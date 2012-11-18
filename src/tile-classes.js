@@ -21,6 +21,9 @@ HonorTile.prototype.constructor = HonorTile;
 function NumberedTile(number) {
     Tile.call(this);
     this.number = number; // number 1 to 9
+    this.isTerminal = function() {
+        return (this.number == 1 || this.number == 9);
+    };
 }
 NumberedTile.prototype = new Tile();
 NumberedTile.prototype.constructor = NumberedTile;

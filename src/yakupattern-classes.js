@@ -74,3 +74,21 @@ function Chinitsu() {
 }
 Chinitsu.prototype = new YakuPattern();
 Chinitsu.prototype.constructor = Chinitsu;
+
+/**
+ * Honroutou (all terminals & honors) yaku pattern
+ * A hand consisting of only terminals and honors
+ */
+function Honroutou() {
+    YakuPattern.call(this);
+    
+    this.check = function(tiles) {
+        for (var i = 0; i < tiles.length; i++) {
+            var tile = tiles[i];
+            if (! (tile instanceof HonorTile || tile.isTerminal())) return false; 
+        }
+        return true;
+    };
+}
+Honroutou.prototype = new YakuPattern();
+Honroutou.prototype.constructor = Honroutou;
