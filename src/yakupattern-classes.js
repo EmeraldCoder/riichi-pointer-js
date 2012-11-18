@@ -11,14 +11,13 @@ function TanyaouChuu() {
     YakuPattern.call(this);
     
     this.check = function(tiles) {
-        var result = true;
         for (var i = 0; i < tiles.length; i++) {
             var tile = tiles[i];
             if (! (tile instanceof NumberedTile && tile.number > 1 && tile.number < 9)) {
-                result = false;
+                return false;
             }
         }
-        return result;
+        return true;
     };
 }
 TanyaouChuu.prototype = new YakuPattern();
@@ -32,7 +31,6 @@ function Honitsu() {
     YakuPattern.call(this);
     
     this.check = function(tiles) {
-        var result = true;
         var nbHonorTile = 0;
         var suit = null;
         for (var i = 0; i < tiles.length; i++) {
@@ -42,16 +40,37 @@ function Honitsu() {
             } else {
                 if (suit == null) {
                     suit = tile.suit;
-                } else {
-                    if (suit != tile.suit) {
-                        return false;
-                    }
+                } else if (suit != tile.suit) {
+                    return false;
                 }
             }
         }
-        if (nbHonorTile == 0) result = false;
-        return result;
+        return nbHonorTile > 0;
     };
 }
 Honitsu.prototype = new YakuPattern();
 Honitsu.prototype.constructor = Honitsu;
+
+/**
+ * Chinitsu (full flush) yaku pattern
+ * A hand with tile from only one suit and no honor tiles
+ */
+function Chinitsu() {
+    YakuPattern.call(this);
+    
+    this.check = function(tiles) {
+        var suit = null;
+        for (var i = 0; i < tiles.length; i++) {
+            var tile = tiles[i];
+            if (tile instanceof HonorTile) return false;
+            if (suit == null) {
+                suit = tile.suit;
+            } else if (suit != tile.suit) {
+                return false;
+            }
+        }
+        return true;
+    };
+}
+Chinitsu.prototype = new YakuPattern();
+Chinitsu.prototype.constructor = Chinitsu;
