@@ -92,3 +92,4 @@ function Honroutou() {
 }
 Honroutou.prototype = new YakuPattern();
 Honroutou.prototype.constructor = Honroutou;
+
