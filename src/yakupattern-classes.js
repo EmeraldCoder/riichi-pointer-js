@@ -156,3 +156,34 @@ function SanShokuDoujun() {
 }
 SanShokuDoujun.prototype = new YakuPattern();
 SanShokuDoujun.prototype.construction = SanShokuDoujun;
+
+/**
+ * Itsu (pure straight) yaku pattern
+ * Three consecutive chiis (1-9) in the same suit
+ */
+function Itsu() {
+    YakuPattern.call(this);
+    
+    this.check = function(hand) {
+        var storedChiis = {};
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Chii) {
+                var tile = combinaison.tiles[0];
+                
+                if (storedChiis[tile.suit] == undefined) {
+                    storedChiis[tile.suit] = {1: 0, 4: 0, 7: 0};
+                }
+                
+                var chii = storedChiis[tile.suit];
+                
+                chii[tile.number]++;
+                
+                if (chii[1] && chii[4] && chii[7]) return true;
+            }
+        }
+        return false;
+    };
+}
+Itsu.prototype = new YakuPattern();
+Itsu.prototype.constructor = Itsu;
