@@ -10,11 +10,11 @@ function YakuPattern() {}
 function TanyaouChuu() {
     YakuPattern.call(this);
     
-    this.check = function(tiles) {
-        for (var i = 0; i < tiles.length; i++) {
-            var tile = tiles[i];
-            if (! (tile instanceof NumberedTile && tile.number > 1 && tile.number < 9)) {
-                return false;
+    this.check = function(hand) {
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            for (var j = 0; j < hand.combinaisons[i].tiles.length; j++) {
+                var tile = hand.combinaisons[i].tiles[j];
+                if (tile instanceof HonorTile || tile.isTerminal()) return false;
             }
         }
         return true;
@@ -30,18 +30,20 @@ TanyaouChuu.prototype.constructor = TanyaouChuu;
 function Honitsu() {
     YakuPattern.call(this);
     
-    this.check = function(tiles) {
+    this.check = function(hand) {
         var nbHonorTile = 0;
         var suit = null;
-        for (var i = 0; i < tiles.length; i++) {
-            var tile = tiles[i];
-            if (tile instanceof HonorTile) {
-                nbHonorTile++;
-            } else {
-                if (suit == null) {
-                    suit = tile.suit;
-                } else if (suit != tile.suit) {
-                    return false;
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            for (var j = 0; j < hand.combinaisons[i].tiles.length; j++) {
+                var tile = hand.combinaisons[i].tiles[j];
+                if (tile instanceof HonorTile) {
+                    nbHonorTile++;
+                } else {
+                    if (suit == null) {
+                        suit = tile.suit;
+                    } else if (suit != tile.suit) {
+                        return false;
+                    }
                 }
             }
         }
@@ -58,15 +60,17 @@ Honitsu.prototype.constructor = Honitsu;
 function Chinitsu() {
     YakuPattern.call(this);
     
-    this.check = function(tiles) {
+    this.check = function(hand) {
         var suit = null;
-        for (var i = 0; i < tiles.length; i++) {
-            var tile = tiles[i];
-            if (tile instanceof HonorTile) return false;
-            if (suit == null) {
-                suit = tile.suit;
-            } else if (suit != tile.suit) {
-                return false;
+        for (var i = 0; i < hand.combinaisons.length; i ++) {
+            for (var j = 0; j < hand.combinaisons[i].tiles.length; j++) {
+                var tile = hand.combinaisons[i].tiles[j];
+                if (tile instanceof HonorTile) return false;
+                if (suit == null) {
+                    suit = tile.suit;
+                } else if (suit != tile.suit) {
+                    return false;
+                }
             }
         }
         return true;
@@ -82,10 +86,12 @@ Chinitsu.prototype.constructor = Chinitsu;
 function Honroutou() {
     YakuPattern.call(this);
     
-    this.check = function(tiles) {
-        for (var i = 0; i < tiles.length; i++) {
-            var tile = tiles[i];
-            if (! (tile instanceof HonorTile || tile.isTerminal())) return false; 
+    this.check = function(hand) {
+        for (var i = 0; i < hand.combinaisons.length; i ++) {
+            for (var j = 0; j < hand.combinaisons[i].tiles.length; j++) {
+                var tile = hand.combinaisons[i].tiles[j];
+                if (! (tile instanceof HonorTile || tile.isTerminal())) return false; 
+            }
         }
         return true;
     };
