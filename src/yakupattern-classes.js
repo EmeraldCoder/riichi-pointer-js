@@ -125,3 +125,34 @@ function Iipeikou() {
 }
 Iipeikou.prototype = new YakuPattern();
 Iipeikou.prototype.constructor = Iipeikou;
+
+/**
+ * San Shoku Doujun (mixed triple chii) yaku pattern
+ * Three chiis of the same value, with one in each suit
+ */
+function SanShokuDoujun() {
+    YakuPattern.call(this);
+    
+    this.check = function(hand) {
+        var storedChiis = {};
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Chii) {
+                var tile = combinaison.tiles[0];
+                
+                if (storedChiis[tile.number] == undefined) {
+                    storedChiis[tile.number] = { dot: 0, bamboo: 0, character: 0 };
+                }
+                
+                var chii = storedChiis[tile.number];
+                
+                chii[tile.suit]++;
+                
+                if (chii.dot && chii.bamboo && chii.character) return true;
+            }
+        }
+        return false;
+    };
+}
+SanShokuDoujun.prototype = new YakuPattern();
+SanShokuDoujun.prototype.construction = SanShokuDoujun;
