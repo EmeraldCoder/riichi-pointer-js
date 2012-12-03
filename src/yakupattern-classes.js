@@ -277,3 +277,28 @@ function ToiToiHou() {
 }
 ToiToiHou.prototype = new YakuPattern();
 ToiToiHou.prototype.constructor = ToiToiHou;
+
+/**
+ * Shou Sangen (three little dragons) yaku pattern
+ * Two pons/kans of dragons plus one pair of dragons.
+ */
+function ShouSangen() {
+    YakuPattern.call(this);
+
+    this.check = function(hand) {
+        var nbDragonPair = 0;
+        var nbDragonPon = 0;
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Pair) {
+                if (combinaison.tiles[0] instanceof DragonTile) nbDragonPair++;
+            } else if (combinaison instanceof Pon || combinaison instanceof Kan) {
+                if (combinaison.tiles[0] instanceof DragonTile) nbDragonPon++;
+            }
+        }
+        return nbDragonPair >= 1 && nbDragonPon >=2;
+    };
+}
+ShouSangen.prototype = new YakuPattern();
+ShouSangen.prototype.constructor = ShouSangen;
+
