@@ -187,3 +187,29 @@ function Itsu() {
 }
 Itsu.prototype = new YakuPattern();
 Itsu.prototype.constructor = Itsu;
+
+/**
+ * Chanta (outside hand) yaku pattern
+ * A hand where all sets contain a terminal or honor tile, and at least one of the sets is a chii.
+ */
+function Chanta() {
+    YakuPattern.call(this);
+
+    this.check = function(hand) {
+        var nbChii = 0;
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Chii) nbChii++;
+
+            var nbTerminalOrHonor = 0;
+            for (var j = 0; j < combinaison.tiles.length; j++) {
+                var tile = combinaison.tiles[j];
+                if (tile instanceof HonorTile || tile.isTerminal()) nbTerminalOrHonor++;
+            }
+            if (nbTerminalOrHonor == 0) return false;
+        }
+        return nbChii > 0;
+    }
+}
+Chanta.prototype = new YakuPattern();
+Chanta.prototype.constructor = Chanta;
