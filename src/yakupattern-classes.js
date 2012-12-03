@@ -213,3 +213,22 @@ function Chanta() {
 }
 Chanta.prototype = new YakuPattern();
 Chanta.prototype.constructor = Chanta;
+
+/**
+ * Chii Toitsu (seven pairs) yaku pattern
+ * A hand consisting of seven pairs
+ */
+function ChiiToitsu() {
+    YakuPattern.call(this);
+
+    this.check = function(hand) {
+        var nbPair = 0;
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Pair) nbPair++;
+        }
+        return nbPair == 7;
+    }
+}
+ChiiToitsu.prototype = new YakuPattern();
+ChiiToitsu.prototype.constructor = ChiiToitsu;
