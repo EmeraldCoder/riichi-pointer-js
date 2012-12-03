@@ -258,3 +258,22 @@ function SanShokuDokou() {
 }
 SanShokuDokou.prototype = new YakuPattern();
 SanShokuDokou.prototype.constructor = SanShokuDokou;
+
+/*
+ * Toi-Toi Hou (all pons) yaku pattern
+ * A hand with four pons/kans and one pair.
+ */
+function ToiToiHou() {
+    YakuPattern.call(this);
+
+    this.check = function(hand) {
+        var nbPon = 0;
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Pon || combinaison instanceof Kan) nbPon++;
+        }
+        return nbPon >= 4;
+    };
+}
+ToiToiHou.prototype = new YakuPattern();
+ToiToiHou.prototype.constructor = ToiToiHou;
