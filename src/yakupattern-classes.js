@@ -232,3 +232,29 @@ function ChiiToitsu() {
 }
 ChiiToitsu.prototype = new YakuPattern();
 ChiiToitsu.prototype.constructor = ChiiToitsu;
+
+/**
+ * San Shoku Dokou (triple pon) yaku pattern
+ * One pon or kan in each of the three suits, all having the same number.
+ */
+function SanShokuDokou() {
+    YakuPattern.call(this);
+
+    this.check = function(hand) {
+        var storedPons = {};
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Pon || combinaison instanceof Kan) {
+                var tile = combinaison.tiles[0];
+                if (tile instanceof NumberedTile) {
+                    if (storedPons[tile.number] == undefined) storedPons[tile.number] = 0;
+                    storedPons[tile.number]++;
+                    if (storedPons[tile.number] == 3) return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+SanShokuDokou.prototype = new YakuPattern();
+SanShokuDokou.prototype.constructor = SanShokuDokou;
