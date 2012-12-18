@@ -302,3 +302,25 @@ function ShouSangen() {
 ShouSangen.prototype = new YakuPattern();
 ShouSangen.prototype.constructor = ShouSangen;
 
+/**
+ * Ryan Peikou (twice pure double chiis) yaku pattern
+ * Two pair of chiis, where each pair consists of two identical chiis.
+ */
+function RyanPeikou() {
+    YakuPattern.call(this);
+    
+    this.check = function(hand) {
+        var chiis = {};
+        var nbPairOfChii = 0;
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Chii) {
+                var chiiKey = combinaison.tiles[0].suit + combinaison.tiles[0].number;
+                if (chiis[chiiKey] == undefined) chiis[chiiKey] = 0; else nbPairOfChii++;
+            }
+        }        
+        return nbPairOfChii == 2;
+    };
+}
+RyanPeikou.prototype = new YakuPattern();
+RyanPeikou.prototype.constructor = RyanPeikou;
