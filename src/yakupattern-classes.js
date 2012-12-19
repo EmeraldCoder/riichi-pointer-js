@@ -324,3 +324,28 @@ function RyanPeikou() {
 }
 RyanPeikou.prototype = new YakuPattern();
 RyanPeikou.prototype.constructor = RyanPeikou;
+
+/**
+ * Junchan Taiyai (terminals in all sets) yaku pattern
+ * A hand with at least one chii and where all sets and the pair contains terminals
+ */
+function JunchanTaiyai() {
+    YakuPattern.call(this);
+    
+    this.check = function(hand) {
+        var nbChii = 0;
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Chii) nbChii++;
+            var nbTerminal = 0;
+            for (var j = 0; j < combinaison.tiles.length; j++) {
+                var tile = combinaison.tiles[j];
+                if (tile instanceof NumberedTile && tile.isTerminal()) nbTerminal++;
+            }
+            if (nbTerminal == 0) return false;
+        }
+        return nbChii > 0;
+    };
+}
+JunchanTaiyai.prototype = new YakuPattern();
+JunchanTaiyai.prototype.constructor = JunchanTaiyai;
