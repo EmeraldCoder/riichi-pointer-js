@@ -370,3 +370,24 @@ function FanpaiSeatWind() {
 }
 FanpaiSeatWind.prototype = new YakuPattern();
 FanpaiSeatWind.prototype.constructor = FanpaiSeatWind;
+
+/**
+ * Fanpai/Yakuhai (Round Wind)
+ * A pon or kan in the prevalent wind.
+ */
+function FanpaiRoundWind() {
+    YakuPattern.call(this);
+    
+    this.check = function(hand) {
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Pon || combinaison instanceof Kan) {
+                var tile = combinaison.tiles[0];
+                if (tile instanceof WindTile && tile.direction == hand.roundWind) return true;
+            }
+        }
+        return false;
+    };
+}
+FanpaiRoundWind.prototype = new YakuPattern();
+FanpaiRoundWind.prototype.constructor = FanpaiRoundWind;
