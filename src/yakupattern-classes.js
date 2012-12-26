@@ -351,7 +351,7 @@ JunchanTaiyai.prototype = new YakuPattern();
 JunchanTaiyai.prototype.constructor = JunchanTaiyai;
 
 /**
- * Fanpai/Yakuhai (Seat Wind)
+ * Fanpai/Yakuhai (Seat Wind) yaku pattern
  * A pon or kan in the players wind.
  */
 function FanpaiSeatWind() {
@@ -372,7 +372,7 @@ FanpaiSeatWind.prototype = new YakuPattern();
 FanpaiSeatWind.prototype.constructor = FanpaiSeatWind;
 
 /**
- * Fanpai/Yakuhai (Round Wind)
+ * Fanpai/Yakuhai (Round Wind) yaku pattern
  * A pon or kan in the prevalent wind.
  */
 function FanpaiRoundWind() {
@@ -391,3 +391,24 @@ function FanpaiRoundWind() {
 }
 FanpaiRoundWind.prototype = new YakuPattern();
 FanpaiRoundWind.prototype.constructor = FanpaiRoundWind;
+
+/**
+ * Fanpai/Yakuhai (Dragon Pon) yaku pattern
+ * A pon or kan in the prevalent wind.
+ */
+function FanpaiDragonPon() {
+    YakuPattern.call(this);
+    
+    this.check = function(hand) {
+        var nbDragonPon = 0;
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Pon || combinaison instanceof Kan) {
+                if (combinaison.tiles[0] instanceof DragonTile) nbDragonPon++;
+            }
+        }
+        return nbDragonPon;
+    };
+}
+FanpaiDragonPon.prototype = new YakuPattern();
+FanpaiDragonPon.prototype.constructor = FanpaiDragonPon;
