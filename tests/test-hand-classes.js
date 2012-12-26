@@ -11,12 +11,14 @@ function TestHandClasses() {
             new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
             new Pair(new WindTile('east'))
         ];
-        var hand = new Hand(handCombinaisons);
+        var hand = new Hand(handCombinaisons, 'east', 'north');
         test('hand has five hand combinaison', function() {
             ok(hand.combinaisons.length == 5);
         });
         test('hand has valid combinaison', function() {
             ok(hand.combinaisons == handCombinaisons);
+            ok(hand.seatWind == 'east');
+            ok(hand.roundWind == 'north');
         });
         
         // pair test

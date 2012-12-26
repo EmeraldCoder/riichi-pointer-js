@@ -349,3 +349,24 @@ function JunchanTaiyai() {
 }
 JunchanTaiyai.prototype = new YakuPattern();
 JunchanTaiyai.prototype.constructor = JunchanTaiyai;
+
+/**
+ * Fanpai/Yakuhai (Seat Wind)
+ * A pon or kan in the players wind.
+ */
+function FanpaiSeatWind() {
+    YakuPattern.call(this);
+    
+    this.check = function(hand) {
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            if (combinaison instanceof Pon || combinaison instanceof Kan) {
+                var tile = combinaison.tiles[0];
+                if (tile instanceof WindTile && tile.direction == hand.seatWind) return true;
+            }
+        }
+        return false;
+    };
+}
+FanpaiSeatWind.prototype = new YakuPattern();
+FanpaiSeatWind.prototype.constructor = FanpaiSeatWind;

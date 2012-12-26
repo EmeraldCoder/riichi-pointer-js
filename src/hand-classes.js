@@ -2,9 +2,13 @@
  * Hand class
  *
  * param Array<HandCombinaison> combinaisons
+ * param String seatWind
+ * param String roundWind
  */
-function Hand(combinaisons) {
+function Hand(combinaisons, seatWind, roundWind) {
     this.combinaisons = combinaisons; // array of HandCombinaison
+    this.seatWind = seatWind;
+    this.roundWind = roundWind;
 }
 
 /**
