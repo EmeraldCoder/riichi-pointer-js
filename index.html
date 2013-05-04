@@ -6,7 +6,38 @@
 </head>
 <body>
     <h1>Riichi Mahjong Pointer</h1>
+
+    <div><b>Your hands</b></div>
+    <div id="HandTiles" style="border: 1px solid #000; padding: 10px;"></div>
+
+    <div style="margin: 10px;">
+        <input type="button" value="Red Dragon" onclick="addDragon('red')" />
+        <input type="button" value="White Dragon" onclick="addDragon('white')" />
+        <input type="button" value="Green Dragon" onclick="addDragon('green')" />
+    </div>
     
-    <p>Loading...</p>
+    <div style="margin: 10px;"><input type="button" value="Calculate hand points" /></div>
+    
+    <div><b>Your points</b></div>
+    <div style="border: 1px solid #000; padding: 10px;"></div>
+
+    <script src="src/tile-classes.js"></script>    
+    <script>
+        var handTiles = [];
+
+        function addDragon(color) {
+            var tile = new DragonTile(color);
+            handTiles.push(tile);
+            refreshHandTiles();
+        }
+        
+        function refreshHandTiles() {
+            var html = '';
+            for (var i = 0; i < handTiles.length; i++) {
+                html = html + '<span style="display: inline-block">' + handTiles[i].color + '<br />' + handTiles[i].suit +'</span>';
+            }
+            document.getElementById('HandTiles').innerHTML = html;
+        }
+    </script>
 </body>
 </html>
