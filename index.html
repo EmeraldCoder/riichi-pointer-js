@@ -11,32 +11,78 @@
     <div id="HandTiles" style="border: 1px solid #000; padding: 10px;"></div>
 
     <div style="margin: 10px;">
-        <input type="button" value="Red Dragon" onclick="addDragon('red')" />
-        <input type="button" value="White Dragon" onclick="addDragon('white')" />
-        <input type="button" value="Green Dragon" onclick="addDragon('green')" />
+        <div>
+            <input type="button" value="Red Dragon Pon" onclick="addDragonPon('red')" />
+            <input type="button" value="White Dragon Pon" onclick="addDragonPon('white')" />
+            <input type="button" value="Green Dragon Pon" onclick="addDragonPon('green')" />
+        </div>
+        <div>
+            <input type="button" value="East Wind Pon" onclick="addWindPon('east')" />
+            <input type="button" value="South Wind Pon" onclick="addWindPon('south')" />
+            <input type="button" value="West Wind Pon" onclick="addWindPon('west')" />
+            <input type="button" value="North Wind Pon" onclick="addWindPon('north')" />
+        </div>
     </div>
     
-    <div style="margin: 10px;"><input type="button" value="Calculate hand points" /></div>
+    <div style="margin: 10px;"><input type="button" value="Calculate hand points" onclick="refreshHandPoints()" /></div>
     
     <div><b>Your points</b></div>
-    <div style="border: 1px solid #000; padding: 10px;"></div>
+    <div id="HandPoints" style="border: 1px solid #000; padding: 10px;"></div>
 
     <script src="src/tile-classes.js"></script>    
+    <script src="src/hand-classes.js"></script>
+    <script src="src/yakupattern-classes.js"></script>
     <script>
-        var handTiles = [];
+        var hand = new Hand([], 'east', 'east');
 
-        function addDragon(color) {
-            var tile = new DragonTile(color);
-            handTiles.push(tile);
+        function addDragonPon(color) {
+            var pon = new Pon(new DragonTile(color));
+            hand.combinaisons.push(pon);
+            refreshHandTiles();
+        }
+        
+        function addWindPon(direction) {
+            var pon = new Pon(new WindTile(direction));
+            hand.combinaisons.push(pon);
             refreshHandTiles();
         }
         
         function refreshHandTiles() {
             var html = '';
-            for (var i = 0; i < handTiles.length; i++) {
-                html = html + '<span style="display: inline-block">' + handTiles[i].color + '<br />' + handTiles[i].suit +'</span>';
+            for (var i = 0; i < hand.combinaisons.length; i++) {
+                for (var j = 0; j < hand.combinaisons[i].tiles.length; j++) {
+                    var tile = hand.combinaisons[i].tiles[j];
+                    if (tile instanceof DragonTile) {
+                        html = html + '<span style="display: inline-block">' + tile.color + '<br />' + tile.suit +'</span>';
+                    } else if (tile instanceof WindTile) {
+                        html = html + '<span style="display: inline-block">' + tile.direction + '<br />' + tile.suit +'</span>';
+                    }
+                }
             }
             document.getElementById('HandTiles').innerHTML = html;
+        }
+        
+        function refreshHandPoints() {
+            var patterns = [
+                { name: 'Fanpai (dragon pon)', checker: new FanpaiDragonPon() },
+                { name: 'Fanpai (round wind pon)', checker: new FanpaiRoundWind() },
+                { name: 'Fanpai (seat wind pon)', checker: new FanpaiSeatWind() },
+            ];
+            
+            var result = [];
+            
+            for (var i = 0; i < patterns.length; i++) {
+                var pattern = patterns[i];
+                result.push({ name: pattern.name, value: pattern.checker.check(hand) });
+            }
+            
+            var html = '';
+            
+            for (var i = 0; i < result.length; i++) {
+                html = html + '<div>' + result[i].name + ' : ' + result[i].value + '</div>';
+            }
+        
+            document.getElementById('HandPoints').innerHTML = html;
         }
     </script>
 </body>
