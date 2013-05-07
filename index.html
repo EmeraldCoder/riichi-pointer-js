@@ -5,195 +5,95 @@
     <title>Riichi Mahjong Pointer</title>
 </head>
 <body>
-    <h1>Riichi Mahjong Pointer</h1>
+    <div id="PageSelectCombinaisonType" style="display: none;">
+        <input type="button" value="Pair" onclick="selectCombinaisonType('pair')" />
+        <input type="button" value="Pon" onclick="selectCombinaisonType('pon')" />
+        <input type="button" value="Kan" onclick="selectCombinaisonType('kan')" />
+        <input type="button" value="Chii" onclick="selectCombinaisonType('chii')" />
+    </div>
+    
+    <div id="PageSelectTileSuit" style="display: none;">
+        <div id="TileSuitForChii">
+            <input type="button" value="Dot" onclick="selectTileSuit('dot')" />
+            <input type="button" value="Bamboo" onclick="selectTileSuit('bamboo')" />
+            <input type="button" value="Character" onclick="selectTileSuit('character')" />
+        </div>
+        <div id="TileSuitForNonChii">
+            <input type="button" value="Dragon" onclick="selectTileSuit('dragon')" />
+            <input type="button" value="Wind" onclick="selectTileSuit('wind')" />
+            <input type="button" value="Dot" onclick="selectTileSuit('dot')" />
+            <input type="button" value="Bamboo" onclick="selectTileSuit('bamboo')" />
+            <input type="button" value="Character" onclick="selectTileSuit('character')" />
+        </div>        
+    </div>
+    
+    <div id="PageSelectTileValue" style="display: none;">
+        <div id="TileValueForDragon">
+            <input type="button" value="Green" onclick="selectTileValue('green')" />
+            <input type="button" value="Red" onclick="selectTileValue('red')" />
+            <input type="button" value="White" onclick="selectTileValue('white')" />
+        </div>
+        <div id="TileValueForWind">
+            <input type="button" value="East" onclick="selectTileValue('east')" />
+            <input type="button" value="South" onclick="selectTileValue('south')" />
+            <input type="button" value="West" onclick="selectTileValue('west')" />
+            <input type="button" value="North" onclick="selectTileValue('north')" />
+        </div>
+        <div id="TileValueForNumbered">
+            <input type="button" value="1" onclick="selectTileValue(1)" />
+            <input type="button" value="2" onclick="selectTileValue(2)" />
+            <input type="button" value="3" onclick="selectTileValue(3)" />
+            <input type="button" value="4" onclick="selectTileValue(4)" />
+            <input type="button" value="5" onclick="selectTileValue(5)" />
+            <input type="button" value="6" onclick="selectTileValue(6)" />
+            <input type="button" value="7" onclick="selectTileValue(7)" />
+            <input type="button" value="8" onclick="selectTileValue(8)" />
+            <input type="button" value="9" onclick="selectTileValue(9)" />
+        </div>
+        <div id="TileValueForChii">
+            <input type="button" value="1" onclick="selectTileValue(1)" />
+            <input type="button" value="2" onclick="selectTileValue(2)" />
+            <input type="button" value="3" onclick="selectTileValue(3)" />
+            <input type="button" value="4" onclick="selectTileValue(4)" />
+            <input type="button" value="5" onclick="selectTileValue(5)" />
+            <input type="button" value="6" onclick="selectTileValue(6)" />
+            <input type="button" value="7" onclick="selectTileValue(7)" />
+        </div>
+    </div>
 
-    <div style="margin: 10px;">
-        <label>Prevalent wind: </label>
-        <select id="PrevalentWind">
-            <option value="east">East</option>
-            <option value="south">South</option>
-            <option value="west">West</option>
-            <option value="north">North</option>
-        </select>
+    <div id="PageMain">
+        <h1>Riichi Mahjong Pointer</h1>
+
+        <div style="margin: 10px;">
+            <label>Prevalent wind: </label>
+            <select id="PrevalentWind">
+                <option value="east">East</option>
+                <option value="south">South</option>
+                <option value="west">West</option>
+                <option value="north">North</option>
+            </select>
+            
+            <label>Seat wind: </label>
+            <select id="SeatWind">
+                <option value="east">East</option>
+                <option value="south">South</option>
+                <option value="west">West</option>
+                <option value="north">North</option>
+            </select>
+        </div>
         
-        <label>Seat wind: </label>
-        <select id="SeatWind">
-            <option value="east">East</option>
-            <option value="south">South</option>
-            <option value="west">West</option>
-            <option value="north">North</option>
-        </select>
-    </div>
+        <div>
+            <input type="button" value="Add a combinaison to your hand" onclick="add()" />
+        </div>
 
-    <div><b>Your hands</b></div>
-    <div id="HandTiles" style="border: 1px solid #000; padding: 10px;"></div>
-
-    <div style="margin: 10px;">
-        <div>
-            <input type="button" value="Green Dragon Pon" onclick="addCombinaison('pon', 'dragon', 'green')" />
-            <input type="button" value="Red Dragon Pon" onclick="addCombinaison('pon', 'dragon', 'red')" />
-            <input type="button" value="White Dragon Pon" onclick="addCombinaison('pon', 'dragon', 'white')" />
-        </div>
-        <div>
-            <input type="button" value="East Wind Pon" onclick="addCombinaison('pon', 'wind', 'east')" />
-            <input type="button" value="South Wind Pon" onclick="addCombinaison('pon', 'wind', 'south')" />
-            <input type="button" value="West Wind Pon" onclick="addCombinaison('pon', 'wind', 'west')" />
-            <input type="button" value="North Wind Pon" onclick="addCombinaison('pon', 'wind', 'north')" />
-        </div>
-        <div>
-            <input type="button" value="1 Dot Pon" onclick="addCombinaison('pon', 'dot', 1)" />
-            <input type="button" value="2 Dot Pon" onclick="addCombinaison('pon', 'dot', 2)" />
-            <input type="button" value="3 Dot Pon" onclick="addCombinaison('pon', 'dot', 3)" />
-            <input type="button" value="4 Dot Pon" onclick="addCombinaison('pon', 'dot', 4)" />
-            <input type="button" value="5 Dot Pon" onclick="addCombinaison('pon', 'dot', 5)" />
-            <input type="button" value="6 Dot Pon" onclick="addCombinaison('pon', 'dot', 6)" />
-            <input type="button" value="7 Dot Pon" onclick="addCombinaison('pon', 'dot', 7)" />
-            <input type="button" value="8 Dot Pon" onclick="addCombinaison('pon', 'dot', 8)" />
-            <input type="button" value="9 Dot Pon" onclick="addCombinaison('pon', 'dot', 9)" />
-        </div>
-        <div>
-            <input type="button" value="1 Bamboo Pon" onclick="addCombinaison('pon', 'bamboo', 1)" />
-            <input type="button" value="2 Bamboo Pon" onclick="addCombinaison('pon', 'bamboo', 2)" />
-            <input type="button" value="3 Bamboo Pon" onclick="addCombinaison('pon', 'bamboo', 3)" />
-            <input type="button" value="4 Bamboo Pon" onclick="addCombinaison('pon', 'bamboo', 4)" />
-            <input type="button" value="5 Bamboo Pon" onclick="addCombinaison('pon', 'bamboo', 5)" />
-            <input type="button" value="6 Bamboo Pon" onclick="addCombinaison('pon', 'bamboo', 6)" />
-            <input type="button" value="7 Bamboo Pon" onclick="addCombinaison('pon', 'bamboo', 7)" />
-            <input type="button" value="8 Bamboo Pon" onclick="addCombinaison('pon', 'bamboo', 8)" />
-            <input type="button" value="9 Bamboo Pon" onclick="addCombinaison('pon', 'bamboo', 9)" />
-        </div>
-        <div>
-            <input type="button" value="1 Character Pon" onclick="addCombinaison('pon', 'character', 1)" />
-            <input type="button" value="2 Character Pon" onclick="addCombinaison('pon', 'character', 2)" />
-            <input type="button" value="3 Character Pon" onclick="addCombinaison('pon', 'character', 3)" />
-            <input type="button" value="4 Character Pon" onclick="addCombinaison('pon', 'character', 4)" />
-            <input type="button" value="5 Character Pon" onclick="addCombinaison('pon', 'character', 5)" />
-            <input type="button" value="6 Character Pon" onclick="addCombinaison('pon', 'character', 6)" />
-            <input type="button" value="7 Character Pon" onclick="addCombinaison('pon', 'character', 7)" />
-            <input type="button" value="8 Character Pon" onclick="addCombinaison('pon', 'character', 8)" />
-            <input type="button" value="9 Character Pon" onclick="addCombinaison('pon', 'character', 9)" />
-        </div>
-        <div>
-            <input type="button" value="Green Dragon Kan" onclick="addCombinaison('kan', 'dragon', 'green')" />
-            <input type="button" value="Red Dragon Kan" onclick="addCombinaison('kan', 'dragon', 'red')" />
-            <input type="button" value="White Dragon Kan" onclick="addCombinaison('kan', 'dragon', 'white')" />
-        </div>
-        <div>
-            <input type="button" value="East Wind Kan" onclick="addCombinaison('kan', 'wind', 'east')" />
-            <input type="button" value="South Wind Kan" onclick="addCombinaison('kan', 'wind', 'south')" />
-            <input type="button" value="West Wind Kan" onclick="addCombinaison('kan', 'wind', 'west')" />
-            <input type="button" value="North Wind Kan" onclick="addCombinaison('kan', 'wind', 'north')" />
-        </div>
-        <div>
-            <input type="button" value="1 Dot Kan" onclick="addCombinaison('kan', 'dot', 1)" />
-            <input type="button" value="2 Dot Kan" onclick="addCombinaison('kan', 'dot', 2)" />
-            <input type="button" value="3 Dot Kan" onclick="addCombinaison('kan', 'dot', 3)" />
-            <input type="button" value="4 Dot Kan" onclick="addCombinaison('kan', 'dot', 4)" />
-            <input type="button" value="5 Dot Kan" onclick="addCombinaison('kan', 'dot', 5)" />
-            <input type="button" value="6 Dot Kan" onclick="addCombinaison('kan', 'dot', 6)" />
-            <input type="button" value="7 Dot Kan" onclick="addCombinaison('kan', 'dot', 7)" />
-            <input type="button" value="8 Dot Kan" onclick="addCombinaison('kan', 'dot', 8)" />
-            <input type="button" value="9 Dot Kan" onclick="addCombinaison('kan', 'dot', 9)" />
-        </div>
-        <div>
-            <input type="button" value="1 Bamboo Kan" onclick="addCombinaison('kan', 'bamboo', 1)" />
-            <input type="button" value="2 Bamboo Kan" onclick="addCombinaison('kan', 'bamboo', 2)" />
-            <input type="button" value="3 Bamboo Kan" onclick="addCombinaison('kan', 'bamboo', 3)" />
-            <input type="button" value="4 Bamboo Kan" onclick="addCombinaison('kan', 'bamboo', 4)" />
-            <input type="button" value="5 Bamboo Kan" onclick="addCombinaison('kan', 'bamboo', 5)" />
-            <input type="button" value="6 Bamboo Kan" onclick="addCombinaison('kan', 'bamboo', 6)" />
-            <input type="button" value="7 Bamboo Kan" onclick="addCombinaison('kan', 'bamboo', 7)" />
-            <input type="button" value="8 Bamboo Kan" onclick="addCombinaison('kan', 'bamboo', 8)" />
-            <input type="button" value="9 Bamboo Kan" onclick="addCombinaison('kan', 'bamboo', 9)" />
-        </div>
-        <div>
-            <input type="button" value="1 Character Kan" onclick="addCombinaison('kan', 'character', 1)" />
-            <input type="button" value="2 Character Kan" onclick="addCombinaison('kan', 'character', 2)" />
-            <input type="button" value="3 Character Kan" onclick="addCombinaison('kan', 'character', 3)" />
-            <input type="button" value="4 Character Kan" onclick="addCombinaison('kan', 'character', 4)" />
-            <input type="button" value="5 Character Kan" onclick="addCombinaison('kan', 'character', 5)" />
-            <input type="button" value="6 Character Kan" onclick="addCombinaison('kan', 'character', 6)" />
-            <input type="button" value="7 Character Kan" onclick="addCombinaison('kan', 'character', 7)" />
-            <input type="button" value="8 Character Kan" onclick="addCombinaison('kan', 'character', 8)" />
-            <input type="button" value="9 Character Kan" onclick="addCombinaison('kan', 'character', 9)" />
-        </div>
-        <div>
-            <input type="button" value="1,2,3 Dot Chii" onclick="addCombinaison('chii', 'dot', 1)" />
-            <input type="button" value="2,3,4 Dot Chii" onclick="addCombinaison('chii', 'dot', 2)" />
-            <input type="button" value="3,4,5 Dot Chii" onclick="addCombinaison('chii', 'dot', 3)" />
-            <input type="button" value="4,5,6 Dot Chii" onclick="addCombinaison('chii', 'dot', 4)" />
-            <input type="button" value="5,6,7 Dot Chii" onclick="addCombinaison('chii', 'dot', 5)" />
-            <input type="button" value="6,7,8 Dot Chii" onclick="addCombinaison('chii', 'dot', 6)" />
-            <input type="button" value="7,8,9 Dot Chii" onclick="addCombinaison('chii', 'dot', 7)" />
-        </div>
-        <div>
-            <input type="button" value="1,2,3 Bamboo Chii" onclick="addCombinaison('chii', 'bamboo', 1)" />
-            <input type="button" value="2,3,4 Bamboo Chii" onclick="addCombinaison('chii', 'bamboo', 2)" />
-            <input type="button" value="3,4,5 Bamboo Chii" onclick="addCombinaison('chii', 'bamboo', 3)" />
-            <input type="button" value="4,5,6 Bamboo Chii" onclick="addCombinaison('chii', 'bamboo', 4)" />
-            <input type="button" value="5,6,7 Bamboo Chii" onclick="addCombinaison('chii', 'bamboo', 5)" />
-            <input type="button" value="6,7,8 Bamboo Chii" onclick="addCombinaison('chii', 'bamboo', 6)" />
-            <input type="button" value="7,8,9 Bamboo Chii" onclick="addCombinaison('chii', 'bamboo', 7)" />
-        </div>
-        <div>
-            <input type="button" value="1,2,3 Character Chii" onclick="addCombinaison('chii', 'character', 1)" />
-            <input type="button" value="2,3,4 Character Chii" onclick="addCombinaison('chii', 'character', 2)" />
-            <input type="button" value="3,4,5 Character Chii" onclick="addCombinaison('chii', 'character', 3)" />
-            <input type="button" value="4,5,6 Character Chii" onclick="addCombinaison('chii', 'character', 4)" />
-            <input type="button" value="5,6,7 Character Chii" onclick="addCombinaison('chii', 'character', 5)" />
-            <input type="button" value="6,7,8 Character Chii" onclick="addCombinaison('chii', 'character', 6)" />
-            <input type="button" value="7,8,9 Character Chii" onclick="addCombinaison('chii', 'character', 7)" />
-        </div>
-        <div>
-            <input type="button" value="Green Dragon Pair" onclick="addCombinaison('pair', 'dragon', 'green')" />
-            <input type="button" value="Red Dragon Pair" onclick="addCombinaison('pair', 'dragon', 'red')" />
-            <input type="button" value="White Dragon Pair" onclick="addCombinaison('pair', 'dragon', 'white')" />
-        </div>
-        <div>
-            <input type="button" value="East Wind Pair" onclick="addCombinaison('pair', 'wind', 'east')" />
-            <input type="button" value="South Wind Pair" onclick="addCombinaison('pair', 'wind', 'south')" />
-            <input type="button" value="West Wind Pair" onclick="addCombinaison('pair', 'wind', 'west')" />
-            <input type="button" value="North Wind Pair" onclick="addCombinaison('pair', 'wind', 'north')" />
-        </div>
-        <div>
-            <input type="button" value="1 Dot Pair" onclick="addCombinaison('pair', 'dot', 1)" />
-            <input type="button" value="2 Dot Pair" onclick="addCombinaison('pair', 'dot', 2)" />
-            <input type="button" value="3 Dot Pair" onclick="addCombinaison('pair', 'dot', 3)" />
-            <input type="button" value="4 Dot Pair" onclick="addCombinaison('pair', 'dot', 4)" />
-            <input type="button" value="5 Dot Pair" onclick="addCombinaison('pair', 'dot', 5)" />
-            <input type="button" value="6 Dot Pair" onclick="addCombinaison('pair', 'dot', 6)" />
-            <input type="button" value="7 Dot Pair" onclick="addCombinaison('pair', 'dot', 7)" />
-            <input type="button" value="8 Dot Pair" onclick="addCombinaison('pair', 'dot', 8)" />
-            <input type="button" value="9 Dot Pair" onclick="addCombinaison('pair', 'dot', 9)" />
-        </div>
-        <div>
-            <input type="button" value="1 Bamboo Pair" onclick="addCombinaison('pair', 'bamboo', 1)" />
-            <input type="button" value="2 Bamboo Pair" onclick="addCombinaison('pair', 'bamboo', 2)" />
-            <input type="button" value="3 Bamboo Pair" onclick="addCombinaison('pair', 'bamboo', 3)" />
-            <input type="button" value="4 Bamboo Pair" onclick="addCombinaison('pair', 'bamboo', 4)" />
-            <input type="button" value="5 Bamboo Pair" onclick="addCombinaison('pair', 'bamboo', 5)" />
-            <input type="button" value="6 Bamboo Pair" onclick="addCombinaison('pair', 'bamboo', 6)" />
-            <input type="button" value="7 Bamboo Pair" onclick="addCombinaison('pair', 'bamboo', 7)" />
-            <input type="button" value="8 Bamboo Pair" onclick="addCombinaison('pair', 'bamboo', 8)" />
-            <input type="button" value="9 Bamboo Pair" onclick="addCombinaison('pair', 'bamboo', 9)" />
-        </div>
-        <div>
-            <input type="button" value="1 Character Pair" onclick="addCombinaison('pair', 'character', 1)" />
-            <input type="button" value="2 Character Pair" onclick="addCombinaison('pair', 'character', 2)" />
-            <input type="button" value="3 Character Pair" onclick="addCombinaison('pair', 'character', 3)" />
-            <input type="button" value="4 Character Pair" onclick="addCombinaison('pair', 'character', 4)" />
-            <input type="button" value="5 Character Pair" onclick="addCombinaison('pair', 'character', 5)" />
-            <input type="button" value="6 Character Pair" onclick="addCombinaison('pair', 'character', 6)" />
-            <input type="button" value="7 Character Pair" onclick="addCombinaison('pair', 'character', 7)" />
-            <input type="button" value="8 Character Pair" onclick="addCombinaison('pair', 'character', 8)" />
-            <input type="button" value="9 Character Pair" onclick="addCombinaison('pair', 'character', 9)" />
-        </div>
+        <div><b>Your hands</b></div>
+        <div id="HandTiles" style="border: 1px solid #000; padding: 10px;"></div>
+       
+        <div style="margin: 10px;"><input type="button" value="Calculate hand points" onclick="refreshHandPoints()" /></div>
+        
+        <div><b>Your points</b></div>
+        <div id="HandPoints" style="border: 1px solid #000; padding: 10px;"></div>
     </div>
-    
-    <div style="margin: 10px;"><input type="button" value="Calculate hand points" onclick="refreshHandPoints()" /></div>
-    
-    <div><b>Your points</b></div>
-    <div id="HandPoints" style="border: 1px solid #000; padding: 10px;"></div>
 
     <script src="src/tile-classes.js"></script>    
     <script src="src/hand-classes.js"></script>
@@ -299,6 +199,55 @@
         
             document.getElementById('HandPoints').innerHTML = html;
         }
+        
+        var addCombinaisonType = null;
+        var addTileSuit = null;
+        var addTileValue = null;
+        function add () {
+            document.getElementById('PageMain').style.display = 'none';
+            document.getElementById('PageSelectCombinaisonType').style.display = 'block';
+        }
+        function selectCombinaisonType (type) {
+            addCombinaisonType = type;
+            document.getElementById('PageSelectCombinaisonType').style.display = 'none';
+            document.getElementById('PageSelectTileSuit').style.display = 'block';
+            
+            if (addCombinaisonType === 'chii') {
+                document.getElementById('TileSuitForChii').style.display = 'block';
+                document.getElementById('TileSuitForNonChii').style.display = 'none';
+            } else {
+                document.getElementById('TileSuitForChii').style.display = 'none';
+                document.getElementById('TileSuitForNonChii').style.display = 'block';
+            }
+        }
+        function selectTileSuit (suit) {
+            addTileSuit = suit;
+            document.getElementById('PageSelectTileSuit').style.display = 'none';
+            document.getElementById('PageSelectTileValue').style.display = 'block';
+            
+            document.getElementById('TileValueForChii').style.display = 'none';
+            document.getElementById('TileValueForDragon').style.display = 'none';
+            document.getElementById('TileValueForWind').style.display = 'none';
+            document.getElementById('TileValueForNumbered').style.display = 'none';
+            if (addCombinaisonType === 'chii') {
+                document.getElementById('TileValueForChii').style.display = 'block';
+            } else {
+                if (addTileSuit === 'dragon') {
+                    document.getElementById('TileValueForDragon').style.display = 'block';
+                } else if (addTileSuit === 'wind') {
+                    document.getElementById('TileValueForWind').style.display = 'block';
+                } else {
+                    document.getElementById('TileValueForNumbered').style.display = 'block';
+                }                
+            }
+        }
+        function selectTileValue (value) {
+            addTileValue = value;
+            addCombinaison(addCombinaisonType, addTileSuit, addTileValue);
+            document.getElementById('PageSelectTileValue').style.display = 'none';
+            document.getElementById('PageMain').style.display = 'block';
+        }
     </script>
 </body>
 </html>
+
