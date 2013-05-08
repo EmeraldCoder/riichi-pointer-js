@@ -143,16 +143,18 @@
         function refreshHandTiles() {
             var html = '';
             for (var i = 0; i < combinaisons.length; i++) {
+                html += '<span style="display: inline-block; margin-right: 10px;">';
                 for (var j = 0; j < combinaisons[i].tiles.length; j++) {
                     var tile = combinaisons[i].tiles[j];
                     if (tile instanceof DragonTile) {
-                        html = html + '<span style="display: inline-block">' + tile.color + '<br />' + tile.suit +'</span>';
+                        html = html + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.color + '.png" /></span>';
                     } else if (tile instanceof WindTile) {
-                        html = html + '<span style="display: inline-block">' + tile.direction + '<br />' + tile.suit +'</span>';
+                        html = html + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.direction + '.png" /></span>';
                     } else {
-                        html = html + '<span style="display: inline-block">' + tile.suit + '<br />' + tile.number + '</span>';
+                        html = html + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.number + '.png" /></span>';
                     }
                 }
+                html += '</span>';
             }
             document.getElementById('HandTiles').innerHTML = html;
         }
