@@ -3,96 +3,110 @@
 <head>
     <meta charset="utf-8" />
     <title>Riichi Mahjong Pointer</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div id="PageSelectCombinaisonType" style="display: none;">
-        <input type="button" value="Pair" onclick="selectCombinaisonType('pair')" />
-        <input type="button" value="Pon" onclick="selectCombinaisonType('pon')" />
-        <input type="button" value="Kan" onclick="selectCombinaisonType('kan')" />
-        <input type="button" value="Chii" onclick="selectCombinaisonType('chii')" />
-    </div>
-    
-    <div id="PageSelectTileSuit" style="display: none;">
-        <div id="TileSuitForChii">
-            <input type="button" value="Dot" onclick="selectTileSuit('dot')" />
-            <input type="button" value="Bamboo" onclick="selectTileSuit('bamboo')" />
-            <input type="button" value="Character" onclick="selectTileSuit('character')" />
-        </div>
-        <div id="TileSuitForNonChii">
-            <input type="button" value="Dragon" onclick="selectTileSuit('dragon')" />
-            <input type="button" value="Wind" onclick="selectTileSuit('wind')" />
-            <input type="button" value="Dot" onclick="selectTileSuit('dot')" />
-            <input type="button" value="Bamboo" onclick="selectTileSuit('bamboo')" />
-            <input type="button" value="Character" onclick="selectTileSuit('character')" />
-        </div>        
-    </div>
-    
-    <div id="PageSelectTileValue" style="display: none;">
-        <div id="TileValueForDragon">
-            <input type="button" value="Green" onclick="selectTileValue('green')" />
-            <input type="button" value="Red" onclick="selectTileValue('red')" />
-            <input type="button" value="White" onclick="selectTileValue('white')" />
-        </div>
-        <div id="TileValueForWind">
-            <input type="button" value="East" onclick="selectTileValue('east')" />
-            <input type="button" value="South" onclick="selectTileValue('south')" />
-            <input type="button" value="West" onclick="selectTileValue('west')" />
-            <input type="button" value="North" onclick="selectTileValue('north')" />
-        </div>
-        <div id="TileValueForNumbered">
-            <input type="button" value="1" onclick="selectTileValue(1)" />
-            <input type="button" value="2" onclick="selectTileValue(2)" />
-            <input type="button" value="3" onclick="selectTileValue(3)" />
-            <input type="button" value="4" onclick="selectTileValue(4)" />
-            <input type="button" value="5" onclick="selectTileValue(5)" />
-            <input type="button" value="6" onclick="selectTileValue(6)" />
-            <input type="button" value="7" onclick="selectTileValue(7)" />
-            <input type="button" value="8" onclick="selectTileValue(8)" />
-            <input type="button" value="9" onclick="selectTileValue(9)" />
-        </div>
-        <div id="TileValueForChii">
-            <input type="button" value="1" onclick="selectTileValue(1)" />
-            <input type="button" value="2" onclick="selectTileValue(2)" />
-            <input type="button" value="3" onclick="selectTileValue(3)" />
-            <input type="button" value="4" onclick="selectTileValue(4)" />
-            <input type="button" value="5" onclick="selectTileValue(5)" />
-            <input type="button" value="6" onclick="selectTileValue(6)" />
-            <input type="button" value="7" onclick="selectTileValue(7)" />
-        </div>
-    </div>
-
-    <div id="PageMain">
+    <div id="layout">
         <h1>Riichi Mahjong Pointer</h1>
-
-        <div style="margin: 10px;">
-            <label>Prevalent wind: </label>
-            <select id="PrevalentWind">
-                <option value="east">East</option>
-                <option value="south">South</option>
-                <option value="west">West</option>
-                <option value="north">North</option>
-            </select>
+    
+        <div id="PageSelectCombinaisonType" style="display: none;">
+            <h2>Select the combinaison type to add to your hand</h2>
             
-            <label>Seat wind: </label>
-            <select id="SeatWind">
-                <option value="east">East</option>
-                <option value="south">South</option>
-                <option value="west">West</option>
-                <option value="north">North</option>
-            </select>
+            <input type="button" value="Pair" onclick="selectCombinaisonType('pair')" />
+            <input type="button" value="Pon" onclick="selectCombinaisonType('pon')" />
+            <input type="button" value="Kan" onclick="selectCombinaisonType('kan')" />
+            <input type="button" value="Chii" onclick="selectCombinaisonType('chii')" />
         </div>
         
-        <div>
-            <input type="button" value="Add a combinaison to your hand" onclick="add()" />
+        <div id="PageSelectTileSuit" style="display: none;">
+            <h2>Select type tile type of the combinaison to add to your hand</h2>
+            
+            <div id="TileSuitForChii">
+                <input type="button" value="Dot" onclick="selectTileSuit('dot')" />
+                <input type="button" value="Bamboo" onclick="selectTileSuit('bamboo')" />
+                <input type="button" value="Character" onclick="selectTileSuit('character')" />
+            </div>
+            <div id="TileSuitForNonChii">
+                <input type="button" value="Dragon" onclick="selectTileSuit('dragon')" />
+                <input type="button" value="Wind" onclick="selectTileSuit('wind')" />
+                <input type="button" value="Dot" onclick="selectTileSuit('dot')" />
+                <input type="button" value="Bamboo" onclick="selectTileSuit('bamboo')" />
+                <input type="button" value="Character" onclick="selectTileSuit('character')" />
+            </div>        
+        </div>
+        
+        <div id="PageSelectTileValue" style="display: none;">
+            <h2>Select the value of the tile of the combinaison to add to your hand</h2>
+            
+            <div id="TileValueForDragon">
+                <input type="button" value="Green" onclick="selectTileValue('green')" />
+                <input type="button" value="Red" onclick="selectTileValue('red')" />
+                <input type="button" value="White" onclick="selectTileValue('white')" />
+            </div>
+            <div id="TileValueForWind">
+                <input type="button" value="East" onclick="selectTileValue('east')" />
+                <input type="button" value="South" onclick="selectTileValue('south')" />
+                <input type="button" value="West" onclick="selectTileValue('west')" />
+                <input type="button" value="North" onclick="selectTileValue('north')" />
+            </div>
+            <div id="TileValueForNumbered">
+                <input type="button" value="1" onclick="selectTileValue(1)" />
+                <input type="button" value="2" onclick="selectTileValue(2)" />
+                <input type="button" value="3" onclick="selectTileValue(3)" />
+                <input type="button" value="4" onclick="selectTileValue(4)" />
+                <input type="button" value="5" onclick="selectTileValue(5)" />
+                <input type="button" value="6" onclick="selectTileValue(6)" />
+                <input type="button" value="7" onclick="selectTileValue(7)" />
+                <input type="button" value="8" onclick="selectTileValue(8)" />
+                <input type="button" value="9" onclick="selectTileValue(9)" />
+            </div>
+            <div id="TileValueForChii">
+                <input type="button" value="1" onclick="selectTileValue(1)" />
+                <input type="button" value="2" onclick="selectTileValue(2)" />
+                <input type="button" value="3" onclick="selectTileValue(3)" />
+                <input type="button" value="4" onclick="selectTileValue(4)" />
+                <input type="button" value="5" onclick="selectTileValue(5)" />
+                <input type="button" value="6" onclick="selectTileValue(6)" />
+                <input type="button" value="7" onclick="selectTileValue(7)" />
+            </div>
         </div>
 
-        <div><b>Your hands</b></div>
-        <div id="HandTiles" style="border: 1px solid #000; padding: 10px;"></div>
-       
-        <div style="margin: 10px;"><input type="button" value="Calculate hand points" onclick="refreshHandPoints()" /></div>
+        <div id="PageMain">
+            <h2>Your hands</h2>
+
+            <div style="margin: 10px 0;">
+                <label>Prevalent wind: </label>
+                <select id="PrevalentWind">
+                    <option value="east">East</option>
+                    <option value="south">South</option>
+                    <option value="west">West</option>
+                    <option value="north">North</option>
+                </select>
+                
+                <label>Seat wind: </label>
+                <select id="SeatWind">
+                    <option value="east">East</option>
+                    <option value="south">South</option>
+                    <option value="west">West</option>
+                    <option value="north">North</option>
+                </select>
+            </div>
+            
+            <div>
+                <input type="button" value="Add a combinaison to your hand" onclick="add()" />
+                <input type="button" value="Calculate hand points" onclick="refreshHandPoints()" />
+            </div>
+
+            <div id="HandTiles" class="box" style="min-height: 100px;"></div>
+        </div>
         
-        <div><b>Your points</b></div>
-        <div id="HandPoints" style="border: 1px solid #000; padding: 10px;"></div>
+        <div id="PageResult" style="display: none">
+            <h2>Your hand points</h2>
+            <div style="margin-bottom: 20px">
+                <input type="button" value="retour à la main" onclick="returnToMain()" />
+            </div>
+            <div id="HandPoints" class="box"></div>
+        </div>
     </div>
 
     <script src="src/tile-classes.js"></script>    
@@ -138,6 +152,11 @@
             }
             combinaisons.push(combinaison);
             refreshHandTiles();
+        }
+        
+        function returnToMain() {
+            document.getElementById('PageResult').style.display = 'none';
+            document.getElementById('PageMain').style.display = 'block';
         }
         
         function refreshHandTiles() {
@@ -200,6 +219,9 @@
             }
         
             document.getElementById('HandPoints').innerHTML = html;
+            
+            document.getElementById('PageMain').style.display = 'none';
+            document.getElementById('PageResult').style.display = 'block';
         }
         
         var addCombinaisonType = null;
