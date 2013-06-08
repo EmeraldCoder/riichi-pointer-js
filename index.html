@@ -233,15 +233,18 @@
             
             for (var i = 0; i < patterns.length; i++) {
                 var pattern = patterns[i];
-                result.push({ name: pattern.name, value: pattern.checker.check(hand) });
+                var checkResult = pattern.checker.check(hand);
+                if (checkResult > 0) {
+                    result.push({ name: pattern.checker.japaneseName + ' (' + pattern.checker.englishName + ')', value: checkResult });
+                }
             }
             
             var html = '';
 
             html += '<table>';
-            html += '<tr><thead><th>Combinaison name</th><th>Value</th></thead><tbody>';
+            html += '<tr><thead><th>Combinaison name</th><th>Han value</th></thead><tbody>';
             for (var i = 0; i < result.length; i++) {
-                html += '<tr><td>' + result[i].name + '</td><td>' + result[i].value + '</td></tr>';
+                html += '<tr><td>' + result[i].name + '</td><td align="center">' + result[i].value + '</td></tr>';
             }
             html += '</tbody></table>';
         

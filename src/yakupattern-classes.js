@@ -13,6 +13,9 @@ function YakuPattern() {}
 function TanyaouChuu() {
     YakuPattern.call(this);
     
+    this.japaneseName = 'Tanyaou Chuu';
+    this.englishName = 'All Simples';
+    
     this.check = function(hand) {
         for (var i = 0; i < hand.combinaisons.length; i++) {
             for (var j = 0; j < hand.combinaisons[i].tiles.length; j++) {
@@ -35,6 +38,9 @@ TanyaouChuu.prototype.constructor = TanyaouChuu;
  */
 function Honitsu() {
     YakuPattern.call(this);
+    
+    this.japaneseName = 'Honitsu';
+    this.englishName = 'Half Flush';
     
     this.check = function(hand) {
         var nbHonorTile = 0;
@@ -77,6 +83,9 @@ Honitsu.prototype.constructor = Honitsu;
 function Chinitsu() {
     YakuPattern.call(this);
     
+    this.japaneseName = 'Chinitsu';
+    this.englishName = 'Full Flush';
+    
     this.check = function(hand) {
         var suit = null;
         for (var i = 0; i < hand.combinaisons.length; i ++) {
@@ -110,6 +119,9 @@ Chinitsu.prototype.constructor = Chinitsu;
 function Honroutou() {
     YakuPattern.call(this);
     
+    this.japaneseName = 'Honroutou';
+    this.englishName = 'All terminals & honors';
+    
     this.check = function(hand) {
         for (var i = 0; i < hand.combinaisons.length; i ++) {
             for (var j = 0; j < hand.combinaisons[i].tiles.length; j++) {
@@ -132,6 +144,9 @@ Honroutou.prototype.constructor = Honroutou;
  */
 function Iipeikou() {
     YakuPattern.call(this);
+    
+    this.japaneseName = 'Iipeikou';
+    this.englishName = 'Pure Double Chii';
     
     this.check = function(hand) {
         if (hand.openCombinaisons.length > 0) return 0;
@@ -164,6 +179,9 @@ Iipeikou.prototype.constructor = Iipeikou;
  */
 function SanShokuDoujun() {
     YakuPattern.call(this);
+    
+    this.japaneseName = 'San Shoku Doujun';
+    this.englishName = 'Mixed Triple Chii';
     
     this.check = function(hand) {
         var storedChiis = {};
@@ -205,6 +223,9 @@ SanShokuDoujun.prototype.construction = SanShokuDoujun;
 function Itsu() {
     YakuPattern.call(this);
     
+    this.japaneseName = 'Itsu';
+    this.englishName = 'Pure Straight';
+    
     this.check = function(hand) {
         var storedChiis = {};
         for (var i = 0; i < hand.combinaisons.length; i++) {
@@ -244,6 +265,9 @@ Itsu.prototype.constructor = Itsu;
  */
 function Chanta() {
     YakuPattern.call(this);
+    
+    this.japaneseName = 'Chanta';
+    this.englishName = 'Outside Hand';
 
     this.check = function(hand) {
         var nbChii = 0;
@@ -281,6 +305,9 @@ Chanta.prototype.constructor = Chanta;
  */
 function ChiiToitsu() {
     YakuPattern.call(this);
+    
+    this.japaneseName = 'Chii Toitsu';
+    this.englishName = 'Seven Pairs';
 
     this.check = function(hand) {
         var nbPair = 0;
@@ -307,6 +334,9 @@ ChiiToitsu.prototype.constructor = ChiiToitsu;
  */
 function SanShokuDokou() {
     YakuPattern.call(this);
+    
+    this.japaneseName = 'San Shoku Dokou';
+    this.englishName = 'Triple Pon';
 
     this.check = function(hand) {
         var storedPons = {};
@@ -336,6 +366,9 @@ SanShokuDokou.prototype.constructor = SanShokuDokou;
  */
 function ToiToiHou() {
     YakuPattern.call(this);
+    
+    this.japaneseName = 'Toi-Toi Hou';
+    this.englishName = 'All Pon';
 
     this.check = function(hand) {
         var nbPon = 0;
@@ -362,6 +395,9 @@ ToiToiHou.prototype.constructor = ToiToiHou;
  */
 function ShouSangen() {
     YakuPattern.call(this);
+    
+    this.japaneseName = 'Shou Sangen';
+    this.englishName = 'Little Three Dragons';
 
     this.check = function(hand) {
         var nbDragonPair = 0;
@@ -395,6 +431,9 @@ ShouSangen.prototype.constructor = ShouSangen;
 function RyanPeikou() {
     YakuPattern.call(this);
     
+    this.japaneseName = 'Ryan Peikou';
+    this.englishName = 'Twice Pure Double Chii';
+    
     this.check = function(hand) {
         if (hand.openCombinaisons.length > 0) return 0;
     
@@ -426,6 +465,9 @@ RyanPeikou.prototype.constructor = RyanPeikou;
  */
 function JunchanTaiyai() {
     YakuPattern.call(this);
+    
+    this.japaneseName = 'Junchan Taiyai';
+    this.englishName = 'Terminals in all sets';
     
     this.check = function(hand) {
         var nbChii = 0;
@@ -459,6 +501,9 @@ JunchanTaiyai.prototype.constructor = JunchanTaiyai;
 function FanpaiSeatWind() {
     YakuPattern.call(this);
     
+    this.japaneseName = 'Fanpai';
+    this.englishName = 'Seat Wind';
+    
     this.check = function(hand) {
         for (var i = 0; i < hand.combinaisons.length; i++) {
             var combinaison = hand.combinaisons[i];
@@ -483,6 +528,9 @@ FanpaiSeatWind.prototype.constructor = FanpaiSeatWind;
 function FanpaiRoundWind() {
     YakuPattern.call(this);
     
+    this.japaneseName = 'Fanpai';
+    this.englishName = 'Round Wind';
+    
     this.check = function(hand) {
         for (var i = 0; i < hand.combinaisons.length; i++) {
             var combinaison = hand.combinaisons[i];
@@ -506,6 +554,9 @@ FanpaiRoundWind.prototype.constructor = FanpaiRoundWind;
  */
 function FanpaiDragonPon() {
     YakuPattern.call(this);
+    
+    this.japaneseName = 'Fanpai';
+    this.englishName = 'Dragon Pon';
     
     this.check = function(hand) {
         var nbDragonPon = 0;
