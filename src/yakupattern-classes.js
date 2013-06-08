@@ -54,7 +54,11 @@ function Honitsu() {
             }
         }
         if (nbHonorTile > 0) {
-            return 3;
+            if (hand.openCombinaisons.length > 0) {
+                return 2;
+            } else {
+                return 3;
+            }
         } else {
             return 0;
         }
@@ -86,7 +90,11 @@ function Chinitsu() {
                 }
             }
         }
-        return 6;
+        if (hand.openCombinaisons.length > 0) {
+            return 5;
+        } else {
+            return 6;
+        }
     };
 }
 Chinitsu.prototype = new YakuPattern();
@@ -126,6 +134,8 @@ function Iipeikou() {
     YakuPattern.call(this);
     
     this.check = function(hand) {
+        if (hand.openCombinaisons.length > 0) return 0;
+        
         var storedChiis = [];
         for (var i = 0; i < hand.combinaisons.length; i++) {
             var combinaison = hand.combinaisons[i];
@@ -170,7 +180,13 @@ function SanShokuDoujun() {
                 
                 chii[tile.suit]++;
                 
-                if (chii.dot && chii.bamboo && chii.character) return 2;
+                if (chii.dot && chii.bamboo && chii.character) {
+                    if (hand.openCombinaisons.length > 0) {
+                        return 1;
+                    } else {
+                        return 2;
+                    }
+                }
             }
         }
         return 0;
@@ -204,7 +220,13 @@ function Itsu() {
                 
                 chii[tile.number]++;
                 
-                if (chii[1] && chii[4] && chii[7]) return 2;
+                if (chii[1] && chii[4] && chii[7]) {
+                    if (hand.openCombinaisons.length > 0) {
+                        return 1;
+                    } else {
+                        return 2;
+                    }
+                }
             }
         }
         return 0;
@@ -237,7 +259,11 @@ function Chanta() {
             if (nbTerminalOrHonor == 0) return 0;
         }
         if (nbChii > 0) {
-            return 2;
+            if (hand.openCombinaisons.length > 0) {
+                return 1;
+            } else {
+                return 2;
+            }
         } else {
             return 0;
         }
@@ -370,6 +396,8 @@ function RyanPeikou() {
     YakuPattern.call(this);
     
     this.check = function(hand) {
+        if (hand.openCombinaisons.length > 0) return 0;
+    
         var chiis = {};
         var nbPairOfChii = 0;
         for (var i = 0; i < hand.combinaisons.length; i++) {

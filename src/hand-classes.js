@@ -1,12 +1,15 @@
 /**
  * Hand class
  *
- * param Array<HandCombinaison> combinaisons
+ * param Array<HandCombinaison> concealedCombinaisons
+ * param Array<HandCombinaison> openCombinaisons
  * param String seatWind
  * param String roundWind
  */
-function Hand(combinaisons, seatWind, roundWind) {
-    this.combinaisons = combinaisons; // array of HandCombinaison
+function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind) {
+    this.concealedCombinaisons = concealedCombinaisons; // array of HandCombinaison
+    this.openCombinaisons = openCombinaisons; // array of HandCombinaison
+    this.combinaisons = Array.concat(this.concealedCombinaisons, this.openCombinaisons);
     this.seatWind = seatWind;
     this.roundWind = roundWind;
 }

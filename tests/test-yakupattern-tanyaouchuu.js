@@ -9,7 +9,7 @@ function TestYakuPatternTanyaouChuu() {
             new Chii(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("tanyaou chuu (all simples) valid hand", function(){
             ok(tanyaouChuu.check(validHand) === 1);
         });
@@ -20,7 +20,7 @@ function TestYakuPatternTanyaouChuu() {
             new Chii(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),
             new Pon(new DragonTile("red")),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("tanyaou chuu (all simples) invalid hand with honor tiles", function(){
             ok(tanyaouChuu.check(invalidHandWithHonorTile) === 0);
         });
@@ -31,7 +31,7 @@ function TestYakuPatternTanyaouChuu() {
             new Chii(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("tanyaou chuu (all simples) invalid hand with terminal tile", function(){
             ok(tanyaouChuu.check(invalidHandWithTerminalTile) === 0);
         });

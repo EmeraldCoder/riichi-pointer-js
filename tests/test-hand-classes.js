@@ -4,21 +4,29 @@ function TestHandClasses() {
     this.runTests = function() {
     
         // hand test
-        var handCombinaisons = [
+        var concealedHandCombinaisons = [
             new Pon(new DragonTile('white')),
             new Pon(new DotTile(6)),
             new Kan(new CharacterTile(9)),
             new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
             new Pair(new WindTile('east'))
         ];
-        var hand = new Hand(handCombinaisons, 'east', 'north');
+        var openHandCombinaisons = [];
+        var hand = new Hand(concealedHandCombinaisons, openHandCombinaisons, 'east', 'north');
+        test('hand has five concealed hand combinaison', function() {
+            ok(hand.concealedCombinaisons.length === 5);
+        });
+        test('hand has zero open hand combinaison', function() {
+            ok(hand.openCombinaisons.length === 0);
+        });
         test('hand has five hand combinaison', function() {
-            ok(hand.combinaisons.length == 5);
+            ok(hand.combinaisons.length === 5);
         });
         test('hand has valid combinaison', function() {
-            ok(hand.combinaisons == handCombinaisons);
-            ok(hand.seatWind == 'east');
-            ok(hand.roundWind == 'north');
+            ok(hand.concealedCombinaisons === concealedHandCombinaisons);
+            ok(hand.openCombinaisons === openHandCombinaisons);
+            ok(hand.seatWind === 'east');
+            ok(hand.roundWind === 'north');
         });
         
         // pair test

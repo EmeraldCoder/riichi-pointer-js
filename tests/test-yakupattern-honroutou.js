@@ -9,7 +9,7 @@ function TestYakuPatternHonroutou() {
             new Pon(new WindTile('east')),
             new Pon(new DotTile(1)),
             new Pair(new BambooTile(9))
-        ]);
+        ], []);
         test("honroutou (all terminals & honors) valid hand", function(){
             ok(honroutou.check(validHand) === 2);
         });
@@ -20,7 +20,7 @@ function TestYakuPatternHonroutou() {
             new Pon(new WindTile('east')),
             new Pon(new DotTile(1)),
             new Pair(new BambooTile(5))
-        ]);
+        ], []);
         test("honroutou (all terminals & honors) invvalid hand with tiles not honor or terminal", function(){
             ok(honroutou.check(invalidHandWithTileNotHonorOrTerminal) === 0);
         });

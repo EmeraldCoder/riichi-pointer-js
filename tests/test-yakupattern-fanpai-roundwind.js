@@ -10,7 +10,7 @@ function TestYakuPatternFanpaiRoundWind() {
             new Pon(new BambooTile(4)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ], 'west', 'north');
+        ], [], 'west', 'north');
         test("fanpai (round wind) valid hand", function(){
             ok(fanpaiRoundWind.check(validHand) === 1);
         });
@@ -21,7 +21,7 @@ function TestYakuPatternFanpaiRoundWind() {
             new Pon(new BambooTile(4)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ], 'west', 'north');
+        ], [], 'west', 'north');
         test("fanpai (round wind) valid hand with kan", function(){
             ok(fanpaiRoundWind.check(validHandWithKan) === 1);
         });
@@ -32,7 +32,7 @@ function TestYakuPatternFanpaiRoundWind() {
             new Pon(new BambooTile(4)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ], 'west', 'north');
+        ], [], 'west', 'north');
         test("fanpai (round wind) invalid hand with wrong wind pon", function(){
             ok(fanpaiRoundWind.check(invalidHandWithWrongWindPon) === 0);
         });
@@ -43,7 +43,7 @@ function TestYakuPatternFanpaiRoundWind() {
             new Pon(new BambooTile(4)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ], 'west', 'north');
+        ], [], 'west', 'north');
         test("fanpai (round wind) invalid hand without wind pon", function(){
             ok(fanpaiRoundWind.check(invalidHandWithoutWindPon) === 0);
         });

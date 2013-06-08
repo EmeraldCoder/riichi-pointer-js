@@ -10,9 +10,22 @@ function TestYakuPatternIipeikou() {
             new Chii(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("iipeikou (pure double chii) valid hand", function(){
             ok(iipeikou.check(validHand) === 1);
+        });
+        
+        // test with a open hand
+        var invalidOpenHand = new Hand([
+            new Chii(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
+            new Chii(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
+            new Chii(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5))
+        ], [
+            new Pon(new DotTile(3)),
+            new Pair(new DotTile(7))
+        ]);
+        test("iipeikou (pure double chii) invalid with a open hand", function(){
+            ok(iipeikou.check(invalidOpenHand) === 0);
         });
         
         // test with different number
@@ -22,7 +35,7 @@ function TestYakuPatternIipeikou() {
             new Chii(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("iipeikou (pure double chii) invalid hand without two identical chii", function(){
             ok(iipeikou.check(invalidHandWithoutTwoIdenticalChii1) === 0);
         });
@@ -34,7 +47,7 @@ function TestYakuPatternIipeikou() {
             new Chii(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("iipeikou (pure double chii) invalid hand without two identical chii", function(){
             ok(iipeikou.check(invalidHandWithoutTwoIdenticalChii2) === 0);
         });

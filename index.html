@@ -93,11 +93,13 @@
             </div>
             
             <div>
-                <input type="button" value="Add a combinaison to your hand" onclick="add()" />
+                <input type="button" value="Add a combinaison to your concealed hand" onclick="add(true)" />
+                <input type="button" value="Add a combinaison to your open hand" onclick="add(false)" />
                 <input type="button" value="Calculate hand points" onclick="refreshHandPoints()" />
             </div>
 
-            <div id="HandTiles" class="box" style="min-height: 100px;"></div>
+            <div id="ConcealedHandTiles" class="box" style="min-height: 100px;"></div>
+            <div id="OpenHandTiles" class="box" style="min-height: 100px;"></div>
         </div>
         
         <div id="PageResult" style="display: none">
@@ -113,7 +115,8 @@
     <script src="src/hand-classes.js"></script>
     <script src="src/yakupattern-classes.js"></script>
     <script>
-        var combinaisons = [];
+        var concealedCombinaisons = [];
+        var openCombinaisons = [];
         
         function tileFactory(suit, value) {
             var tile = null;
@@ -133,7 +136,7 @@
             return tile;
         }
         
-        function addCombinaison(combinaisonType, suit, value) {
+        function addCombinaison(combinaisonIsConcealed, combinaisonType, suit, value) {
             var combinaison;
             if (combinaisonType === 'pair') {
                 combinaison = new Pair(tileFactory(suit, value));
@@ -150,7 +153,11 @@
             } else {
                 alert('combinaisonType not supported');
             }
-            combinaisons.push(combinaison);
+            if (combinaisonIsConcealed) {
+                concealedCombinaisons.push(combinaison);    
+            } else {
+                openCombinaisons.push(combinaison);
+            }
             refreshHandTiles();
         }
         
@@ -160,27 +167,44 @@
         }
         
         function refreshHandTiles() {
-            var html = '';
-            for (var i = 0; i < combinaisons.length; i++) {
-                html += '<span style="display: inline-block; margin-right: 10px;">';
-                for (var j = 0; j < combinaisons[i].tiles.length; j++) {
-                    var tile = combinaisons[i].tiles[j];
+            var concealedHtml = '';
+            var openHtml = '';
+            for (var i = 0; i < concealedCombinaisons.length; i++) {
+                concealedHtml += '<span style="display: inline-block; margin-right: 10px;">';
+                for (var j = 0; j < concealedCombinaisons[i].tiles.length; j++) {
+                    var tile = concealedCombinaisons[i].tiles[j];
                     if (tile instanceof DragonTile) {
-                        html = html + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.color + '.png" /></span>';
+                        concealedHtml = concealedHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.color + '.png" /></span>';
                     } else if (tile instanceof WindTile) {
-                        html = html + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.direction + '.png" /></span>';
+                        concealedHtml = concealedHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.direction + '.png" /></span>';
                     } else {
-                        html = html + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.number + '.png" /></span>';
+                        concealedHtml = concealedHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.number + '.png" /></span>';
                     }
                 }
-                html += '</span>';
+                concealedHtml += '</span>';
             }
-            document.getElementById('HandTiles').innerHTML = html;
+            for (var i = 0; i < openCombinaisons.length; i++) {
+                openHtml += '<span style="display: inline-block; margin-right: 10px;">';
+                for (var j = 0; j < openCombinaisons[i].tiles.length; j++) {
+                    var tile = openCombinaisons[i].tiles[j];
+                    if (tile instanceof DragonTile) {
+                        openHtml = openHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.color + '.png" /></span>';
+                    } else if (tile instanceof WindTile) {
+                        openHtml = openHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.direction + '.png" /></span>';
+                    } else {
+                        openHtml = openHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.number + '.png" /></span>';
+                    }
+                }
+                openHtml += '</span>';
+            }
+            document.getElementById('ConcealedHandTiles').innerHTML = concealedHtml;
+            document.getElementById('OpenHandTiles').innerHTML = openHtml;
         }
         
         function refreshHandPoints() {
             var hand = new Hand(
-                combinaisons, 
+                concealedCombinaisons, 
+                openCombinaisons,
                 document.getElementById('SeatWind').value,
                 document.getElementById('PrevalentWind').value
             );
@@ -227,10 +251,12 @@
             document.getElementById('PageResult').style.display = 'block';
         }
         
+        var addCombinaisonIsConcealed = null;
         var addCombinaisonType = null;
         var addTileSuit = null;
         var addTileValue = null;
-        function add () {
+        function add (isConcealed) {
+            addCombinaisonIsConcealed = isConcealed;
             document.getElementById('PageMain').style.display = 'none';
             document.getElementById('PageSelectCombinaisonType').style.display = 'block';
         }
@@ -270,7 +296,7 @@
         }
         function selectTileValue (value) {
             addTileValue = value;
-            addCombinaison(addCombinaisonType, addTileSuit, addTileValue);
+            addCombinaison(addCombinaisonIsConcealed, addCombinaisonType, addTileSuit, addTileValue);
             document.getElementById('PageSelectTileValue').style.display = 'none';
             document.getElementById('PageMain').style.display = 'block';
         }

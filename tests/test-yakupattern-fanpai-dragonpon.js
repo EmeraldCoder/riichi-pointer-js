@@ -10,7 +10,7 @@ function TestYakuPatternFanpaiDragonPon() {
             new Pon(new BambooTile(4)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("fanpai (dragon pon) valid hand", function(){
             ok(fanpaiDragonPon.check(validHand) === 1);
         });
@@ -21,7 +21,7 @@ function TestYakuPatternFanpaiDragonPon() {
             new Pon(new BambooTile(4)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("fanpai (dragon pon) valid hand with two dragon pon", function(){
             ok(fanpaiDragonPon.check(validHandWithTwoDragonPon) === 2);
         });
@@ -32,7 +32,7 @@ function TestYakuPatternFanpaiDragonPon() {
             new Pon(new DragonTile('green')),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("fanpai (dragon pon) valid hand with three dragon pon", function(){
             ok(fanpaiDragonPon.check(validHandWithThreeDragonPon) === 3);
         });
@@ -43,7 +43,7 @@ function TestYakuPatternFanpaiDragonPon() {
             new Pon(new BambooTile(4)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("fanpai (dragon pon) valid hand with kan", function(){
             ok(fanpaiDragonPon.check(validHandWithKan) === 1);
         });
@@ -54,7 +54,7 @@ function TestYakuPatternFanpaiDragonPon() {
             new Pon(new BambooTile(4)),
             new Pon(new DotTile(3)),
             new Pair(new DotTile(7))
-        ]);
+        ], []);
         test("fanpai (dragon pon) invalid hand without dragon pon", function(){
             ok(fanpaiDragonPon.check(invalidHandWithDragonPon) === 0);
         });

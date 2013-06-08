@@ -10,7 +10,7 @@ function TestYakuPatternShouSangen() {
             new Pair(new DragonTile("white")),
             new Pon(new BambooTile(1)),
             new Pon(new BambooTile(2))
-        ]);
+        ], []);
         test("shou sangen (little three dragons) valid hand", function(){
             ok(shouSangen.check(validHand) === 2);
         });
@@ -21,7 +21,7 @@ function TestYakuPatternShouSangen() {
             new Pair(new DragonTile("white")),
             new Pon(new BambooTile(1)),
             new Pon(new BambooTile(2))
-        ]);
+        ], []);
         test("shou sangen (little three dragons) valid hand with kan", function(){
             ok(shouSangen.check(validHandWithKan) === 2);
         });
@@ -32,7 +32,7 @@ function TestYakuPatternShouSangen() {
             new Pair(new WindTile("east")),
             new Pon(new BambooTile(1)),
             new Pon(new BambooTile(2))
-        ]);
+        ], []);
         test("shou sangen (little three dragons) invalid hand without dragon pair", function(){
             ok(shouSangen.check(invalidHandWithoutDragonPair) === 0);
         });
@@ -43,7 +43,7 @@ function TestYakuPatternShouSangen() {
             new Pair(new DragonTile("white")),
             new Pon(new BambooTile(1)),
             new Pon(new BambooTile(2))
-        ]);
+        ], []);
         test("shou sangen (little three dragons) invalid hand without two dragon pon", function(){
             ok(shouSangen.check(invalidHandWithoutTwoDragonPon) === 0);
         });
