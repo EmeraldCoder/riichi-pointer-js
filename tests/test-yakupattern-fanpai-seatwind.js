@@ -12,7 +12,7 @@ function TestYakuPatternFanpaiSeatWind() {
             new Pair(new DotTile(7))
         ], 'west');
         test("fanpai (seat wind) valid hand", function(){
-            ok(fanpaiSeatWind.check(validHand));
+            ok(fanpaiSeatWind.check(validHand) === 1);
         });
         
         var validHandWithKan = new Hand([
@@ -23,7 +23,7 @@ function TestYakuPatternFanpaiSeatWind() {
             new Pair(new DotTile(7))
         ], 'west');
         test("fanpai (seat wind) valid hand with kan", function(){
-            ok(fanpaiSeatWind.check(validHandWithKan));
+            ok(fanpaiSeatWind.check(validHandWithKan) === 1);
         });
         
         var invalidHandWithWrongWindPon = new Hand([
@@ -34,7 +34,7 @@ function TestYakuPatternFanpaiSeatWind() {
             new Pair(new DotTile(7))
         ], 'west');
         test("fanpai (seat wind) invalid hand with wrong wind pon", function(){
-            ok(fanpaiSeatWind.check(invalidHandWithWrongWindPon) == false);
+            ok(fanpaiSeatWind.check(invalidHandWithWrongWindPon) === 0);
         });
         
         var invalidHandWithoutWindPon = new Hand([
@@ -45,7 +45,7 @@ function TestYakuPatternFanpaiSeatWind() {
             new Pair(new DotTile(7))
         ], 'west');
         test("fanpai (seat wind) invalid hand without wind pon", function(){
-            ok(fanpaiSeatWind.check(invalidHandWithoutWindPon) == false);
+            ok(fanpaiSeatWind.check(invalidHandWithoutWindPon) === 0);
         });
         
     };

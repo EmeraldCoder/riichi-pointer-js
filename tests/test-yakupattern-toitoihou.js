@@ -12,7 +12,7 @@ function TestYakuPatternToiToiHou() {
             new Pair(new DotTile(7))
         ]);
         test("toi-toi hou (all pons) valid hand", function(){
-            ok(toiToiHou.check(validHand));
+            ok(toiToiHou.check(validHand) === 2);
         });
 
         var validHandWithKan = new Hand([
@@ -23,7 +23,7 @@ function TestYakuPatternToiToiHou() {
             new Pair(new DotTile(7))
         ]);
         test("toi-toi hou (all pons) valid hand with kan", function(){
-            ok(toiToiHou.check(validHandWithKan));
+            ok(toiToiHou.check(validHandWithKan) === 2);
         });
 
         var invalidHandWithoutFourPon = new Hand([
@@ -34,7 +34,7 @@ function TestYakuPatternToiToiHou() {
             new Pair(new DotTile(7))
         ]);
         test("toi-toi hou (all pons) invalid hand without four pon", function(){
-            ok(toiToiHou.check(invalidHandWithoutFourPon) == false);
+            ok(toiToiHou.check(invalidHandWithoutFourPon) === 0);
         });
 
         

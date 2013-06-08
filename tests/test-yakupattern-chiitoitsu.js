@@ -14,7 +14,7 @@ function TestYakuPatternChiiToitsu() {
             new Pair(new BambooTile(7))
         ]);
         test("chii toitsu (seven pairs) valid hand", function(){
-            ok(chiiToitsu.check(validHand));
+            ok(chiiToitsu.check(validHand) === 2);
         });
 
         var invalidHandWithoutSevenPairs = new Hand([
@@ -27,7 +27,7 @@ function TestYakuPatternChiiToitsu() {
             new Pon(new BambooTile(7))
         ]);
         test("chii toitsu (seven pairs) invalid hand without seven pairs", function(){
-            ok(chiiToitsu.check(invalidHandWithoutSevenPairs) == false);
+            ok(chiiToitsu.check(invalidHandWithoutSevenPairs) === 0);
         });
         
     };

@@ -12,7 +12,7 @@ function TestYakuPatternChanta() {
             new Pair(new DotTile(1))
         ]);
         test("chanta (outside hand) valid hand", function(){
-            ok(chanta.check(validHand));
+            ok(chanta.check(validHand) === 2);
         });
         
         var invalidHandWithoutChii = new Hand([
@@ -23,7 +23,7 @@ function TestYakuPatternChanta() {
             new Pair(new DotTile(9))
         ]);
         test("chanta (outside hand) invalid without one chii", function(){
-            ok(chanta.check(invalidHandWithoutChii) == false);
+            ok(chanta.check(invalidHandWithoutChii) === 0);
         });
 
         // check for terminals
@@ -35,7 +35,7 @@ function TestYakuPatternChanta() {
             new Pair(new DotTile(1))
         ]);
         test("chanta (outside hand) invalid hand with set without terminal or honor", function(){
-            ok(chanta.check(invalidHandWithSetWithoutTerminalOrHonor) == false);
+            ok(chanta.check(invalidHandWithSetWithoutTerminalOrHonor) === 0);
         });
 
         // check of honor tiles
@@ -47,7 +47,7 @@ function TestYakuPatternChanta() {
             new Pair(new DotTile(1))
         ]);
         test("chanta (outside hand) invalid hand with set without terminal or honor", function(){
-            ok(chanta.check(invalidHandWithSetWithoutTerminalOrHonor2) == false);
+            ok(chanta.check(invalidHandWithSetWithoutTerminalOrHonor2) === 0);
         });
 
     };

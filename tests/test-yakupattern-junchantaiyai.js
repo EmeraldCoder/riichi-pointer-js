@@ -12,7 +12,7 @@ function TestYakuPatternJunchanTaiyai() {
             new Pair(new CharacterTile(1))
         ]);
         test("junchan taiyai (terminals in all sets) valid hand", function(){
-            ok(junchanTaiyai.check(validHand));
+            ok(junchanTaiyai.check(validHand) === 3);
         });
         
         var invalidHandWithoutChii = new Hand([
@@ -23,7 +23,7 @@ function TestYakuPatternJunchanTaiyai() {
             new Pair(new CharacterTile(1))
         ]);
         test("junchan taiyai (terminals in all sets) invalid hand without chii", function(){
-            ok(junchanTaiyai.check(invalidHandWithoutChii) == false);
+            ok(junchanTaiyai.check(invalidHandWithoutChii) === 0);
         });
         
         var invalidHandWithSetWithoutTerminal = new Hand([
@@ -34,7 +34,7 @@ function TestYakuPatternJunchanTaiyai() {
             new Pair(new CharacterTile(1))
         ]);
         test("junchan taiyai (terminals in all sets) with set without terminal", function(){
-            ok(junchanTaiyai.check(invalidHandWithSetWithoutTerminal) == false);
+            ok(junchanTaiyai.check(invalidHandWithSetWithoutTerminal) === 0);
         });
         
     };

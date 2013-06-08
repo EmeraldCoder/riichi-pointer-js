@@ -12,7 +12,7 @@ function TestYakuPatternSanShokuDokou() {
             new Pair(new DotTile(7))
         ]);
         test("san shoku dokou (triple pon) valid hand", function(){
-            ok(sanShokuDokou.check(validHand));
+            ok(sanShokuDokou.check(validHand) === 2);
         });
 
         var invalidHandWithoutThreeSamePon = new Hand([
@@ -23,7 +23,7 @@ function TestYakuPatternSanShokuDokou() {
             new Pair( new DotTile(7))
         ]);
         test("san shoku dokou (triple pon) invalid hand without three same pon", function() {
-            ok(sanShokuDokou.check(invalidHandWithoutThreeSamePon) == false);
+            ok(sanShokuDokou.check(invalidHandWithoutThreeSamePon) === 0);
         });
         
     };

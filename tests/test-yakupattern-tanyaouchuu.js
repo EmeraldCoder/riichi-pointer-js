@@ -11,7 +11,7 @@ function TestYakuPatternTanyaouChuu() {
             new Pair(new DotTile(7))
         ]);
         test("tanyaou chuu (all simples) valid hand", function(){
-            ok(tanyaouChuu.check(validHand));
+            ok(tanyaouChuu.check(validHand) === 1);
         });
         
         var invalidHandWithHonorTile = new Hand([
@@ -22,7 +22,7 @@ function TestYakuPatternTanyaouChuu() {
             new Pair(new DotTile(7))
         ]);
         test("tanyaou chuu (all simples) invalid hand with honor tiles", function(){
-            ok(tanyaouChuu.check(invalidHandWithHonorTile) == false);
+            ok(tanyaouChuu.check(invalidHandWithHonorTile) === 0);
         });
         
         var invalidHandWithTerminalTile = new Hand([
@@ -33,7 +33,7 @@ function TestYakuPatternTanyaouChuu() {
             new Pair(new DotTile(7))
         ]);
         test("tanyaou chuu (all simples) invalid hand with terminal tile", function(){
-            ok(tanyaouChuu.check(invalidHandWithTerminalTile) == false);
+            ok(tanyaouChuu.check(invalidHandWithTerminalTile) === 0);
         });
     };
 }

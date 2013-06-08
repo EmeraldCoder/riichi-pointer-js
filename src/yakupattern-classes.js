@@ -5,7 +5,10 @@ function YakuPattern() {}
 
 /**
  * Tanyaou Chuu (all simples) yaku pattern
- * A concealed hand consisting only of suit tiles 2-8
+ * A hand consisting only of suit tiles 2-8 (without terminal or honor tiles)
+ * 
+ * Must be concealed : no (some rules say yes)
+ * Han : 1
  */
 function TanyaouChuu() {
     YakuPattern.call(this);
@@ -14,10 +17,10 @@ function TanyaouChuu() {
         for (var i = 0; i < hand.combinaisons.length; i++) {
             for (var j = 0; j < hand.combinaisons[i].tiles.length; j++) {
                 var tile = hand.combinaisons[i].tiles[j];
-                if (tile instanceof HonorTile || tile.isTerminal()) return false;
+                if (tile instanceof HonorTile || tile.isTerminal()) return 0;
             }
         }
-        return true;
+        return 1;
     };
 }
 TanyaouChuu.prototype = new YakuPattern();
@@ -26,6 +29,9 @@ TanyaouChuu.prototype.constructor = TanyaouChuu;
 /**
  * Honitsu (half flush) yaku pattern
  * A hand with tiles from only one suit plus honor tiles
+ *
+ * Must be concealed: no
+ * Han: 3 (concealed) / 2 (open)
  */
 function Honitsu() {
     YakuPattern.call(this);
@@ -42,12 +48,16 @@ function Honitsu() {
                     if (suit == null) {
                         suit = tile.suit;
                     } else if (suit != tile.suit) {
-                        return false;
+                        return 0;
                     }
                 }
             }
         }
-        return nbHonorTile > 0;
+        if (nbHonorTile > 0) {
+            return 3;
+        } else {
+            return 0;
+        }
     };
 }
 Honitsu.prototype = new YakuPattern();
@@ -55,7 +65,10 @@ Honitsu.prototype.constructor = Honitsu;
 
 /**
  * Chinitsu (full flush) yaku pattern
- * A hand with tile from only one suit and no honor tiles
+ * A hand with tiles from only one suit
+ *
+ * Must be concealed: no
+ * Han: 6 (concealed) / 5 (open)
  */
 function Chinitsu() {
     YakuPattern.call(this);
@@ -65,15 +78,15 @@ function Chinitsu() {
         for (var i = 0; i < hand.combinaisons.length; i ++) {
             for (var j = 0; j < hand.combinaisons[i].tiles.length; j++) {
                 var tile = hand.combinaisons[i].tiles[j];
-                if (tile instanceof HonorTile) return false;
+                if (tile instanceof HonorTile) return 0;
                 if (suit == null) {
                     suit = tile.suit;
                 } else if (suit != tile.suit) {
-                    return false;
+                    return 0;
                 }
             }
         }
-        return true;
+        return 6;
     };
 }
 Chinitsu.prototype = new YakuPattern();
@@ -82,6 +95,9 @@ Chinitsu.prototype.constructor = Chinitsu;
 /**
  * Honroutou (all terminals & honors) yaku pattern
  * A hand consisting of only terminals and honors
+ *
+ * Must be concealed: no
+ * Han: 2
  */
 function Honroutou() {
     YakuPattern.call(this);
@@ -90,10 +106,10 @@ function Honroutou() {
         for (var i = 0; i < hand.combinaisons.length; i ++) {
             for (var j = 0; j < hand.combinaisons[i].tiles.length; j++) {
                 var tile = hand.combinaisons[i].tiles[j];
-                if (! (tile instanceof HonorTile || tile.isTerminal())) return false; 
+                if (! (tile instanceof HonorTile || tile.isTerminal())) return 0; 
             }
         }
-        return true;
+        return 2;
     };
 }
 Honroutou.prototype = new YakuPattern();
@@ -102,6 +118,9 @@ Honroutou.prototype.constructor = Honroutou;
 /**
  * Iipeikou (pure double chii) yaku pattern
  * Two chiis of the same value and suit
+ *
+ * Must be concealed: yes
+ * Han: 1
  */
 function Iipeikou() {
     YakuPattern.call(this);
@@ -114,13 +133,13 @@ function Iipeikou() {
                 for (var j = 0; j < storedChiis.length; j++) {
                     if (storedChiis[j].tiles[0].suit == combinaison.tiles[0].suit &&
                         storedChiis[j].tiles[0].number == combinaison.tiles[0].number) {
-                            return true;
+                            return 1;
                     }
                 }
                 storedChiis.push(combinaison);
             }
         }
-        return false;
+        return 0;
     };
 }
 Iipeikou.prototype = new YakuPattern();
@@ -129,6 +148,9 @@ Iipeikou.prototype.constructor = Iipeikou;
 /**
  * San Shoku Doujun (mixed triple chii) yaku pattern
  * Three chiis of the same value, with one in each suit
+ *
+ * Must be concealed: no
+ * Han: 2 (concealed) / 1 (open)
  */
 function SanShokuDoujun() {
     YakuPattern.call(this);
@@ -148,10 +170,10 @@ function SanShokuDoujun() {
                 
                 chii[tile.suit]++;
                 
-                if (chii.dot && chii.bamboo && chii.character) return true;
+                if (chii.dot && chii.bamboo && chii.character) return 2;
             }
         }
-        return false;
+        return 0;
     };
 }
 SanShokuDoujun.prototype = new YakuPattern();
@@ -160,6 +182,9 @@ SanShokuDoujun.prototype.construction = SanShokuDoujun;
 /**
  * Itsu (pure straight) yaku pattern
  * Three consecutive chiis (1-9) in the same suit
+ *
+ * Must be concealed: no
+ * Han: 2 (concealed) / 1 (open)
  */
 function Itsu() {
     YakuPattern.call(this);
@@ -179,10 +204,10 @@ function Itsu() {
                 
                 chii[tile.number]++;
                 
-                if (chii[1] && chii[4] && chii[7]) return true;
+                if (chii[1] && chii[4] && chii[7]) return 2;
             }
         }
-        return false;
+        return 0;
     };
 }
 Itsu.prototype = new YakuPattern();
@@ -191,6 +216,9 @@ Itsu.prototype.constructor = Itsu;
 /**
  * Chanta (outside hand) yaku pattern
  * A hand where all sets contain a terminal or honor tile, and at least one of the sets is a chii.
+ * 
+ * Must be concealed: no
+ * Han: 2 (concealed) / 1 (open)
  */
 function Chanta() {
     YakuPattern.call(this);
@@ -206,9 +234,13 @@ function Chanta() {
                 var tile = combinaison.tiles[j];
                 if (tile instanceof HonorTile || tile.isTerminal()) nbTerminalOrHonor++;
             }
-            if (nbTerminalOrHonor == 0) return false;
+            if (nbTerminalOrHonor == 0) return 0;
         }
-        return nbChii > 0;
+        if (nbChii > 0) {
+            return 2;
+        } else {
+            return 0;
+        }
     }
 }
 Chanta.prototype = new YakuPattern();
@@ -217,6 +249,9 @@ Chanta.prototype.constructor = Chanta;
 /**
  * Chii Toitsu (seven pairs) yaku pattern
  * A hand consisting of seven pairs
+ *
+ * Must be concealed: yes
+ * Han: 2
  */
 function ChiiToitsu() {
     YakuPattern.call(this);
@@ -227,7 +262,11 @@ function ChiiToitsu() {
             var combinaison = hand.combinaisons[i];
             if (combinaison instanceof Pair) nbPair++;
         }
-        return nbPair == 7;
+        if (nbPair === 7) {
+            return 2;
+        } else {
+            return 0;
+        }
     }
 }
 ChiiToitsu.prototype = new YakuPattern();
@@ -236,6 +275,9 @@ ChiiToitsu.prototype.constructor = ChiiToitsu;
 /**
  * San Shoku Dokou (triple pon) yaku pattern
  * One pon or kan in each of the three suits, all having the same number.
+ *
+ * Must be concealed: no
+ * Han: 2
  */
 function SanShokuDokou() {
     YakuPattern.call(this);
@@ -249,11 +291,11 @@ function SanShokuDokou() {
                 if (tile instanceof NumberedTile) {
                     if (storedPons[tile.number] == undefined) storedPons[tile.number] = 0;
                     storedPons[tile.number]++;
-                    if (storedPons[tile.number] == 3) return true;
+                    if (storedPons[tile.number] == 3) return 2;
                 }
             }
         }
-        return false;
+        return 0;
     }
 }
 SanShokuDokou.prototype = new YakuPattern();
@@ -262,6 +304,9 @@ SanShokuDokou.prototype.constructor = SanShokuDokou;
 /*
  * Toi-Toi Hou (all pons) yaku pattern
  * A hand with four pons/kans and one pair.
+ * 
+ * Must be concealed: no
+ * Han: 2
  */
 function ToiToiHou() {
     YakuPattern.call(this);
@@ -272,15 +317,22 @@ function ToiToiHou() {
             var combinaison = hand.combinaisons[i];
             if (combinaison instanceof Pon || combinaison instanceof Kan) nbPon++;
         }
-        return nbPon >= 4;
+        if (nbPon >= 4) {
+            return 2;
+        } else {
+            return 0;
+        }
     };
 }
 ToiToiHou.prototype = new YakuPattern();
 ToiToiHou.prototype.constructor = ToiToiHou;
 
 /**
- * Shou Sangen (three little dragons) yaku pattern
+ * Shou Sangen (little three dragons) yaku pattern
  * Two pons/kans of dragons plus one pair of dragons.
+ *
+ * Must be concealed: no
+ * Han: 2
  */
 function ShouSangen() {
     YakuPattern.call(this);
@@ -296,7 +348,11 @@ function ShouSangen() {
                 if (combinaison.tiles[0] instanceof DragonTile) nbDragonPon++;
             }
         }
-        return nbDragonPair >= 1 && nbDragonPon >=2;
+        if (nbDragonPair >= 1 && nbDragonPon >=2) {
+            return 2;
+        } else {
+            return 0;
+        }
     };
 }
 ShouSangen.prototype = new YakuPattern();
@@ -305,6 +361,10 @@ ShouSangen.prototype.constructor = ShouSangen;
 /**
  * Ryan Peikou (twice pure double chiis) yaku pattern
  * Two pair of chiis, where each pair consists of two identical chiis.
+ *
+ * Must be concealed: yes
+ * Han: 3
+ *
  */
 function RyanPeikou() {
     YakuPattern.call(this);
@@ -319,7 +379,11 @@ function RyanPeikou() {
                 if (chiis[chiiKey] == undefined) chiis[chiiKey] = 0; else nbPairOfChii++;
             }
         }        
-        return nbPairOfChii == 2;
+        if (nbPairOfChii == 2) {
+            return 3;
+        } else {
+            return 0;
+        }
     };
 }
 RyanPeikou.prototype = new YakuPattern();
@@ -328,6 +392,9 @@ RyanPeikou.prototype.constructor = RyanPeikou;
 /**
  * Junchan Taiyai (terminals in all sets) yaku pattern
  * A hand with at least one chii and where all sets and the pair contains terminals
+ * 
+ * Must be concealed: no
+ * Han: 3 (concealed) / 2 (open)
  */
 function JunchanTaiyai() {
     YakuPattern.call(this);
@@ -342,9 +409,13 @@ function JunchanTaiyai() {
                 var tile = combinaison.tiles[j];
                 if (tile instanceof NumberedTile && tile.isTerminal()) nbTerminal++;
             }
-            if (nbTerminal == 0) return false;
+            if (nbTerminal == 0) return 0;
         }
-        return nbChii > 0;
+        if (nbChii > 0) {
+            return 3;
+        } else {
+            return 0;
+        }
     };
 }
 JunchanTaiyai.prototype = new YakuPattern();
@@ -353,6 +424,9 @@ JunchanTaiyai.prototype.constructor = JunchanTaiyai;
 /**
  * Fanpai/Yakuhai (Seat Wind) yaku pattern
  * A pon or kan in the players wind.
+ *
+ * Must be concealed: no
+ * Han: 1
  */
 function FanpaiSeatWind() {
     YakuPattern.call(this);
@@ -362,10 +436,10 @@ function FanpaiSeatWind() {
             var combinaison = hand.combinaisons[i];
             if (combinaison instanceof Pon || combinaison instanceof Kan) {
                 var tile = combinaison.tiles[0];
-                if (tile instanceof WindTile && tile.direction == hand.seatWind) return true;
+                if (tile instanceof WindTile && tile.direction == hand.seatWind) return 1;
             }
         }
-        return false;
+        return 0;
     };
 }
 FanpaiSeatWind.prototype = new YakuPattern();
@@ -374,6 +448,9 @@ FanpaiSeatWind.prototype.constructor = FanpaiSeatWind;
 /**
  * Fanpai/Yakuhai (Round Wind) yaku pattern
  * A pon or kan in the prevalent wind.
+ *
+ * Must be concealed: no
+ * Han: 1
  */
 function FanpaiRoundWind() {
     YakuPattern.call(this);
@@ -383,10 +460,10 @@ function FanpaiRoundWind() {
             var combinaison = hand.combinaisons[i];
             if (combinaison instanceof Pon || combinaison instanceof Kan) {
                 var tile = combinaison.tiles[0];
-                if (tile instanceof WindTile && tile.direction == hand.roundWind) return true;
+                if (tile instanceof WindTile && tile.direction == hand.roundWind) return 1;
             }
         }
-        return false;
+        return 0;
     };
 }
 FanpaiRoundWind.prototype = new YakuPattern();
@@ -395,6 +472,9 @@ FanpaiRoundWind.prototype.constructor = FanpaiRoundWind;
 /**
  * Fanpai/Yakuhai (Dragon Pon) yaku pattern
  * A pon or kan in the prevalent wind.
+ *
+ * Must be concealed: no
+ * Han: 1
  */
 function FanpaiDragonPon() {
     YakuPattern.call(this);

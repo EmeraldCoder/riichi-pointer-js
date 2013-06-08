@@ -47,3 +47,17 @@ select {
         -webkit-box-shadow: inset 0px 0px 5px 0px rgba(b2, b2, b2, 1);
 }
 
+table {
+    border: 1px solid green;
+}
+table thead th {
+    background: green;
+    padding: 10px;
+    font-weight: normal;
+}
+table tbody tr td {
+    padding: 10px;
+}
+table tbody tr:nth-child(even) td {
+    background: #0dac0d;
+}

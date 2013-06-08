@@ -11,7 +11,7 @@ function TestYakuPatternHonroutou() {
             new Pair(new BambooTile(9))
         ]);
         test("honroutou (all terminals & honors) valid hand", function(){
-            ok(honroutou.check(validHand));
+            ok(honroutou.check(validHand) === 2);
         });
         
         var invalidHandWithTileNotHonorOrTerminal = new Hand([
@@ -22,7 +22,7 @@ function TestYakuPatternHonroutou() {
             new Pair(new BambooTile(5))
         ]);
         test("honroutou (all terminals & honors) invvalid hand with tiles not honor or terminal", function(){
-            ok(honroutou.check(invalidHandWithTileNotHonorOrTerminal) == false);
+            ok(honroutou.check(invalidHandWithTileNotHonorOrTerminal) === 0);
         });
     };
 }

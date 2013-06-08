@@ -12,7 +12,7 @@ function TestYakuPatternRyanPeikou() {
             new Pair(new DotTile(1))
         ]);
         test("ryan peikou (twice pure double chiis) valid hand", function(){
-            ok(ryanPeikou.check(validHand));
+            ok(ryanPeikou.check(validHand) === 3);
         });
         
         var invalidHandWitoutTwoPairOfChii = new Hand([
@@ -23,7 +23,7 @@ function TestYakuPatternRyanPeikou() {
             new Pair(new DotTile(1))
         ]);
         test("ryan peikou (twice pure double chiis) invalid hand without two pair of chii", function(){
-            ok(ryanPeikou.check(invalidHandWitoutTwoPairOfChii) == false);
+            ok(ryanPeikou.check(invalidHandWitoutTwoPairOfChii) === 0);
         });
         
         var invalidHandWithoutChii = new Hand([
@@ -34,7 +34,7 @@ function TestYakuPatternRyanPeikou() {
             new Pair(new DotTile(1))
         ]);
         test("ryan peikou (twice pure double chiis) invalid hand without chii", function(){
-            ok(ryanPeikou.check(invalidHandWithoutChii) == false);
+            ok(ryanPeikou.check(invalidHandWithoutChii) === 0);
         });
         
     };

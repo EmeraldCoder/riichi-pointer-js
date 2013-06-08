@@ -12,7 +12,7 @@ function TestYakuPatternIipeikou() {
             new Pair(new DotTile(7))
         ]);
         test("iipeikou (pure double chii) valid hand", function(){
-            ok(iipeikou.check(validHand));
+            ok(iipeikou.check(validHand) === 1);
         });
         
         // test with different number
@@ -24,7 +24,7 @@ function TestYakuPatternIipeikou() {
             new Pair(new DotTile(7))
         ]);
         test("iipeikou (pure double chii) invalid hand without two identical chii", function(){
-            ok(iipeikou.check(invalidHandWithoutTwoIdenticalChii1) == false);
+            ok(iipeikou.check(invalidHandWithoutTwoIdenticalChii1) === 0);
         });
         
         // test with different suit
@@ -36,7 +36,7 @@ function TestYakuPatternIipeikou() {
             new Pair(new DotTile(7))
         ]);
         test("iipeikou (pure double chii) invalid hand without two identical chii", function(){
-            ok(iipeikou.check(invalidHandWithoutTwoIdenticalChii2) == false);
+            ok(iipeikou.check(invalidHandWithoutTwoIdenticalChii2) === 0);
         });
     };
 }

@@ -12,7 +12,7 @@ function TestYakuPatternShouSangen() {
             new Pon(new BambooTile(2))
         ]);
         test("shou sangen (little three dragons) valid hand", function(){
-            ok(shouSangen.check(validHand));
+            ok(shouSangen.check(validHand) === 2);
         });
 
         var validHandWithKan = new Hand([
@@ -23,7 +23,7 @@ function TestYakuPatternShouSangen() {
             new Pon(new BambooTile(2))
         ]);
         test("shou sangen (little three dragons) valid hand with kan", function(){
-            ok(shouSangen.check(validHandWithKan));
+            ok(shouSangen.check(validHandWithKan) === 2);
         });
 
         var invalidHandWithoutDragonPair = new Hand([
@@ -34,7 +34,7 @@ function TestYakuPatternShouSangen() {
             new Pon(new BambooTile(2))
         ]);
         test("shou sangen (little three dragons) invalid hand without dragon pair", function(){
-            ok(shouSangen.check(invalidHandWithoutDragonPair) == false);
+            ok(shouSangen.check(invalidHandWithoutDragonPair) === 0);
         });
 
         var invalidHandWithoutTwoDragonPon = new Hand([
@@ -45,7 +45,7 @@ function TestYakuPatternShouSangen() {
             new Pon(new BambooTile(2))
         ]);
         test("shou sangen (little three dragons) invalid hand without two dragon pon", function(){
-            ok(shouSangen.check(invalidHandWithoutTwoDragonPon) == false);
+            ok(shouSangen.check(invalidHandWithoutTwoDragonPon) === 0);
         });
 
 

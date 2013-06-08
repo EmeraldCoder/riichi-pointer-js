@@ -12,7 +12,7 @@ function TestYakuPatternSanShokuDoujun() {
             new Pair(new DotTile(7))
         ]);
         test("san shoku doujun (mixed triple chii) valid hand", function(){
-            ok(sanShokuDoujun.check(validHand));
+            ok(sanShokuDoujun.check(validHand) === 2);
         });
         
         var invalidHandWithOnlyTwoChiiOfTheSameValue = new Hand([
@@ -23,7 +23,7 @@ function TestYakuPatternSanShokuDoujun() {
             new Pair(new DotTile(7))
         ]);
         test("san shoku doujun (mixed triple chii) invalid hand with only two chii of the same value", function(){
-            ok(sanShokuDoujun.check(invalidHandWithOnlyTwoChiiOfTheSameValue) == false);
+            ok(sanShokuDoujun.check(invalidHandWithOnlyTwoChiiOfTheSameValue) === 0);
         });
         
         var invalidHandWithoutThreeDifferentSuit = new Hand([
@@ -34,7 +34,7 @@ function TestYakuPatternSanShokuDoujun() {
             new Pair(new DotTile(7))
         ]);
         test("san shoku doujun (mixed triple chii) invalid hand without three different suit", function(){
-            ok(sanShokuDoujun.check(invalidHandWithoutThreeDifferentSuit) == false);
+            ok(sanShokuDoujun.check(invalidHandWithoutThreeDifferentSuit) === 0);
         });
     };
 }

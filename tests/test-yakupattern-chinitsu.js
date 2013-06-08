@@ -11,7 +11,7 @@ function TestYakuPatternChinitsu() {
             new Pair(new BambooTile(7))
         ]);
         test("chinitsu (full flush) valid hand", function(){
-            ok(chinitsu.check(validHand));
+            ok(chinitsu.check(validHand) === 6);
         });
         
         var invalidHandWithHonorTiles = new Hand([
@@ -22,7 +22,7 @@ function TestYakuPatternChinitsu() {
             new Pair(new DragonTile('white'))
         ]);
         test("chinitsu (full flush) invalid hand with honor tile", function(){
-            ok(chinitsu.check(invalidHandWithHonorTiles) == false);
+            ok(chinitsu.check(invalidHandWithHonorTiles) === 0);
         });
         
         var invalidHandWithTwoSuit = new Hand([
@@ -33,7 +33,7 @@ function TestYakuPatternChinitsu() {
             new Pair(new BambooTile(7))
         ]);
         test("chinitsu (full flush) invalid hand with two suit", function(){
-            ok(chinitsu.check(invalidHandWithTwoSuit) == false);
+            ok(chinitsu.check(invalidHandWithTwoSuit) === 0);
         });
     };
 }

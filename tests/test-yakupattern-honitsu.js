@@ -12,7 +12,7 @@ function TestYakuPatternHonitsu() {
             new Pon(new BambooTile(4))
         ]);
         test("honitsu (half flush) valid hand", function(){
-            ok(honitsu.check(validHand));
+            ok(honitsu.check(validHand) === 3);
         });
         
         var invalidHandWithoutHonorTile = new Hand([
@@ -23,7 +23,7 @@ function TestYakuPatternHonitsu() {
             new Pair(new BambooTile(4))
         ]);
         test("honitsu (half flush) invalid hand without honor tile", function() {
-            ok(honitsu.check(invalidHandWithoutHonorTile) == false);
+            ok(honitsu.check(invalidHandWithoutHonorTile) === 0);
         });
         
         var invalidHandWithTwoSuit = new Hand([
@@ -34,7 +34,7 @@ function TestYakuPatternHonitsu() {
             new Pon(new DotTile(4))
         ]);
         test("honitsu (half flush) invalid hand with two suit", function(){
-            ok(honitsu.check(invalidHandWithTwoSuit) == false);
+            ok(honitsu.check(invalidHandWithTwoSuit) === 0);
         });
     };
 }

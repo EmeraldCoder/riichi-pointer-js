@@ -213,10 +213,13 @@
             }
             
             var html = '';
-            
+
+            html += '<table>';
+            html += '<tr><thead><th>Combinaison name</th><th>Value</th></thead><tbody>';
             for (var i = 0; i < result.length; i++) {
-                html = html + '<div>' + result[i].name + ' : ' + result[i].value + '</div>';
+                html += '<tr><td>' + result[i].name + '</td><td>' + result[i].value + '</td></tr>';
             }
+            html += '</tbody></table>';
         
             document.getElementById('HandPoints').innerHTML = html;
             

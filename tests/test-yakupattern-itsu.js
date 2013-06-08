@@ -12,7 +12,7 @@ function TestYakuPatternItsu() {
             new Pair(new DotTile(7))
         ]);
         test("itsu (pure straight) valid hand", function(){
-            ok(itsu.check(validHand));
+            ok(itsu.check(validHand) === 2);
         });
         
         var invalidHandWithoutOneToNineNumber = new Hand([
@@ -23,7 +23,7 @@ function TestYakuPatternItsu() {
             new Pair(new DotTile(7))
         ]);
         test("itsu (pure straight) invalid hand without one to nine number", function(){
-            ok(itsu.check(invalidHandWithoutOneToNineNumber) == false);
+            ok(itsu.check(invalidHandWithoutOneToNineNumber) === 0);
         });
         
         var invalidHandWithTwoSuit = new Hand([
@@ -34,7 +34,7 @@ function TestYakuPatternItsu() {
             new Pair(new DotTile(7))
         ]);
         test("itsu (pure straight) valid hand", function(){
-            ok(itsu.check(invalidHandWithTwoSuit) == false);
+            ok(itsu.check(invalidHandWithTwoSuit) === 0);
         });
     };
 }
