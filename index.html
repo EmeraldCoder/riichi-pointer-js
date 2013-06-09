@@ -93,9 +93,9 @@
             </div>
             
             <div>
-                <input type="button" value="Add a combinaison to your concealed hand" onclick="add(true)" />
-                <input type="button" value="Add a combinaison to your open hand" onclick="add(false)" />
-                <input type="button" value="Calculate hand points" onclick="refreshHandPoints()" />
+                <input id="AddConcealedCombinaisonButton" type="button" value="Add a combinaison to your concealed hand" onclick="add(true)" />
+                <input id="AddOpenCombinaisonButton" type="button" value="Add a combinaison to your open hand" onclick="add(false)" />
+                <input id="ViewResultButton" type="button" value="Calculate hand points" onclick="refreshHandPoints()" style="display: none;" />
             </div>
 
             <div id="ConcealedHandTiles" class="box" style="min-height: 100px;"></div>
@@ -159,6 +159,17 @@
                 openCombinaisons.push(combinaison);
             }
             refreshHandTiles();
+            
+            var tempHand = new Hand(concealedCombinaisons, openCombinaisons);
+            if (tempHand.isFinish()) {
+                document.getElementById('AddConcealedCombinaisonButton').style.display = 'none';
+                document.getElementById('AddOpenCombinaisonButton').style.display = 'none';
+                document.getElementById('ViewResultButton').style.display = 'inline-block';
+            } else {
+                document.getElementById('AddConcealedCombinaisonButton').style.display = 'inline-block';
+                document.getElementById('AddOpenCombinaisonButton').style.display = 'inline-block';
+                document.getElementById('ViewResultButton').style.display = 'none';
+            }
         }
         
         function returnToMain() {

@@ -29,6 +29,57 @@ function TestHandClasses() {
             ok(hand.roundWind === 'north');
         });
         
+        // hand isFinish() test
+        var notFinishHandWhenEmpty = new Hand([], []);
+        test('hand is not finish when empty', function() {
+            ok(notFinishHandWhenEmpty.isFinish() === false);
+        });
+        
+        var notFinishHandWhenNotEnoughCombinaison = new Hand([
+            new Pon(new DragonTile('red')),
+            new Pon(new DragonTile('white')),
+            new Pon(new DragonTile('green')),
+            new Pair(new WindTile('east'))
+        ], []);
+        test('hand is not finish when less than 4 combinaison', function(){
+            ok(notFinishHandWhenNotEnoughCombinaison.isFinish() === false);
+        });
+        
+        var notFinishHandWhenNoPair = new Hand([
+            new Pon(new DragonTile('red')),
+            new Pon(new DragonTile('white')),
+            new Pon(new DragonTile('green')),
+            new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
+            new Pon(new WindTile('east'))
+        ], []);
+        test('hand is not finish without a pair', function(){
+            ok(notFinishHandWhenNoPair.isFinish() === false);
+        });
+        
+        var finishHandWith4CombinaisonAnd1Pair = new Hand([
+            new Pon(new DragonTile('red')),
+            new Pon(new DragonTile('white')),
+            new Pon(new DragonTile('green')),
+            new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
+            new Pair(new WindTile('east'))
+        ], []);
+        test('hand is finish with 4 combinaison and 1 pair', function(){
+            ok(finishHandWith4CombinaisonAnd1Pair.isFinish() === true);
+        });
+        
+        var finishHandWithSevenPairs = new Hand([
+            new Pair(new DragonTile('red')),
+            new Pair(new DragonTile('white')),
+            new Pair(new DragonTile('green')),
+            new Pair(new WindTile('east')),
+            new Pair(new WindTile('west')),
+            new Pair(new WindTile('north')),
+            new Pair(new WindTile('south'))
+        ], []);
+        test('hand is finish with 7 pairs', function(){
+            ok(finishHandWithSevenPairs.isFinish() === true);
+        });
+        
         // pair test
         var pair = new Pair(new DragonTile('green'));
         test('pair is a hand combinaison', function() {

@@ -12,6 +12,29 @@ function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind) {
     this.combinaisons = Array.concat(this.concealedCombinaisons, this.openCombinaisons);
     this.seatWind = seatWind;
     this.roundWind = roundWind;
+    
+    this.isFinish = function(){
+        var nbPair = 0,
+            nbCombinaison = 0;
+            
+        for (var i = 0; i < this.combinaisons.length; i++) {
+            var combinaison = this.combinaisons[i];
+            if (combinaison instanceof Pair) {
+                nbPair++;
+            } else {
+                nbCombinaison++;
+            }
+        }
+    
+        if (nbPair === 1 && nbCombinaison === 4) {
+            return true;
+        }
+        if (nbPair === 7 && nbCombinaison === 0) {
+            return true;
+        }
+    
+        return false;
+    };
 }
 
 /**
