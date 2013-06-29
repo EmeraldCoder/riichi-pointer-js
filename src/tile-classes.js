@@ -2,7 +2,9 @@
  * Tile base class
  * All tile inherit from this class
  */
-function Tile() {}
+function Tile() {
+    this.isWinningTile = false;
+}
 
 /**
  * Honor tile base class
