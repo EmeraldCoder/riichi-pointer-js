@@ -571,3 +571,43 @@ function FanpaiDragonPon() {
 }
 FanpaiDragonPon.prototype = new YakuPattern();
 FanpaiDragonPon.prototype.constructor = FanpaiDragonPon;
+
+/**
+ * Pinfu (All chii / No points) yaku pattern
+ * A hand with no fu except the one for winning
+ * Just chii, no pair point (dragon or seat/prevalent wind) and a two-sided wait (only wait that give no fu)
+ *
+ * Must be concealed: yes
+ * Han: 1
+ */
+function Pinfu() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Pinfu';
+    this.englishName = 'All Chii / No points';
+    
+    this.check = function(hand) {
+        if (hand.openCombinaisons.length > 0) return 0;
+        if (hand.isEdgeWait()) return 0;
+        if (hand.isClosedWait()) return 0;
+        if (hand.isSingleWait()) return 0;
+        
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            var combinaison = hand.combinaisons[i];
+            
+            if (combinaison instanceof Pair) {
+                if (combinaison.tiles[0] instanceof DragonTile) return 0;
+                if (combinaison.tiles[0] instanceof WindTile) {
+                    if (combinaison.tiles[0].direction === hand.seatWind) return 0;
+                    if (combinaison.tiles[0].direction === hand.roundWind) return 0;
+                }
+            }
+            
+            if (combinaison instanceof Pon || combinaison instanceof Kan) return 0;
+        }
+        
+        return 1;
+    };
+}
+Pinfu.prototype = new YakuPattern();
+Pinfu.prototype.constructor = Pinfu;
