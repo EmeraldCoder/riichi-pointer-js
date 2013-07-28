@@ -6,12 +6,14 @@
  * param String seatWind
  * param String roundWind
  */
-function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind) {
+function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winningCombinaisonIndex, winningTileIndex) {
     this.concealedCombinaisons = concealedCombinaisons; // array of HandCombinaison
     this.openCombinaisons = openCombinaisons; // array of HandCombinaison
     this.combinaisons = Array.concat(this.concealedCombinaisons, this.openCombinaisons);
     this.seatWind = seatWind;
     this.roundWind = roundWind;
+    this.winningCombinaisonIndex = winningCombinaisonIndex;
+    this.winningTileIndex = winningTileIndex;
     
     this.isFinish = function(){
         var nbPair = 0,
@@ -33,6 +35,49 @@ function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind) {
             return true;
         }
     
+        return false;
+    };
+    
+    this.isTwoSidedWait = function(){
+        if (this.winningCombinaisonIndex !== undefined && this.winningTileIndex !== undefined) {
+            var combinaison = this.combinaisons[this.winningCombinaisonIndex];
+            var tile = combinaison.tiles[this.winningTileIndex];
+            if (combinaison instanceof Chii) {
+                if (this.winningTileIndex !== 1 && !this.isEdgeWait()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+    
+    this.isEdgeWait = function(){
+        if (this.winningCombinaisonIndex !== undefined && this.winningTileIndex !== undefined) {
+            var combinaison = this.combinaisons[this.winningCombinaisonIndex];
+            var tile = combinaison.tiles[this.winningTileIndex];
+            if (combinaison instanceof Chii) {
+                if (this.winningTileIndex === 0 && tile.number === 7) return true;
+                if (this.winningTileIndex === 2 && tile.number === 3) return true;
+            }
+        }
+        return false;
+    };
+    
+    this.isClosedWait = function(){
+        if (this.winningCombinaisonIndex !== undefined && this.winningTileIndex !== undefined) {
+            var combinaison = this.combinaisons[this.winningCombinaisonIndex];
+            if (combinaison instanceof Chii) {
+                if (this.winningTileIndex === 1) return true;
+            }
+        }
+        return false;
+    };
+    
+    this.isSingleWait = function(){
+        if (this.winningCombinaisonIndex !== undefined && this.winningTileIndex !== undefined) {
+            var combinaison = this.combinaisons[this.winningCombinaisonIndex];
+            if (!(combinaison instanceof Chii)) return true;
+        }
         return false;
     };
 }

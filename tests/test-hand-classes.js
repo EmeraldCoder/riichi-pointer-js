@@ -80,6 +80,60 @@ function TestHandClasses() {
             ok(finishHandWithSevenPairs.isFinish() === true);
         });
         
+        // wait test
+        var validTwoSidedWait = new Hand([
+            new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+            new Pon(new DotTile(1)),
+            new Pon(new DotTile(2)),
+            new Pon(new DotTile(3)),
+            new Pair(new DotTile(9))
+        ], [], 'east', 'east', 0, 0);
+        var validEdgeWait = new Hand([
+            new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+            new Pon(new DotTile(1)),
+            new Pon(new DotTile(2)),
+            new Pon(new DotTile(3)),
+            new Pair(new DotTile(9))
+        ], [], 'east', 'east', 0, 2);
+        var validClosedWait = new Hand([
+            new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+            new Pon(new DotTile(1)),
+            new Pon(new DotTile(2)),
+            new Pon(new DotTile(3)),
+            new Pair(new DotTile(9))
+        ], [], 'east', 'east', 0, 1);
+        var validSingleWait = new Hand([
+            new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+            new Pon(new DotTile(1)),
+            new Pon(new DotTile(2)),
+            new Pon(new DotTile(3)),
+            new Pair(new DotTile(9))
+        ], [], 'east', 'east', 4, 0);
+        test('hand is a two-sided wait', function(){
+            ok(validTwoSidedWait.isSingleWait() === false);
+            ok(validTwoSidedWait.isClosedWait() === false);
+            ok(validTwoSidedWait.isEdgeWait() === false);
+            ok(validTwoSidedWait.isTwoSidedWait() === true);
+        });
+        test('hand is a edge wait', function(){
+            ok(validEdgeWait.isSingleWait() === false);
+            ok(validEdgeWait.isClosedWait() === false);
+            ok(validEdgeWait.isEdgeWait() === true);
+            ok(validEdgeWait.isTwoSidedWait() === false);
+        });
+        test('hand is a closed wait', function(){
+            ok(validClosedWait.isSingleWait() === false);
+            ok(validClosedWait.isClosedWait() === true);
+            ok(validClosedWait.isEdgeWait() === false);
+            ok(validClosedWait.isTwoSidedWait() === false);
+        });
+        test('hand is a single wait', function(){
+            ok(validSingleWait.isSingleWait() === true);
+            ok(validSingleWait.isClosedWait() === false);
+            ok(validSingleWait.isEdgeWait() === false);
+            ok(validSingleWait.isTwoSidedWait() === false);
+        });
+        
         // pair test
         var pair = new Pair(new DragonTile('green'));
         test('pair is a hand combinaison', function() {
