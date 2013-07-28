@@ -117,6 +117,8 @@
     <script>
         var concealedCombinaisons = [];
         var openCombinaisons = [];
+        var winningCombinaisonIndex = -1;
+        var winningTileIndex = -1;
         
         function tileFactory(suit, value) {
             var tile = null;
@@ -180,89 +182,111 @@
         function refreshHandTiles() {
             var concealedHtml = '';
             var openHtml = '';
+            var combinaisonIndex = 0;
             for (var i = 0; i < concealedCombinaisons.length; i++) {
                 concealedHtml += '<span style="display: inline-block; margin-right: 10px;">';
                 for (var j = 0; j < concealedCombinaisons[i].tiles.length; j++) {
                     var tile = concealedCombinaisons[i].tiles[j];
+                    
+                    var cssClass = '';
+                    if (combinaisonIndex === winningCombinaisonIndex && j === winningTileIndex) {
+                        cssClass = 'waiting';
+                    }
+                    
                     if (tile instanceof DragonTile) {
-                        concealedHtml = concealedHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.color + '.png" /></span>';
+                        concealedHtml = concealedHtml + '<span style="display: inline-block" class="' + cssClass + '" onclick="selectWaitingTile(' + combinaisonIndex + ', ' + j + ')"><img src="img/' + tile.suit + tile.color + '.png" /></span>';
                     } else if (tile instanceof WindTile) {
-                        concealedHtml = concealedHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.direction + '.png" /></span>';
+                        concealedHtml = concealedHtml + '<span style="display: inline-block" class="' + cssClass + '" onclick="selectWaitingTile(' + combinaisonIndex + ', ' + j + ')"><img src="img/' + tile.suit + tile.direction + '.png" /></span>';
                     } else {
-                        concealedHtml = concealedHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.number + '.png" /></span>';
+                        concealedHtml = concealedHtml + '<span style="display: inline-block" class="' + cssClass + '" onclick="selectWaitingTile(' + combinaisonIndex + ', ' + j + ')"><img src="img/' + tile.suit + tile.number + '.png" /></span>';
                     }
                 }
                 concealedHtml += '</span>';
+                combinaisonIndex++;
             }
             for (var i = 0; i < openCombinaisons.length; i++) {
                 openHtml += '<span style="display: inline-block; margin-right: 10px;">';
                 for (var j = 0; j < openCombinaisons[i].tiles.length; j++) {
                     var tile = openCombinaisons[i].tiles[j];
+                    
+                    var cssClass = '';
+                    if (combinaisonIndex === winningCombinaisonIndex && j === winningTileIndex) {
+                        cssClass = 'waiting';
+                    }
+                    
                     if (tile instanceof DragonTile) {
-                        openHtml = openHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.color + '.png" /></span>';
+                        openHtml = openHtml + '<span style="display: inline-block" class="' + cssClass + '" onclick="selectWaitingTile(' + combinaisonIndex + ', ' + j + ')"><img src="img/' + tile.suit + tile.color + '.png" /></span>';
                     } else if (tile instanceof WindTile) {
-                        openHtml = openHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.direction + '.png" /></span>';
+                        openHtml = openHtml + '<span style="display: inline-block" class="' + cssClass + '" onclick="selectWaitingTile(' + combinaisonIndex + ', ' + j + ')"><img src="img/' + tile.suit + tile.direction + '.png" /></span>';
                     } else {
-                        openHtml = openHtml + '<span style="display: inline-block"><img src="img/' + tile.suit + tile.number + '.png" /></span>';
+                        openHtml = openHtml + '<span style="display: inline-block" class="' + cssClass + '" onclick="selectWaitingTile(' + combinaisonIndex + ', ' + j + ')"><img src="img/' + tile.suit + tile.number + '.png" /></span>';
                     }
                 }
                 openHtml += '</span>';
+                combinaisonIndex++;
             }
             document.getElementById('ConcealedHandTiles').innerHTML = concealedHtml;
             document.getElementById('OpenHandTiles').innerHTML = openHtml;
         }
         
         function refreshHandPoints() {
-            var hand = new Hand(
-                concealedCombinaisons, 
-                openCombinaisons,
-                document.getElementById('SeatWind').value,
-                document.getElementById('PrevalentWind').value
-            );
-        
-            var patterns = [
-                { name: 'TanyaouChuu', checker: new TanyaouChuu() },
-                { name: 'Honitsu', checker: new Honitsu() },
-                { name: 'Chinitsu', checker: new Chinitsu() },
-                { name: 'Honroutou', checker: new Honroutou() },
-                { name: 'Iipeikou', checker: new Iipeikou() },
-                { name: 'SanShokuDoujun', checker: new SanShokuDoujun() },
-                { name: 'Itsu', checker: new Itsu() },
-                { name: 'Chanta', checker: new Chanta() },
-                { name: 'ChiiToitsu', checker: new ChiiToitsu() },
-                { name: 'SanShokuDokou', checker: new SanShokuDokou() },
-                { name: 'ToiToiHou', checker: new ToiToiHou() },
-                { name: 'ShouSangen', checker: new ShouSangen() },
-                { name: 'RyanPeikou', checker: new RyanPeikou() },
-                { name: 'JunchanTaiyai', checker: new JunchanTaiyai() },
-                { name: 'Fanpai (dragon pon)', checker: new FanpaiDragonPon() },
-                { name: 'Fanpai (round wind pon)', checker: new FanpaiRoundWind() },
-                { name: 'Fanpai (seat wind pon)', checker: new FanpaiSeatWind() }
-            ];
+            if (winningCombinaisonIndex === -1 && winningTileIndex === -1) {
+                alert("You must select your waiting tile");
+            } else {
+                var hand = new Hand(
+                    concealedCombinaisons, 
+                    openCombinaisons,
+                    document.getElementById('SeatWind').value,
+                    document.getElementById('PrevalentWind').value,
+                    winningCombinaisonIndex,
+                    winningTileIndex
+                );
             
-            var result = [];
-            
-            for (var i = 0; i < patterns.length; i++) {
-                var pattern = patterns[i];
-                var checkResult = pattern.checker.check(hand);
-                if (checkResult > 0) {
-                    result.push({ name: pattern.checker.japaneseName + ' (' + pattern.checker.englishName + ')', value: checkResult });
+                var patterns = [
+                    { name: 'TanyaouChuu', checker: new TanyaouChuu() },
+                    { name: 'Honitsu', checker: new Honitsu() },
+                    { name: 'Chinitsu', checker: new Chinitsu() },
+                    { name: 'Honroutou', checker: new Honroutou() },
+                    { name: 'Iipeikou', checker: new Iipeikou() },
+                    { name: 'SanShokuDoujun', checker: new SanShokuDoujun() },
+                    { name: 'Itsu', checker: new Itsu() },
+                    { name: 'Chanta', checker: new Chanta() },
+                    { name: 'ChiiToitsu', checker: new ChiiToitsu() },
+                    { name: 'SanShokuDokou', checker: new SanShokuDokou() },
+                    { name: 'ToiToiHou', checker: new ToiToiHou() },
+                    { name: 'ShouSangen', checker: new ShouSangen() },
+                    { name: 'RyanPeikou', checker: new RyanPeikou() },
+                    { name: 'JunchanTaiyai', checker: new JunchanTaiyai() },
+                    { name: 'Fanpai (dragon pon)', checker: new FanpaiDragonPon() },
+                    { name: 'Fanpai (round wind pon)', checker: new FanpaiRoundWind() },
+                    { name: 'Fanpai (seat wind pon)', checker: new FanpaiSeatWind() },
+                    { name: 'Pinfu (all chii / no point)', checker: new Pinfu() }
+                ];
+                
+                var result = [];
+                
+                for (var i = 0; i < patterns.length; i++) {
+                    var pattern = patterns[i];
+                    var checkResult = pattern.checker.check(hand);
+                    if (checkResult > 0) {
+                        result.push({ name: pattern.checker.japaneseName + ' (' + pattern.checker.englishName + ')', value: checkResult });
+                    }
                 }
-            }
-            
-            var html = '';
+                
+                var html = '';
 
-            html += '<table>';
-            html += '<tr><thead><th>Combinaison name</th><th>Han value</th></thead><tbody>';
-            for (var i = 0; i < result.length; i++) {
-                html += '<tr><td>' + result[i].name + '</td><td align="center">' + result[i].value + '</td></tr>';
-            }
-            html += '</tbody></table>';
-        
-            document.getElementById('HandPoints').innerHTML = html;
+                html += '<table>';
+                html += '<tr><thead><th>Combinaison name</th><th>Han value</th></thead><tbody>';
+                for (var i = 0; i < result.length; i++) {
+                    html += '<tr><td>' + result[i].name + '</td><td align="center">' + result[i].value + '</td></tr>';
+                }
+                html += '</tbody></table>';
             
-            document.getElementById('PageMain').style.display = 'none';
-            document.getElementById('PageResult').style.display = 'block';
+                document.getElementById('HandPoints').innerHTML = html;
+                
+                document.getElementById('PageMain').style.display = 'none';
+                document.getElementById('PageResult').style.display = 'block';
+            }
         }
         
         var addCombinaisonIsConcealed = null;
@@ -313,6 +337,12 @@
             addCombinaison(addCombinaisonIsConcealed, addCombinaisonType, addTileSuit, addTileValue);
             document.getElementById('PageSelectTileValue').style.display = 'none';
             document.getElementById('PageMain').style.display = 'block';
+        }
+        
+        function selectWaitingTile(combinaisonIndex, tileIndex) {
+            winningCombinaisonIndex = combinaisonIndex;
+            winningTileIndex = tileIndex;
+            refreshHandTiles();
         }
     </script>
 </body>

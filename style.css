@@ -61,3 +61,8 @@ table tbody tr td {
 table tbody tr:nth-child(even) td {
     background: #0dac0d;
 }
+
+.waiting {
+    background: gold;
+    border: 3px solid yellow;
+}
