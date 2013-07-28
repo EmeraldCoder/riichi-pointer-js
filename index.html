@@ -72,7 +72,7 @@
         </div>
 
         <div id="PageMain">
-            <h2>Your hands</h2>
+            <h2>Your hand</h2>
 
             <div style="margin: 10px 0;">
                 <label>Prevalent wind: </label>
@@ -93,27 +93,30 @@
             </div>
             
             <div>
-                <input id="AddConcealedCombinaisonButton" type="button" value="Add a combinaison to your concealed hand" onclick="add(true)" />
-                <input id="AddOpenCombinaisonButton" type="button" value="Add a combinaison to your open hand" onclick="add(false)" />
+                <input id="AddConcealedCombinaisonButton" type="button" value="Add a concealed combinaison" onclick="add(true)" />
+                <input id="AddOpenCombinaisonButton" type="button" value="Add an open combinaison" onclick="add(false)" />
                 <input id="ViewResultButton" type="button" value="Calculate hand points" onclick="refreshHandPoints()" style="display: none;" />
             </div>
 
+            <div style="margin-top:20px;">Concealed combinaisons</div>
             <div id="ConcealedHandTiles" class="box" style="min-height: 100px;"></div>
+            <div style="margin-top:20px;">Open combinaisons</div>
             <div id="OpenHandTiles" class="box" style="min-height: 100px;"></div>
         </div>
         
         <div id="PageResult" style="display: none">
             <h2>Your hand points</h2>
             <div style="margin-bottom: 20px">
-                <input type="button" value="retour à la main" onclick="returnToMain()" />
+                <input type="button" value="back to your hand" onclick="returnToMain()" />
             </div>
-            <div id="HandPoints" class="box"></div>
+            <div id="HandPoints" class="box" style="margin: 20px 0;"></div>
         </div>
     </div>
 
     <script src="src/tile-classes.js"></script>    
     <script src="src/hand-classes.js"></script>
     <script src="src/yakupattern-classes.js"></script>
+    <script src="src/pointer-classes.js"></script>
     <script>
         var concealedCombinaisons = [];
         var openCombinaisons = [];
@@ -273,16 +276,29 @@
                     }
                 }
                 
-                var html = '';
+                var fuCalculator = new FuCalculator();
+                var fuResult = fuCalculator.calculate(hand);
+                               
+                var hanTotal = 0;
 
-                html += '<table>';
-                html += '<tr><thead><th>Combinaison name</th><th>Han value</th></thead><tbody>';
+                var hanTableHtml = '<b>Han details</b><br /><table>';
+                hanTableHtml += '<thead><tr><th>Combinaison name</th><th>Han value</th></tr></thead><tbody>';
                 for (var i = 0; i < result.length; i++) {
-                    html += '<tr><td>' + result[i].name + '</td><td align="center">' + result[i].value + '</td></tr>';
+                    hanTotal += result[i].value;
+                    hanTableHtml += '<tr><td>' + result[i].name + '</td><td align="center">' + result[i].value + '</td></tr>';
                 }
-                html += '</tbody></table>';
+                hanTableHtml += '</tbody></table>';
+                
+                var fuTableHtml = '<br /><b>Fu details</b><br /><table>';
+                fuTableHtml += '<thead><tr><th>Description</th><th>Fu value</th></tr></thead><tbody>';
+                for (var i = 0; i < fuResult.details.length; i++) {
+                    fuTableHtml += '<tr><td>' + fuResult.details[i].name + '</td><td>' + fuResult.details[i].value + '</td></tr>';
+                }
+                fuTableHtml += '</tbody></table>';
+                
+                var totalHtml = '<p><b>Han:</b> ' + hanTotal + ' / <b>Fu:</b> ' + fuResult.total + '</p>';
             
-                document.getElementById('HandPoints').innerHTML = html;
+                document.getElementById('HandPoints').innerHTML = totalHtml + hanTableHtml + fuTableHtml;
                 
                 document.getElementById('PageMain').style.display = 'none';
                 document.getElementById('PageResult').style.display = 'block';

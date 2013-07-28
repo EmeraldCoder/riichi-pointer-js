@@ -42,7 +42,7 @@ select {
 .box {
     padding: 10px;
     border: 2px solid #b2b2b2;
-    margin: 20px 0;
+    margin: 0;
     box-shadow: inset 0px 0px 5px 0px rgba(b2, b2, b2, 1);
         -webkit-box-shadow: inset 0px 0px 5px 0px rgba(b2, b2, b2, 1);
 }
