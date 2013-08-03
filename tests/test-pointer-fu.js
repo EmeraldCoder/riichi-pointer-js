@@ -22,8 +22,10 @@ function TestPointerFu() {
         
         // tsumo (20 pts)
         test("tsumo award 20 fu", function(){
-            ok(fuCalculator.calculate(concealedPointlessHand, 'tsumo').total === 20);
-            ok(fuCalculator.calculate(openPointlessHand, 'tsumo').total === 22); // +2 because of the open pinfu
+            concealedPointlessHand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(concealedPointlessHand).total === 20);
+            openPointlessHand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(openPointlessHand).total === 22); // +2 because of the open pinfu
         });
         
         // seven pairs (25 pts)
@@ -37,18 +39,22 @@ function TestPointerFu() {
                 new Pair(new WindTile('east')),
                 new Pair(new DragonTile('red')),
             ], [], 'east', 'east');
-            ok(fuCalculator.calculate(sevenPairHandWithDragonAndWind, 'tsumo').total === 25);
-            ok(fuCalculator.calculate(sevenPairHandWithDragonAndWind, 'ron').total === 25);
+            sevenPairHandWithDragonAndWind.winningType = 'tsumo';
+            ok(fuCalculator.calculate(sevenPairHandWithDragonAndWind).total === 25);
+            sevenPairHandWithDragonAndWind.winningType = 'ron';
+            ok(fuCalculator.calculate(sevenPairHandWithDragonAndWind).total === 25);
         });
         
         // ron non-concealed (20 pts)
         test("ron non-concealed award 20 fu", function(){
-            ok(fuCalculator.calculate(openPointlessHand, 'ron').total === 20);
+            openPointlessHand.winningType = 'ron';
+            ok(fuCalculator.calculate(openPointlessHand).total === 20);
         });
         
         // ron concealed (30 pts)
         test("ron concealed award 30 fu", function(){
-            ok(fuCalculator.calculate(concealedPointlessHand, 'ron').total === 30);
+            concealedPointlessHand.winningType = 'ron';
+            ok(fuCalculator.calculate(concealedPointlessHand).total === 30);
         });
         
         // simple pon non-concealed (2 pts)
@@ -61,7 +67,8 @@ function TestPointerFu() {
             ], [
                 new Pon(new CharacterTile(2))
             ]);
-            ok(fuCalculator.calculate(hand, 'tsumo').total === 24); // +2 for tsumo not pinfu
+            hand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(hand).total === 24); // +2 for tsumo not pinfu
         });
         
         // simple pon concealed (4 pts)
@@ -73,7 +80,8 @@ function TestPointerFu() {
                 new Pair(new DotTile(4)),
                 new Pon(new CharacterTile(2))
             ], []);
-            ok(fuCalculator.calculate(hand, 'tsumo').total === 26); // +2 for tsumo not pinfu
+            hand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(hand).total === 26); // +2 for tsumo not pinfu
         });
         
         // terminal & honor pon non-concealed (4 pts)
@@ -94,8 +102,10 @@ function TestPointerFu() {
             ], [
                 new Pon(new DragonTile('green'))
             ]);
-            ok(fuCalculator.calculate(handWithTerminal, 'tsumo').total === 26); // +2 for tsumo not pinfu
-            ok(fuCalculator.calculate(handWithHonor, 'tsumo').total === 26); // +2 for tsumo not pinfu
+            handWithTerminal.winningType = 'tsumo';
+            ok(fuCalculator.calculate(handWithTerminal).total === 26); // +2 for tsumo not pinfu
+            handWithHonor.winningType = 'tsumo';
+            ok(fuCalculator.calculate(handWithHonor).total === 26); // +2 for tsumo not pinfu
         });
         
         // terminal & honor pon concealed (8 pts)
@@ -114,8 +124,10 @@ function TestPointerFu() {
                 new Pair(new DotTile(4)),
                 new Pon(new DragonTile('green'))
             ], []);
-            ok(fuCalculator.calculate(handWithTerminal, 'tsumo').total === 30); // +2 for tsumo not pinfu
-            ok(fuCalculator.calculate(handWithHonor, 'tsumo').total === 30); // +2 for tsumo not pinfu
+            handWithTerminal.winningType = 'tsumo';
+            ok(fuCalculator.calculate(handWithTerminal).total === 30); // +2 for tsumo not pinfu
+            handWithHonor.winningType = 'tsumo';
+            ok(fuCalculator.calculate(handWithHonor).total === 30); // +2 for tsumo not pinfu
         });
         
         // simple kan non-concealed (8 pts)
@@ -128,7 +140,8 @@ function TestPointerFu() {
             ], [
                 new Kan(new CharacterTile(2))
             ]);
-            ok(fuCalculator.calculate(hand, 'tsumo').total === 30); // +2 for tsumo not pinfu
+            hand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(hand).total === 30); // +2 for tsumo not pinfu
         });
         
         // simple kan concealed (16 pts)
@@ -140,7 +153,8 @@ function TestPointerFu() {
                 new Pair(new DotTile(4)),
                 new Kan(new CharacterTile(2))
             ], []);
-            ok(fuCalculator.calculate(hand, 'tsumo').total === 38); // +2 for tsumo not pinfu
+            hand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(hand).total === 38); // +2 for tsumo not pinfu
         });
         
         // terminal & honor kan non-concealed (16 pts)
@@ -161,8 +175,10 @@ function TestPointerFu() {
             ], [
                 new Kan(new DragonTile('green'))
             ]);
-            ok(fuCalculator.calculate(handWithTerminal, 'tsumo').total === 38); // +2 for tsumo not pinfu
-            ok(fuCalculator.calculate(handWithHonor, 'tsumo').total === 38); // +2 for tsumo not pinfu
+            handWithTerminal.winningType = 'tsumo';
+            ok(fuCalculator.calculate(handWithTerminal).total === 38); // +2 for tsumo not pinfu
+            handWithHonor.winningType = 'tsumo';
+            ok(fuCalculator.calculate(handWithHonor).total === 38); // +2 for tsumo not pinfu
         });
         
         // terminal & honor kan concealed (32 pts)
@@ -181,8 +197,10 @@ function TestPointerFu() {
                 new Pair(new DotTile(4)),
                 new Kan(new DragonTile('green'))
             ], []);
-            ok(fuCalculator.calculate(handWithTerminal, 'tsumo').total === 54); // +2 for tsumo not pinfu
-            ok(fuCalculator.calculate(handWithHonor, 'tsumo').total === 54); // +2 for tsumo not pinfu
+            handWithTerminal.winningType = 'tsumo';
+            ok(fuCalculator.calculate(handWithTerminal).total === 54); // +2 for tsumo not pinfu
+            handWithHonor.winningType = 'tsumo';
+            ok(fuCalculator.calculate(handWithHonor).total === 54); // +2 for tsumo not pinfu
         });
         
         // dragon pair (2 pts)
@@ -194,7 +212,8 @@ function TestPointerFu() {
                 new Chii(new CharacterTile(1), new CharacterTile(2), new CharacterTile(3)),
                 new Pair(new DragonTile('green'))
             ], []);
-            ok(fuCalculator.calculate(hand, 'tsumo').total === 24); // +2 for tsumo not pinfu
+            hand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(hand).total === 24); // +2 for tsumo not pinfu
         });
         
         // seat wind pair (2 pts)
@@ -206,7 +225,8 @@ function TestPointerFu() {
                 new Chii(new CharacterTile(1), new CharacterTile(2), new CharacterTile(3)),
                 new Pair(new WindTile('south'))
             ], [], 'south', 'east');
-            ok(fuCalculator.calculate(hand, 'tsumo').total === 24); // +2 for tsumo not pinfu
+            hand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(hand).total === 24); // +2 for tsumo not pinfu
         });
         
         // round wind pair (2 pts)
@@ -218,7 +238,8 @@ function TestPointerFu() {
                 new Chii(new CharacterTile(1), new CharacterTile(2), new CharacterTile(3)),
                 new Pair(new WindTile('east'))
             ], [], 'south', 'east');
-            ok(fuCalculator.calculate(hand, 'tsumo').total === 24); // +2 for tsumo not pinfu
+            hand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(hand).total === 24); // +2 for tsumo not pinfu
         });
         
         // edge wait (2 pts)
@@ -230,7 +251,8 @@ function TestPointerFu() {
                 new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
                 new Pair(new DotTile(9))
             ], [], 'east', 'east', 0, 2);
-            ok(fuCalculator.calculate(hand, 'ron').total === 32);
+            hand.winningType = 'ron';
+            ok(fuCalculator.calculate(hand).total === 32);
         });
         
         // closed wait (2 pts)
@@ -242,7 +264,8 @@ function TestPointerFu() {
                 new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
                 new Pair(new DotTile(9))
             ], [], 'east', 'east', 0, 1);
-            ok(fuCalculator.calculate(hand, 'ron').total === 32);
+            hand.winningType = 'ron';
+            ok(fuCalculator.calculate(hand).total === 32);
         });
         
         // single wait (2 pts)
@@ -254,7 +277,8 @@ function TestPointerFu() {
                 new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
                 new Pair(new DotTile(9))
             ], [], 'east', 'east', 4, 0);
-            ok(fuCalculator.calculate(hand, 'ron').total === 32);
+            hand.winningType = 'ron';
+            ok(fuCalculator.calculate(hand).total === 32);
         });
         
         // two-sided wait (0 pts)
@@ -266,7 +290,8 @@ function TestPointerFu() {
                 new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
                 new Pair(new DotTile(9))
             ], [], 'east', 'east', 0, 0);
-            ok(fuCalculator.calculate(hand, 'ron').total === 30);
+            hand.winningType = 'ron';
+            ok(fuCalculator.calculate(hand).total === 30);
         });
         
         // winning on a self-draw (except in case of pinfu) (2 pts)
@@ -278,8 +303,10 @@ function TestPointerFu() {
                 new Chii(new DotTile(4), new DotTile(5), new DotTile(6)),
                 new Pair(new DragonTile('red'))
             ], [], 'east', 'east', 1, 2);
-            ok(fuCalculator.calculate(hand, 'tsumo').total === 26); // +2 dragon pair, +2 edge wait
-            ok(fuCalculator.calculate(hand, 'ron').total === 34); // +2 dragon pair, +2 edge wait
+            hand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(hand).total === 26); // +2 dragon pair, +2 edge wait
+            hand.winningType = 'ron';
+            ok(fuCalculator.calculate(hand).total === 34); // +2 dragon pair, +2 edge wait
         });
         
         // open pinfu (2 pts)
@@ -292,8 +319,10 @@ function TestPointerFu() {
                 new Chii(new CharacterTile(1), new CharacterTile(2), new CharacterTile(3)),
                 new Chii(new DotTile(5), new DotTile(6), new DotTile(7))
             ], 'east', 'east');
-            ok(fuCalculator.calculate(hand, 'tsumo').total === 22);
-            ok(fuCalculator.calculate(hand, 'ron').total === 20);
+            hand.winningType = 'tsumo';
+            ok(fuCalculator.calculate(hand).total === 22);
+            hand.winningType = 'ron';
+            ok(fuCalculator.calculate(hand).total === 20);
         });
         
     };

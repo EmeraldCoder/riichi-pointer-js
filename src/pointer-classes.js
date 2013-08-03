@@ -1,6 +1,6 @@
 function FuCalculator() {};
 
-FuCalculator.prototype.calculate = function(hand, winningType) {
+FuCalculator.prototype.calculate = function(hand) {
     var result = {
         total: 0,
         details: []
@@ -16,7 +16,7 @@ FuCalculator.prototype.calculate = function(hand, winningType) {
         result.details.push({ name: 'Win with a chiitoitsu', value: 25 });
         result.total += 25;
         return result;
-    } else if (winningType === 'ron' && hand.openCombinaisons.length === 0) {
+    } else if (hand.winningType === 'ron' && hand.openCombinaisons.length === 0) {
         // concealed ron always award 30 fu
         result.details.push({ name: 'Win by ron with a concealed hand', value: 30 });
         result.total += 30;
@@ -98,13 +98,13 @@ FuCalculator.prototype.calculate = function(hand, winningType) {
         result.total += 2;
     }
     
-    if (winningType === 'tsumo' && !isPinfu) {
+    if (hand.winningType === 'tsumo' && !isPinfu) {
         result.details.push({ name: 'Tsumo (self-draw)', value: 2 });
         result.total += 2;
     }
     
     // open pinfu award 2 fu
-    if (winningType === 'tsumo' && hand.openCombinaisons.length > 0 && result.total === 20) {
+    if (hand.winningType === 'tsumo' && hand.openCombinaisons.length > 0 && result.total === 20) {
         result.details.push({ name: 'Open pinfu', value: 2 });
         result.total += 2;
     }

@@ -75,6 +75,12 @@
             <h2>Your hand</h2>
 
             <div style="margin: 10px 0;">
+                <label>Winning type: </label>
+                <select id="WinningType">
+                    <option value="tsumo">Tsumo</option>
+                    <option value="ron">Ron</option>
+                </select>
+            
                 <label>Prevalent wind: </label>
                 <select id="PrevalentWind">
                     <option value="east">East</option>
@@ -242,7 +248,8 @@
                     document.getElementById('SeatWind').value,
                     document.getElementById('PrevalentWind').value,
                     winningCombinaisonIndex,
-                    winningTileIndex
+                    winningTileIndex,
+                    document.getElementById('WinningType').value
                 );
             
                 var patterns = [

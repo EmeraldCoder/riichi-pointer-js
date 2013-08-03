@@ -5,8 +5,11 @@
  * param Array<HandCombinaison> openCombinaisons
  * param String seatWind
  * param String roundWind
+ * param Integer winningCombinaisonIndex
+ * param Integer winningTileIndex
+ * param string winningType 
  */
-function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winningCombinaisonIndex, winningTileIndex) {
+function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winningCombinaisonIndex, winningTileIndex, winningType) {
     this.concealedCombinaisons = concealedCombinaisons; // array of HandCombinaison
     this.openCombinaisons = openCombinaisons; // array of HandCombinaison
     this.combinaisons = Array.concat(this.concealedCombinaisons, this.openCombinaisons);
@@ -14,6 +17,7 @@ function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winn
     this.roundWind = roundWind;
     this.winningCombinaisonIndex = winningCombinaisonIndex;
     this.winningTileIndex = winningTileIndex;
+    this.winningType = winningType;
     
     this.isFinish = function(){
         var nbPair = 0,
