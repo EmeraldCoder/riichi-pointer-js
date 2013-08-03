@@ -643,3 +643,34 @@ function SanAnkou() {
 }
 SanAnkou.prototype = new YakuPattern();
 SanAnkou.prototype.constructor = SanAnkou;
+
+/**
+ * San Kan Tsu (3 kans) yaku pattern
+ * A hand with three kans.
+ *
+ * Must be concealed: no
+ * Han: 2
+ */
+function SanKanTsu() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'San Kan Tsu';
+    this.englishName = '3 kans';
+    
+    this.check = function(hand) {
+        var nbKan = 0;
+        
+        for (var i = 0; i < hand.combinaisons.length; i++) {
+            if (hand.combinaisons[i] instanceof Kan) {
+                nbKan++;
+            }
+        }
+        
+        if (nbKan >= 3) {
+            return 2;
+        }
+        return 0;
+    };
+}
+SanKanTsu.prototype = new YakuPattern();
+SanKanTsu.prototype.constructor = SanKanTsu;
