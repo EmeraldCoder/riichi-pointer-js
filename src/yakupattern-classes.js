@@ -674,3 +674,26 @@ function SanKanTsu() {
 }
 SanKanTsu.prototype = new YakuPattern();
 SanKanTsu.prototype.constructor = SanKanTsu;
+
+/**
+ * Menzen Tsumo (Fully Concealed Hand) yaku pattern
+ * Going out on self-draw with a concealed hand.
+ *
+ * Must be concealed: yes
+ * Han: 1
+ */
+function MenzenTsumo() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Menzen Tsumo';
+    this.englishName = 'Fully Concealed Hand';
+    
+    this.check = function(hand) {
+        if (hand.winningType === 'tsumo' && hand.openCombinaisons.length === 0) {
+            return 1;
+        }
+        return 0;
+    };
+}
+MenzenTsumo.prototype = new YakuPattern();
+MenzenTsumo.prototype.constructor = MenzenTsumo;
