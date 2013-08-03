@@ -98,6 +98,15 @@
                 </select>
             </div>
             
+            <div style="margin: 10px 0;">
+                <fieldset>
+                    <legend>Riichi</legend>
+                    <input type="checkbox" id="IsRiichi" /><label for="IsRiichi">Riichi</label>
+                    <input type="checkbox" id="IsDoubleRiichi" /><label for="IsDoubleRiichi">Double Riichi</label>
+                    <input type="checkbox" id="IsIppatsu" /><label for="IsIppatsu">Ippatsu</label>
+                </fieldset>
+            </div>
+            
             <div>
                 <input id="AddConcealedCombinaisonButton" type="button" value="Add a concealed combinaison" onclick="add(true)" />
                 <input id="AddOpenCombinaisonButton" type="button" value="Add an open combinaison" onclick="add(false)" />
@@ -251,6 +260,18 @@
                     winningTileIndex,
                     document.getElementById('WinningType').value
                 );
+                
+                if (document.getElementById('IsRiichi').checked) {
+                    hand.isRiichi = true;
+                }
+                if (document.getElementById('IsDoubleRiichi').checked) {
+                    hand.isRiichi = true;
+                    hand.isDoubleRiichi = true;
+                }
+                if (document.getElementById('IsIppatsu').checked) {
+                    hand.isRiichi = true;
+                    hand.isIppatsu = true;
+                }
             
                 var patterns = [
                     { name: 'TanyaouChuu', checker: new TanyaouChuu() },
@@ -273,7 +294,10 @@
                     { name: 'Pinfu (all chii / no point)', checker: new Pinfu() },
                     { name: 'SanAnkou (3 concealed pons)', checker: new SanAnkou() },
                     { name: 'SanKanTsu (3 kans)', checker: new SanKanTsu() },
-                    { name: 'Menzen Tsumo (Fully Concealed Hand)', checker: new MenzenTsumo() }
+                    { name: 'Menzen Tsumo (Fully Concealed Hand)', checker: new MenzenTsumo() },
+                    { name: 'Riichi', checker: new Riichi() },
+                    { name: 'Double Riichi', checker: new DoubleRiichi() },
+                    { name: 'Ippatsu (One Shot)', checker: new Ippatsu() }
                 ];
                 
                 var result = [];

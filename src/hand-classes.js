@@ -18,6 +18,9 @@ function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winn
     this.winningCombinaisonIndex = winningCombinaisonIndex;
     this.winningTileIndex = winningTileIndex;
     this.winningType = winningType;
+    this.isRiichi = false;
+    this.isDoubleRiichi = false;
+    this.isIppatsu = false;
     
     this.isFinish = function(){
         var nbPair = 0,

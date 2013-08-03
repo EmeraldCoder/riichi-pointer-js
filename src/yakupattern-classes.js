@@ -697,3 +697,72 @@ function MenzenTsumo() {
 }
 MenzenTsumo.prototype = new YakuPattern();
 MenzenTsumo.prototype.constructor = MenzenTsumo;
+
+/**
+ * Riichi yaku pattern
+ * Waiting hand with declaration and 1000 point buy in. 
+ *
+ * Must be concealed: yes
+ * Han: 1
+ */
+function Riichi() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Riichi';
+    this.englishName = 'Riichi';
+    
+    this.check = function(hand) {
+        if (hand.isRiichi) {
+            return 1;
+        }
+        return 0;
+    };
+}
+Riichi.prototype = new YakuPattern();
+Riichi.prototype.constructor = Riichi;
+
+/**
+ * Double Riichi yaku pattern
+ * Declaring riichi within the first uninterrupted go around.
+ *
+ * Must be concealed: yes
+ * Han: 1
+ */
+function DoubleRiichi() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Double Riichi';
+    this.englishName = 'Double Riichi';
+    
+    this.check = function(hand) {
+        if (hand.isDoubleRiichi) {
+            return 1;
+        }
+        return 0;
+    };
+}
+DoubleRiichi.prototype = new YakuPattern();
+DoubleRiichi.prototype.constructor = DoubleRiichi;
+
+/**
+ * Ippatsu (One Shot) yaku pattern
+ * Winning within the first uninterrupted go around after declaring riichi .
+ *
+ * Must be concealed: yes
+ * Han: 1
+ */
+function Ippatsu() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Ippatsu';
+    this.englishName = 'One Shot';
+    
+    this.check = function(hand) {
+        if (hand.isIppatsu) {
+            return 1;
+        }
+        return 0;
+    };
+}
+Ippatsu.prototype = new YakuPattern();
+Ippatsu.prototype.constructor = Ippatsu;
