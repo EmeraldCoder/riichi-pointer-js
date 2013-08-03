@@ -80,6 +80,14 @@
                     <option value="tsumo">Tsumo</option>
                     <option value="ron">Ron</option>
                 </select>
+                <select id="WinningSecondType">
+                    <option></option>
+                    <option value="haitei raoyue">Haitei Raoyue</option>
+                    <option value="houtei raoyui">Houtei Raoyui</option>
+                    <option value="rinshan kaihou">Rinshan Kaihou</option>
+                    <option value="chan kan">Chan Kan</option>
+                </select>
+                
             
                 <label>Prevalent wind: </label>
                 <select id="PrevalentWind">
@@ -258,7 +266,8 @@
                     document.getElementById('PrevalentWind').value,
                     winningCombinaisonIndex,
                     winningTileIndex,
-                    document.getElementById('WinningType').value
+                    document.getElementById('WinningType').value,
+                    document.getElementById('WinningSecondType').value
                 );
                 
                 if (document.getElementById('IsRiichi').checked) {
@@ -297,7 +306,11 @@
                     { name: 'Menzen Tsumo (Fully Concealed Hand)', checker: new MenzenTsumo() },
                     { name: 'Riichi', checker: new Riichi() },
                     { name: 'Double Riichi', checker: new DoubleRiichi() },
-                    { name: 'Ippatsu (One Shot)', checker: new Ippatsu() }
+                    { name: 'Ippatsu (One Shot)', checker: new Ippatsu() },
+                    { name: 'HaiteiRaoyue', checker: new HaiteiRaoyue() },
+                    { name: 'HouteiRaoyui', checker: new HouteiRaoyui() },
+                    { name: 'RinshanKaihou', checker: new RinshanKaihou() },
+                    { name: 'ChanKan', checker: new ChanKan() }
                 ];
                 
                 var result = [];

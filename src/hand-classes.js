@@ -8,8 +8,9 @@
  * param Integer winningCombinaisonIndex
  * param Integer winningTileIndex
  * param string winningType 
+ * param string winningSecondType
  */
-function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winningCombinaisonIndex, winningTileIndex, winningType) {
+function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winningCombinaisonIndex, winningTileIndex, winningType, winningSecondType) {
     this.concealedCombinaisons = concealedCombinaisons; // array of HandCombinaison
     this.openCombinaisons = openCombinaisons; // array of HandCombinaison
     this.combinaisons = Array.concat(this.concealedCombinaisons, this.openCombinaisons);
@@ -18,6 +19,7 @@ function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winn
     this.winningCombinaisonIndex = winningCombinaisonIndex;
     this.winningTileIndex = winningTileIndex;
     this.winningType = winningType;
+    this.winningSecondType = winningSecondType;
     this.isRiichi = false;
     this.isDoubleRiichi = false;
     this.isIppatsu = false;

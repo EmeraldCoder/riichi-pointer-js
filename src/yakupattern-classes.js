@@ -766,3 +766,95 @@ function Ippatsu() {
 }
 Ippatsu.prototype = new YakuPattern();
 Ippatsu.prototype.constructor = Ippatsu;
+
+/**
+ * Haitei Raoyue (Last Tile Draw) yaku pattern
+ * Winning on the very last tile
+ *
+ * Must be concealed: no
+ * Han: 1
+ */
+function HaiteiRaoyue() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Haitei Raoyue';
+    this.englishName = 'Last Tile Draw';
+    
+    this.check = function(hand) {
+        if (hand.winningType === 'tsumo' && hand.winningSecondType === 'haitei raoyue') {
+            return 1;
+        }
+        return 0;
+    };
+}
+HaiteiRaoyue.prototype = new YakuPattern();
+HaiteiRaoyue.prototype.constructor = HaiteiRaoyue;
+
+/**
+ * Houtei Raoyui (Last Tile Discard) yaku pattern
+ * Winning on the very last discard
+ *
+ * Must be concealed: no
+ * Han: 1
+ */
+function HouteiRaoyui() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Houtei Raoyui';
+    this.englishName = 'Last Tile Discard';
+    
+    this.check = function(hand) {
+        if (hand.winningType === 'ron' && hand.winningSecondType === 'houtei raoyui') {
+            return 1;
+        }
+        return 0;
+    };
+}
+HouteiRaoyui.prototype = new YakuPattern();
+HouteiRaoyui.prototype.constructor = HouteiRaoyui;
+
+/**
+ * Rinshan Kaihou (After Kan) yaku pattern
+ * Winning after drawing a replacement tile.
+ *
+ * Must be concealed: no
+ * Han: 1
+ */
+function RinshanKaihou() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Rinshan Kaihou';
+    this.englishName = 'After kan';
+    
+    this.check = function(hand) {
+        if (hand.winningType === 'tsumo' && hand.winningSecondType === 'rinshan kaihou') {
+            return 1;
+        }
+        return 0;
+    };
+}
+RinshanKaihou.prototype = new YakuPattern();
+RinshanKaihou.prototype.constructor = RinshanKaihou;
+
+/**
+ * Chan Kan (Robbing the kan) yaku pattern
+ * Winning on off a tile used to extend a kong.
+ *
+ * Must be concealed: no
+ * Han: 1
+ */
+function ChanKan() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Chan Kan';
+    this.englishName = 'Robbing the kan';
+    
+    this.check = function(hand) {
+        if (hand.winningType === 'ron' && hand.winningSecondType === 'chan kan') {
+            return 1;
+        }
+        return 0;
+    };
+}
+ChanKan.prototype = new YakuPattern();
+ChanKan.prototype.constructor = ChanKan;
