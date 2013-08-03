@@ -611,3 +611,35 @@ function Pinfu() {
 }
 Pinfu.prototype = new YakuPattern();
 Pinfu.prototype.constructor = Pinfu;
+
+/**
+ * San Ankou (3 concealed pons) yaku pattern
+ * A hand with three concealed pons or kans.
+ *
+ * Must be concealed: no
+ * Han: 2
+ */
+function SanAnkou() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'San Ankou';
+    this.englishName = '3 concealed pons';
+    
+    this.check = function(hand) {
+        var nbConcealedPon = 0;
+        
+        for (var i = 0; i < hand.concealedCombinaisons.length; i++) {
+            var combinaison = hand.concealedCombinaisons[i];
+            if (combinaison instanceof Pon || combinaison instanceof Kan) {
+                nbConcealedPon++;
+            }
+        }
+        
+        if (nbConcealedPon >= 3) {
+            return 2;
+        }
+        return 0;
+    };
+}
+SanAnkou.prototype = new YakuPattern();
+SanAnkou.prototype.constructor = SanAnkou;
