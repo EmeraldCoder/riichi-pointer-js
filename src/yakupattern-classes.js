@@ -214,7 +214,7 @@ SanShokuDoujun.prototype = new YakuPattern();
 SanShokuDoujun.prototype.construction = SanShokuDoujun;
 
 /**
- * Itsu (pure straight) yaku pattern
+ * Itsu or Ikkitsuukan (pure straight) yaku pattern
  * Three consecutive chiis (1-9) in the same suit
  *
  * Must be concealed: no
@@ -223,7 +223,7 @@ SanShokuDoujun.prototype.construction = SanShokuDoujun;
 function Itsu() {
     YakuPattern.call(this);
     
-    this.japaneseName = 'Itsu';
+    this.japaneseName = 'Itsu'; // can be call Ikkitsuukan
     this.englishName = 'Pure Straight';
     
     this.check = function(hand) {
@@ -457,7 +457,7 @@ RyanPeikou.prototype = new YakuPattern();
 RyanPeikou.prototype.constructor = RyanPeikou;
 
 /**
- * Junchan Taiyai (terminals in all sets) yaku pattern
+ * Junchan Taiyai or Junchan Tayao or Junchan (terminals in all sets) yaku pattern
  * A hand with at least one chii and where all sets and the pair contains terminals
  * 
  * Must be concealed: no
@@ -466,7 +466,7 @@ RyanPeikou.prototype.constructor = RyanPeikou;
 function JunchanTaiyai() {
     YakuPattern.call(this);
     
-    this.japaneseName = 'Junchan Taiyai';
+    this.japaneseName = 'Junchan Taiyai'; // can also be call Junchan Tayao or Junchan
     this.englishName = 'Terminals in all sets';
     
     this.check = function(hand) {
