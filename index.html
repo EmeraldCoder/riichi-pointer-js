@@ -343,9 +343,27 @@
                 }
                 fuTableHtml += '</tbody></table>';
                 
+                var pointCalculator = new PointCalculator();
+                var pointResult = pointCalculator.calculate(hand, hanTotal, fuResult.total);
+                
                 var totalHtml = '<p><b>Han:</b> ' + hanTotal + ' / <b>Fu:</b> ' + fuResult.total + '</p>';
+                
+                var pointHtml = '';
+                if (hand.seatWind === 'east') { // dealer
+                    if (hand.winningType === 'tsumo') {
+                        pointHtml = '<p>' + pointResult + ' points from each player (' + (pointResult * 3) + ' points)</p>';
+                    } else if (hand.winningType === 'ron') {
+                        pointHtml = '<p>' + pointResult + ' points from the discard player</p>';
+                    }
+                } else { // non-dealer
+                    if (hand.winningType === 'tsumo') {
+                        pointHtml = '<p>' + pointResult.dealer + ' points from dealer / ' + pointResult.nonDealer + ' points from others players (' + (pointResult.dealer + (pointResult.nonDealer * 2)) + ' points)</p>';
+                    } else if (hand.winningType === 'ron') {
+                        pointHtml = '<p>' + pointResult + ' points from the discard player</p>';
+                    }
+                }
             
-                document.getElementById('HandPoints').innerHTML = totalHtml + hanTableHtml + fuTableHtml;
+                document.getElementById('HandPoints').innerHTML = pointHtml + totalHtml + hanTableHtml + fuTableHtml;
                 
                 document.getElementById('PageMain').style.display = 'none';
                 document.getElementById('PageResult').style.display = 'block';
