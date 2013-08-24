@@ -38,6 +38,7 @@ function WindTile(direction) {
     HonorTile.call(this);
     this.suit = "wind";
     this.direction = direction; // east, south, west, north
+    this.value = direction;
 }
 WindTile.prototype = new HonorTile();
 WindTile.prototype.constructor = WindTile;
@@ -50,6 +51,7 @@ function DragonTile(color) {
     HonorTile.call(this);
     this.suit = "dragon";
     this.color = color; // red, green, white
+    this.value = color;
 }
 DragonTile.prototype = new HonorTile();
 DragonTile.prototype.constructor = DragonTile;
@@ -60,6 +62,7 @@ DragonTile.prototype.constructor = DragonTile;
 function DotTile(number) {
     NumberedTile.call(this, number);
     this.suit = "dot";
+    this.value = number;
 }
 DotTile.prototype = new NumberedTile();
 DotTile.prototype.constructor = DotTile;
@@ -70,6 +73,7 @@ DotTile.prototype.constructor = DotTile;
 function CharacterTile(number) {
     NumberedTile.call(this, number);
     this.suit = "character";
+    this.value = number;
 }
 CharacterTile.prototype = new NumberedTile();
 CharacterTile.prototype.constructor = CharacterTile;
@@ -80,6 +84,7 @@ CharacterTile.prototype.constructor = CharacterTile;
 function BambooTile(number) {
     NumberedTile.call(this, number);
     this.suit = "bamboo";
+    this.value = number;
 }
 BambooTile.prototype = new NumberedTile();
 BambooTile.prototype.constructor = BambooTile;

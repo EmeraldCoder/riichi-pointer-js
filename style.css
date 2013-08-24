@@ -47,12 +47,12 @@ select {
 }*/
 .box span {
     width: 4.8%;
+    display: inline-block;
 }
 .box span.last {
     margin-right: 2.4%;
 }
 .box img {
-    display: block;
     width: 100%;
 }
 
