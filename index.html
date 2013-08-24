@@ -3,20 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <title>Riichi Mahjong Pointer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <div id="layout">
         <h1>Riichi Mahjong Pointer</h1>
-    
-        <div id="PageSelectCombinaisonType" style="display: none;">
-            <h2>Select the combinaison type to add to your hand</h2>
-            
-            <input type="button" value="Pair" onclick="selectCombinaisonType('pair')" />
-            <input type="button" value="Pon" onclick="selectCombinaisonType('pon')" />
-            <input type="button" value="Kan" onclick="selectCombinaisonType('kan')" />
-            <input type="button" value="Chii" onclick="selectCombinaisonType('chii')" />
-        </div>
         
         <div id="PageSelectTileSuit" style="display: none;">
             <h2>Select type tile type of the combinaison to add to your hand</h2>
@@ -75,35 +67,46 @@
             <h2>Your hand</h2>
 
             <div style="margin: 10px 0;">
-                <label>Winning type: </label>
-                <select id="WinningType">
-                    <option value="tsumo">Tsumo</option>
-                    <option value="ron">Ron</option>
-                </select>
-                <select id="WinningSecondType">
-                    <option></option>
-                    <option value="haitei raoyue">Haitei Raoyue</option>
-                    <option value="houtei raoyui">Houtei Raoyui</option>
-                    <option value="rinshan kaihou">Rinshan Kaihou</option>
-                    <option value="chan kan">Chan Kan</option>
-                </select>
-                
+                <fieldset>
+                    <legend>Winning type</legend>
+                    <select id="WinningType">
+                        <option value="tsumo">Tsumo</option>
+                        <option value="ron">Ron</option>
+                    </select>
+                    <select id="WinningSecondType">
+                        <option></option>
+                        <option value="haitei raoyue">Haitei Raoyue</option>
+                        <option value="houtei raoyui">Houtei Raoyui</option>
+                        <option value="rinshan kaihou">Rinshan Kaihou</option>
+                        <option value="chan kan">Chan Kan</option>
+                    </select>
+                </fieldset>
+            </div>
             
-                <label>Prevalent wind: </label>
-                <select id="PrevalentWind">
-                    <option value="east">East</option>
-                    <option value="south">South</option>
-                    <option value="west">West</option>
-                    <option value="north">North</option>
-                </select>
-                
-                <label>Seat wind: </label>
-                <select id="SeatWind">
-                    <option value="east">East</option>
-                    <option value="south">South</option>
-                    <option value="west">West</option>
-                    <option value="north">North</option>
-                </select>
+            <div style="margin: 10px 0;">
+                <fieldset>
+                    <legend>Winds</legend>
+                    
+                    <div style="display: inline-block;">
+                        <label>Prevalent: </label>
+                        <select id="PrevalentWind">
+                            <option value="east">East</option>
+                            <option value="south">South</option>
+                            <option value="west">West</option>
+                            <option value="north">North</option>
+                        </select>
+                    </div>
+                    
+                    <div style="display: inline-block;">
+                        <label>Seat: </label>
+                        <select id="SeatWind">
+                            <option value="east">East</option>
+                            <option value="south">South</option>
+                            <option value="west">West</option>
+                            <option value="north">North</option>
+                        </select>
+                    </div>
+                </fieldset>
             </div>
             
             <div style="margin: 10px 0;">
@@ -115,16 +118,35 @@
                 </fieldset>
             </div>
             
+            <div style="margin: 10px 0;">
+                <fieldset>
+                    <legend>Concealed combinaisons</legend>
+                    <div id="AddConcealedCombinaisonButtons">
+                        <input type="button" value="+ Pair" onclick="add(true, 'pair')" />
+                        <input type="button" value="+ Pon" onclick="add(true, 'pon')" />
+                        <input type="button" value="+ Kan" onclick="add(true, 'kan')" />
+                        <input type="button" value="+ Chii" onclick="add(true, 'chii')" />
+                    </div>
+                    <div id="ConcealedHandTiles" class="box" style="margin-top: 10px;"></div>
+                </fieldset>
+            </div>
+            
+            <div style="margin: 10px 0;">
+                <fieldset>
+                    <legend>Open combinaisons</legend>
+                    <div id="AddOpenCombinaisonButtons">
+                        <input type="button" value="+ Pair" onclick="add(false, 'pair')" />
+                        <input type="button" value="+ Pon" onclick="add(false, 'pon')" />
+                        <input type="button" value="+ Kan" onclick="add(false, 'kan')" />
+                        <input type="button" value="+ Chii" onclick="add(false, 'chii')" />
+                    </div>
+                    <div id="OpenHandTiles" class="box" style="margin-top: 10px;"></div>
+                </fieldset>
+            </div>
+            
             <div>
-                <input id="AddConcealedCombinaisonButton" type="button" value="Add a concealed combinaison" onclick="add(true)" />
-                <input id="AddOpenCombinaisonButton" type="button" value="Add an open combinaison" onclick="add(false)" />
                 <input id="ViewResultButton" type="button" value="Calculate hand points" onclick="refreshHandPoints()" style="display: none;" />
             </div>
-
-            <div style="margin-top:20px;">Concealed combinaisons</div>
-            <div id="ConcealedHandTiles" class="box" style="min-height: 100px;"></div>
-            <div style="margin-top:20px;">Open combinaisons</div>
-            <div id="OpenHandTiles" class="box" style="min-height: 100px;"></div>
         </div>
         
         <div id="PageResult" style="display: none">
@@ -190,12 +212,12 @@
             
             var tempHand = new Hand(concealedCombinaisons, openCombinaisons);
             if (tempHand.isFinish()) {
-                document.getElementById('AddConcealedCombinaisonButton').style.display = 'none';
-                document.getElementById('AddOpenCombinaisonButton').style.display = 'none';
+                document.getElementById('AddConcealedCombinaisonButtons').style.display = 'none';
+                document.getElementById('AddOpenCombinaisonButtons').style.display = 'none';
                 document.getElementById('ViewResultButton').style.display = 'inline-block';
             } else {
-                document.getElementById('AddConcealedCombinaisonButton').style.display = 'inline-block';
-                document.getElementById('AddOpenCombinaisonButton').style.display = 'inline-block';
+                document.getElementById('AddConcealedCombinaisonButtons').style.display = 'inline-block';
+                document.getElementById('AddOpenCombinaisonButtons').style.display = 'inline-block';
                 document.getElementById('ViewResultButton').style.display = 'none';
             }
         }
@@ -209,14 +231,21 @@
             var concealedHtml = '';
             var openHtml = '';
             var combinaisonIndex = 0;
-            for (var i = 0; i < concealedCombinaisons.length; i++) {
-                concealedHtml += '<span style="display: inline-block; margin-right: 10px;">';
-                for (var j = 0; j < concealedCombinaisons[i].tiles.length; j++) {
-                    var tile = concealedCombinaisons[i].tiles[j];
+            
+            var concealedCombinaisonsLength = concealedCombinaisons.length;
+            for (var i = 0; i < concealedCombinaisonsLength; i++) {
+                var tiles = concealedCombinaisons[i].tiles;
+                var tilesLength = tiles.length;
+                var tilesMaxIndex = tilesLength-1;
+                for (var j = 0; j < tilesLength; j++) {
+                    var tile = tiles[j];
                     
                     var cssClass = '';
                     if (combinaisonIndex === winningCombinaisonIndex && j === winningTileIndex) {
                         cssClass = 'waiting';
+                    }
+                    if (j === tilesMaxIndex) {
+                        cssClass += ' last';
                     }
                     
                     if (tile instanceof DragonTile) {
@@ -227,17 +256,23 @@
                         concealedHtml = concealedHtml + '<span style="display: inline-block" class="' + cssClass + '" onclick="selectWaitingTile(' + combinaisonIndex + ', ' + j + ')"><img src="img/' + tile.suit + tile.number + '.png" /></span>';
                     }
                 }
-                concealedHtml += '</span>';
                 combinaisonIndex++;
             }
-            for (var i = 0; i < openCombinaisons.length; i++) {
-                openHtml += '<span style="display: inline-block; margin-right: 10px;">';
-                for (var j = 0; j < openCombinaisons[i].tiles.length; j++) {
-                    var tile = openCombinaisons[i].tiles[j];
+            
+            var openCombinaisonsLength = openCombinaisons.length;
+            for (var i = 0; i < openCombinaisonsLength; i++) {
+                var tiles = openCombinaisons[i].tiles;
+                var tilesLength = tiles.length;
+                var tilesMaxIndex = tilesLength-1;
+                for (var j = 0; j < tilesLength; j++) {
+                    var tile = tiles[j];
                     
                     var cssClass = '';
                     if (combinaisonIndex === winningCombinaisonIndex && j === winningTileIndex) {
                         cssClass = 'waiting';
+                    }
+                    if (j === tilesMaxIndex) {
+                        cssClass += ' last';
                     }
                     
                     if (tile instanceof DragonTile) {
@@ -248,11 +283,12 @@
                         openHtml = openHtml + '<span style="display: inline-block" class="' + cssClass + '" onclick="selectWaitingTile(' + combinaisonIndex + ', ' + j + ')"><img src="img/' + tile.suit + tile.number + '.png" /></span>';
                     }
                 }
-                openHtml += '</span>';
                 combinaisonIndex++;
             }
             document.getElementById('ConcealedHandTiles').innerHTML = concealedHtml;
             document.getElementById('OpenHandTiles').innerHTML = openHtml;
+            
+            window.scrollTo(0, 0);
         }
         
         function refreshHandPoints() {
@@ -367,6 +403,8 @@
                 
                 document.getElementById('PageMain').style.display = 'none';
                 document.getElementById('PageResult').style.display = 'block';
+                
+                window.scrollTo(0, 0);
             }
         }
         
@@ -374,14 +412,13 @@
         var addCombinaisonType = null;
         var addTileSuit = null;
         var addTileValue = null;
-        function add (isConcealed) {
+        function add (isConcealed, type) {
             addCombinaisonIsConcealed = isConcealed;
             document.getElementById('PageMain').style.display = 'none';
-            document.getElementById('PageSelectCombinaisonType').style.display = 'block';
+            selectCombinaisonType(type);            
         }
         function selectCombinaisonType (type) {
             addCombinaisonType = type;
-            document.getElementById('PageSelectCombinaisonType').style.display = 'none';
             document.getElementById('PageSelectTileSuit').style.display = 'block';
             
             if (addCombinaisonType === 'chii') {

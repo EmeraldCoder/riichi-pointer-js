@@ -40,11 +40,20 @@ select {
 }
 
 .box {
-    padding: 10px;
-    border: 2px solid #b2b2b2;
-    margin: 0;
-    box-shadow: inset 0px 0px 5px 0px rgba(b2, b2, b2, 1);
-        -webkit-box-shadow: inset 0px 0px 5px 0px rgba(b2, b2, b2, 1);
+    
+}
+/*.box span {
+    max-width: 20%;
+}*/
+.box span {
+    width: 4.8%;
+}
+.box span.last {
+    margin-right: 2.4%;
+}
+.box img {
+    display: block;
+    width: 100%;
 }
 
 table {
