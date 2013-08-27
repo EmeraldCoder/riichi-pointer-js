@@ -13,37 +13,37 @@
         <div data-bind="{visible: currentView() === 'TileSuitSelection'}">
             <h2>Select type tile type of the combinaison to add to your hand</h2>
 
-            <input type="button" value="Dragon" data-bind="{click: selectDragonSuit, visible: addType() !== 'chii'}" />
-            <input type="button" value="Wind" data-bind="{click: selectWindSuit, visible: addType() !== 'chii'}" />
-            <input type="button" value="Dot" data-bind="{click: selectDotSuit}" />
-            <input type="button" value="Bamboo" data-bind="{click: selectBambooSuit}" />
-            <input type="button" value="Character" data-bind="{click: selectCharacterSuit}" />    
+            <input type="button" value="Dragon" data-bind="{click: selectSuit.bind($data, 'dragon'), visible: addType() !== 'chii'}" />
+            <input type="button" value="Wind" data-bind="{click: selectSuit.bind($data, 'wind'), visible: addType() !== 'chii'}" />
+            <input type="button" value="Dot" data-bind="{click: selectSuit.bind($data, 'dot')}" />
+            <input type="button" value="Bamboo" data-bind="{click: selectSuit.bind($data, 'bamboo')}" />
+            <input type="button" value="Character" data-bind="{click: selectSuit.bind($data, 'character')}" />    
         </div>
         
         <div data-bind="{visible: currentView() === 'TileValueSelection'}">
             <h2>Select the value of the tile of the combinaison to add to your hand</h2>
             
             <div data-bind="{visible: addSuit() === 'dragon'}">
-                <input type="button" value="Green" data-bind="{click: selectGreenValue}" />
-                <input type="button" value="Red" data-bind="{click: selectRedValue}" />
-                <input type="button" value="White" data-bind="{click: selectWhiteValue}" />
+                <input type="button" value="Green" data-bind="{click: selectValue.bind($data, 'green')}" />
+                <input type="button" value="Red" data-bind="{click: selectValue.bind($data, 'red')}" />
+                <input type="button" value="White" data-bind="{click: selectValue.bind($data, 'white')}" />
             </div>
             <div data-bind="{visible: addSuit() === 'wind'}">
-                <input type="button" value="East" data-bind="{click: selectEastValue}" />
-                <input type="button" value="South" data-bind="{click: selectSouthValue}" />
-                <input type="button" value="West" data-bind="{click: selectWestValue}" />
-                <input type="button" value="North" data-bind="{click: selectNorthValue}" />
+                <input type="button" value="East" data-bind="{click: selectValue.bind($data, 'east')}" />
+                <input type="button" value="South" data-bind="{click: selectValue.bind($data, 'south')}" />
+                <input type="button" value="West" data-bind="{click: selectValue.bind($data, 'west')}" />
+                <input type="button" value="North" data-bind="{click: selectValue.bind($data, 'north')}" />
             </div>
             <div data-bind="{visible: addSuit() !== 'dragon' && addSuit() !== 'wind'}">
-                <input type="button" value="1" data-bind="{click: select1Value}" />
-                <input type="button" value="2" data-bind="{click: select2Value}" />
-                <input type="button" value="3" data-bind="{click: select3Value}" />
-                <input type="button" value="4" data-bind="{click: select4Value}" />
-                <input type="button" value="5" data-bind="{click: select5Value}" />
-                <input type="button" value="6" data-bind="{click: select6Value}" />
-                <input type="button" value="7" data-bind="{click: select7Value}" />
-                <input type="button" value="8" data-bind="{click: select8Value, visible: addType() !== 'chii'}" />
-                <input type="button" value="9" data-bind="{click: select9Value, visible: addType() !== 'chii'}" />
+                <input type="button" value="1" data-bind="{click: selectValue.bind($data, 1)}" />
+                <input type="button" value="2" data-bind="{click: selectValue.bind($data, 2)}" />
+                <input type="button" value="3" data-bind="{click: selectValue.bind($data, 3)}" />
+                <input type="button" value="4" data-bind="{click: selectValue.bind($data, 4)}" />
+                <input type="button" value="5" data-bind="{click: selectValue.bind($data, 5)}" />
+                <input type="button" value="6" data-bind="{click: selectValue.bind($data, 6)}" />
+                <input type="button" value="7" data-bind="{click: selectValue.bind($data, 7)}" />
+                <input type="button" value="8" data-bind="{click: selectValue.bind($data, 8), visible: addType() !== 'chii'}" />
+                <input type="button" value="9" data-bind="{click: selectValue.bind($data, 9), visible: addType() !== 'chii'}" />
             </div>
         </div>
 
@@ -106,10 +106,10 @@
                 <fieldset>
                     <legend>Concealed combinaisons</legend>
                     <div data-bind="{visible: !handIsFinish()}">
-                        <input type="button" value="+ Pair" data-bind="{click: addConcealedPair}" />
-                        <input type="button" value="+ Pon" data-bind="{click: addConcealedPon}" />
-                        <input type="button" value="+ Kan" data-bind="{click: addConcealedKan}" />
-                        <input type="button" value="+ Chii" data-bind="{click: addConcealedChii}" />
+                        <input type="button" value="+ Pair" data-bind="{click: add.bind($data, true, 'pair')}" />
+                        <input type="button" value="+ Pon" data-bind="{click: add.bind($data, true, 'pon')}" />
+                        <input type="button" value="+ Kan" data-bind="{click: add.bind($data, true, 'kan')}" />
+                        <input type="button" value="+ Chii" data-bind="{click: add.bind($data, true, 'chii')}" />
                     </div>
                     <div class="box" style="margin-top: 10px;" data-bind="{html: refreshConcealedHandTiles}">
                     </div>
@@ -120,9 +120,9 @@
                 <fieldset>
                     <legend>Open combinaisons</legend>
                     <div data-bind="{visible: !handIsFinish()}">
-                        <input type="button" value="+ Pon" data-bind="{click: addOpenPon}" />
-                        <input type="button" value="+ Kan" data-bind="{click: addOpenKan}" />
-                        <input type="button" value="+ Chii" data-bind="{click: addOpenChii}" />
+                        <input type="button" value="+ Pon" data-bind="{click: add.bind($data, false, 'pon')}" />
+                        <input type="button" value="+ Kan" data-bind="{click: add.bind($data, false, 'kan')}" />
+                        <input type="button" value="+ Chii" data-bind="{click: add.bind($data, false, 'chii')}" />
                     </div>
                     <div class="box" style="margin-top: 10px;" data-bind="{html: refreshOpenHandTiles}">
                     </div>

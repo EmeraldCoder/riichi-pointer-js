@@ -35,50 +35,19 @@ var appViewModel;
         self.pointsFuTotal = ko.observable(0);
         self.pointsTotal = ko.observable('');
 
-        self.addConcealedPair = function(){ add(true, 'pair'); };
-        self.addConcealedPon = function(){ add(true, 'pon'); };
-        self.addConcealedKan = function(){ add(true, 'kan'); };
-        self.addConcealedChii = function(){ add(true, 'chii'); };
-        self.addOpenPon = function(){ add(false, 'pon'); };
-        self.addOpenKan = function(){ add(false, 'kan'); };
-        self.addOpenChii = function(){ add(false, 'chii'); };
-        
-        function add(isConcealed, type) {
+        self.add = function(isConcealed, type) {
             self.addIsConcealed(isConcealed);
             self.addType(type);
             
             self.currentView('TileSuitSelection');
         };
         
-        self.selectDragonSuit = function(){ selectSuit('dragon'); };
-        self.selectWindSuit = function(){ selectSuit('wind'); };
-        self.selectBambooSuit = function(){ selectSuit('bamboo'); };
-        self.selectDotSuit = function(){ selectSuit('dot'); };
-        self.selectCharacterSuit = function(){ selectSuit('character'); };
-        
-        function selectSuit(suit) {
+        self.selectSuit = function(suit) {
             self.addSuit(suit);
             self.currentView('TileValueSelection');
         };
         
-        self.selectRedValue = function(){ selectValue('red'); };
-        self.selectGreenValue = function(){ selectValue('green'); };
-        self.selectWhiteValue = function(){ selectValue('white'); };
-        self.selectEastValue = function(){ selectValue('east'); };
-        self.selectWestValue = function(){ selectValue('west'); };
-        self.selectNorthValue = function(){ selectValue('north'); };
-        self.selectSouthValue = function(){ selectValue('south'); };
-        self.select1Value = function(){ selectValue(1); };
-        self.select2Value = function(){ selectValue(2); };
-        self.select3Value = function(){ selectValue(3); };
-        self.select4Value = function(){ selectValue(4); };
-        self.select5Value = function(){ selectValue(5); };
-        self.select6Value = function(){ selectValue(6); };
-        self.select7Value = function(){ selectValue(7); };
-        self.select8Value = function(){ selectValue(8); };
-        self.select9Value = function(){ selectValue(9); };
-        
-        function selectValue(value) {
+        self.selectValue = function(value) {
             self.addValue(value);
             addCombinaison();
             self.currentView('Main');
