@@ -202,5 +202,35 @@ function TestHandClasses() {
             ok(chii.tiles[2] instanceof BambooTile && chii.tiles[2].number == 6);
         });
         
+        // factory test
+        test('HandCombinaisonFactory create pair', function(){
+            var combinaison = HandCombinaisonFactory.create('pair', TileFactory.create('dot', 1));
+            ok(combinaison instanceof Pair);
+            ok(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1);
+            ok(combinaison.tiles[1] instanceof DotTile && combinaison.tiles[1].value === 1);
+        });
+        test('HandCombinaisonFactory create pon', function(){
+            var combinaison = HandCombinaisonFactory.create('pon', TileFactory.create('dot', 1));
+            ok(combinaison instanceof Pon);
+            ok(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1);
+            ok(combinaison.tiles[1] instanceof DotTile && combinaison.tiles[1].value === 1);
+            ok(combinaison.tiles[2] instanceof DotTile && combinaison.tiles[2].value === 1);
+        });
+        test('HandCombinaisonFactory create kan', function(){
+            var combinaison = HandCombinaisonFactory.create('kan', TileFactory.create('dot', 1));
+            ok(combinaison instanceof Kan);
+            ok(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1);
+            ok(combinaison.tiles[1] instanceof DotTile && combinaison.tiles[1].value === 1);
+            ok(combinaison.tiles[2] instanceof DotTile && combinaison.tiles[2].value === 1);
+            ok(combinaison.tiles[3] instanceof DotTile && combinaison.tiles[3].value === 1);
+        });
+        test('HandCombinaisonFactory create chii', function(){
+            var combinaison = HandCombinaisonFactory.create('chii', TileFactory.create('dot', 1));
+            ok(combinaison instanceof Chii);
+            ok(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1);
+            ok(combinaison.tiles[1] instanceof DotTile && combinaison.tiles[1].value === 2);
+            ok(combinaison.tiles[2] instanceof DotTile && combinaison.tiles[2].value === 3);
+        });
+        
     };
 }

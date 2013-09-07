@@ -92,6 +92,31 @@ function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winn
 }
 
 /**
+ * Hand combinaison factory class
+ * Factory design pattern to help create hand combinaison classes
+ *
+ * ex. : HandCombinaisonFactory.create('pon', new DotTile(1))
+ */
+var HandCombinaisonFactory = {
+    create: function(combinaisonType, firstCombinaisonTile) {
+        switch (combinaisonType) {
+            case 'pair':
+                return new Pair(firstCombinaisonTile);
+            case 'pon':
+                return new Pon(firstCombinaisonTile);
+            case 'kan':
+                return new Kan(firstCombinaisonTile);
+            case 'chii':
+                var secondCombinaisonTile = TileFactory.create(firstCombinaisonTile.suit, firstCombinaisonTile.value + 1),
+                    thirdCombinaisonTile = TileFactory.create(firstCombinaisonTile.suit, firstCombinaisonTile.value + 2)
+                return new Chii(firstCombinaisonTile, secondCombinaisonTile, thirdCombinaisonTile);
+            default:
+                alert('Hand Combinaison Factory Error: "' + combinaisonType + '" is not a supported combinaison type');
+        }
+    }
+};
+
+/**
  * Hand combinaison base class (pair, pon, kan, chii)
  */
 function HandCombinaison() {

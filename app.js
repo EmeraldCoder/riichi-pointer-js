@@ -54,29 +54,8 @@ var appViewModel;
         };
         
         function addCombinaison() {
-            var suit = self.addSuit(),
-                value = self.addValue();
-                
-            switch (self.addType()) {
-                case 'pair':
-                    var combinaison = new Pair(TileFactory.create(suit, value));
-                    break;
-                case 'pon':
-                    var combinaison = new Pon(TileFactory.create(suit, value));
-                    break;
-                case 'kan':
-                    var combinaison = new Kan(TileFactory.create(suit, value));
-                    break;
-                case 'chii':
-                    var combinaison = new Chii(
-                        TileFactory.create(suit, value), 
-                        TileFactory.create(suit, value+1), 
-                        TileFactory.create(suit, value+2)
-                    );
-                    break;
-                default:
-                    alert('combinaisonType not supported');
-            }
+            var firstCombinaisonTile = TileFactory.create(self.addSuit(), self.addValue()),
+                combinaison = HandCombinaisonFactory.create(self.addType(), firstCombinaisonTile);
 
             if (self.addIsConcealed()) {
                 self.concealedCombinaisons.push(combinaison);    
