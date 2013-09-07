@@ -47,7 +47,8 @@ select {
 }*/
 .box span {
     width: 4.8%;
-    display: inline-block;
+    display: block;
+    float: left;
 }
 .box span.last {
     margin-right: 2.4%;

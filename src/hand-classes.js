@@ -134,7 +134,7 @@ function Pair(tile) {
     
     // constructor
     // fill the base class tiles array
-    this.tiles = [tile, tile];
+    this.tiles = [TileFactory.create(tile.suit, tile.value), TileFactory.create(tile.suit, tile.value)];
 }
 Pair.prototype = new HandCombinaison();
 Pair.prototype.constructor = Pair;
@@ -150,7 +150,7 @@ function Pon(tile) {
     
     // constructor
     // fill the base class tiles array
-    this.tiles = [tile, tile, tile];
+    this.tiles = [TileFactory.create(tile.suit, tile.value), TileFactory.create(tile.suit, tile.value), TileFactory.create(tile.suit, tile.value)];
 }
 Pon.prototype = new HandCombinaison();
 Pon.prototype.constructor = Pon;
@@ -166,7 +166,7 @@ function Kan(tile) {
     
     // constructor
     // fill the base class tiles array
-    this.tiles = [tile, tile, tile, tile];
+    this.tiles = [TileFactory.create(tile.suit, tile.value), TileFactory.create(tile.suit, tile.value), TileFactory.create(tile.suit, tile.value), TileFactory.create(tile.suit, tile.value)];
 }
 Kan.prototype = new HandCombinaison();
 Kan.prototype.constructor = Kan;

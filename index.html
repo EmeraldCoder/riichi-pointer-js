@@ -111,8 +111,7 @@
                         <input type="button" value="+ Kan" data-bind="{click: add.bind($data, true, 'kan')}" />
                         <input type="button" value="+ Chii" data-bind="{click: add.bind($data, true, 'chii')}" />
                     </div>
-                    <div class="box" style="margin-top: 10px;" data-bind="{html: refreshConcealedHandTiles}">
-                    </div>
+                    <div class="box" style="margin-top: 10px;" data-bind="template: {name: 'hand-template', foreach: concealedCombinaisons}"></div>
                 </fieldset>
             </div>
             
@@ -124,8 +123,7 @@
                         <input type="button" value="+ Kan" data-bind="{click: add.bind($data, false, 'kan')}" />
                         <input type="button" value="+ Chii" data-bind="{click: add.bind($data, false, 'chii')}" />
                     </div>
-                    <div class="box" style="margin-top: 10px;" data-bind="{html: refreshOpenHandTiles}">
-                    </div>
+                    <div class="box" style="margin-top: 10px;" data-bind="template: {name: 'hand-template', foreach: openCombinaisons}"></div>
                 </fieldset>
             </div>
             
@@ -179,6 +177,26 @@
             </div>
         </div>
     </div>
+    
+    <script type="text/html" id="hand-template">
+    <!-- ko foreach: tiles -->
+        <!-- ko if: $index() === $parent.tiles.length-1 && !isWinningTile() -->
+        <span class="last" data-bind="click: $root.setWinningTile"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <!-- /ko -->
+        
+        <!-- ko if: $index() === $parent.tiles.length-1 && isWinningTile() -->
+        <span class="waiting last" data-bind="click: $root.setWinningTile"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <!-- /ko -->
+        
+        <!-- ko if: $index() !== $parent.tiles.length-1 && isWinningTile() -->
+        <span class="waiting" data-bind="click: $root.setWinningTile"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <!-- /ko -->
+        
+        <!-- ko if: $index() !== $parent.tiles.length-1 && !isWinningTile() -->
+        <span data-bind="click: $root.setWinningTile"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <!-- /ko -->
+    <!-- /ko -->
+    </script>
 
     <script src="knockout-2.3.0.js"></script>
     <script src="src/tile-classes.js"></script>    

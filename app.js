@@ -20,94 +20,52 @@ var appViewModel;
         self.concealedCombinaisons = ko.observableArray([]);
         self.openCombinaisons = ko.observableArray([]);
         
-        self.addIsConcealed = ko.observable(true);
-        self.addType = ko.observable('');
-        self.addSuit = ko.observable('');
-        self.addValue = ko.observable('');
-        
-        self.winningTileIsConcealed = ko.observable(false);
-        self.winningTileCombinaisonIndex = ko.observable(-1);
-        self.winningTileIndex = ko.observable(-1);
+        self.addIsConcealed = null
+        self.addType = null;
+        self.addSuit = null;
         
         self.pointsYakuDetails = ko.observableArray([]);
         self.pointsYakuTotal = ko.observable(0);
         self.pointsFuDetails = ko.observableArray([]);
         self.pointsFuTotal = ko.observable(0);
         self.pointsTotal = ko.observable('');
+        
+        self.winningTile = null;
 
         self.add = function(isConcealed, type) {
-            self.addIsConcealed(isConcealed);
-            self.addType(type);
-            
+            self.addIsConcealed = isConcealed;
+            self.addType = type;
             self.currentView('TileSuitSelection');
         };
         
         self.selectSuit = function(suit) {
-            self.addSuit(suit);
+            self.addSuit = suit;
             self.currentView('TileValueSelection');
         };
         
         self.selectValue = function(value) {
-            self.addValue(value);
-            addCombinaison();
-            self.currentView('Main');
-        };
-        
-        function addCombinaison() {
-            var firstCombinaisonTile = TileFactory.create(self.addSuit(), self.addValue()),
-                combinaison = HandCombinaisonFactory.create(self.addType(), firstCombinaisonTile);
+            var firstCombinaisonTile = TileFactory.create(self.addSuit, value),
+                combinaison = HandCombinaisonFactory.create(self.addType, firstCombinaisonTile);
+                
+            for (var i = 0; i < combinaison.tiles.length; i++) {
+                combinaison.tiles[i].isWinningTile = ko.observable(false);
+            }
 
-            if (self.addIsConcealed()) {
-                self.concealedCombinaisons.push(combinaison);    
+            if (self.addIsConcealed) {
+                self.concealedCombinaisons.push(combinaison);
             } else {
                 self.openCombinaisons.push(combinaison);
             }
+            
+            self.currentView('Main');
         };
         
-        self.refreshConcealedHandTiles = ko.computed(function(){
-            var html = '';
-            for (var i = 0; i < self.concealedCombinaisons().length; i++) {
-                for (var j = 0; j < self.concealedCombinaisons()[i].tiles.length; j++) {
-                    var tile = self.concealedCombinaisons()[i].tiles[j];
-                    
-                    var cssClass = '';
-                    if (self.winningTileIsConcealed() === true && self.winningTileCombinaisonIndex() === i && self.winningTileIndex() === j) {
-                        cssClass = 'waiting';
-                    }
-                    if (j === self.concealedCombinaisons()[i].tiles.length - 1) {
-                        cssClass += ' last';
-                    }
-                    
-                    html += '<span class="' + cssClass + '" onclick="appViewModel.setWinningTile(true, ' + i + ', ' + j + ')"><img src="img/' + tile.suit + tile.value + '.png" /></span>';
-                }
+        self.setWinningTile = function(tile) {
+            if (self.winningTile) {
+                self.winningTile.isWinningTile(false);
             }
-            return html;
-        });
-        
-        self.refreshOpenHandTiles = ko.computed(function(){
-            var html = '';
-            for (var i = 0; i < self.openCombinaisons().length; i++) {
-                for (var j = 0; j < self.openCombinaisons()[i].tiles.length; j++) {
-                    var tile = self.openCombinaisons()[i].tiles[j];
-                    
-                    var cssClass = '';
-                    if (self.winningTileIsConcealed() === false && self.winningTileCombinaisonIndex() === i && self.winningTileIndex() === j) {
-                        cssClass = 'waiting';
-                    }
-                    if (j === self.openCombinaisons()[i].tiles.length - 1) {
-                        cssClass += ' last';
-                    }
-                    
-                    html += '<span class="' + cssClass + '" onclick="appViewModel.setWinningTile(false, ' + i + ', ' + j + ')"><img src="img/' + tile.suit + tile.value + '.png" /></span>';
-                }
-            }
-            return html;
-        });
-        
-        self.setWinningTile = function(isConcealed, winningCombinaisonIndex, winningTileIndex) {
-            self.winningTileIsConcealed(isConcealed);
-            self.winningTileCombinaisonIndex(winningCombinaisonIndex);
-            self.winningTileIndex(winningTileIndex);
+            self.winningTile = tile;
+            self.winningTile.isWinningTile(true);
         };
         
         self.handIsFinish = ko.computed(function(){
@@ -116,16 +74,13 @@ var appViewModel;
         });
         
         self.showPoints = function(){
-            if (self.winningTileCombinaisonIndex() === -1) {
+            if (self.winningTile === null) {
                 alert("You must select your waiting tile");
                 return false;
             }
             
-            var winningCombinaisonIndex = self.winningTileCombinaisonIndex();
-            var winningTileIndex = self.winningTileIndex();
-            if (self.winningTileIsConcealed() === false) {
-                winningTileIndex += self.concealedCombinaisons().length;
-            }
+            var winningCombinaisonIndex = 0;
+            var winningTileIndex = 0;
             
             var hand = new Hand(
                 self.concealedCombinaisons(),
