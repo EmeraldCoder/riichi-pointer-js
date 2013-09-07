@@ -101,5 +101,29 @@ function TestTiles() {
         test("bamboo tile is a bamboo tile", function(){
             ok(bambooTile instanceof BambooTile);
         });
+        
+        // ---------------------
+        // tile factory tests
+        // ---------------------
+        test("tile factory create dragon tile", function(){
+            var tile = TileFactory.create("dragon", "red");
+            ok(tile instanceof DragonTile && tile.color === "red");
+        });
+        test("tile factory create wind tile", function(){
+            var tile = TileFactory.create("wind", "south");
+            ok(tile instanceof WindTile && tile.direction === "south");
+        });
+        test("tile factory create bamboo tile", function(){
+            var tile = TileFactory.create("bamboo", 5);
+            ok(tile instanceof BambooTile && tile.value === 5);
+        });
+        test("tile factory create dot tile", function(){
+            var tile = TileFactory.create("dot", 3);
+            ok(tile instanceof DotTile && tile.value === 3);
+        });
+        test("tile factory create character tile", function(){
+            var tile = TileFactory.create("character", 6);
+            ok(tile instanceof CharacterTile && tile.value === 6);
+        });
     }
 }

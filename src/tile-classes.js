@@ -1,4 +1,29 @@
 /**
+ * Tile factory class
+ * Factory design pattern to help create tile classes
+ *
+ * ex. : TileFactory.create('dragon', 'red')
+ */
+var TileFactory = {
+    create: function(suit, value) {
+        switch (suit) {
+            case 'dragon':
+                return new DragonTile(value);
+            case 'wind':
+                return new WindTile(value);
+            case 'bamboo':
+                return new BambooTile(value);
+            case 'dot':
+                return new DotTile(value);
+            case 'character':
+                return new CharacterTile(value);
+            default:
+                alert('Tile Factory Error : "' + suit + '" is not a supported suit');
+        }
+    }
+};
+
+/**
  * Tile base class
  * All tile inherit from this class
  */

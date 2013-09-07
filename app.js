@@ -53,40 +53,26 @@ var appViewModel;
             self.currentView('Main');
         };
         
-        function tileFactory(suit, value) {
-            var tile = null;
-            if (suit === 'dragon') {
-                tile = new DragonTile(value);
-            } else if (suit === 'wind') {
-                tile = new WindTile(value);
-            } else if (suit === 'dot') {            
-                tile = new DotTile(value);
-            } else if (suit === 'bamboo') {
-                tile = new BambooTile(value);
-            } else if (suit === 'character') {
-                tile = new CharacterTile(value);
-            } else {
-                alert('tile suit not supported');
-            }
-            return tile;
-        };
-        
         function addCombinaison() {
             var suit = self.addSuit(),
                 value = self.addValue();
                 
             switch (self.addType()) {
                 case 'pair':
-                    var combinaison = new Pair(tileFactory(suit, value));
+                    var combinaison = new Pair(TileFactory.create(suit, value));
                     break;
                 case 'pon':
-                    var combinaison = new Pon(tileFactory(suit, value));
+                    var combinaison = new Pon(TileFactory.create(suit, value));
                     break;
                 case 'kan':
-                    var combinaison = new Kan(tileFactory(suit, value));
+                    var combinaison = new Kan(TileFactory.create(suit, value));
                     break;
                 case 'chii':
-                    var combinaison = new Chii(tileFactory(suit, value), tileFactory(suit, value+1), tileFactory(suit, value+2));
+                    var combinaison = new Chii(
+                        TileFactory.create(suit, value), 
+                        TileFactory.create(suit, value+1), 
+                        TileFactory.create(suit, value+2)
+                    );
                     break;
                 default:
                     alert('combinaisonType not supported');
