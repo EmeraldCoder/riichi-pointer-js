@@ -149,7 +149,7 @@ function RiichiMahjongPointerViewModel() {
      */
     self.selectValue = function(value) {
         var firstCombinaisonTile = TileFactory.create(self.addSuit(), value),
-            combinaison = HandCombinaisonFactory.create(self.addType(), firstCombinaisonTile);
+            combinaison = CombinaisonFactory.create(self.addType(), firstCombinaisonTile);
             
         for (var i = 0; i < combinaison.tiles.length; i++) {
             combinaison.tiles[i].isWinningTile = ko.observable(false);
