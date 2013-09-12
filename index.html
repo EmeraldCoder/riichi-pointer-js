@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Riichi Mahjong Pointer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
     <div id="layout">
@@ -198,11 +198,16 @@
     <!-- /ko -->
     </script>
 
-    <script src="knockout-2.3.0.js"></script>
-    <script src="src/tile-classes.js"></script>    
-    <script src="src/hand-classes.js"></script>
-    <script src="src/yakupattern-classes.js"></script>
-    <script src="src/pointer-classes.js"></script>
-    <script src="app.js"></script>
+    <script src="vendor/knockout-2.3.0.js"></script>
+    <script src="src/core/tile-classes.js"></script>    
+    <script src="src/core/hand-classes.js"></script>
+    <script src="src/core/yakupattern-classes.js"></script>
+    <script src="src/core/pointer-classes.js"></script>
+    <script src="src/gui/RiichiMahjongPointerViewModel.js"></script>
+    
+    <script>
+        // initialize the application
+        ko.applyBindings(new RiichiMahjongPointerViewModel());
+    </script>
 </body>
 </html>
