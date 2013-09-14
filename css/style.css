@@ -19,6 +19,13 @@ h2 {
     font: 30px arial, sans-serif;
 }
 
+fieldset {
+    padding: 0.75em;
+}
+fieldset  legend {
+    color: #fff;
+}
+
 input[type=button] {
     background: green;
     border: 2px solid #b2b2b2;
