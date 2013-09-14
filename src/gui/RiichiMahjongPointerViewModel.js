@@ -248,15 +248,13 @@ function RiichiMahjongPointerViewModel() {
             winningCombinaisonIndex,
             winningTileIndex,
             self.winningType(),
-            self.winningSecondaryType()
+            self.winningSecondaryType(),
+            self.doraTiles(),
+            self.uraDoraTiles()
         );
         hand.isRiichi = self.isRiichi() || self.isDoubleRiichi();
         hand.isDoubleRiichi = self.isDoubleRiichi();
         hand.isIppatsu = self.isIppatsu();
-        hand.doraTiles = self.doraTiles();
-        hand.uraDoraTiles = self.uraDoraTiles();
-        
-        console.log(hand);
         
         var patterns = [
             new TanyaouChuu(),
