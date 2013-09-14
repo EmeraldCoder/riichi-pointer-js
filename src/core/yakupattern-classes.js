@@ -858,3 +858,126 @@ function ChanKan() {
 }
 ChanKan.prototype = new YakuPattern();
 ChanKan.prototype.constructor = ChanKan;
+
+/**
+ * Dora yaku pattern
+ * 
+ * Must be concealed: no
+ * Han: 1 / dora
+ */
+function Dora() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Dora';
+    this.englishName = 'Dora';
+    
+    this.check = function(hand) {
+        var result = 0;
+        
+        for (var i = 0; i < hand.doraTiles.length; i++) {
+            var doraTile = hand.doraTiles[i];
+            var doraSuit = doraTile.suit;
+            var doraValue = doraTile.value;
+            
+            if (!isNaN(doraValue) && doraValue < 9) {
+                doraValue++;
+            } else if (!isNaN(doraValue) && doraValue === 9) {
+                doraValue = 1;
+            } else if (doraSuit === 'dragon') {
+                if (doraValue === 'green') {
+                    doraValue = 'red';
+                } else if (doraValue === 'red') {
+                    doraValue = 'white';
+                } else if (doraValue === 'white') {
+                    doraValue = 'green';
+                }
+            } else if (doraSuit === 'wind') {
+                if (doraValue === 'east') {
+                    doraValue = 'south';
+                } else if (doraValue === 'south') {
+                    doraValue = 'west';
+                } else if (doraValue === 'west') {
+                    doraValue = 'north';
+                } else if (doraValue === 'north') {
+                    doraValue = 'east';
+                }
+            }
+            
+            for (var j = 0; j < hand.combinaisons.length; j++) {
+                for (var k = 0; k < hand.combinaisons[j].tiles.length; k++) {
+                    var tile = hand.combinaisons[j].tiles[k];
+                    if (tile.suit === doraSuit && tile.value === doraValue) {
+                        result++;
+                    }
+                }
+            }
+        }
+        
+        return result;
+    };
+}
+Dora.prototype = new YakuPattern();
+Dora.prototype.constructor = Dora;
+
+/**
+ * Ura-Dora yaku pattern
+ * 
+ * Must be concealed: no
+ * Han: 1 / ura-dora
+ */
+function UraDora() {
+    YakuPattern.call(this);
+    
+    this.japaneseName = 'Ura-Dora';
+    this.englishName = 'Ura-Dora';
+    
+    this.check = function(hand) {
+        if (!hand.isRiichi) return 0;
+    
+        var result = 0;
+        
+        for (var i = 0; i < hand.uraDoraTiles.length; i++) {
+            var doraTile = hand.uraDoraTiles[i];
+            var doraSuit = doraTile.suit;
+            var doraValue = doraTile.value;
+            
+            if (!isNaN(doraValue) && doraValue < 9) {
+                doraValue++;
+            } else if (!isNaN(doraValue) && doraValue === 9) {
+                doraValue = 1;
+            } else if (doraSuit === 'dragon') {
+                if (doraValue === 'green') {
+                    doraValue = 'red';
+                } else if (doraValue === 'red') {
+                    doraValue = 'white';
+                } else if (doraValue === 'white') {
+                    doraValue = 'green';
+                }
+            } else if (doraSuit === 'wind') {
+                if (doraValue === 'east') {
+                    doraValue = 'south';
+                } else if (doraValue === 'south') {
+                    doraValue = 'west';
+                } else if (doraValue === 'west') {
+                    doraValue = 'north';
+                } else if (doraValue === 'north') {
+                    doraValue = 'east';
+                }
+            }
+            
+            for (var j = 0; j < hand.combinaisons.length; j++) {
+                for (var k = 0; k < hand.combinaisons[j].tiles.length; k++) {
+                    var tile = hand.combinaisons[j].tiles[k];
+                    if (tile.suit === doraSuit && tile.value === doraValue) {
+                        result++;
+                    }
+                }
+            }
+        }
+        
+        return result;
+    };
+}
+UraDora.prototype = new YakuPattern();
+UraDora.prototype.constructor = UraDora;
+

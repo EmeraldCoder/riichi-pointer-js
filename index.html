@@ -104,6 +104,26 @@
             
             <div style="margin: 10px 0;">
                 <fieldset>
+                    <legend>Dora</legend>
+                    <div>
+                        <input type="button" value="+ Dora" data-bind="click: addDora.bind($data, false)" />
+                    </div>
+                    <div class="box" style="margin-top: 10px;" data-bind="template: {name: 'tile-template', foreach: doraTiles}"></div>
+                </fieldset>
+            </div>
+            
+            <div style="margin: 10px 0;">
+                <fieldset>
+                    <legend>Ura-Dora</legend>
+                    <div>
+                        <input type="button" value="+ Ura-Dora" data-bind="click: addDora.bind($data, true)" />
+                    </div>
+                    <div class="box" style="margin-top: 10px;" data-bind="template: {name: 'tile-template', foreach: uraDoraTiles}"></div>
+                </fieldset>
+            </div>
+            
+            <div style="margin: 10px 0;">
+                <fieldset>
                     <legend>Concealed combinaisons</legend>
                     <div data-bind="{visible: !handIsFinish()}">
                         <input type="button" value="+ Pair" data-bind="{click: add.bind($data, true, 'pair')}" />
@@ -196,6 +216,10 @@
         <span data-bind="click: $root.setWinningTile"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
         <!-- /ko -->
     <!-- /ko -->
+    </script>
+    
+    <script type="text/html" id="tile-template">
+        <span><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
     </script>
 
     <script src="vendor/knockout-2.3.0.js"></script>

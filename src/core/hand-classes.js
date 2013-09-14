@@ -10,10 +10,10 @@
  * param string winningType 
  * param string winningSecondType
  */
-function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winningCombinaisonIndex, winningTileIndex, winningType, winningSecondType) {
+function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winningCombinaisonIndex, winningTileIndex, winningType, winningSecondType, doraTiles, uraDoraTiles) {
     this.concealedCombinaisons = concealedCombinaisons; // array of HandCombinaison
     this.openCombinaisons = openCombinaisons; // array of HandCombinaison
-    this.combinaisons = Array.concat(this.concealedCombinaisons, this.openCombinaisons);
+    this.combinaisons = concealedCombinaisons.concat(this.openCombinaisons);
     this.seatWind = seatWind;
     this.roundWind = roundWind;
     this.winningCombinaisonIndex = winningCombinaisonIndex;
@@ -23,6 +23,8 @@ function Hand(concealedCombinaisons, openCombinaisons, seatWind, roundWind, winn
     this.isRiichi = false;
     this.isDoubleRiichi = false;
     this.isIppatsu = false;
+    this.doraTiles = doraTiles;
+    this.uraDoraTiles = uraDoraTiles;
     
     this.isFinish = function(){
         var nbPair = 0,

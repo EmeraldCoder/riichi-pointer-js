@@ -51,6 +51,16 @@ function RiichiMahjongPointerViewModel() {
     self.isIppatsu = ko.observable(false);
     
     /**
+     * list of the dora tiles
+     */
+    self.doraTiles = ko.observableArray([]);
+    
+    /**
+     * list of the ura-dora tiles
+     */
+    self.uraDoraTiles = ko.observableArray([]);
+    
+    /**
      * winning tile select by the user
      */
     self.winningTile = null;
@@ -64,6 +74,11 @@ function RiichiMahjongPointerViewModel() {
      * list of the open combinaisons of the player
      */
     self.openCombinaisons = ko.observableArray([]);
+    
+    /**
+     * indicate if the adding process is for dora or not (ex. : combinaison)
+     */
+    self.addForDora = null;
     
     /**
      * indicate if the combinaison that the user is currently adding is concealed or not
@@ -82,6 +97,11 @@ function RiichiMahjongPointerViewModel() {
      */
     self.addSuit = ko.observable();
     
+    /**
+     * indicate if the dora that the user is currently adding is ura-dora or not
+     */
+    self.addIsUraDora = null;
+
     /**
      * list of all the yaku pattern valid for the player hand
      */
@@ -117,6 +137,12 @@ function RiichiMahjongPointerViewModel() {
         return hand.isFinish();
     });
     
+    self.addDora = function(isUraDora) {
+        self.addForDora = true;
+        self.addIsUraDora = isUraDora;
+        self.currentView('TileSuitSelection');
+    };
+    
     /**
      * action to begin the process of adding a new combinaison
      * this open the TileSuitSelection view on the interface
@@ -125,6 +151,7 @@ function RiichiMahjongPointerViewModel() {
      * @param string type specify the combinaison type that will be add (pair, pon, kan, chii)
      */
     self.add = function(isConcealed, type) {
+        self.addForDora = false;
         self.addIsConcealed = isConcealed;
         self.addType(type);
         self.currentView('TileSuitSelection');
@@ -148,19 +175,34 @@ function RiichiMahjongPointerViewModel() {
      * @param string value specify the tile value of the combinaison that will be add ('red', 'east', 1, 9, ...)
      */
     self.selectValue = function(value) {
-        var firstCombinaisonTile = TileFactory.create(self.addSuit(), value),
-            combinaison = CombinaisonFactory.create(self.addType(), firstCombinaisonTile);
-            
-        for (var i = 0; i < combinaison.tiles.length; i++) {
-            combinaison.tiles[i].isWinningTile = ko.observable(false);
-        }
-
-        if (self.addIsConcealed) {
-            self.concealedCombinaisons.push(combinaison);
+    
+        if (self.addForDora) {
+            var tile = TileFactory.create(self.addSuit(), value);
+            if (self.addIsUraDora) {
+                self.uraDoraTiles.push(tile);
+            } else {
+                self.doraTiles.push(tile);
+            }
         } else {
-            self.openCombinaisons.push(combinaison);
+            var firstCombinaisonTile = TileFactory.create(self.addSuit(), value),
+                combinaison = CombinaisonFactory.create(self.addType(), firstCombinaisonTile);
+                
+            for (var i = 0; i < combinaison.tiles.length; i++) {
+                combinaison.tiles[i].isWinningTile = ko.observable(false);
+            }
+
+            if (self.addIsConcealed) {
+                self.concealedCombinaisons.push(combinaison);
+            } else {
+                self.openCombinaisons.push(combinaison);
+            }
         }
         
+        self.addForDora = null;
+        self.addIsConcealed = null;
+        self.addType(null);
+        self.addSuit(null);
+        self.addIsUraDora = null;
         self.currentView('Main');
     };
     
@@ -211,6 +253,10 @@ function RiichiMahjongPointerViewModel() {
         hand.isRiichi = self.isRiichi() || self.isDoubleRiichi();
         hand.isDoubleRiichi = self.isDoubleRiichi();
         hand.isIppatsu = self.isIppatsu();
+        hand.doraTiles = self.doraTiles();
+        hand.uraDoraTiles = self.uraDoraTiles();
+        
+        console.log(hand);
         
         var patterns = [
             new TanyaouChuu(),
@@ -240,7 +286,9 @@ function RiichiMahjongPointerViewModel() {
             new HaiteiRaoyue(),
             new HouteiRaoyui(),
             new RinshanKaihou(),
-            new ChanKan()
+            new ChanKan(),
+            new Dora(),
+            new UraDora()
         ];
         
         var result = [];
