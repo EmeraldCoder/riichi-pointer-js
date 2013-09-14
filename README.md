@@ -6,7 +6,6 @@ Riichi Mahjong Pointer is a JavaScript application to calculate the value of a w
 The application is already able to calculate the points of your mahjong hand, but keep in mind that this application is in beta phase and a lot of features are missing. If you encounter bugs or points calculation errors, please contact me or add the bug in the github issues section. This way, the application will become more and more stable.
 
 ### v. 0.0.0 (hajime) Last beta release 
-####(September 14, 2013)
 * Calculate Han and Fu points
 * Calculate how many points you win from the others players
 * Support self-draw (tsumo) and discard (ron)
