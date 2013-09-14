@@ -103,23 +103,27 @@
             </div>
             
             <div style="margin: 10px 0;">
-                <fieldset>
-                    <legend>Dora</legend>
-                    <div>
-                        <input type="button" value="+ Dora" data-bind="click: addDora.bind($data, false)" />
-                    </div>
-                    <div class="box" style="margin-top: 10px;" data-bind="template: {name: 'tile-template', foreach: doraTiles}"></div>
-                </fieldset>
-            </div>
-            
-            <div style="margin: 10px 0;">
-                <fieldset>
-                    <legend>Ura-Dora</legend>
-                    <div>
-                        <input type="button" value="+ Ura-Dora" data-bind="click: addDora.bind($data, true)" />
-                    </div>
-                    <div class="box" style="margin-top: 10px;" data-bind="template: {name: 'tile-template', foreach: uraDoraTiles}"></div>
-                </fieldset>
+                <div style="float: left; width: 50%;">
+                    <fieldset>
+                        <legend>Dora</legend>
+                        <div style="margin-bottom: 10px;">
+                            <input type="button" value="+ Dora" data-bind="click: addDora.bind($data, false)" />
+                        </div>
+                        <div class="box box-dora" data-bind="template: {name: 'tile-template', foreach: doraTiles}"></div>
+                    </fieldset>
+                </div>
+                
+                <div style="float: left; width: 50%;">
+                    <fieldset>
+                        <legend>Ura-Dora</legend>
+                        <div style="margin-bottom: 10px;">
+                            <input type="button" value="+ Ura-Dora" data-bind="click: addDora.bind($data, true)" />
+                        </div>
+                        <div class="box box-dora" data-bind="template: {name: 'tile-template', foreach: uraDoraTiles}"></div>
+                    </fieldset>
+                </div>
+                
+                <div style="clear: both;"></div>
             </div>
             
             <div style="margin: 10px 0;">

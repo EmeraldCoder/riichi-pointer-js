@@ -64,6 +64,10 @@ select {
     width: 100%;
 }
 
+.box-dora span {
+    width: 10%;
+}
+
 table {
     border: 1px solid green;
 }
