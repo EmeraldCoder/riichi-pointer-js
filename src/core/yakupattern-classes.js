@@ -424,7 +424,7 @@ ShouSangen.prototype.constructor = ShouSangen;
  * Ryan Peikou (twice pure double chiis) yaku pattern
  * Two pair of chiis, where each pair consists of two identical chiis.
  *
- * Must be concealed: yes
+ * Must be concealed: no (some rules say yes)
  * Han: 3
  *
  */
@@ -435,8 +435,6 @@ function RyanPeikou() {
     this.englishName = 'Twice Pure Double Chii';
     
     this.check = function(hand) {
-        if (hand.openCombinaisons.length > 0) return 0;
-    
         var chiis = {};
         var nbPairOfChii = 0;
         for (var i = 0; i < hand.combinaisons.length; i++) {
@@ -446,11 +444,16 @@ function RyanPeikou() {
                 if (chiis[chiiKey] == undefined) chiis[chiiKey] = 0; else nbPairOfChii++;
             }
         }        
+        
         if (nbPairOfChii == 2) {
-            return 3;
-        } else {
-            return 0;
+            if (hand.openCombinaisons.length === 0) {
+                return 3;
+            } else {
+                return 2;
+            }
         }
+        
+        return 0;
     };
 }
 RyanPeikou.prototype = new YakuPattern();

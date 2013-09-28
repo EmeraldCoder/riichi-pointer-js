@@ -15,16 +15,16 @@ function TestYakuPatternRyanPeikou() {
             ok(ryanPeikou.check(validHand) === 3);
         });
         
-        var invalidOpenHand = new Hand([
-            new Pair(new DotTile(1))
+        var validOpenHand = new Hand([
+            new Pair(new DotTile(1)),
+            new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3))
         ], [
-            new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
             new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
             new Chii(new DotTile(7), new DotTile(8), new DotTile(9)),
             new Chii(new DotTile(7), new DotTile(8), new DotTile(9))
         ]);
-        test("ryan peikou (twice pure double chiis) invalid open hand", function(){
-            ok(ryanPeikou.check(invalidOpenHand) === 0);
+        test("ryan peikou (twice pure double chiis) valid open hand give 2 han", function(){
+            ok(ryanPeikou.check(validOpenHand) === 2);
         });
         
         var invalidHandWitoutTwoPairOfChii = new Hand([
