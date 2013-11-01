@@ -1,0 +1,6 @@
+{
+  "name": "riichi-pointer-js",
+  "devDependencies": {
+    "grunt": "~0.4.1"
+  }
+}
