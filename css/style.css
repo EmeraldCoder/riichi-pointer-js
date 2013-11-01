@@ -87,3 +87,8 @@ table tbody tr:nth-child(even) td {
     background: gold;
     border: 3px solid yellow;
 }
+
+#select-tile-view img {
+    width: 10%;
+    max-width: 82px;
+}

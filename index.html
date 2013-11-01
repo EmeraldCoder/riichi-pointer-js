@@ -10,40 +10,52 @@
     <div id="layout">
         <h1>Riichi Mahjong Pointer</h1>
         
-        <div data-bind="{visible: currentView() === 'TileSuitSelection'}">
-            <h2>Select type tile type of the combinaison to add to your hand</h2>
+        <div id="select-tile-view" data-bind="{visible: currentView() === 'TileSelection'}">
+            <h2>Select the tile</h2>
 
-            <input type="button" value="Dragon" data-bind="{click: selectSuit.bind($data, 'dragon'), visible: addType() !== 'chii'}" />
-            <input type="button" value="Wind" data-bind="{click: selectSuit.bind($data, 'wind'), visible: addType() !== 'chii'}" />
-            <input type="button" value="Dot" data-bind="{click: selectSuit.bind($data, 'dot')}" />
-            <input type="button" value="Bamboo" data-bind="{click: selectSuit.bind($data, 'bamboo')}" />
-            <input type="button" value="Character" data-bind="{click: selectSuit.bind($data, 'character')}" />    
-        </div>
-        
-        <div data-bind="{visible: currentView() === 'TileValueSelection'}">
-            <h2>Select the value of the tile of the combinaison to add to your hand</h2>
-            
-            <div data-bind="{visible: addSuit() === 'dragon'}">
-                <input type="button" value="Green" data-bind="{click: selectValue.bind($data, 'green')}" />
-                <input type="button" value="Red" data-bind="{click: selectValue.bind($data, 'red')}" />
-                <input type="button" value="White" data-bind="{click: selectValue.bind($data, 'white')}" />
+            <div data-bind="{visible: addType() !== 'chii'}">
+                <img src="img/dragongreen.png" data-bind="{click: selectTile.bind($data, 'dragon', 'green')}" />
+                <img src="img/dragonred.png" data-bind="{click: selectTile.bind($data, 'dragon', 'red')}" />
+                <img src="img/dragonwhite.png" data-bind="{click: selectTile.bind($data, 'dragon', 'white')}" />
             </div>
-            <div data-bind="{visible: addSuit() === 'wind'}">
-                <input type="button" value="East" data-bind="{click: selectValue.bind($data, 'east')}" />
-                <input type="button" value="South" data-bind="{click: selectValue.bind($data, 'south')}" />
-                <input type="button" value="West" data-bind="{click: selectValue.bind($data, 'west')}" />
-                <input type="button" value="North" data-bind="{click: selectValue.bind($data, 'north')}" />
+            <div data-bind="{visible: addType() !== 'chii'}">
+                <img src="img/windeast.png" data-bind="{click: selectTile.bind($data, 'wind', 'east')}" />
+                <img src="img/windsouth.png" data-bind="{click: selectTile.bind($data, 'wind', 'south')}" />
+                <img src="img/windwest.png" data-bind="{click: selectTile.bind($data, 'wind', 'west')}" />
+                <img src="img/windnorth.png" data-bind="{click: selectTile.bind($data, 'wind', 'north')}" />
             </div>
-            <div data-bind="{visible: addSuit() !== 'dragon' && addSuit() !== 'wind'}">
-                <input type="button" value="1" data-bind="{click: selectValue.bind($data, 1)}" />
-                <input type="button" value="2" data-bind="{click: selectValue.bind($data, 2)}" />
-                <input type="button" value="3" data-bind="{click: selectValue.bind($data, 3)}" />
-                <input type="button" value="4" data-bind="{click: selectValue.bind($data, 4)}" />
-                <input type="button" value="5" data-bind="{click: selectValue.bind($data, 5)}" />
-                <input type="button" value="6" data-bind="{click: selectValue.bind($data, 6)}" />
-                <input type="button" value="7" data-bind="{click: selectValue.bind($data, 7)}" />
-                <input type="button" value="8" data-bind="{click: selectValue.bind($data, 8), visible: addType() !== 'chii'}" />
-                <input type="button" value="9" data-bind="{click: selectValue.bind($data, 9), visible: addType() !== 'chii'}" />
+            <div>
+                <img src="img/bamboo1.png" data-bind="{click: selectTile.bind($data, 'bamboo', 1)}" />
+                <img src="img/bamboo2.png" data-bind="{click: selectTile.bind($data, 'bamboo', 2)}" />
+                <img src="img/bamboo3.png" data-bind="{click: selectTile.bind($data, 'bamboo', 3)}" />
+                <img src="img/bamboo4.png" data-bind="{click: selectTile.bind($data, 'bamboo', 4)}" />
+                <img src="img/bamboo5.png" data-bind="{click: selectTile.bind($data, 'bamboo', 5)}" />
+                <img src="img/bamboo6.png" data-bind="{click: selectTile.bind($data, 'bamboo', 6)}" />
+                <img src="img/bamboo7.png" data-bind="{click: selectTile.bind($data, 'bamboo', 7)}" />
+                <img src="img/bamboo8.png" data-bind="{click: selectTile.bind($data, 'bamboo', 8), visible: addType() !== 'chii'}" />
+                <img src="img/bamboo9.png" data-bind="{click: selectTile.bind($data, 'bamboo', 9), visible: addType() !== 'chii'}" />
+            </div>
+            <div>
+                <img src="img/character1.png" data-bind="{click: selectTile.bind($data, 'character', 1)}" />
+                <img src="img/character2.png" data-bind="{click: selectTile.bind($data, 'character', 2)}" />
+                <img src="img/character3.png" data-bind="{click: selectTile.bind($data, 'character', 3)}" />
+                <img src="img/character4.png" data-bind="{click: selectTile.bind($data, 'character', 4)}" />
+                <img src="img/character5.png" data-bind="{click: selectTile.bind($data, 'character', 5)}" />
+                <img src="img/character6.png" data-bind="{click: selectTile.bind($data, 'character', 6)}" />
+                <img src="img/character7.png" data-bind="{click: selectTile.bind($data, 'character', 7)}" />
+                <img src="img/character8.png" data-bind="{click: selectTile.bind($data, 'character', 8), visible: addType() !== 'chii'}" />
+                <img src="img/character9.png" data-bind="{click: selectTile.bind($data, 'character', 9), visible: addType() !== 'chii'}" />
+            </div>
+            <div>
+                <img src="img/dot1.png" data-bind="{click: selectTile.bind($data, 'dot', 1)}" />
+                <img src="img/dot2.png" data-bind="{click: selectTile.bind($data, 'dot', 2)}" />
+                <img src="img/dot3.png" data-bind="{click: selectTile.bind($data, 'dot', 3)}" />
+                <img src="img/dot4.png" data-bind="{click: selectTile.bind($data, 'dot', 4)}" />
+                <img src="img/dot5.png" data-bind="{click: selectTile.bind($data, 'dot', 5)}" />
+                <img src="img/dot6.png" data-bind="{click: selectTile.bind($data, 'dot', 6)}" />
+                <img src="img/dot7.png" data-bind="{click: selectTile.bind($data, 'dot', 7)}" />
+                <img src="img/dot8.png" data-bind="{click: selectTile.bind($data, 'dot', 8), visible: addType() !== 'chii'}" />
+                <img src="img/dot9.png" data-bind="{click: selectTile.bind($data, 'dot', 9), visible: addType() !== 'chii'}" />
             </div>
         </div>
 

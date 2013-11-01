@@ -92,12 +92,6 @@ function RiichiMahjongPointerViewModel() {
     self.addType = ko.observable();
     
     /**
-     * tile suit of the combinaison that the user is currently adding
-     * dragon, wind, bamboo, dot, character
-     */
-    self.addSuit = ko.observable();
-    
-    /**
      * indicate if the dora that the user is currently adding is ura-dora or not
      */
     self.addIsUraDora = null;
@@ -137,15 +131,21 @@ function RiichiMahjongPointerViewModel() {
         return hand.isFinish();
     });
     
+    /**
+     * action to begin the process of adding a new dora
+     * this open the TileSelection view on the interface
+     *
+     * @param bool isUraDora indicate if the dora is an ura-dora (under the dora for riichi win)
+     */
     self.addDora = function(isUraDora) {
         self.addForDora = true;
         self.addIsUraDora = isUraDora;
-        self.currentView('TileSuitSelection');
+        self.currentView('TileSelection');
     };
     
     /**
      * action to begin the process of adding a new combinaison
-     * this open the TileSuitSelection view on the interface
+     * this open the TileSelection view on the interface
      *
      * @param bool isConcealed indicate if the new combinaison will be concealed or not
      * @param string type specify the combinaison type that will be add (pair, pon, kan, chii)
@@ -154,18 +154,7 @@ function RiichiMahjongPointerViewModel() {
         self.addForDora = false;
         self.addIsConcealed = isConcealed;
         self.addType(type);
-        self.currentView('TileSuitSelection');
-    };
-    
-    /**
-     * action when the user select the tile suit of the combinaison during the process of adding a new combinaison
-     * this open the TileValueSelection view on the interface
-     *
-     * @param string suit specify the tile suit of the combinaison that will be add (dragon, wind, dot, ...)
-     */
-    self.selectSuit = function(suit) {
-        self.addSuit(suit);
-        self.currentView('TileValueSelection');
+        self.currentView('TileSelection');
     };
     
     /**
@@ -174,17 +163,17 @@ function RiichiMahjongPointerViewModel() {
      *
      * @param string value specify the tile value of the combinaison that will be add ('red', 'east', 1, 9, ...)
      */
-    self.selectValue = function(value) {
+    self.selectTile = function(suit, value) {
     
         if (self.addForDora) {
-            var tile = TileFactory.create(self.addSuit(), value);
+            var tile = TileFactory.create(suit, value);
             if (self.addIsUraDora) {
                 self.uraDoraTiles.push(tile);
             } else {
                 self.doraTiles.push(tile);
             }
         } else {
-            var firstCombinaisonTile = TileFactory.create(self.addSuit(), value),
+            var firstCombinaisonTile = TileFactory.create(suit, value),
                 combinaison = CombinaisonFactory.create(self.addType(), firstCombinaisonTile);
                 
             for (var i = 0; i < combinaison.tiles.length; i++) {
@@ -201,7 +190,6 @@ function RiichiMahjongPointerViewModel() {
         self.addForDora = null;
         self.addIsConcealed = null;
         self.addType(null);
-        self.addSuit(null);
         self.addIsUraDora = null;
         self.currentView('Main');
     };
