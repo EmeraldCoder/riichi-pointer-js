@@ -131,6 +131,31 @@ function RiichiMahjongPointerViewModel() {
         return hand.isFinish();
     });
     
+    self.reset = function() {
+        self.currentView('Main');
+        self.prevalentWind('east');
+        self.seatWind('east');
+        self.winningType('tsumo');
+        self.winningSecondaryType('');
+        self.isRiichi(false);
+        self.isDoubleRiichi(false);
+        self.isIppatsu(false);
+        self.doraTiles([]);
+        self.uraDoraTiles([]);
+        self.winningTile = null;
+        self.concealedCombinaisons([]);
+        self.openCombinaisons([]);
+        self.addForDora = null;
+        self.addIsConcealed = null
+        self.addType(null);
+        self.addIsUraDora = null;
+        self.pointsYakuDetails([]);
+        self.pointsYakuTotal(0);
+        self.pointsFuDetails([]);
+        self.pointsFuTotal(0);
+        self.pointsTotal('');
+    };
+    
     /**
      * action to begin the process of adding a new dora
      * this open the TileSelection view on the interface

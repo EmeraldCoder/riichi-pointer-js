@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+    <div id="left-menu">
+        <nav>
+            <a href="#" data-bind="click: reset">Reset</a>
+        </nav>
+    </div>
+    
     <div id="layout">
         <h1>Riichi Mahjong Pointer</h1>
         
@@ -247,7 +253,6 @@
     <script src="src/gui/RiichiMahjongPointerViewModel.js"></script>
     
     <script>
-        // initialize the application
         ko.applyBindings(new RiichiMahjongPointerViewModel());
     </script>
 </body>

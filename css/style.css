@@ -6,8 +6,33 @@ body {
     font: 20px verdana, sans-serif;
 }
 
+#left-menu {
+    width: 90px;
+    float: left;
+    position: fixed;
+    left: 0px;
+    height: 100%;
+    top: 0;
+    padding: 10px;
+    border-right: 2px solid #b2b2b2;
+}
+#left-menu a {
+    text-decoration: none;
+    display: block;
+    
+    background: green;
+    border: 2px solid #b2b2b2;
+    padding: 10px;
+    color: #fff;
+    font: 20px verdana, sans-serif;
+}
+#left-menu a:hover, #left-menu a:active {
+    border-color: #fff;
+}
+
+
 #layout {
-    margin: 10px 30px 10px 100px;
+    margin: 10px 30px 10px 120px;
 }
 
 h1 {
