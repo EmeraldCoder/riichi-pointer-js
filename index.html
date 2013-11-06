@@ -5,12 +5,14 @@
     <title>Riichi Mahjong Pointer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/left-menu.css" />
 </head>
 <body>
-    <div id="left-menu">
+    <div id="left-menu" class="close">
         <nav>
             <a href="#" data-bind="click: reset">Reset</a>
         </nav>
+        <a id="left-menu-slider"><span id="left-menu-slider-icon">></span></a>
     </div>
     
     <div id="layout">
@@ -251,6 +253,7 @@
     <script src="src/core/yakupattern-classes.js"></script>
     <script src="src/core/pointer-classes.js"></script>
     <script src="src/gui/RiichiMahjongPointerViewModel.js"></script>
+    <script src="src/gui/LeftMenu.js"></script>
     
     <script>
         ko.applyBindings(new RiichiMahjongPointerViewModel());

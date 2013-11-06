@@ -1,0 +1,50 @@
+#left-menu {
+    background: #339d3b;
+    border-right: 2px solid #b2b2b2;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+}
+
+#left-menu nav {
+    padding: 10px 30px 10px 10px;
+}
+#left-menu nav a {
+    text-decoration: none;
+    display: block;
+    background: green;
+    border: 2px solid #b2b2b2;
+    padding: 10px;
+    color: #fff;
+    font: 20px verdana, sans-serif;
+}
+#left-menu nav a:hover, #left-menu nav a:active {
+    border-color: #fff;
+}
+
+#left-menu-slider {
+    width: 20px;
+    height: 100%;
+    background: green;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    display: block;
+}
+#left-menu-slider-icon {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+}
+
+#left-menu.open { width: 150px; }
+#left-menu.open ~ #layout { margin-left: 170px; }
+
+#left-menu.close { width: 20px; }
+#left-menu.close nav { display: none; }
+#left-menu.close ~ #layout { margin-left: 40px; }
