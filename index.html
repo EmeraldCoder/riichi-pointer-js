@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/left-menu.css" />
+    <link rel="stylesheet" href="css/delete-drop.css" />
 </head>
 <body>
     <div id="left-menu" class="close">
@@ -129,7 +130,7 @@
                         <div style="margin-bottom: 10px;">
                             <input type="button" value="+ Dora" data-bind="click: addDora.bind($data, false)" />
                         </div>
-                        <div class="box box-dora" data-bind="template: {name: 'tile-template', foreach: doraTiles}"></div>
+                        <div id="Dora" class="box box-dora" data-bind="template: {name: 'tile-template', foreach: doraTiles}"></div>
                     </fieldset>
                 </div>
                 
@@ -139,7 +140,7 @@
                         <div style="margin-bottom: 10px;">
                             <input type="button" value="+ Ura-Dora" data-bind="click: addDora.bind($data, true)" />
                         </div>
-                        <div class="box box-dora" data-bind="template: {name: 'tile-template', foreach: uraDoraTiles}"></div>
+                        <div id="UraDora" class="box box-dora" data-bind="template: {name: 'tile-template', foreach: uraDoraTiles}"></div>
                     </fieldset>
                 </div>
                 
@@ -155,7 +156,7 @@
                         <input type="button" value="+ Kan" data-bind="{click: add.bind($data, true, 'kan')}" />
                         <input type="button" value="+ Chii" data-bind="{click: add.bind($data, true, 'chii')}" />
                     </div>
-                    <div class="box" style="margin-top: 10px;" data-bind="template: {name: 'hand-template', foreach: concealedCombinaisons}"></div>
+                    <div id="ConcealedCombinaison" class="box box-combinaison" style="margin-top: 10px;" data-bind="template: {name: 'hand-template', foreach: concealedCombinaisons}"></div>
                 </fieldset>
             </div>
             
@@ -167,7 +168,7 @@
                         <input type="button" value="+ Kan" data-bind="{click: add.bind($data, false, 'kan')}" />
                         <input type="button" value="+ Chii" data-bind="{click: add.bind($data, false, 'chii')}" />
                     </div>
-                    <div class="box" style="margin-top: 10px;" data-bind="template: {name: 'hand-template', foreach: openCombinaisons}"></div>
+                    <div id="OpenCombinaison" class="box box-combinaison" style="margin-top: 10px;" data-bind="template: {name: 'hand-template', foreach: openCombinaisons}"></div>
                 </fieldset>
             </div>
             
@@ -222,41 +223,49 @@
         </div>
     </div>
     
+    <div id="DeleteDrop" ondragover="event.preventDefault();">
+        <span id="DeleteDropMessage">Drag dora tile here to delete it!</span>
+    </div>
+    
     <script type="text/html" id="hand-template">
     <!-- ko foreach: tiles -->
         <!-- ko if: $index() === $parent.tiles.length-1 && !isWinningTile() -->
-        <span class="last" data-bind="click: $root.setWinningTile"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <span class="last" data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
         <!-- /ko -->
         
         <!-- ko if: $index() === $parent.tiles.length-1 && isWinningTile() -->
-        <span class="waiting last" data-bind="click: $root.setWinningTile"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <span class="waiting last" data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
         <!-- /ko -->
         
         <!-- ko if: $index() !== $parent.tiles.length-1 && isWinningTile() -->
-        <span class="waiting" data-bind="click: $root.setWinningTile"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <span class="waiting" data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
         <!-- /ko -->
         
         <!-- ko if: $index() !== $parent.tiles.length-1 && !isWinningTile() -->
-        <span data-bind="click: $root.setWinningTile"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <span data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
         <!-- /ko -->
     <!-- /ko -->
     </script>
     
     <script type="text/html" id="tile-template">
-        <span><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <span data-bind="attr: {'data-index': $index}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
     </script>
 
     <script src="vendor/knockout.js"></script>
-    <script src="src/core/tile-classes.js"></script>    
+    <script src="vendor/jquery.js"></script>
+    <script src="src/core/tile-classes.js"></script>
     <script src="src/core/combinaison-classes.js"></script>
     <script src="src/core/hand-classes.js"></script>
     <script src="src/core/yakupattern-classes.js"></script>
     <script src="src/core/pointer-classes.js"></script>
     <script src="src/gui/RiichiMahjongPointerViewModel.js"></script>
     <script src="src/gui/LeftMenu.js"></script>
+    <script src="src/gui/DragDropDoraDeletion.js"></script>
+    <script src="src/gui/DragDropCombinaisonDeletion.js"></script>
     
     <script>
-        ko.applyBindings(new RiichiMahjongPointerViewModel());
+        var viewModel = new RiichiMahjongPointerViewModel();
+        ko.applyBindings(viewModel);
     </script>
 </body>
 </html>

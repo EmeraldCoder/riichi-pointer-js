@@ -168,6 +168,14 @@ function RiichiMahjongPointerViewModel() {
         self.currentView('TileSelection');
     };
     
+    self.removeDora = function(index, isUraDora) {
+        if (isUraDora) {
+            self.uraDoraTiles.splice(index, 1);
+        } else {
+            self.doraTiles.splice(index, 1);
+        }
+    };
+    
     /**
      * action to begin the process of adding a new combinaison
      * this open the TileSelection view on the interface
@@ -180,6 +188,14 @@ function RiichiMahjongPointerViewModel() {
         self.addIsConcealed = isConcealed;
         self.addType(type);
         self.currentView('TileSelection');
+    };
+    
+    self.remove = function(index, isOpen) {
+        if (isOpen) {
+            self.openCombinaisons.splice(index, 1);
+        } else {
+            self.concealedCombinaisons.splice(index, 1);
+        }
     };
     
     /**
@@ -206,8 +222,14 @@ function RiichiMahjongPointerViewModel() {
             }
 
             if (self.addIsConcealed) {
+                combinaison._index = ko.computed(function(){
+                    return self.concealedCombinaisons.indexOf(this);
+                }, combinaison);
                 self.concealedCombinaisons.push(combinaison);
             } else {
+                combinaison._index = ko.computed(function(){
+                    return self.openCombinaisons.indexOf(this);
+                }, combinaison);
                 self.openCombinaisons.push(combinaison);
             }
         }
