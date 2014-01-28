@@ -14,6 +14,8 @@
     
     $('.box-combinaison').on('touchend', 'span', function(e) {
         e.preventDefault();
+        $(this).trigger('click');
+        
         if (selectionTimeout) clearTimeout(selectionTimeout);
     });
     

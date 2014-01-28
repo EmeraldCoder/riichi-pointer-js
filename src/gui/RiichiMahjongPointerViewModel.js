@@ -191,6 +191,11 @@ function RiichiMahjongPointerViewModel() {
     };
     
     self.remove = function(index, isOpen) {
+        if (self.winningTile) {
+            self.winningTile.isWinningTile(false);
+            self.winningTile = null;
+        }
+    
         if (isOpen) {
             self.openCombinaisons.splice(index, 1);
         } else {

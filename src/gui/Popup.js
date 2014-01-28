@@ -3,13 +3,16 @@ var Popup = (function($){
     var $idleBackground,
         $popup,
         $popupTitle,
-        $popupButtons;
+        $popupButtons,
+        isOpen = false;
 
     function init() {
         createHtmlStructure();
     }
     
     function open(message, buttons) {
+        isOpen = true;
+    
         $popupTitle.html(message);
         
         buttons.forEach(function(button){
@@ -27,6 +30,8 @@ var Popup = (function($){
     }
     
     function close() {
+        isOpen = false;
+    
         $idleBackground.hide();
         $popup.hide();
         
@@ -57,6 +62,7 @@ var Popup = (function($){
     init();
     return {
         open: open,
-        close: close
+        close: close,
+        isOpen: isOpen
     };
 }(jQuery));
