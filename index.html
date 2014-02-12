@@ -18,11 +18,13 @@
     </div>
     
     <div id="layout">
-        <h1>Riichi Mahjong Pointer</h1>
+        <div style="width: 100%;">
+            <img src="img/logo.png" style="height: 40px; display: block; float: left; margin-right: 40px;" />
+            <h1 style="font-size: 30px; line-height: 40px;"><span data-bind="{text: title}"></span></h1>
+            <div style="clear: both;"></div>
+        </div>
         
         <div id="select-tile-view" data-bind="{visible: currentView() === 'TileSelection'}">
-            <h2>Select the tile</h2>
-
             <div data-bind="{visible: addType() !== 'chii'}">
                 <img src="img/dragongreen.png" data-bind="{click: selectTile.bind($data, 'dragon', 'green')}" />
                 <img src="img/dragonred.png" data-bind="{click: selectTile.bind($data, 'dragon', 'red')}" />
@@ -70,22 +72,37 @@
         </div>
 
         <div data-bind="{visible: currentView() === 'Main'}">
-            <h2>Your hand</h2>
-
             <div style="margin: 10px 0;">
                 <fieldset>
                     <legend>Winning type</legend>
-                    <select data-bind="{value: winningType}">
-                        <option value="tsumo">Tsumo</option>
-                        <option value="ron">Ron</option>
-                    </select>
-                    <select data-bind="{value: winningSecondaryType}">
-                        <option></option>
-                        <option value="haitei raoyue">Haitei Raoyue</option>
-                        <option value="houtei raoyui">Houtei Raoyui</option>
-                        <option value="rinshan kaihou">Rinshan Kaihou</option>
-                        <option value="chan kan">Chan Kan</option>
-                    </select>
+                    
+                    <div style="line-height: 14px; float: left; max-width: 30%; overflow: hidden; margin-right: 5%;">
+                        <span class="txt1">Winning By<br /></span>
+                        <select data-bind="{value: winningType}" style="width: 100%">
+                            <option value="tsumo">Tsumo</option>
+                            <option value="ron">Ron</option>
+                        </select>
+                    </div>
+                    <div style="line-height: 14px;float: left; max-width: 30%; overflow: hidden; margin-right: 5%;">
+                        <span class="txt1">Complete By<br /></span>
+                        <select data-bind="{value: winningSecondaryType}" style="width: 100%">
+                            <option></option>
+                            <option value="haitei raoyue">Haitei Raoyue</option>
+                            <option value="houtei raoyui">Houtei Raoyui</option>
+                            <option value="rinshan kaihou">Rinshan Kaihou</option>
+                            <option value="chan kan">Chan Kan</option>
+                        </select>
+                    </div>
+                    <div style="line-height: 14px;float: left; max-width: 30%; overflow: hidden;">
+                        <span class="txt1">Riichi<br /></span>
+                        <select data-bind="{value: winningRiichiType}" style="width: 100%">
+                            <option></option>
+                            <option value="riichi">Riichi</option>
+                            <option value="riichi ippatsu">Riichi Ippatsu</option>
+                            <option value="double riichi">Double Riichi</option>
+                            <option value="double riichi ippatsu">Double Riichi Ippatsu</option>
+                        </select>
+                    </div>
                 </fieldset>
             </div>
             
@@ -93,8 +110,8 @@
                 <fieldset>
                     <legend>Winds</legend>
                     
-                    <div style="display: inline-block;">
-                        <label>Prevalent: </label>
+                    <div style="line-height: 14px; float: left; max-width: 40%; overflow: hidden; margin-right: 5%;">
+                        <span class="txt1">Prevalent: <br /></span>
                         <select data-bind="{value: prevalentWind}">
                             <option value="east">East</option>
                             <option value="south">South</option>
@@ -103,8 +120,8 @@
                         </select>
                     </div>
                     
-                    <div style="display: inline-block;">
-                        <label>Seat: </label>
+                    <div style="line-height: 14px; float: left; max-width: 40%; overflow: hidden;">
+                        <span class="txt1">Seat: <br /></span>
                         <select data-bind="{value: seatWind}">
                             <option value="east">East</option>
                             <option value="south">South</option>
@@ -112,15 +129,6 @@
                             <option value="north">North</option>
                         </select>
                     </div>
-                </fieldset>
-            </div>
-            
-            <div style="margin: 10px 0;">
-                <fieldset>
-                    <legend>Riichi</legend>
-                    <input type="checkbox" id="IsRiichi" data-bind="{checked: isRiichi}" /><label for="IsRiichi">Riichi</label>
-                    <input type="checkbox" id="IsDoubleRiichi" data-bind="{checked: isDoubleRiichi}" /><label for="IsDoubleRiichi">Double Riichi</label>
-                    <input type="checkbox" id="IsIppatsu" data-bind="{checked: isIppatsu}" /><label for="IsIppatsu">Ippatsu</label>
                 </fieldset>
             </div>
             
@@ -179,7 +187,6 @@
         </div>
         
         <div data-bind="{visible: currentView() === 'Result'}">
-            <h2>Your hand points</h2>
             <div style="margin-bottom: 20px">
                 <input type="button" value="back to your hand" data-bind="click: returnToMain" />
             </div>

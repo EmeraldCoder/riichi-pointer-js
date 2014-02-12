@@ -14,10 +14,11 @@
     text-decoration: none;
     display: block;
     background: green;
-    border: 2px solid #b2b2b2;
+    border: none;
     padding: 10px;
     color: #fff;
     font: 20px verdana, sans-serif;
+    border-radius: 5px;
 }
 #left-menu nav a:hover, #left-menu nav a:active {
     border-color: #fff;
@@ -43,7 +44,7 @@
 }
 
 #left-menu.open { width: 150px; }
-#left-menu.open ~ #layout { margin-left: 170px; }
+#left-menu.open ~ #layout { margin-left: 155px; }
 
 #left-menu.close { width: 20px; }
 #left-menu.close nav { display: none; }
