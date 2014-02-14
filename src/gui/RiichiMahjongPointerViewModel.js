@@ -6,6 +6,11 @@ function RiichiMahjongPointerViewModel() {
     var self = this;
     
     /**
+     * Title of the current active view on the interface
+     */
+    self.title = ko.observable('Your hand');
+    
+    /**
      * Id of the current active view on the interface
      * Main, TileSuitSelection, TileValueSelection, Result
      */
@@ -36,19 +41,10 @@ function RiichiMahjongPointerViewModel() {
     self.winningSecondaryType = ko.observable('');
     
     /**
-     * indicate if the player won with a riichi
+     * indicate if the player won with riichi circonstance
+     * riichi / riichi ippatsu / double riichi / double riichi ippatsu
      */
-    self.isRiichi = ko.observable(false);
-    
-    /**
-     * indicate if the player riichi was put on the first round
-     */
-    self.isDoubleRiichi = ko.observable(false);
-    
-    /**
-     * indicate if the player won in the first round after declaring his riichi
-     */
-    self.isIppatsu = ko.observable(false);
+    self.winningRiichiType = ko.observable('');
     
     /**
      * list of the dora tiles
@@ -132,14 +128,13 @@ function RiichiMahjongPointerViewModel() {
     });
     
     self.reset = function() {
+        self.title('Your hand');
         self.currentView('Main');
         self.prevalentWind('east');
         self.seatWind('east');
         self.winningType('tsumo');
         self.winningSecondaryType('');
-        self.isRiichi(false);
-        self.isDoubleRiichi(false);
-        self.isIppatsu(false);
+        self.winningRiichiType('');
         self.doraTiles([]);
         self.uraDoraTiles([]);
         self.winningTile = null;
@@ -166,6 +161,7 @@ function RiichiMahjongPointerViewModel() {
         self.addForDora = true;
         self.addIsUraDora = isUraDora;
         self.currentView('TileSelection');
+        self.title('Select a tile');
     };
     
     self.removeDora = function(index, isUraDora) {
@@ -188,6 +184,7 @@ function RiichiMahjongPointerViewModel() {
         self.addIsConcealed = isConcealed;
         self.addType(type);
         self.currentView('TileSelection');
+        self.title('Select a tile');
     };
     
     self.remove = function(index, isOpen) {
@@ -237,6 +234,11 @@ function RiichiMahjongPointerViewModel() {
                 }, combinaison);
                 self.openCombinaisons.push(combinaison);
             }
+            
+            combinaison.tiles.forEach(function(tile) {
+                tile._combinaison = combinaison;
+                tile._index = combinaison.tiles.indexOf(tile);
+            });
         }
         
         self.addForDora = null;
@@ -244,6 +246,7 @@ function RiichiMahjongPointerViewModel() {
         self.addType(null);
         self.addIsUraDora = null;
         self.currentView('Main');
+        self.title('Your hand');
     };
     
     /**
@@ -264,6 +267,7 @@ function RiichiMahjongPointerViewModel() {
      */
     self.returnToMain = function(){
         self.currentView('Main');
+        self.title('Your hand');
     };
     
     /**
@@ -277,8 +281,8 @@ function RiichiMahjongPointerViewModel() {
             return false;
         }
         
-        var winningCombinaisonIndex = 0;
-        var winningTileIndex = 0;
+        var winningCombinaisonIndex = self.winningTile._combinaison._index();
+        var winningTileIndex = self.winningTile._index;
         
         var hand = new Hand(
             self.concealedCombinaisons(),
@@ -292,9 +296,12 @@ function RiichiMahjongPointerViewModel() {
             self.doraTiles(),
             self.uraDoraTiles()
         );
-        hand.isRiichi = self.isRiichi() || self.isDoubleRiichi();
-        hand.isDoubleRiichi = self.isDoubleRiichi();
-        hand.isIppatsu = self.isIppatsu();
+        
+        hand.isRiichi = self.winningRiichiType() !== '';
+        hand.isDoubleRiichi = self.winningRiichiType() === 'double riichi' || 
+            self.winningRiichiType() === 'double riichi ippatsu';
+        hand.isIppatsu = self.winningRiichiType() === 'riichi ippatsu' ||
+            self.winningRiichiType() === 'double riichi ippatsu';
         
         var patterns = [
             new TanyaouChuu(),
@@ -367,6 +374,7 @@ function RiichiMahjongPointerViewModel() {
         self.pointsTotal(pointHtml);
         
         self.currentView('Result');
+        self.title('Hand points');
     };
     
 }
