@@ -238,19 +238,19 @@
     <script type="text/html" id="hand-template">
     <!-- ko foreach: tiles -->
         <!-- ko if: $index() === $parent.tiles.length-1 && !isWinningTile() -->
-        <span class="last" data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <span class="last" data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index, 'data-combinaison-concealed': $parent._isConcealed}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
         <!-- /ko -->
         
         <!-- ko if: $index() === $parent.tiles.length-1 && isWinningTile() -->
-        <span class="waiting last" data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <span class="waiting last" data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index, 'data-combinaison-concealed': $parent._isConcealed}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
         <!-- /ko -->
         
         <!-- ko if: $index() !== $parent.tiles.length-1 && isWinningTile() -->
-        <span class="waiting" data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <span class="waiting" data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index, 'data-combinaison-concealed': $parent._isConcealed}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
         <!-- /ko -->
         
         <!-- ko if: $index() !== $parent.tiles.length-1 && !isWinningTile() -->
-        <span data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
+        <span data-bind="click: $root.setWinningTile, attr: {'data-combinaison-index': $parent._index, 'data-combinaison-concealed': $parent._isConcealed}"><img data-bind="attr: {src: 'img/' + suit + value + '.png'}" /></span>
         <!-- /ko -->
     <!-- /ko -->
     </script>

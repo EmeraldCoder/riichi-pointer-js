@@ -13,7 +13,7 @@
             e.preventDefault();
             
             var index = parseInt(dragging.attr('data-combinaison-index')),
-                isOpen = dragging.parents('div').attr('id') === 'OpenCombinaison';
+                isOpen = dragging.attr('data-combinaison-concealed') !== 'true';
                 
             viewModel.remove(index, isOpen);
             

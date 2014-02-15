@@ -223,6 +223,7 @@ function RiichiMahjongPointerViewModel() {
                 combinaison.tiles[i].isWinningTile = ko.observable(false);
             }
 
+            combinaison._isConcealed = self.addIsConcealed;
             if (self.addIsConcealed) {
                 combinaison._index = ko.computed(function(){
                     return self.concealedCombinaisons.indexOf(this);

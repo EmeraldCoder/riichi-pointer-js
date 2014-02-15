@@ -29,9 +29,9 @@
         );
     }
     
-    function deleteSelectedCombinaison() {           
+    function deleteSelectedCombinaison() {
         var index = parseInt(selection.attr('data-combinaison-index')),
-            isOpen = selection.parents('div').attr('id') === 'OpenCombinaison';
+            isOpen = selection.attr('data-combinaison-concealed') !== 'true';
         viewModel.remove(index, isOpen);
     }
 
