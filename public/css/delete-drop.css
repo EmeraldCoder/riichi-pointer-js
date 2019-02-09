@@ -1,0 +1,14 @@
+#DeleteDrop {
+    position: fixed; 
+    top: 10px;
+    left: 3%; 
+    width: 94%; 
+    height: 50px; 
+    background: red; 
+    display: none;
+    border: 3px dashed pink;
+    text-align: center;
+    line-height: 50px;
+    color: pink;
+}
+

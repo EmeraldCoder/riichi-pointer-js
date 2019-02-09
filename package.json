@@ -1,5 +1,12 @@
 {
   "name": "riichi-pointer-js",
   "version": "0.3.0",
-  "devDependencies": {}
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^3.4.0",
+    "vue-template-compiler": "^2.6.4"
+  }
 }
