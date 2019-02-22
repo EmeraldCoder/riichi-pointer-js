@@ -1,0 +1,116 @@
+/**
+ * Tile factory class
+ * Factory design pattern to help create tile classes
+ *
+ * ex. : TileFactory.create('dragon', 'red')
+ */
+export const TileFactory = {
+    create: function(suit, value) {
+        switch (suit) {
+            case 'dragon':
+                return new DragonTile(value);
+            case 'wind':
+                return new WindTile(value);
+            case 'bamboo':
+                return new BambooTile(value);
+            case 'dot':
+                return new DotTile(value);
+            case 'character':
+                return new CharacterTile(value);
+            default:
+                alert('Tile Factory Error : "' + suit + '" is not a supported suit');
+        }
+    }
+};
+
+/**
+ * Tile base class
+ * All tile inherit from this class
+ */
+export function Tile() {
+    this.isWinningTile = false;
+}
+
+/**
+ * Honor tile base class
+ * Wind and Dragon tile inherit from this class
+ */
+export function HonorTile() {
+    Tile.call(this);
+}
+HonorTile.prototype = new Tile();
+HonorTile.prototype.constructor = HonorTile;
+
+/**
+ * Numbered tile base class
+ * Dot, Character and Bamboo tile inherit from this class
+ */
+export function NumberedTile(number) {
+    Tile.call(this);
+    this.number = number; // number 1 to 9
+    this.isTerminal = function() {
+        return (this.number == 1 || this.number == 9);
+    };
+}
+NumberedTile.prototype = new Tile();
+NumberedTile.prototype.constructor = NumberedTile;
+
+/**
+ * Wind tile class
+ * East, South, West and North tile
+ */
+export function WindTile(direction) {
+    HonorTile.call(this);
+    this.suit = "wind";
+    this.direction = direction; // east, south, west, north
+    this.value = direction;
+}
+WindTile.prototype = new HonorTile();
+WindTile.prototype.constructor = WindTile;
+
+/**
+ * Dragon tile class
+ * Red, Green and White dragon tile
+ */
+export function DragonTile(color) {
+    HonorTile.call(this);
+    this.suit = "dragon";
+    this.color = color; // red, green, white
+    this.value = color;
+}
+DragonTile.prototype = new HonorTile();
+DragonTile.prototype.constructor = DragonTile;
+
+/**
+ * Dot tile class
+ */
+export function DotTile(number) {
+    NumberedTile.call(this, number);
+    this.suit = "dot";
+    this.value = number;
+}
+DotTile.prototype = new NumberedTile();
+DotTile.prototype.constructor = DotTile;
+
+/**
+ * Character tile class
+ */
+export function CharacterTile(number) {
+    NumberedTile.call(this, number);
+    this.suit = "character";
+    this.value = number;
+}
+CharacterTile.prototype = new NumberedTile();
+CharacterTile.prototype.constructor = CharacterTile;
+
+/**
+ * Bamboo tile class
+ */
+export function BambooTile(number) {
+    NumberedTile.call(this, number);
+    this.suit = "bamboo";
+    this.value = number;
+}
+BambooTile.prototype = new NumberedTile();
+BambooTile.prototype.constructor = BambooTile;
+

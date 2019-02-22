@@ -1,4 +1,40 @@
 import ko from 'knockout'
+import { Hand } from './core/hand-classes'
+import { TileFactory } from './core/tile-classes'
+import { CombinaisonFactory } from './core/combinaison-classes'
+import { calculateFu, calculatePoint } from './core/pointer-classes'
+import {
+    TanyaouChuu,
+    Honitsu,
+    Chinitsu,
+    Honroutou,
+    Iipeikou,
+    SanShokuDoujun,
+    Itsu,
+    Chanta,
+    ChiiToitsu,
+    SanShokuDokou,
+    ToiToiHou,
+    ShouSangen,
+    RyanPeikou,
+    JunchanTaiyai,
+    FanpaiDragonPon,
+    FanpaiRoundWind,
+    FanpaiSeatWind,
+    Pinfu,
+    SanAnkou,
+    SanKanTsu,
+    MenzenTsumo,
+    Riichi,
+    DoubleRiichi,
+    Ippatsu,
+    HaiteiRaoyue,
+    HouteiRaoyui,
+    RinshanKaihou,
+    ChanKan,
+    Dora,
+    UraDora
+} from './core/yakupattern-classes'
 
 /**
  * View Model Class that handle the logic of the user interface for the application
@@ -352,13 +388,11 @@ export default function () {
         self.pointsYakuDetails(result);
         self.pointsYakuTotal(resultTotal);
         
-        var fuCalculator = new FuCalculator();
-        var fuResult = fuCalculator.calculate(hand);
+        var fuResult = calculateFu(hand);
         self.pointsFuDetails(fuResult.details);
         self.pointsFuTotal(fuResult.total);
         
-        var pointCalculator = new PointCalculator();
-        var pointResult = pointCalculator.calculate(hand, resultTotal, fuResult.total);
+        var pointResult = calculatePoint(hand, resultTotal, fuResult.total);
         
         var pointHtml = '';
         if (hand.seatWind === 'east') { // dealer
