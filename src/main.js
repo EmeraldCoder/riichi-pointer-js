@@ -1,7 +1,6 @@
-import ko from 'knockout'
-import AppViewModel from './AppViewModel'
+import Vue from 'vue'
+import App from './App.vue'
 
-const appViewModel = new AppViewModel()
-ko.applyBindings(appViewModel)
-
-window.viewModel = appViewModel // ugly temporary fix because some GUI jQuery code need to reference the view model globally
+new Vue({
+    render: h => h(App)
+}).$mount('#App')

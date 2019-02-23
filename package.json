@@ -8,15 +8,14 @@
   },
   "devDependencies": {
     "@babel/polyfill": "^7.2.5",
-    "@vue/cli-plugin-babel": "^3.4.0",
-    "@vue/cli-plugin-unit-jest": "^3.4.0",
-    "@vue/cli-service": "^3.4.0",
+    "@vue/cli-plugin-babel": "^3.4.1",
+    "@vue/cli-plugin-unit-jest": "^3.4.1",
+    "@vue/cli-service": "^3.4.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
-    "vue-template-compiler": "^2.6.4"
+    "vue-template-compiler": "^2.6.7"
   },
   "dependencies": {
-    "knockout": "^3.0.0",
     "vue": "^2.6.7"
   }
 }

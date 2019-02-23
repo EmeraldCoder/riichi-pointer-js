@@ -44,9 +44,13 @@ input[type=button] {
     font: 20px verdana, sans-serif;
     cursor: pointer;
     border-radius: 5px;
+    margin-right: 5px;
 }
 input[type=button]:hover {
     border-color: #eead4d;
+}
+input[type=button]:last-child {
+    margin-right: 0;
 }
 
 select {
