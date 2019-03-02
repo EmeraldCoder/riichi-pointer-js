@@ -407,38 +407,7 @@ import { Hand } from './core/hand-classes'
 import { TileFactory } from './core/tile-classes'
 import { CombinaisonFactory } from './core/combinaison-classes'
 import { calculateFu, calculatePoint } from './core/pointer-classes'
-import {
-  TanyaouChuu,
-  Honitsu,
-  Chinitsu,
-  Honroutou,
-  Iipeikou,
-  SanShokuDoujun,
-  Itsu,
-  Chanta,
-  ChiiToitsu,
-  SanShokuDokou,
-  ToiToiHou,
-  ShouSangen,
-  RyanPeikou,
-  JunchanTaiyai,
-  FanpaiDragonPon,
-  FanpaiRoundWind,
-  FanpaiSeatWind,
-  Pinfu,
-  SanAnkou,
-  SanKanTsu,
-  MenzenTsumo,
-  Riichi,
-  DoubleRiichi,
-  Ippatsu,
-  HaiteiRaoyue,
-  HouteiRaoyui,
-  RinshanKaihou,
-  ChanKan,
-  Dora,
-  UraDora
-} from './core/yakupattern-classes'
+import { DefaultRuleset } from './core/ruleset-classes'
 
 export default {
   data () {
@@ -463,7 +432,8 @@ export default {
       pointsYakuTotal: 0, // an total of the player hand
       pointsFuDetails: [], // list of all the fu valid for the player hand
       pointsFuTotal: 0, // fu total of the player hand (ex. : 1000 points from each players || ex. : 500 points from non-dealer players / 1000 points from dealer player)
-      leftMenuIsOpen: false
+      leftMenuIsOpen: false,
+      ruleset: new DefaultRuleset()
     }
   },
 
@@ -650,38 +620,7 @@ export default {
       hand.isDoubleRiichi = this.winningRiichiType === 'double riichi' || this.winningRiichiType === 'double riichi ippatsu'
       hand.isIppatsu = this.winningRiichiType === 'riichi ippatsu' || this.winningRiichiType === 'double riichi ippatsu'
 
-      const patterns = [
-        new TanyaouChuu(),
-        new Honitsu(),
-        new Chinitsu(),
-        new Honroutou(),
-        new Iipeikou(),
-        new SanShokuDoujun(),
-        new Itsu(),
-        new Chanta(),
-        new ChiiToitsu(),
-        new SanShokuDokou(),
-        new ToiToiHou(),
-        new ShouSangen(),
-        new RyanPeikou(),
-        new JunchanTaiyai(),
-        new FanpaiDragonPon(),
-        new FanpaiRoundWind(),
-        new FanpaiSeatWind(),
-        new Pinfu(),
-        new SanAnkou(),
-        new SanKanTsu(),
-        new MenzenTsumo(),
-        new Riichi(),
-        new DoubleRiichi(),
-        new Ippatsu(),
-        new HaiteiRaoyue(),
-        new HouteiRaoyui(),
-        new RinshanKaihou(),
-        new ChanKan(),
-        new Dora(),
-        new UraDora()
-      ]
+      const patterns = this.ruleset.getYakuPatterns()
 
       let result = []
       let resultTotal = 0
