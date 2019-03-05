@@ -31,7 +31,13 @@ import {
   UraDora
 } from '@/core/yakupattern-classes'
 
-export class DefaultRuleset {
+export class Ruleset {
+  getYakuPatterns () {
+    throw new Error('NotImplemented')
+  }
+}
+
+export class DefaultRuleset extends Ruleset {
   getYakuPatterns () {
     return [
       new TanyaouChuu(),

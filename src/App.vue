@@ -357,45 +357,9 @@
             @click="returnToMain">
         </div>
         <div style="margin: 20px 0;">
-          <p>{{ pointsTotal }}</p>
-
-          <p><b>Han:</b> <span>{{ pointsYakuTotal }}</span> / <b>Fu:</b> <span>{{ pointsFuTotal }}</span></p>
-
-          <b>Han details</b><br >
-          <table>
-            <thead>
-              <tr>
-                <th>Description</th>
-                <th>Han value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(detail, index) in pointsYakuDetails"
-                :key="index">
-                <td>{{ detail.name }}</td>
-                <td>{{ detail.value }}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <br><b>Fu details</b><br>
-          <table>
-            <thead>
-              <tr>
-                <th>Description</th>
-                <th>Fu value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(detail, index) in pointsFuDetails"
-                :key="index">
-                <td>{{ detail.name }}</td>
-                <td>{{ detail.value }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <score-component
+            :hand="hand"
+            :ruleset="ruleset" />
         </div>
       </div>
     </div>
@@ -406,10 +370,14 @@
 import { Hand } from './core/hand-classes'
 import { TileFactory } from './core/tile-classes'
 import { CombinaisonFactory } from './core/combinaison-classes'
-import { calculateFu, calculatePoint } from './core/pointer-classes'
 import { DefaultRuleset } from './core/ruleset-classes'
+import ScoreComponent from './components/Score.vue'
 
 export default {
+  components: {
+    ScoreComponent
+  },
+
   data () {
     return {
       title: 'Your hand', // Title of the current active view on the interface
@@ -428,12 +396,9 @@ export default {
       addIsConcealed: null, // indicate if the combinaison that the user is currently adding is concealed or not
       addType: null, // type of the combinaison that the user is currently adding (pair, pon, kan, chii)
       addIsUraDora: null, // indicate if the dora that the user is currently adding is ura-dora or not
-      pointsYakuDetails: [], // list of all the yaku pattern valid for the player hand
-      pointsYakuTotal: 0, // an total of the player hand
-      pointsFuDetails: [], // list of all the fu valid for the player hand
-      pointsFuTotal: 0, // fu total of the player hand (ex. : 1000 points from each players || ex. : 500 points from non-dealer players / 1000 points from dealer player)
       leftMenuIsOpen: false,
-      ruleset: new DefaultRuleset()
+      ruleset: new DefaultRuleset(),
+      hand: null
     }
   },
 
@@ -620,43 +585,7 @@ export default {
       hand.isDoubleRiichi = this.winningRiichiType === 'double riichi' || this.winningRiichiType === 'double riichi ippatsu'
       hand.isIppatsu = this.winningRiichiType === 'riichi ippatsu' || this.winningRiichiType === 'double riichi ippatsu'
 
-      const patterns = this.ruleset.getYakuPatterns()
-
-      let result = []
-      let resultTotal = 0
-      for (let i = 0; i < patterns.length; i++) {
-        const pattern = patterns[i]
-        const checkResult = pattern.check(hand)
-        if (checkResult > 0) {
-          resultTotal += checkResult
-          result.push({ name: pattern.japaneseName + ' (' + pattern.englishName + ')', value: checkResult })
-        }
-      }
-      this.pointsYakuDetails = result
-      this.pointsYakuTotal = resultTotal
-
-      const fuResult = calculateFu(hand)
-      this.pointsFuDetails = fuResult.details
-      this.pointsFuTotal = fuResult.total
-
-      const pointResult = calculatePoint(hand, resultTotal, fuResult.total)
-
-      let pointHtml = ''
-      if (hand.seatWind === 'east') { // dealer
-        if (hand.winningType === 'tsumo') {
-          pointHtml = pointResult + ' points from each player (' + (pointResult * 3) + ' points)'
-        } else if (hand.winningType === 'ron') {
-          pointHtml = pointResult + ' points from the discard player'
-        }
-      } else { // non-dealer
-        if (hand.winningType === 'tsumo') {
-          pointHtml = pointResult.dealer + ' points from dealer / ' + pointResult.nonDealer + ' points from others players (' + (pointResult.dealer + (pointResult.nonDealer * 2)) + ' points)'
-        } else if (hand.winningType === 'ron') {
-          pointHtml = pointResult + ' points from the discard player'
-        }
-      }
-      this.pointsTotal = pointHtml
-
+      this.hand = hand
       this.currentView = 'Result'
       this.title = 'Hand points'
     },
