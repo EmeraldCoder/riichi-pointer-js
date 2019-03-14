@@ -428,11 +428,6 @@ export default {
       this.addIsConcealed = null
       this.addType = null
       this.addIsUraDora = null
-      this.pointsYakuDetails = []
-      this.pointsYakuTotal = 0
-      this.pointsFuDetails = []
-      this.pointsFuTotal = 0
-      this.pointsTotal = ''
     },
 
     /**
