@@ -293,7 +293,7 @@
                 <span
                   v-for="(tile, index) in combinaison.tiles"
                   :key="'concealCombinaison.' + combinaisonIndex + '.' + index"
-                  :class="{ waiting: tile.isWinningTile, last: index === combinaison.tiles.length - 1 }"
+                  :class="{ waiting: winningTile === tile, last: index === combinaison.tiles.length - 1 }"
                   @click.right.prevent="remove(combinaisonIndex, false)"
                   @click.left="setWinningTile(tile)"
                 >
@@ -329,7 +329,7 @@
                 <span
                   v-for="(tile, index) in combinaison.tiles"
                   :key="'openCombinaison.' + combinaisonIndex + '.' + index"
-                  :class="{ waiting: tile.isWinningTile, last: index === combinaison.tiles.length - 1 }"
+                  :class="{ waiting: winningTile === tile, last: index === combinaison.tiles.length - 1 }"
                   @click.right.prevent="remove(combinaisonIndex, true)"
                   @click.left="setWinningTile(tile)"
                 >
@@ -389,7 +389,7 @@ export default {
       winningRiichiType: '', // indicate if the player won with riichi circonstance (riichi / riichi ippatsu / double riichi / double riichi ippatsu)
       doraTiles: [], // list of the dora tiles
       uraDoraTiles: [], // list of the ura-dora tiles
-      winningTile: null, // winning tile select by the user
+      winningTile: null, // winning tile selected by the user
       concealedCombinaisons: [], // list of the concealed combinaisons of the player
       openCombinaisons: [], // list of the open combinaisons of the player
       addForDora: null, // ndicate if the adding process is for dora or not (ex. : combinaison)
@@ -475,10 +475,7 @@ export default {
 
     remove (index, isOpen) {
       if (confirm('Do you want to delete this combinaison?')) {
-        if (this.winningTile) {
-          this.winningTile.isWinningTile = false
-          this.winningTile = null
-        }
+        this.winningTile = null
 
         if (isOpen) {
           this.openCombinaisons.splice(index, 1)
@@ -506,23 +503,11 @@ export default {
         const firstCombinaisonTile = TileFactory.create(suit, value)
         const combinaison = CombinaisonFactory.create(this.addType, firstCombinaisonTile)
 
-        for (let i = 0; i < combinaison.tiles.length; i++) {
-          combinaison.tiles[i].isWinningTile = false
-        }
-
-        combinaison._isConcealed = this.addIsConcealed
         if (this.addIsConcealed) {
-          combinaison._index = this.concealedCombinaisons.length
           this.concealedCombinaisons.push(combinaison)
         } else {
-          combinaison._index = this.openCombinaisons.length
           this.openCombinaisons.push(combinaison)
         }
-
-        combinaison.tiles.forEach(function (tile) {
-          tile._combinaison = combinaison
-          tile._index = combinaison.tiles.indexOf(tile)
-        })
       }
 
       this.addForDora = null
@@ -539,11 +524,11 @@ export default {
      * @param object tile
      */
     setWinningTile (tile) {
-      if (this.winningTile) {
-        this.winningTile.isWinningTile = false
+      if (this.winningTile === tile) {
+        this.winningTile = null
+      } else {
+        this.winningTile = tile
       }
-      this.winningTile = tile
-      this.winningTile.isWinningTile = true
     },
 
     /**
@@ -565,16 +550,16 @@ export default {
         return
       }
 
-      const winningCombinaisonIndex = this.winningTile._combinaison._index
-      const winningTileIndex = this.winningTile._index
+      const combinaisons = [].concat(this.concealedCombinaisons, this.openCombinaisons)
+      const winningCombinaison = combinaisons.filter(x => x.tiles.indexOf(this.winningTile) > -1)[0]
 
       const hand = new Hand(
         this.concealedCombinaisons,
         this.openCombinaisons,
         this.seatWind,
         this.prevalentWind,
-        winningCombinaisonIndex,
-        winningTileIndex,
+        combinaisons.indexOf(winningCombinaison),
+        winningCombinaison.tiles.indexOf(this.winningTile),
         this.winningType,
         this.winningSecondaryType,
         this.doraTiles,

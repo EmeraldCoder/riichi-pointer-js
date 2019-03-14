@@ -28,7 +28,6 @@ export const TileFactory = {
  * All tile inherit from this class
  */
 export function Tile () {
-  this.isWinningTile = false
 }
 
 /**
