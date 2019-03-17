@@ -26,7 +26,7 @@ fieldset {
 }
 fieldset  legend {
     color: green;
-    letter-spacing: 2px;    
+    letter-spacing: 2px;
     font-family: 'arial', sans-serif;
     font-size: 30px;
 }
@@ -60,28 +60,6 @@ select {
     border: none;
     color: #fff;
     border-radius: 5px;
-}
-
-.box {
-    
-}
-/*.box span {
-    max-width: 20%;
-}*/
-.box span {
-    width: 4.8%;
-    display: block;
-    float: left;
-}
-.box span.last {
-    margin-right: 2.4%;
-}
-.box img {
-    width: 100%;
-}
-
-.box-dora span {
-    width: 10%;
 }
 
 table {

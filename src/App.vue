@@ -221,18 +221,19 @@
                   type="button"
                   value="+ Dora"
                   @click="addDora(false)">
+                <input
+                  v-if="selectedDoraTiles.length > 0"
+                  type="button"
+                  value="- Dora"
+                  @click="removeSelectedDoraTiles(false)">
               </div>
-              <div
-                id="Dora"
-                class="box box-dora">
-                <span
-                  v-for="(dora, index) in doraTiles"
-                  :key="index"
-                  :data-index="index">
-                  <img
-                    :src="'img/' + dora.suit + dora.value + '.png'"
-                    @click.right.prevent="removeDora(index, false)">
-                </span>
+              <div>
+                <tile-component
+                  v-for="(tile, index) in doraTiles"
+                  :key="'dora.' + index"
+                  :tile="tile"
+                  :selected="selectedDoraTiles.indexOf(tile) > -1"
+                  @click.native="toggleDoraTileSelection(tile, false)" />
               </div>
             </fieldset>
           </div>
@@ -245,18 +246,19 @@
                   type="button"
                   value="+ Ura-Dora"
                   @click="addDora(true)">
+                <input
+                  v-if="selectedUraDoraTiles.length > 0"
+                  type="button"
+                  value="- Ura-Dora"
+                  @click="removeSelectedDoraTiles(true)">
               </div>
-              <div
-                id="UraDora"
-                class="box box-dora">
-                <span
-                  v-for="(dora, index) in uraDoraTiles"
-                  :key="index"
-                  :data-index="index">
-                  <img
-                    :src="'img/' + dora.suit + dora.value + '.png'"
-                    @click.right.prevent="removeDora(index, true)">
-                </span>
+              <div>
+                <tile-component
+                  v-for="(tile, index) in uraDoraTiles"
+                  :key="'uraDora.' + index"
+                  :tile="tile"
+                  :selected="selectedUraDoraTiles.indexOf(tile) > -1"
+                  @click.native="toggleDoraTileSelection(tile, true)" />
               </div>
             </fieldset>
           </div>
@@ -267,39 +269,42 @@
         <div style="margin: 10px 0;">
           <fieldset>
             <legend>Concealed combinaisons</legend>
-            <div v-if="!handIsFinish">
+            <div>
               <input
+                v-if="!handIsFinish"
                 type="button"
                 value="+ Pair"
-                @click="add(true, 'pair')">
+                @click="addCombinaison(true, 'pair')">
               <input
+                v-if="!handIsFinish"
                 type="button"
                 value="+ Pon"
-                @click="add(true, 'pon')">
+                @click="addCombinaison(true, 'pon')">
               <input
+                v-if="!handIsFinish"
                 type="button"
                 value="+ Kan"
-                @click="add(true, 'kan')">
+                @click="addCombinaison(true, 'kan')">
               <input
+                v-if="!handIsFinish"
                 type="button"
                 value="+ Chii"
-                @click="add(true, 'chii')">
+                @click="addCombinaison(true, 'chii')">
+              <input
+                v-if="selectedConcealedCombinaisons.length > 0"
+                type="button"
+                value="- Combinaison"
+                @click="removeSelectedCombinaisons(true)">
             </div>
             <div
-              id="ConcealedCombinaison"
-              class="box box-combinaison"
+              class="box-combinaison"
               style="margin-top: 10px;">
-              <template v-for="(combinaison, combinaisonIndex) in concealedCombinaisons">
-                <span
-                  v-for="(tile, index) in combinaison.tiles"
-                  :key="'concealCombinaison.' + combinaisonIndex + '.' + index"
-                  :class="{ waiting: winningTile === tile, last: index === combinaison.tiles.length - 1 }"
-                  @click.right.prevent="remove(combinaisonIndex, false)"
-                  @click.left="setWinningTile(tile)"
-                >
-                  <img :src="'img/' + tile.suit + tile.value + '.png'">
-                </span>
-              </template>
+              <combinaison-component
+                v-for="(combinaison, index) in concealedCombinaisons"
+                :key="'concealedCombinaisons.' + index"
+                :combinaison="combinaison"
+                :selected="selectedConcealedCombinaisons.indexOf(combinaison) > -1"
+                @click.native="toggleCombinaisonSelection(combinaison, true)" />
             </div>
           </fieldset>
         </div>
@@ -307,34 +312,52 @@
         <div style="margin: 10px 0;">
           <fieldset>
             <legend>Open combinaisons</legend>
-            <div v-if="!handIsFinish">
+            <div>
               <input
+                v-if="!handIsFinish"
                 type="button"
                 value="+ Pon"
-                @click="add(false, 'pon')">
+                @click="addCombinaison(false, 'pon')">
               <input
+                v-if="!handIsFinish"
                 type="button"
                 value="+ Kan"
-                @click="add(false, 'kan')">
+                @click="addCombinaison(false, 'kan')">
               <input
+                v-if="!handIsFinish"
                 type="button"
                 value="+ Chii"
-                @click="add(false, 'chii')">
+                @click="addCombinaison(false, 'chii')">
+              <input
+                v-if="selectedOpenCombinaisons.length > 0"
+                type="button"
+                value="- Combinaison"
+                @click="removeSelectedCombinaisons(false)">
             </div>
             <div
-              id="OpenCombinaison"
-              class="box box-combinaison"
+              class="box-combinaison"
               style="margin-top: 10px;">
-              <template v-for="(combinaison, combinaisonIndex) in openCombinaisons">
-                <span
-                  v-for="(tile, index) in combinaison.tiles"
-                  :key="'openCombinaison.' + combinaisonIndex + '.' + index"
-                  :class="{ waiting: winningTile === tile, last: index === combinaison.tiles.length - 1 }"
-                  @click.right.prevent="remove(combinaisonIndex, true)"
-                  @click.left="setWinningTile(tile)"
-                >
-                  <img :src="'img/' + tile.suit + tile.value + '.png'">
-                </span>
+              <combinaison-component
+                v-for="(combinaison, index) in openCombinaisons"
+                :key="'openCombinaisons.' + index"
+                :combinaison="combinaison"
+                :selected="selectedOpenCombinaisons.indexOf(combinaison) > -1"
+                @click.native="toggleCombinaisonSelection(combinaison, false)" />
+            </div>
+          </fieldset>
+        </div>
+
+        <div style="margin: 10px 0;">
+          <fieldset>
+            <legend>Waiting Tile</legend>
+            <div style="margin-top: 10px;">
+              <template v-for="(combinaison, combinaisonIndex) in concealedCombinaisons">
+                <tile-component
+                  v-for="(tile, tileIndex) in combinaison.tiles"
+                  :key="'waitingTile.' + combinaisonIndex + '.' + tileIndex"
+                  :tile="tile"
+                  :selected="waitingTile === tile"
+                  @click.native="toggleWaitingTile(tile)" />
               </template>
             </div>
           </fieldset>
@@ -342,7 +365,7 @@
 
         <div>
           <input
-            v-if="handIsFinish"
+            v-if="canCalculatePoint"
             type="button"
             value="Calculate hand points"
             @click="showPoints">
@@ -366,16 +389,29 @@
   </div>
 </template>
 
+<style>
+.box-combinaison .combinaison {
+  margin-right: 1.5vw;
+}
+.box-combinaison .combinaison:last-child {
+  margin-right: 0;
+}
+</style>
+
 <script>
 import { Hand } from './core/hand-classes'
 import { TileFactory } from './core/tile-classes'
 import { CombinaisonFactory } from './core/combinaison-classes'
 import { DefaultRuleset } from './core/ruleset-classes'
 import ScoreComponent from './components/Score.vue'
+import TileComponent from './components/Tile.vue'
+import CombinaisonComponent from './components/Combinaison.vue'
 
 export default {
   components: {
-    ScoreComponent
+    ScoreComponent,
+    TileComponent,
+    CombinaisonComponent
   },
 
   data () {
@@ -388,10 +424,14 @@ export default {
       winningSecondaryType: '', // indicate if the player won with a particular circonstance (haitei raoyue, houtei raoyui, rinshan kaihou, chan kan)
       winningRiichiType: '', // indicate if the player won with riichi circonstance (riichi / riichi ippatsu / double riichi / double riichi ippatsu)
       doraTiles: [], // list of the dora tiles
+      selectedDoraTiles: [], // list of user selected dora tiles
       uraDoraTiles: [], // list of the ura-dora tiles
-      winningTile: null, // winning tile selected by the user
+      selectedUraDoraTiles: [], // list of user selected ura-dora tiles
+      waitingTile: null, // winning tile selected by the user
       concealedCombinaisons: [], // list of the concealed combinaisons of the player
+      selectedConcealedCombinaisons: [], // list of user selected concealed combinaisons
       openCombinaisons: [], // list of the open combinaisons of the player
+      selectedOpenCombinaisons: [], // list of user selected open combinaisons
       addForDora: null, // ndicate if the adding process is for dora or not (ex. : combinaison)
       addIsConcealed: null, // indicate if the combinaison that the user is currently adding is concealed or not
       addType: null, // type of the combinaison that the user is currently adding (pair, pon, kan, chii)
@@ -407,6 +447,11 @@ export default {
     handIsFinish () {
       const hand = new Hand(this.concealedCombinaisons, this.openCombinaisons)
       return hand.isFinish()
+    },
+
+    /** Computed property that indicate if the state of the hand is ready for point calculation */
+    canCalculatePoint () {
+      return this.handIsFinish && this.waitingTile !== null
     }
   },
 
@@ -420,10 +465,14 @@ export default {
       this.winningSecondaryType = ''
       this.winningRiichiType = ''
       this.doraTiles = []
+      this.selectedDoraTiles = []
       this.uraDoraTiles = []
-      this.winningTile = null
+      this.selectedUraDoraTiles = []
+      this.waitingTile = null
       this.concealedCombinaisons = []
+      this.selectedConcealedCombinaisons = []
       this.openCombinaisons = []
+      this.selectedOpenCombinaisons = []
       this.addForDora = null
       this.addIsConcealed = null
       this.addType = null
@@ -443,13 +492,35 @@ export default {
       this.title = 'Select a tile'
     },
 
-    removeDora (index, isUraDora) {
-      if (confirm('Do you want to delete this dora?')) {
-        if (isUraDora) {
-          this.uraDoraTiles.splice(index, 1)
-        } else {
-          this.doraTiles.splice(index, 1)
-        }
+    /**
+      * action to select/unselect a dora
+      *
+      * @param {object} tile - The dora tile
+      * @param {boolean} isUraDora - Flag indicating is the dora is an ura-dora (reverse dora) or not
+      */
+    toggleDoraTileSelection (tile, isUraDora) {
+      const selectedTiles = isUraDora ? this.selectedUraDoraTiles : this.selectedDoraTiles
+      const index = selectedTiles.indexOf(tile)
+      if (index > -1) {
+        selectedTiles.splice(index, 1)
+      } else {
+        selectedTiles.push(tile)
+      }
+    },
+
+    /**
+      * action to delete the selected dora
+      *
+      * @param {boolean} isUraDora - Flag indicating if we want to delete normal dora or ura-dora (reverse dora)
+      */
+    removeSelectedDoraTiles (isUraDora) {
+      const selectedTiles = isUraDora ? this.selectedUraDoraTiles : this.selectedDoraTiles
+      const tiles = isUraDora ? this.uraDoraTiles : this.doraTiles
+
+      while (selectedTiles.length > 0) {
+        const selectedTile = selectedTiles.pop()
+        const index = tiles.indexOf(selectedTile)
+        tiles.splice(index, 1)
       }
     },
 
@@ -460,7 +531,7 @@ export default {
      * @param bool isConcealed indicate if the new combinaison will be concealed or not
      * @param string type specify the combinaison type that will be add (pair, pon, kan, chii)
      */
-    add (isConcealed, type) {
+    addCombinaison (isConcealed, type) {
       this.addForDora = false
       this.addIsConcealed = isConcealed
       this.addType = type
@@ -468,15 +539,36 @@ export default {
       this.title = 'Select a tile'
     },
 
-    remove (index, isOpen) {
-      if (confirm('Do you want to delete this combinaison?')) {
-        this.winningTile = null
+    /**
+      * action to select/unselect an combinaison
+      *
+      * @param {object} combinaison - The combinaison
+      * @param {boolean} isConcealed - Flag indicating if the combinaison is concealed or not (open)
+      */
+    toggleCombinaisonSelection (combinaison, isConcealed) {
+      const selectedCombinaisons = isConcealed ? this.selectedConcealedCombinaisons : this.selectedOpenCombinaisons
+      const index = selectedCombinaisons.indexOf(combinaison)
 
-        if (isOpen) {
-          this.openCombinaisons.splice(index, 1)
-        } else {
-          this.concealedCombinaisons.splice(index, 1)
-        }
+      if (index > -1) {
+        selectedCombinaisons.splice(index, 1)
+      } else {
+        selectedCombinaisons.push(combinaison)
+      }
+    },
+
+    /**
+      * action to delete the selected combinaisons
+      *
+      * @param {boolean} isConcealed - Flag indicating if we want to delete concealed combinaisons or not (open)
+      */
+    removeSelectedCombinaisons (isConcealed) {
+      const selectedCombinaisons = isConcealed ? this.selectedConcealedCombinaisons : this.selectedOpenCombinaisons
+      const combinaisons = isConcealed ? this.concealedCombinaisons : this.openCombinaisons
+
+      while (selectedCombinaisons.length > 0) {
+        const selectedCombinaison = selectedCombinaisons.pop()
+        const index = combinaisons.indexOf(selectedCombinaison)
+        combinaisons.splice(index, 1)
       }
     },
 
@@ -518,11 +610,11 @@ export default {
      *
      * @param object tile
      */
-    setWinningTile (tile) {
-      if (this.winningTile === tile) {
-        this.winningTile = null
+    toggleWaitingTile (tile) {
+      if (this.waitingTile === tile) {
+        this.waitingTile = null
       } else {
-        this.winningTile = tile
+        this.waitingTile = tile
       }
     },
 
@@ -540,21 +632,15 @@ export default {
      * and this will open the Result view on the interface
     */
     showPoints () {
-      if (this.winningTile === null) {
-        alert('You must select your waiting tile')
-        return
-      }
-
-      const combinaisons = [].concat(this.concealedCombinaisons, this.openCombinaisons)
-      const winningCombinaison = combinaisons.filter(x => x.tiles.indexOf(this.winningTile) > -1)[0]
+      const winningCombinaison = this.concealedCombinaisons.filter(x => x.tiles.indexOf(this.waitingTile) > -1)[0]
 
       const hand = new Hand(
         this.concealedCombinaisons,
         this.openCombinaisons,
         this.seatWind,
         this.prevalentWind,
-        combinaisons.indexOf(winningCombinaison),
-        winningCombinaison.tiles.indexOf(this.winningTile),
+        this.concealedCombinaisons.indexOf(winningCombinaison),
+        winningCombinaison.tiles.indexOf(this.waitingTile),
         this.winningType,
         this.winningSecondaryType,
         this.doraTiles,
