@@ -1,6 +1,24 @@
 {
   "name": "riichi-pointer-js",
+  "version": "0.3.0",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint --no-fix",
+    "test:unit": "vue-cli-service test:unit"
+  },
   "devDependencies": {
-    "grunt": "~0.4.1"
+    "@babel/polyfill": "^7.2.5",
+    "@vue/cli-plugin-babel": "^3.4.1",
+    "@vue/cli-plugin-eslint": "^3.4.1",
+    "@vue/cli-plugin-unit-jest": "^3.4.1",
+    "@vue/cli-service": "^3.4.1",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "vue-template-compiler": "^2.6.7"
+  },
+  "dependencies": {
+    "vue": "^2.6.7"
   }
 }
