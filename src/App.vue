@@ -22,127 +22,17 @@
         <div style="clear: both;"/>
       </div>
 
-      <div
-        v-if="currentView === 'TileSelection'"
-        id="select-tile-view">
-        <div v-if="addType !== 'chii'">
-          <img
-            src="img/dragongreen.png"
-            @click="selectTile('dragon', 'green')">
-          <img
-            src="img/dragonred.png"
-            @click="selectTile('dragon', 'red')">
-          <img
-            src="img/dragonwhite.png"
-            @click="selectTile('dragon', 'white')">
+      <div v-if="currentView === 'TileSelection'">
+        <div style="margin-bottom: 20px">
+          <input
+            type="button"
+            value="back to your hand"
+            @click="closeTileSelection">
         </div>
-        <div v-if="addType !== 'chii'">
-          <img
-            src="img/windeast.png"
-            @click="selectTile('wind', 'east')">
-          <img
-            src="img/windsouth.png"
-            @click="selectTile('wind', 'south')">
-          <img
-            src="img/windwest.png"
-            @click="selectTile('wind', 'west')">
-          <img
-            src="img/windnorth.png"
-            @click="selectTile('wind', 'north')">
-        </div>
-        <div>
-          <img
-            src="img/bamboo1.png"
-            @click="selectTile('bamboo', 1)">
-          <img
-            src="img/bamboo2.png"
-            @click="selectTile('bamboo', 2)">
-          <img
-            src="img/bamboo3.png"
-            @click="selectTile('bamboo', 3)">
-          <img
-            src="img/bamboo4.png"
-            @click="selectTile('bamboo', 4)">
-          <img
-            src="img/bamboo5.png"
-            @click="selectTile('bamboo', 5)">
-          <img
-            src="img/bamboo6.png"
-            @click="selectTile('bamboo', 6)">
-          <img
-            src="img/bamboo7.png"
-            @click="selectTile('bamboo', 7)">
-          <img
-            v-if="addType !== 'chii'"
-            src="img/bamboo8.png"
-            @click="selectTile('bamboo', 8)">
-          <img
-            v-if="addType !== 'chii'"
-            src="img/bamboo9.png"
-            @click="selectTile('bamboo', 9)">
-        </div>
-        <div>
-          <img
-            src="img/character1.png"
-            @click="selectTile('character', 1)">
-          <img
-            src="img/character2.png"
-            @click="selectTile('character', 2)">
-          <img
-            src="img/character3.png"
-            @click="selectTile('character', 3)">
-          <img
-            src="img/character4.png"
-            @click="selectTile('character', 4)">
-          <img
-            src="img/character5.png"
-            @click="selectTile('character', 5)">
-          <img
-            src="img/character6.png"
-            @click="selectTile('character', 6)">
-          <img
-            src="img/character7.png"
-            @click="selectTile('character', 7)">
-          <img
-            v-if="addType !== 'chii'"
-            src="img/character8.png"
-            @click="selectTile('character', 8)">
-          <img
-            v-if="addType !== 'chii'"
-            src="img/character9.png"
-            @click="selectTile('character', 9)">
-        </div>
-        <div>
-          <img
-            src="img/dot1.png"
-            @click="selectTile('dot', 1)">
-          <img
-            src="img/dot2.png"
-            @click="selectTile('dot', 2)">
-          <img
-            src="img/dot3.png"
-            @click="selectTile('dot', 3)">
-          <img
-            src="img/dot4.png"
-            @click="selectTile('dot', 4)">
-          <img
-            src="img/dot5.png"
-            @click="selectTile('dot', 5)">
-          <img
-            src="img/dot6.png"
-            @click="selectTile('dot', 6)">
-          <img
-            src="img/dot7.png"
-            @click="selectTile('dot', 7)">
-          <img
-            v-if="addType !== 'chii'"
-            src="img/dot8.png"
-            @click="selectTile('dot', 8)">
-          <img
-            v-if="addType !== 'chii'"
-            src="img/dot9.png"
-            @click="selectTile('dot', 9)">
-        </div>
+
+        <tile-selection-component
+          :tiles="tilesAvailableForSelection"
+          @selectTile="selectTile" />
       </div>
 
       <div v-if="currentView === 'Main'">
@@ -400,18 +290,20 @@
 
 <script>
 import { Hand } from './core/hand-classes'
-import { TileFactory } from './core/tile-classes'
+import { TileFactory, NumberedTile } from './core/tile-classes'
 import { CombinaisonFactory } from './core/combinaison-classes'
 import { DefaultRuleset } from './core/ruleset-classes'
 import ScoreComponent from './components/Score.vue'
 import TileComponent from './components/Tile.vue'
 import CombinaisonComponent from './components/Combinaison.vue'
+import TileSelectionComponent from './components/TileSelection.vue'
 
 export default {
   components: {
     ScoreComponent,
     TileComponent,
-    CombinaisonComponent
+    CombinaisonComponent,
+    TileSelectionComponent
   },
 
   data () {
@@ -452,6 +344,20 @@ export default {
     /** Computed property that indicate if the state of the hand is ready for point calculation */
     canCalculatePoint () {
       return this.handIsFinish && this.waitingTile !== null
+    },
+
+    /** Computed property to which tiles can be select by the user when showing the tile selection component */
+    tilesAvailableForSelection () {
+      let availableTiles = this.ruleset.getAvailableTiles()
+
+      if (this.addType === 'chii') {
+        // for chii selection, we want to remove honor tiles and the 8 and 9 numbered tiles from the selection available tiles
+        availableTiles = availableTiles.filter(x => x instanceof NumberedTile)
+        const highestNumber = Math.max(...availableTiles.map(x => x.number))
+        availableTiles = availableTiles.filter(x => x.number <= highestNumber - 2)
+      }
+
+      return availableTiles
     }
   },
 
@@ -576,9 +482,9 @@ export default {
      * action when the user select the tile value of the combinaison during the process of adding a new combinaison
      * this will finalize the adding process and return on the Main view on the interface
      *
-     * @param string value specify the tile value of the combinaison that will be add ('red', 'east', 1, 9, ...)
+     * @param {object} - object container the suit (dragon, wind, bamboo, dot or character) and the value (east, red, 1, etc...)
      */
-    selectTile (suit, value) {
+    selectTile ({ suit, value }) {
       if (this.addForDora) {
         const tile = TileFactory.create(suit, value)
         if (this.addIsUraDora) {
@@ -597,12 +503,18 @@ export default {
         }
       }
 
+      this.closeTileSelection()
+    },
+
+    /**
+     * action when the user want to close/cancel the tile selection view and return to the Main view on the interface
+     */
+    closeTileSelection () {
       this.addForDora = null
-      this.addIsConcealed = null
-      this.addType = null
       this.addIsUraDora = null
-      this.currentView = 'Main'
-      this.title = 'Your hand'
+      this.addType = null
+      this.addIsConcealed = null
+      this.returnToMain()
     },
 
     /**

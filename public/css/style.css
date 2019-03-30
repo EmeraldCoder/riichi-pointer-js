@@ -82,11 +82,6 @@ table tbody tr:nth-child(even) td {
     border: 3px solid yellow;
 }
 
-#select-tile-view img {
-    width: 9%;
-    max-width: 80px;
-}
-
 .txt1 {
     font-size: 14px;
     line-height: 20px;
