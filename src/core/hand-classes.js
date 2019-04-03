@@ -88,7 +88,7 @@ export function Hand (concealedCombinaisons, openCombinaisons, seatWind, roundWi
   this.isSingleWait = function () {
     if (this.winningCombinaisonIndex !== undefined && this.winningTileIndex !== undefined) {
       var combinaison = this.combinaisons[this.winningCombinaisonIndex]
-      if (!(combinaison instanceof Chii)) return true
+      if (combinaison instanceof Pair) return true
     }
     return false
   }

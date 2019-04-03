@@ -108,6 +108,13 @@ var validSingleWait = new Hand([
   new Pon(new DotTile(3)),
   new Pair(new DotTile(9))
 ], [], 'east', 'east', 4, 0)
+var noSpecialWait = new Hand([
+  new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+  new Pon(new DotTile(1)),
+  new Pon(new DotTile(2)),
+  new Pon(new DotTile(3)),
+  new Pair(new DotTile(9))
+], [], 'east', 'east', 1, 0)
 test('hand is a two-sided wait', function () {
   expect(validTwoSidedWait.isSingleWait()).toBeFalsy()
   expect(validTwoSidedWait.isClosedWait()).toBeFalsy()
@@ -131,4 +138,10 @@ test('hand is a single wait', function () {
   expect(validSingleWait.isClosedWait()).toBeFalsy()
   expect(validSingleWait.isEdgeWait()).toBeFalsy()
   expect(validSingleWait.isTwoSidedWait()).toBeFalsy()
+})
+test('hand has no special wait', function () {
+  expect(noSpecialWait.isSingleWait()).toBeFalsy()
+  expect(noSpecialWait.isClosedWait()).toBeFalsy()
+  expect(noSpecialWait.isEdgeWait()).toBeFalsy()
+  expect(noSpecialWait.isTwoSidedWait()).toBeFalsy()
 })
