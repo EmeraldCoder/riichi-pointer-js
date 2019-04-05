@@ -25,3 +25,20 @@ export class SuuAnkou extends YakumanPattern {
     return 0
   }
 }
+
+/**
+ * Suu Kantsu (Four kans)
+ * A hand with four kans, which can be open or concealed
+ *
+ * Must be concealed: no
+ * Yakuman: 1
+ */
+export class SuuKantsu extends YakumanPattern {
+  japaneseName = 'Suu Kantsu'
+  englishName = 'Four kans'
+
+  check (hand) {
+    const nbOfKan = hand.combinaisons.filter(x => x instanceof Kan).length
+    return nbOfKan === 4 ? 1 : 0
+  }
+}

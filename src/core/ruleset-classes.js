@@ -32,7 +32,8 @@ import {
   UraDora
 } from '@/core/yakupattern-classes'
 import {
-  SuuAnkou
+  SuuAnkou,
+  SuuKantsu
 } from '@/core/yakumanpattern-classes'
 
 export class Ruleset {
@@ -87,7 +88,8 @@ export class DefaultRuleset extends Ruleset {
 
   getYakumanPatterns () {
     return [
-      new SuuAnkou()
+      new SuuAnkou(),
+      new SuuKantsu()
     ]
   }
 
