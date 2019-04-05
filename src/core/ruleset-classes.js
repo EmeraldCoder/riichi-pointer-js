@@ -31,9 +31,16 @@ import {
   Dora,
   UraDora
 } from '@/core/yakupattern-classes'
+import {
+  SuuAnkou
+} from '@/core/yakumanpattern-classes'
 
 export class Ruleset {
   getYakuPatterns () {
+    throw new Error('NotImplemented')
+  }
+
+  getYakumanPatterns () {
     throw new Error('NotImplemented')
   }
 
@@ -75,6 +82,12 @@ export class DefaultRuleset extends Ruleset {
       new ChanKan(),
       new Dora(),
       new UraDora()
+    ]
+  }
+
+  getYakumanPatterns () {
+    return [
+      new SuuAnkou()
     ]
   }
 

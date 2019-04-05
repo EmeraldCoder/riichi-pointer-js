@@ -32,6 +32,9 @@ import {
   UraDora
 } from '@/core/yakupattern-classes'
 import {
+  SuuAnkou
+} from '@/core/yakumanpattern-classes'
+import {
   DragonTile,
   WindTile,
   BambooTile,
@@ -73,6 +76,13 @@ test('default ruleset return valid yaku pattern list', () => {
   expect(patterns.filter(x => x instanceof ChanKan).length).toBe(1)
   expect(patterns.filter(x => x instanceof Dora).length).toBe(1)
   expect(patterns.filter(x => x instanceof UraDora).length).toBe(1)
+})
+
+test('default ruleset return valid yakuman pattern list', () => {
+  const patterns = new DefaultRuleset().getYakumanPatterns()
+
+  expect(patterns.length).toBe(1)
+  expect(patterns.filter(x => x instanceof SuuAnkou).length).toBe(1)
 })
 
 test('default ruleset return valid available tile list', () => {
