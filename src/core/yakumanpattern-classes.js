@@ -1,4 +1,5 @@
 import { Kan, Pon } from './combinaison-classes'
+import { BambooTile, DragonTile } from './tile-classes'
 
 /**
  * Base class for the yakuman pattern classes
@@ -40,5 +41,32 @@ export class SuuKantsu extends YakumanPattern {
   check (hand) {
     const nbOfKan = hand.combinaisons.filter(x => x instanceof Kan).length
     return nbOfKan === 4 ? 1 : 0
+  }
+}
+
+/**
+ * Ryuu Iisou (All Green)
+ * A hand with only green tiles (2, 3, 4, 6, 8 of bamboo and green dragons)
+ *
+ * Must be concealed: no
+ * Yakuman: 1
+ */
+export class RyuuIisou extends YakumanPattern {
+  japaneseName = 'Ryuu Iisou'
+  englishName = 'All Green'
+
+  check (hand) {
+    for (const combinaison of hand.combinaisons) {
+      for (const tile of combinaison.tiles) {
+        if (!(
+          (tile instanceof DragonTile && tile.color === 'green') ||
+          (tile instanceof BambooTile && [2, 3, 4, 6, 8].includes(tile.number))
+        )) {
+          return 0
+        }
+      }
+    }
+
+    return 1
   }
 }
