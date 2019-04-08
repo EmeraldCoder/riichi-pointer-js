@@ -1,5 +1,5 @@
 import { Kan, Pon } from './combinaison-classes'
-import { BambooTile, DragonTile } from './tile-classes'
+import { BambooTile, DragonTile, NumberedTile } from './tile-classes'
 
 /**
  * Base class for the yakuman pattern classes
@@ -67,6 +67,29 @@ export class RyuuIisou extends YakumanPattern {
       }
     }
 
+    return 1
+  }
+}
+
+/**
+ * Chin Routou (All Terminals)
+ * A hand with only terminal tiles (1 and 9)
+ *
+ * Must be concealed: no
+ * Yakuman: 1
+ */
+export class ChinRoutou extends YakumanPattern {
+  japaneseName = 'Chin Routou'
+  englishName = 'All Terminals'
+
+  check (hand) {
+    for (const combinaison of hand.combinaisons) {
+      for (const tile of combinaison.tiles) {
+        if (!(tile instanceof NumberedTile && tile.isTerminal())) {
+          return 0
+        }
+      }
+    }
     return 1
   }
 }

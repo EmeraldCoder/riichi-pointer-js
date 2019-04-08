@@ -32,6 +32,7 @@ import {
   UraDora
 } from '@/core/yakupattern-classes'
 import {
+  ChinRoutou,
   RyuuIisou,
   SuuAnkou,
   SuuKantsu
@@ -89,6 +90,7 @@ export class DefaultRuleset extends Ruleset {
 
   getYakumanPatterns () {
     return [
+      new ChinRoutou(),
       new SuuAnkou(),
       new SuuKantsu(),
       new RyuuIisou()
