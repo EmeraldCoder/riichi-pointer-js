@@ -35,7 +35,8 @@ import {
   ChinRoutou,
   RyuuIisou,
   SuuAnkou,
-  SuuKantsu
+  SuuKantsu,
+  TsuuIisou
 } from '@/core/yakumanpattern-classes'
 
 export class Ruleset {
@@ -93,7 +94,8 @@ export class DefaultRuleset extends Ruleset {
       new ChinRoutou(),
       new SuuAnkou(),
       new SuuKantsu(),
-      new RyuuIisou()
+      new RyuuIisou(),
+      new TsuuIisou()
     ]
   }
 

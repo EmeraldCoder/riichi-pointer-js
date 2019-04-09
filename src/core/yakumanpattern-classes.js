@@ -1,5 +1,5 @@
 import { Kan, Pon } from './combinaison-classes'
-import { BambooTile, DragonTile, NumberedTile } from './tile-classes'
+import { BambooTile, DragonTile, NumberedTile, HonorTile } from './tile-classes'
 
 /**
  * Base class for the yakuman pattern classes
@@ -88,6 +88,27 @@ export class ChinRoutou extends YakumanPattern {
         if (!(tile instanceof NumberedTile && tile.isTerminal())) {
           return 0
         }
+      }
+    }
+    return 1
+  }
+}
+
+/**
+ * Tsuu Iisou (All Honors)
+ * A hand with only honor tiles (dragons and winds)
+ *
+ * Must be concealed: no
+ * Yakuman: 1
+ */
+export class TsuuIisou extends YakumanPattern {
+  japaneseName = 'Tsuu Iisou'
+  englishName = 'All Honors'
+
+  check (hand) {
+    for (const combinaison of hand.combinaisons) {
+      for (const tile of combinaison.tiles) {
+        if (!(tile instanceof HonorTile)) return 0
       }
     }
     return 1

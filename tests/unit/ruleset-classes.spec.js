@@ -35,7 +35,8 @@ import {
   ChinRoutou,
   RyuuIisou,
   SuuAnkou,
-  SuuKantsu
+  SuuKantsu,
+  TsuuIisou
 } from '@/core/yakumanpattern-classes'
 import {
   DragonTile,
@@ -84,11 +85,12 @@ test('default ruleset return valid yaku pattern list', () => {
 test('default ruleset return valid yakuman pattern list', () => {
   const patterns = new DefaultRuleset().getYakumanPatterns()
 
-  expect(patterns.length).toBe(4)
+  expect(patterns.length).toBe(5)
   expect(patterns.filter(x => x instanceof SuuAnkou).length).toBe(1)
   expect(patterns.filter(x => x instanceof SuuKantsu).length).toBe(1)
   expect(patterns.filter(x => x instanceof RyuuIisou).length).toBe(1)
   expect(patterns.filter(x => x instanceof ChinRoutou).length).toBe(1)
+  expect(patterns.filter(x => x instanceof TsuuIisou).length).toBe(1)
 })
 
 test('default ruleset return valid available tile list', () => {
