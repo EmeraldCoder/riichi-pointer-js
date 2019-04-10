@@ -114,3 +114,20 @@ export class TsuuIisou extends YakumanPattern {
     return 1
   }
 }
+
+/**
+ * Dai Sangen (Big Three Dragons)
+ * A hand with a pon or kan of each type of dragon tile
+ *
+ * Must be concealed: no
+ * Yakuman: 1
+ */
+export class DaiSangen extends YakumanPattern {
+  japaneseName = 'Dai sangen'
+  englishName = 'Big Three Dragons'
+
+  check (hand) {
+    const nbOfDragonPonOrKan = hand.combinaisons.filter(x => (x instanceof Pon || x instanceof Kan) && x.tiles[0] instanceof DragonTile).length
+    return nbOfDragonPonOrKan === 3 ? 1 : 0
+  }
+}
