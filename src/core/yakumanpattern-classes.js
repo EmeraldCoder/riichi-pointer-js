@@ -1,5 +1,5 @@
-import { Kan, Pon } from './combinaison-classes'
-import { BambooTile, DragonTile, NumberedTile, HonorTile } from './tile-classes'
+import { Kan, Pon, Pair } from './combinaison-classes'
+import { BambooTile, DragonTile, NumberedTile, HonorTile, WindTile } from './tile-classes'
 
 /**
  * Base class for the yakuman pattern classes
@@ -129,5 +129,23 @@ export class DaiSangen extends YakumanPattern {
   check (hand) {
     const nbOfDragonPonOrKan = hand.combinaisons.filter(x => (x instanceof Pon || x instanceof Kan) && x.tiles[0] instanceof DragonTile).length
     return nbOfDragonPonOrKan === 3 ? 1 : 0
+  }
+}
+
+/**
+ * Shou Suushii (Little Four Winds)
+ * A hand with three pon/kan of winds and a pair of the fourth wind
+ *
+ * Must be concealed: no
+ * Yakuman: 1
+ */
+export class ShouSuushii extends YakumanPattern {
+  japaneseName = 'Shou Suushii'
+  englishName = 'Little Four Winds'
+
+  check (hand) {
+    const nbOfWindPonOrKan = hand.combinaisons.filter(x => (x instanceof Pon || x instanceof Kan) && x.tiles[0] instanceof WindTile).length
+    const nbOfWindPair = hand.combinaisons.filter(x => x instanceof Pair && x.tiles[0] instanceof WindTile).length
+    return nbOfWindPonOrKan === 3 && nbOfWindPair === 1 ? 1 : 0
   }
 }
