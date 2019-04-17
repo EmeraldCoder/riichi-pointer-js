@@ -149,3 +149,20 @@ export class ShouSuushii extends YakumanPattern {
     return nbOfWindPonOrKan === 3 && nbOfWindPair === 1 ? 1 : 0
   }
 }
+
+/**
+ * Dai Suushii (Big Four Winds)
+ * A hand with four pon/kan of winds
+ *
+ * Must be concealed: no
+ * Yakuman: 2
+ */
+export class DaiSuushii extends YakumanPattern {
+  japaneseName = 'Dai Suushii'
+  englishName = 'Big Four Winds'
+
+  check (hand) {
+    const nbOfWindPonOrKan = hand.combinaisons.filter(x => (x instanceof Pon || x instanceof Kan) && x.tiles[0] instanceof WindTile).length
+    return nbOfWindPonOrKan === 4 ? 2 : 0
+  }
+}

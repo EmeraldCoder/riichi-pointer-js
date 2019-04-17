@@ -34,6 +34,7 @@ import {
 import {
   ChinRoutou,
   DaiSangen,
+  DaiSuushii,
   RyuuIisou,
   ShouSuushii,
   SuuAnkou,
@@ -95,6 +96,7 @@ export class DefaultRuleset extends Ruleset {
     return [
       new ChinRoutou(),
       new DaiSangen(),
+      new DaiSuushii(),
       new ShouSuushii(),
       new SuuAnkou(),
       new SuuKantsu(),
