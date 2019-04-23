@@ -33,6 +33,7 @@ import {
 } from '@/core/yakupattern-classes'
 import {
   ChinRoutou,
+  ChuurenPoutou,
   DaiSangen,
   DaiSuushii,
   RyuuIisou,
@@ -95,6 +96,7 @@ export class DefaultRuleset extends Ruleset {
   getYakumanPatterns () {
     return [
       new ChinRoutou(),
+      new ChuurenPoutou(),
       new DaiSangen(),
       new DaiSuushii(),
       new ShouSuushii(),

@@ -166,3 +166,37 @@ export class DaiSuushii extends YakumanPattern {
     return nbOfWindPonOrKan === 4 ? 2 : 0
   }
 }
+
+/**
+ * Chuuren Poutou (Nine Gates)
+ * A hand with (1-1-1-2-3-4-5-6-7-8-9-9-9) of the same suit and an other tile of the same suit
+ * Worth two yakuman if the hand was waiting on nine different tiles (Junsei Chuuren Poutou)
+ *
+ * Must be concealed: yes
+ * Yakuman: 1 / 2 (Waiting on nine different tiles)
+ */
+export class ChuurenPoutou extends YakumanPattern {
+  japaneseName = 'Chuuren Poutou'
+  englishName = 'Nine Gates'
+
+  check (hand) {
+    const numbers = hand.concealedCombinaisons.reduce((numbers, combinaison) => {
+      combinaison.tiles.forEach(tile => {
+        if (tile instanceof NumberedTile && tile.constructor === hand.combinaisons[0].tiles[0].constructor) {
+          numbers[tile.number]++
+        }
+      })
+      return numbers
+    }, { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 })
+
+    if (!this._containsAllChuurenPoutouNumbers(numbers)) return 0
+
+    numbers[hand.combinaisons[hand.winningCombinaisonIndex].tiles[hand.winningTileIndex].number]--
+
+    return this._containsAllChuurenPoutouNumbers(numbers) ? 2 : 1
+  }
+
+  _containsAllChuurenPoutouNumbers (numbers) {
+    return numbers[1] > 2 && numbers[9] > 2 && numbers[2] && numbers[3] && numbers[4] && numbers[5] && numbers[6] && numbers[7] && numbers[8]
+  }
+}
