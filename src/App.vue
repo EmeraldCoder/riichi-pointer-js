@@ -37,69 +37,49 @@
 
       <div v-if="currentView === 'Main'">
         <div style="margin: 10px 0;">
-          <fieldset>
-            <legend>Winning type</legend>
+          <div style="float: left; width: 50%;">
+            <fieldset>
+              <legend>Winning type</legend>
 
-            <div style="line-height: 14px; float: left; max-width: 30%; overflow: hidden; margin-right: 5%;">
-              <span class="txt1">Winning By<br></span>
-              <select
-                v-model="winningType"
-                style="width: 100%">
-                <option value="tsumo">Tsumo</option>
-                <option value="ron">Ron</option>
-              </select>
-            </div>
-            <div style="line-height: 14px;float: left; max-width: 30%; overflow: hidden; margin-right: 5%;">
-              <span class="txt1">Complete By<br></span>
-              <select
-                v-model="winningSecondaryType"
-                style="width: 100%">
-                <option/>
-                <option value="haitei raoyue">Haitei Raoyue</option>
-                <option value="houtei raoyui">Houtei Raoyui</option>
-                <option value="rinshan kaihou">Rinshan Kaihou</option>
-                <option value="chan kan">Chan Kan</option>
-              </select>
-            </div>
-            <div style="line-height: 14px;float: left; max-width: 30%; overflow: hidden;">
-              <span class="txt1">Riichi<br></span>
-              <select
-                v-model="winningRiichiType"
-                style="width: 100%">
-                <option/>
-                <option value="riichi">Riichi</option>
-                <option value="riichi ippatsu">Riichi Ippatsu</option>
-                <option value="double riichi">Double Riichi</option>
-                <option value="double riichi ippatsu">Double Riichi Ippatsu</option>
-              </select>
-            </div>
-          </fieldset>
-        </div>
+              <div style="line-height: 14px; float: left; max-width: 30%; overflow: hidden; margin-right: 5%;">
+                <span class="txt1">Winning By<br></span>
+                <select
+                  v-model="winningType"
+                  style="width: 100%">
+                  <option value="tsumo">Tsumo</option>
+                  <option value="ron">Ron</option>
+                </select>
+              </div>
+            </fieldset>
+          </div>
 
-        <div style="margin: 10px 0;">
-          <fieldset>
-            <legend>Winds</legend>
+          <div style="float: left; width: 50%;">
+            <fieldset>
+              <legend>Winds</legend>
 
-            <div style="line-height: 14px; float: left; max-width: 40%; overflow: hidden; margin-right: 5%;">
-              <span class="txt1">Prevalent: <br></span>
-              <select v-model="prevalentWind">
-                <option value="east">East</option>
-                <option value="south">South</option>
-                <option value="west">West</option>
-                <option value="north">North</option>
-              </select>
-            </div>
+              <div style="line-height: 14px; float: left; max-width: 40%; overflow: hidden; margin-right: 5%;">
+                <span class="txt1">Prevalent: <br></span>
+                <select v-model="prevalentWind">
+                  <option value="east">East</option>
+                  <option value="south">South</option>
+                  <option value="west">West</option>
+                  <option value="north">North</option>
+                </select>
+              </div>
 
-            <div style="line-height: 14px; float: left; max-width: 40%; overflow: hidden;">
-              <span class="txt1">Seat: <br></span>
-              <select v-model="seatWind">
-                <option value="east">East</option>
-                <option value="south">South</option>
-                <option value="west">West</option>
-                <option value="north">North</option>
-              </select>
-            </div>
-          </fieldset>
+              <div style="line-height: 14px; float: left; max-width: 40%; overflow: hidden;">
+                <span class="txt1">Seat: <br></span>
+                <select v-model="seatWind">
+                  <option value="east">East</option>
+                  <option value="south">South</option>
+                  <option value="west">West</option>
+                  <option value="north">North</option>
+                </select>
+              </div>
+            </fieldset>
+          </div>
+
+          <div style="clear: both;"/>
         </div>
 
         <div style="margin: 10px 0;">
@@ -253,6 +233,46 @@
           </fieldset>
         </div>
 
+        <div style="margin: 10px 0;">
+          <fieldset>
+            <legend>Other</legend>
+
+            <div style="float: left; width: 30%;">
+              <span class="txt1">Riichi<br></span>
+              <div>
+                <select
+                  v-model="riichiType"
+                  style="margin-right: 5px;">
+                  <option/>
+                  <option value="normal">Riichi</option>
+                  <option value="double">Double Riichi</option>
+                </select>
+                <label class="checkbox">
+                  <input
+                    v-model="riichiIsIppatsu"
+                    type="checkbox">
+                  Ippatsu
+                </label>
+              </div>
+            </div>
+
+            <div style="float: left; width: 30%;">
+              <span class="txt1">Special Yaku<br></span>
+              <select
+                v-model="winningSecondaryType"
+                style="width: 100%">
+                <option/>
+                <option value="haitei raoyue">Haitei Raoyue</option>
+                <option value="houtei raoyui">Houtei Raoyui</option>
+                <option value="rinshan kaihou">Rinshan Kaihou</option>
+                <option value="chan kan">Chan Kan</option>
+              </select>
+            </div>
+
+            <div style="clear: both;"/>
+          </fieldset>
+        </div>
+
         <div>
           <input
             v-if="canCalculatePoint"
@@ -314,7 +334,8 @@ export default {
       seatWind: 'east', // name of the wind of the player seat (east, south, west, north)
       winningType: 'tsumo', // indicate if the player won with a self-draw or discard (tsumo, ron)
       winningSecondaryType: '', // indicate if the player won with a particular circonstance (haitei raoyue, houtei raoyui, rinshan kaihou, chan kan)
-      winningRiichiType: '', // indicate if the player won with riichi circonstance (riichi / riichi ippatsu / double riichi / double riichi ippatsu)
+      riichiType: '', // indicate if the player won with riichi circonstance (riichi / double riichi)
+      riichiIsIppatsu: false, // indicate if the player's riichi was ippatsu (won on the first round after declaring riichi)
       doraTiles: [], // list of the dora tiles
       selectedDoraTiles: [], // list of user selected dora tiles
       uraDoraTiles: [], // list of the ura-dora tiles
@@ -369,7 +390,8 @@ export default {
       this.seatWind = 'east'
       this.winningType = 'tsumo'
       this.winningSecondaryType = ''
-      this.winningRiichiType = ''
+      this.riichiType = ''
+      this.riichiIsIppatsu = false
       this.doraTiles = []
       this.selectedDoraTiles = []
       this.uraDoraTiles = []
@@ -559,9 +581,9 @@ export default {
         this.uraDoraTiles
       )
 
-      hand.isRiichi = this.winningRiichiType !== ''
-      hand.isDoubleRiichi = this.winningRiichiType === 'double riichi' || this.winningRiichiType === 'double riichi ippatsu'
-      hand.isIppatsu = this.winningRiichiType === 'riichi ippatsu' || this.winningRiichiType === 'double riichi ippatsu'
+      hand.isRiichi = this.riichiType !== ''
+      hand.isDoubleRiichi = this.riichiType === 'double'
+      hand.isIppatsu = this.riichiIsIppatsu
 
       this.hand = hand
       this.currentView = 'Result'
