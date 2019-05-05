@@ -161,6 +161,11 @@
                 value="+ Chii"
                 @click="addCombinaison(true, 'chii')">
               <input
+                v-if="!handIsFinish"
+                type="button"
+                value="+ Orphan"
+                @click="addCombinaison(true, 'orphan')">
+              <input
                 v-if="selectedConcealedCombinaisons.length > 0"
                 type="button"
                 value="- Combinaison"

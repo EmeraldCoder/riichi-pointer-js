@@ -1,4 +1,4 @@
-import { Pair, Pon, Kan, Chii, Combinaison, CombinaisonFactory } from '@/core/combinaison-classes'
+import { Pair, Pon, Kan, Chii, Orphan, Combinaison, CombinaisonFactory } from '@/core/combinaison-classes'
 import { WindTile, DragonTile, DotTile, BambooTile, TileFactory } from '@/core/tile-classes'
 
 // pair test
@@ -69,6 +69,21 @@ test('chii has 4,5,6 of bamboo', function () {
   expect(chii.tiles[2] instanceof BambooTile && chii.tiles[2].number === 6).toBeTruthy()
 })
 
+// orphan test
+var orphan = new Orphan(new BambooTile(1))
+test('orphan is a combinaison', function () {
+  expect(orphan instanceof Combinaison).toBeTruthy()
+})
+test('orphan is a orphan', function () {
+  expect(orphan instanceof Orphan).toBeTruthy()
+})
+test('orphan has one tile', function () {
+  expect(orphan.tiles.length).toBe(1)
+})
+test('orphan has 1 of bamboo', function () {
+  expect(orphan.tiles[0] instanceof BambooTile && orphan.tiles[0].number === 1).toBeTruthy()
+})
+
 // factory test
 test('CombinaisonFactory create pair', function () {
   var combinaison = CombinaisonFactory.create('pair', TileFactory.create('dot', 1))
@@ -97,4 +112,9 @@ test('CombinaisonFactory create chii', function () {
   expect(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1).toBeTruthy()
   expect(combinaison.tiles[1] instanceof DotTile && combinaison.tiles[1].value === 2).toBeTruthy()
   expect(combinaison.tiles[2] instanceof DotTile && combinaison.tiles[2].value === 3).toBeTruthy()
+})
+test('CombinaisonFactory create orphan', function () {
+  var combinaison = CombinaisonFactory.create('orphan', TileFactory.create('dot', 1))
+  expect(combinaison instanceof Orphan).toBeTruthy()
+  expect(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1).toBeTruthy()
 })

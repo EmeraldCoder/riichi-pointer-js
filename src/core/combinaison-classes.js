@@ -19,6 +19,8 @@ export const CombinaisonFactory = {
         var secondCombinaisonTile = TileFactory.create(firstCombinaisonTile.suit, firstCombinaisonTile.value + 1)
         var thirdCombinaisonTile = TileFactory.create(firstCombinaisonTile.suit, firstCombinaisonTile.value + 2)
         return new Chii(firstCombinaisonTile, secondCombinaisonTile, thirdCombinaisonTile)
+      case 'orphan':
+        return new Orphan(firstCombinaisonTile)
       default:
         alert('Hand Combinaison Factory Error: "' + combinaisonType + '" is not a supported combinaison type')
     }
@@ -104,3 +106,13 @@ export function Chii (tile1, tile2, tile3) {
 }
 Chii.prototype = new Combinaison()
 Chii.prototype.constructor = Chii
+
+export function Orphan (tile) {
+  Combinaison.call(this)
+
+  // constructor
+  // fill the base class tiles array
+  this.tiles = [tile]
+}
+Orphan.prototype = new Combinaison()
+Orphan.prototype.constructor = Orphan
