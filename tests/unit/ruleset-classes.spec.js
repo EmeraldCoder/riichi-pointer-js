@@ -36,6 +36,7 @@ import {
   ChuurenPoutou,
   DaiSangen,
   DaiSuushii,
+  KokushiMusou,
   RyuuIisou,
   ShouSuushii,
   SuuAnkou,
@@ -89,7 +90,7 @@ test('default ruleset return valid yaku pattern list', () => {
 test('default ruleset return valid yakuman pattern list', () => {
   const patterns = new DefaultRuleset().getYakumanPatterns()
 
-  expect(patterns.length).toBe(9)
+  expect(patterns.length).toBe(10)
   expect(patterns.filter(x => x instanceof SuuAnkou).length).toBe(1)
   expect(patterns.filter(x => x instanceof SuuKantsu).length).toBe(1)
   expect(patterns.filter(x => x instanceof RyuuIisou).length).toBe(1)
@@ -99,6 +100,7 @@ test('default ruleset return valid yakuman pattern list', () => {
   expect(patterns.filter(x => x instanceof ShouSuushii).length).toBe(1)
   expect(patterns.filter(x => x instanceof DaiSuushii).length).toBe(1)
   expect(patterns.filter(x => x instanceof ChuurenPoutou).length).toBe(1)
+  expect(patterns.filter(x => x instanceof KokushiMusou).length).toBe(1)
 })
 
 test('default ruleset return valid available tile list', () => {

@@ -1,4 +1,4 @@
-import { Kan, Pon, Pair } from './combinaison-classes'
+import { Kan, Pon, Pair, Orphan } from './combinaison-classes'
 import { BambooTile, DragonTile, NumberedTile, HonorTile, WindTile } from './tile-classes'
 
 /**
@@ -198,5 +198,39 @@ export class ChuurenPoutou extends YakumanPattern {
 
   _containsAllChuurenPoutouNumbers (numbers) {
     return numbers[1] > 2 && numbers[9] > 2 && numbers[2] && numbers[3] && numbers[4] && numbers[5] && numbers[6] && numbers[7] && numbers[8]
+  }
+}
+
+/**
+ * Kokushi Musou (Thirteen Orphans)
+ * A hand with one of each dragon, wind and 1 and 9 of each suit, plus an other tile to make a pair
+ * Worth two yakuman if the hand was waiting on 13 different tiles (Kokushi Musou 13 men machi)
+ *
+ * Must be concealed: yes
+ * Yakuman: 1 / 2 (Waiting on 13 different tiles)
+ */
+export class KokushiMusou extends YakumanPattern {
+  japaneseName = 'Kokushi Musou'
+  englishName = 'Thirteen Orphans'
+
+  check (hand) {
+    const nbOfPair = hand.concealedCombinaisons.filter(x => x instanceof Pair).length
+    if (nbOfPair === 0) return 0
+
+    const nbOfOrphan = hand.concealedCombinaisons.filter(x => x instanceof Orphan).length
+    if (nbOfOrphan !== 12) return 0
+
+    const nbOfValidDistinctTile = hand.concealedCombinaisons.reduce((tiles, combinaison) => {
+      combinaison.tiles.forEach(tile => tiles.push(tile))
+      return tiles
+    }, [])
+      .filter(tile => tile instanceof HonorTile || tile.isTerminal())
+      .map(tile => `${tile.suit}.${tile.value}`)
+      .filter((key, index, keys) => keys.indexOf(key) === index)
+      .length
+
+    if (nbOfValidDistinctTile !== 13) return 0
+
+    return hand.combinaisons[hand.winningCombinaisonIndex] instanceof Pair ? 2 : 1
   }
 }
