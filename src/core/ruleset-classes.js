@@ -41,6 +41,7 @@ import {
   ShouSuushii,
   SuuAnkou,
   SuuKantsu,
+  Tenhou,
   TsuuIisou
 } from '@/core/yakumanpattern-classes'
 
@@ -105,6 +106,7 @@ export class DefaultRuleset extends Ruleset {
       new SuuAnkou(),
       new SuuKantsu(),
       new RyuuIisou(),
+      new Tenhou(),
       new TsuuIisou()
     ]
   }

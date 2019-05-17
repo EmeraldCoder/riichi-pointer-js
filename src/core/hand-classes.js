@@ -22,6 +22,7 @@ export function Hand (concealedCombinaisons, openCombinaisons, seatWind, roundWi
   this.winningTileIndex = winningTileIndex
   this.winningType = winningType
   this.winningSecondType = winningSecondType
+  this.wonDuringFirstUninterruptedRound = false
   this.isRiichi = false
   this.isDoubleRiichi = false
   this.isIppatsu = false

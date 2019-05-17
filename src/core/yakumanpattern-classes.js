@@ -234,3 +234,19 @@ export class KokushiMusou extends YakumanPattern {
     return hand.combinaisons[hand.winningCombinaisonIndex] instanceof Pair ? 2 : 1
   }
 }
+
+/**
+ * Tenhou (Heavenly Hand)
+ * A hand won by the dealer on his first draw
+ *
+ * Must be concealed: yes
+ * Yakuman: 1
+ */
+export class Tenhou extends YakumanPattern {
+  japaneseName = 'Tenhou'
+  englishName = 'Heavenly Hand'
+
+  check (hand) {
+    return hand.wonDuringFirstUninterruptedRound && hand.seatWind === 'east' ? 1 : 0
+  }
+}

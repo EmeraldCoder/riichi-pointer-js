@@ -262,6 +262,18 @@
             </div>
 
             <div style="float: left; width: 30%;">
+              <span class="txt1">Won on<br></span>
+              <div>
+                <label class="checkbox">
+                  <input
+                    v-model="wonDuringFirstUninterruptedRound"
+                    type="checkbox">
+                  First round
+                </label>
+              </div>
+            </div>
+
+            <div style="float: left; width: 30%;">
               <span class="txt1">Special Yaku<br></span>
               <select
                 v-model="winningSecondaryType"
@@ -339,6 +351,7 @@ export default {
       seatWind: 'east', // name of the wind of the player seat (east, south, west, north)
       winningType: 'tsumo', // indicate if the player won with a self-draw or discard (tsumo, ron)
       winningSecondaryType: '', // indicate if the player won with a particular circonstance (haitei raoyue, houtei raoyui, rinshan kaihou, chan kan)
+      wonDuringFirstUninterruptedRound: false, // indicate if the player won during the his first uninterrupted (no open melds by any player) round
       riichiType: '', // indicate if the player won with riichi circonstance (riichi / double riichi)
       riichiIsIppatsu: false, // indicate if the player's riichi was ippatsu (won on the first round after declaring riichi)
       doraTiles: [], // list of the dora tiles
@@ -395,6 +408,7 @@ export default {
       this.seatWind = 'east'
       this.winningType = 'tsumo'
       this.winningSecondaryType = ''
+      this.wonDuringFirstUninterruptedRound = false
       this.riichiType = ''
       this.riichiIsIppatsu = false
       this.doraTiles = []
@@ -585,6 +599,8 @@ export default {
         this.doraTiles,
         this.uraDoraTiles
       )
+
+      hand.wonDuringFirstUninterruptedRound = this.wonDuringFirstUninterruptedRound
 
       hand.isRiichi = this.riichiType !== ''
       hand.isDoubleRiichi = this.riichiType === 'double'
