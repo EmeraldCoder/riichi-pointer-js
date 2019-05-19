@@ -32,6 +32,7 @@ import {
   UraDora
 } from '@/core/yakupattern-classes'
 import {
+  Chiihou,
   ChinRoutou,
   ChuurenPoutou,
   DaiSangen,
@@ -91,7 +92,7 @@ test('default ruleset return valid yaku pattern list', () => {
 test('default ruleset return valid yakuman pattern list', () => {
   const patterns = new DefaultRuleset().getYakumanPatterns()
 
-  expect(patterns.length).toBe(11)
+  expect(patterns.length).toBe(12)
   expect(patterns.filter(x => x instanceof SuuAnkou).length).toBe(1)
   expect(patterns.filter(x => x instanceof SuuKantsu).length).toBe(1)
   expect(patterns.filter(x => x instanceof RyuuIisou).length).toBe(1)
@@ -103,6 +104,7 @@ test('default ruleset return valid yakuman pattern list', () => {
   expect(patterns.filter(x => x instanceof ChuurenPoutou).length).toBe(1)
   expect(patterns.filter(x => x instanceof KokushiMusou).length).toBe(1)
   expect(patterns.filter(x => x instanceof Tenhou).length).toBe(1)
+  expect(patterns.filter(x => x instanceof Chiihou).length).toBe(1)
 })
 
 test('default ruleset return valid available tile list', () => {

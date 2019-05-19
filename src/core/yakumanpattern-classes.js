@@ -250,3 +250,19 @@ export class Tenhou extends YakumanPattern {
     return hand.wonDuringFirstUninterruptedRound && hand.seatWind === 'east' ? 1 : 0
   }
 }
+
+/**
+ * Chiihou (Hand of earth)
+ * A hand won by a non-dealer on his first draw when no open-meld declaration has been made
+ *
+ * Must be concealed: yes
+ * Yakuman: 1
+ */
+export class Chiihou extends YakumanPattern {
+  japaneseName = 'Chiihou'
+  englishName = 'Hand of earth'
+
+  check (hand) {
+    return hand.wonDuringFirstUninterruptedRound && hand.seatWind !== 'east' ? 1 : 0
+  }
+}

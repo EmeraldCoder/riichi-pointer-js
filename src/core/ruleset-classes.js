@@ -32,6 +32,7 @@ import {
   UraDora
 } from '@/core/yakupattern-classes'
 import {
+  Chiihou,
   ChinRoutou,
   ChuurenPoutou,
   DaiSangen,
@@ -97,6 +98,7 @@ export class DefaultRuleset extends Ruleset {
 
   getYakumanPatterns () {
     return [
+      new Chiihou(),
       new ChinRoutou(),
       new ChuurenPoutou(),
       new DaiSangen(),
