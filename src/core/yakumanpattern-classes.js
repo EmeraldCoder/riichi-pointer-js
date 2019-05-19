@@ -247,7 +247,7 @@ export class Tenhou extends YakumanPattern {
   englishName = 'Heavenly Hand'
 
   check (hand) {
-    return hand.wonDuringFirstUninterruptedRound && hand.seatWind === 'east' ? 1 : 0
+    return hand.wonDuringFirstUninterruptedRound && hand.seatWind === 'east' && hand.winningType === 'tsumo' ? 1 : 0
   }
 }
 
@@ -263,7 +263,7 @@ export class Chiihou extends YakumanPattern {
   englishName = 'Hand of earth'
 
   check (hand) {
-    return hand.wonDuringFirstUninterruptedRound && hand.seatWind !== 'east' ? 1 : 0
+    return hand.wonDuringFirstUninterruptedRound && hand.seatWind !== 'east' && hand.winningType === 'tsumo' ? 1 : 0
   }
 }
 

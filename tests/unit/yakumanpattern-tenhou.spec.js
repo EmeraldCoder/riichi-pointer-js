@@ -29,6 +29,21 @@ test('tenhou (heavenly hand) invalid hand because it was not won during the firs
   expect(new Tenhou().check(hand)).toBe(0)
 })
 
+// This test-case in impossible in real life because a dealer can't won on a discard during the first round
+test('tenhou (heavenly hand) invalid hand because it was not won by tsumo', () => {
+  var hand = new Hand([
+    new Pair(new DotTile(1)),
+    new Pon(new BambooTile(1)),
+    new Pon(new BambooTile(9)),
+    new Pon(new CharacterTile(1)),
+    new Pon(new CharacterTile(9))
+  ], [], 'east', 'east', 0, 0, 'ron')
+
+  hand.wonDuringFirstUninterruptedRound = true
+
+  expect(new Tenhou().check(hand)).toBe(0)
+})
+
 test('tenhou (heavenly hand) invalid hand because it was not won by the dealer (south)', () => {
   var hand = new Hand([
     new Pair(new DotTile(1)),

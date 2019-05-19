@@ -59,6 +59,20 @@ test('chiihou (hand of earth) invalid hand because won by the dealer', () => {
   expect(new Chiihou().check(hand)).toBe(0)
 })
 
+test('chiihou (hand of earth) invalid hand because won by tsumo', () => {
+  var hand = new Hand([
+    new Pair(new DotTile(1)),
+    new Pon(new BambooTile(1)),
+    new Pon(new BambooTile(9)),
+    new Pon(new CharacterTile(1)),
+    new Pon(new CharacterTile(9))
+  ], [], 'south', 'east', 0, 0, 'ron')
+
+  hand.wonDuringFirstUninterruptedRound = true
+
+  expect(new Chiihou().check(hand)).toBe(0)
+})
+
 test('chiihou (hand of earth) invalid hand because it was not won on the first uninterrupted round', () => {
   var hand = new Hand([
     new Pair(new DotTile(1)),
