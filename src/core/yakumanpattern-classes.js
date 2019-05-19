@@ -266,3 +266,19 @@ export class Chiihou extends YakumanPattern {
     return hand.wonDuringFirstUninterruptedRound && hand.seatWind !== 'east' ? 1 : 0
   }
 }
+
+/**
+ * Renhou (Hand of man)
+ * A han won by a non-dealer with a discard tile on his first round without open-meld
+ *
+ * Must be concealed: yes
+ * Yakuman: 1
+ */
+export class Renhou extends YakumanPattern {
+  japaneseName = 'Renhou'
+  englishName = 'Hand of man'
+
+  check (hand) {
+    return hand.wonDuringFirstUninterruptedRound && hand.seatWind !== 'east' && hand.winningType === 'ron' ? 1 : 0
+  }
+}
