@@ -5,7 +5,7 @@
  * ex. : TileFactory.create('dragon', 'red')
  */
 export const TileFactory = {
-  create: function (suit, value) {
+  create (suit, value) {
     switch (suit) {
       case 'dragon':
         return new DragonTile(value)
@@ -18,7 +18,7 @@ export const TileFactory = {
       case 'character':
         return new CharacterTile(value)
       default:
-        alert('Tile Factory Error : "' + suit + '" is not a supported suit')
+        throw new Error(`Tile Factory Error : "${suit}" is not a supported suit`)
     }
   }
 }
@@ -27,88 +27,79 @@ export const TileFactory = {
  * Tile base class
  * All tile inherit from this class
  */
-export function Tile () {
+export class Tile {
+  constructor (suit, value) {
+    this.suit = suit
+    this.value = value
+  }
 }
 
 /**
  * Honor tile base class
  * Wind and Dragon tile inherit from this class
  */
-export function HonorTile () {
-  Tile.call(this)
-}
-HonorTile.prototype = new Tile()
-HonorTile.prototype.constructor = HonorTile
+export class HonorTile extends Tile {}
 
 /**
  * Numbered tile base class
  * Dot, Character and Bamboo tile inherit from this class
  */
-export function NumberedTile (number) {
-  Tile.call(this)
-  this.number = number // number 1 to 9
-  this.isTerminal = function () {
-    return (this.number === 1 || this.number === 9)
+export class NumberedTile extends Tile {
+  constructor (suit, value) {
+    super(suit, value)
+    this.number = value
+  }
+
+  isTerminal () {
+    return this.number === 1 || this.number === 9
   }
 }
-NumberedTile.prototype = new Tile()
-NumberedTile.prototype.constructor = NumberedTile
 
 /**
  * Wind tile class
  * East, South, West and North tile
  */
-export function WindTile (direction) {
-  HonorTile.call(this)
-  this.suit = 'wind'
-  this.direction = direction // east, south, west, north
-  this.value = direction
+export class WindTile extends HonorTile {
+  constructor (direction) {
+    super('wind', direction) // east, south, west, north
+    this.direction = direction
+  }
 }
-WindTile.prototype = new HonorTile()
-WindTile.prototype.constructor = WindTile
 
 /**
  * Dragon tile class
  * Red, Green and White dragon tile
  */
-export function DragonTile (color) {
-  HonorTile.call(this)
-  this.suit = 'dragon'
-  this.color = color // red, green, white
-  this.value = color
+export class DragonTile extends HonorTile {
+  constructor (color) {
+    super('dragon', color) // red, green, white
+    this.color = color
+  }
 }
-DragonTile.prototype = new HonorTile()
-DragonTile.prototype.constructor = DragonTile
 
 /**
  * Dot tile class
  */
-export function DotTile (number) {
-  NumberedTile.call(this, number)
-  this.suit = 'dot'
-  this.value = number
+export class DotTile extends NumberedTile {
+  constructor (number) {
+    super('dot', number)
+  }
 }
-DotTile.prototype = new NumberedTile()
-DotTile.prototype.constructor = DotTile
 
 /**
  * Character tile class
  */
-export function CharacterTile (number) {
-  NumberedTile.call(this, number)
-  this.suit = 'character'
-  this.value = number
+export class CharacterTile extends NumberedTile {
+  constructor (number) {
+    super('character', number)
+  }
 }
-CharacterTile.prototype = new NumberedTile()
-CharacterTile.prototype.constructor = CharacterTile
 
 /**
  * Bamboo tile class
  */
-export function BambooTile (number) {
-  NumberedTile.call(this, number)
-  this.suit = 'bamboo'
-  this.value = number
+export class BambooTile extends NumberedTile {
+  constructor (number) {
+    super('bamboo', number)
+  }
 }
-BambooTile.prototype = new NumberedTile()
-BambooTile.prototype.constructor = BambooTile
