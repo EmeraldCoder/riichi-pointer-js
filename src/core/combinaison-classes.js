@@ -7,7 +7,7 @@ import { TileFactory } from './tile-classes'
  * ex. : CombinaisonFactory.create('pon', new DotTile(1))
  */
 export const CombinaisonFactory = {
-  create: function (combinaisonType, firstCombinaisonTile) {
+  create (combinaisonType, firstCombinaisonTile) {
     switch (combinaisonType) {
       case 'pair':
         return new Pair(firstCombinaisonTile)
@@ -22,7 +22,7 @@ export const CombinaisonFactory = {
       case 'orphan':
         return new Orphan(firstCombinaisonTile)
       default:
-        alert('Hand Combinaison Factory Error: "' + combinaisonType + '" is not a supported combinaison type')
+        throw new Error(`Hand Combinaison Factory Error: "${combinaisonType}" is not a supported combinaison type`)
     }
   }
 }
@@ -30,8 +30,10 @@ export const CombinaisonFactory = {
 /**
  * Combinaison base class (pair, pon, kan, chii)
  */
-export function Combinaison () {
-  this.tiles = [] // property that contain the tiles of the combinaison
+export class Combinaison {
+  constructor (tiles) {
+    this.tiles = tiles // property that contain the tiles of the combinaison
+  }
 }
 
 /**
@@ -40,15 +42,14 @@ export function Combinaison () {
  *
  * param Tile tile
  */
-export function Pair (tile) {
-  Combinaison.call(this)
-
-  // constructor
-  // fill the base class tiles array
-  this.tiles = [TileFactory.create(tile.suit, tile.value), TileFactory.create(tile.suit, tile.value)]
+export class Pair extends Combinaison {
+  constructor (tile) {
+    super([
+      TileFactory.create(tile.suit, tile.value),
+      TileFactory.create(tile.suit, tile.value)
+    ])
+  }
 }
-Pair.prototype = new Combinaison()
-Pair.prototype.constructor = Pair
 
 /**
  * Pon combinaison class
@@ -56,19 +57,15 @@ Pair.prototype.constructor = Pair
  *
  * param Tile tile
  */
-export function Pon (tile) {
-  Combinaison.call(this)
-
-  // constructor
-  // fill the base class tiles array
-  this.tiles = [
-    TileFactory.create(tile.suit, tile.value),
-    TileFactory.create(tile.suit, tile.value),
-    TileFactory.create(tile.suit, tile.value)
-  ]
+export class Pon extends Combinaison {
+  constructor (tile) {
+    super([
+      TileFactory.create(tile.suit, tile.value),
+      TileFactory.create(tile.suit, tile.value),
+      TileFactory.create(tile.suit, tile.value)
+    ])
+  }
 }
-Pon.prototype = new Combinaison()
-Pon.prototype.constructor = Pon
 
 /**
  * Kan combinaison class
@@ -76,20 +73,16 @@ Pon.prototype.constructor = Pon
  *
  * param Tile tile
  */
-export function Kan (tile) {
-  Combinaison.call(this)
-
-  // constructor
-  // fill the base class tiles array
-  this.tiles = [
-    TileFactory.create(tile.suit, tile.value),
-    TileFactory.create(tile.suit, tile.value),
-    TileFactory.create(tile.suit, tile.value),
-    TileFactory.create(tile.suit, tile.value)
-  ]
+export class Kan extends Combinaison {
+  constructor (tile) {
+    super([
+      TileFactory.create(tile.suit, tile.value),
+      TileFactory.create(tile.suit, tile.value),
+      TileFactory.create(tile.suit, tile.value),
+      TileFactory.create(tile.suit, tile.value)
+    ])
+  }
 }
-Kan.prototype = new Combinaison()
-Kan.prototype.constructor = Kan
 
 /**
  * Chii combinaison class
@@ -97,22 +90,20 @@ Kan.prototype.constructor = Kan
  *
  * param Tile tile
  */
-export function Chii (tile1, tile2, tile3) {
-  Combinaison.call(this)
-
-  // constructor
-  // fill the base class tiles array
-  this.tiles = [tile1, tile2, tile3]
+export class Chii extends Combinaison {
+  constructor (tile1, tile2, tile3) {
+    super([tile1, tile2, tile3])
+  }
 }
-Chii.prototype = new Combinaison()
-Chii.prototype.constructor = Chii
 
-export function Orphan (tile) {
-  Combinaison.call(this)
-
-  // constructor
-  // fill the base class tiles array
-  this.tiles = [tile]
+/**
+ * Orphan combinaison class
+ * one tile (only used for thirteen orphans yakuman)
+ *
+ * param Tile tile
+ */
+export class Orphan extends Combinaison {
+  constructor (tile) {
+    super([tile])
+  }
 }
-Orphan.prototype = new Combinaison()
-Orphan.prototype.constructor = Orphan
