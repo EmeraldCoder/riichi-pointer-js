@@ -31,9 +31,28 @@ import {
   Dora,
   UraDora
 } from '@/core/yakupattern-classes'
+import {
+  Chiihou,
+  ChinRoutou,
+  ChuurenPoutou,
+  DaiSangen,
+  DaiSuushii,
+  KokushiMusou,
+  RyuuIisou,
+  Renhou,
+  ShouSuushii,
+  SuuAnkou,
+  SuuKantsu,
+  Tenhou,
+  TsuuIisou
+} from '@/core/yakumanpattern-classes'
 
 export class Ruleset {
   getYakuPatterns () {
+    throw new Error('NotImplemented')
+  }
+
+  getYakumanPatterns () {
     throw new Error('NotImplemented')
   }
 
@@ -75,6 +94,24 @@ export class DefaultRuleset extends Ruleset {
       new ChanKan(),
       new Dora(),
       new UraDora()
+    ]
+  }
+
+  getYakumanPatterns () {
+    return [
+      new Chiihou(),
+      new ChinRoutou(),
+      new ChuurenPoutou(),
+      new DaiSangen(),
+      new DaiSuushii(),
+      new KokushiMusou(),
+      new Renhou(),
+      new ShouSuushii(),
+      new SuuAnkou(),
+      new SuuKantsu(),
+      new RyuuIisou(),
+      new Tenhou(),
+      new TsuuIisou()
     ]
   }
 
