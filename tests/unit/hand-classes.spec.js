@@ -1,4 +1,4 @@
-import { Pair, Pon, Kan, Chii } from '@/core/combinaison-classes'
+import { Pair, Pon, Kan, Chii, Orphan } from '@/core/combinaison-classes'
 import { WindTile, DragonTile, DotTile, BambooTile, CharacterTile } from '@/core/tile-classes'
 import { Hand } from '@/core/hand-classes'
 
@@ -77,6 +77,25 @@ var finishHandWithSevenPairs = new Hand([
 ], [])
 test('hand is finish with 7 pairs', function () {
   expect(finishHandWithSevenPairs.isFinish()).toBeTruthy()
+})
+
+var finishHandWith12OrphansAnd1Pair = new Hand([
+  new Orphan(new DotTile(1)),
+  new Orphan(new DotTile(9)),
+  new Orphan(new CharacterTile(1)),
+  new Orphan(new CharacterTile(9)),
+  new Orphan(new BambooTile(1)),
+  new Orphan(new BambooTile(9)),
+  new Orphan(new DragonTile('red')),
+  new Orphan(new DragonTile('white')),
+  new Orphan(new DragonTile('green')),
+  new Orphan(new WindTile('east')),
+  new Orphan(new WindTile('south')),
+  new Orphan(new WindTile('west')),
+  new Pair(new WindTile('north'))
+], [])
+test('hand is finish with 12 orphans and 1 pair (for thirteen orphans yakuman)', function () {
+  expect(finishHandWith12OrphansAnd1Pair.isFinish()).toBeTruthy()
 })
 
 // wait test

@@ -114,8 +114,13 @@ export function calculateFu (hand) {
   return result
 };
 
-export function calculatePoint (hand, han, fu) {
-  if (han === 5) { // mangan
+export function calculatePoint (hand, han, fu, yakuman) {
+  if (yakuman > 0 || han >= 13) { // yakuman
+    if (hand.seatWind === 'east' && hand.winningType === 'tsumo') return 16000
+    if (hand.seatWind === 'east' && hand.winningType === 'ron') return 48000
+    if (hand.seatWind !== 'east' && hand.winningType === 'tsumo') return { dealer: 16000, nonDealer: 8000 }
+    if (hand.seatWind !== 'east' && hand.winningType === 'ron') return 32000
+  } else if (han === 5) { // mangan
     if (hand.seatWind === 'east' && hand.winningType === 'tsumo') return 4000
     if (hand.seatWind === 'east' && hand.winningType === 'ron') return 12000
     if (hand.seatWind !== 'east' && hand.winningType === 'ron') return 8000
@@ -135,11 +140,6 @@ export function calculatePoint (hand, han, fu) {
     if (hand.seatWind === 'east' && hand.winningType === 'ron') return 36000
     if (hand.seatWind !== 'east' && hand.winningType === 'ron') return 24000
     if (hand.seatWind !== 'east' && hand.winningType === 'tsumo') return { dealer: 12000, nonDealer: 6000 }
-  } else if (han >= 13) { // yakuman
-    if (hand.seatWind === 'east' && hand.winningType === 'tsumo') return 16000
-    if (hand.seatWind === 'east' && hand.winningType === 'ron') return 48000
-    if (hand.seatWind !== 'east' && hand.winningType === 'ron') return 32000
-    if (hand.seatWind !== 'east' && hand.winningType === 'tsumo') return { dealer: 16000, nonDealer: 8000 }
   }
 
   var points = fu * Math.pow(2, 2 + han)

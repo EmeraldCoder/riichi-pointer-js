@@ -1,4 +1,4 @@
-import { Pair, Chii } from './combinaison-classes'
+import { Pair, Chii, Orphan } from './combinaison-classes'
 
 /**
  * Hand class
@@ -22,6 +22,7 @@ export function Hand (concealedCombinaisons, openCombinaisons, seatWind, roundWi
   this.winningTileIndex = winningTileIndex
   this.winningType = winningType
   this.winningSecondType = winningSecondType
+  this.wonDuringFirstUninterruptedRound = false
   this.isRiichi = false
   this.isDoubleRiichi = false
   this.isIppatsu = false
@@ -31,11 +32,14 @@ export function Hand (concealedCombinaisons, openCombinaisons, seatWind, roundWi
   this.isFinish = function () {
     var nbPair = 0
     var nbCombinaison = 0
+    var nbOrphan = 0
 
     for (var i = 0; i < this.combinaisons.length; i++) {
       var combinaison = this.combinaisons[i]
       if (combinaison instanceof Pair) {
         nbPair++
+      } else if (combinaison instanceof Orphan) {
+        nbOrphan++
       } else {
         nbCombinaison++
       }
@@ -45,6 +49,9 @@ export function Hand (concealedCombinaisons, openCombinaisons, seatWind, roundWi
       return true
     }
     if (nbPair === 7 && nbCombinaison === 0) {
+      return true
+    }
+    if (nbOrphan === 12 && nbPair === 1) {
       return true
     }
 

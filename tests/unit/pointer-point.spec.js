@@ -277,7 +277,7 @@ test('dealer ron', function () {
     var han = dealerRon[i].han
     var fu = dealerRon[i].fu
     var expected = dealerRon[i].expected
-    var result = calculatePoint(dealerHand, han, fu)
+    var result = calculatePoint(dealerHand, han, fu, 0)
     expect(result).toBe(expected)
   }
 })
@@ -417,7 +417,7 @@ test('non-dealer tsumo', function () {
     var fu = nonDealerTsumo[i].fu
     var expectedFromDealer = nonDealerTsumo[i].expectedFromDealer
     var expectedFromNonDealer = nonDealerTsumo[i].expectedFromNonDealer
-    var result = calculatePoint(nonDealerHand, han, fu)
+    var result = calculatePoint(nonDealerHand, han, fu, 0)
     expect(result.dealer).toBe(expectedFromDealer)
     expect(result.nonDealer).toBe(expectedFromNonDealer)
   }
@@ -557,7 +557,32 @@ test('non-dealer ron', function () {
     var han = nonDealerRon[i].han
     var fu = nonDealerRon[i].fu
     var expected = nonDealerRon[i].expected
-    var result = calculatePoint(nonDealerHand, han, fu)
+    var result = calculatePoint(nonDealerHand, han, fu, 0)
     expect(result).toBe(expected)
   }
+})
+
+test('the score of a dealer yakuman won by tsumo must be 16000', () => {
+  dealerHand.winningType = 'tsumo'
+  const result = calculatePoint(dealerHand, 5, 20, 1)
+  expect(result).toBe(16000)
+})
+
+test('the score of a dealer yakuman won by ron must be 48000', () => {
+  dealerHand.winningType = 'ron'
+  const result = calculatePoint(dealerHand, 5, 20, 1)
+  expect(result).toBe(48000)
+})
+
+test('the score of a non-dealer yakuman won by tsumo must be 16000 for dealer and 8000 for non-dealer', () => {
+  nonDealerHand.winningType = 'tsumo'
+  const result = calculatePoint(nonDealerHand, 5, 20, 1)
+  expect(result.dealer).toBe(16000)
+  expect(result.nonDealer).toBe(8000)
+})
+
+test('the score of a non-dealer yakuman won by ron must be 32000', () => {
+  nonDealerHand.winningType = 'ron'
+  const result = calculatePoint(nonDealerHand, 5, 20, 1)
+  expect(result).toBe(32000)
 })
