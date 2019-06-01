@@ -34,3 +34,18 @@ If you encounter bugs or points calculation errors, please contact me or add a b
 * Pinfu (All chii / No points)
 * San Ankou (3 concealed pons)
 * San Kan Tsu (3 kans)
+
+## Supported Yakuman Patterns
+* Suu Ankou (Four concealed pons)
+* Suu Kantsu (Four kans)
+* Ryuu Iisou (All Greens)
+* Chin Routou (All Terminals)
+* Tsuu Iisou (All Honors)
+* Dai Sangen (Big Three Dragons)
+* Shou Suushii (Little Four Winds)
+* Dai Suushii (Big Four Winds)
+* Chuuren Poutou (Nine Gates)
+* Kokushi Musou (Thirten Orphans)
+* Tenhou (Heavenly Hand)
+* Chiihou (Hand of Earth)
+* Renhou (Hand of Man)
