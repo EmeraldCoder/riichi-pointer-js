@@ -27,9 +27,7 @@ import {
   HaiteiRaoyue,
   HouteiRaoyui,
   RinshanKaihou,
-  ChanKan,
-  Dora,
-  UraDora
+  ChanKan
 } from '@/core/yakupattern-classes'
 import {
   Chiihou,
@@ -91,9 +89,7 @@ export class DefaultRuleset extends Ruleset {
       new HaiteiRaoyue(),
       new HouteiRaoyui(),
       new RinshanKaihou(),
-      new ChanKan(),
-      new Dora(),
-      new UraDora()
+      new ChanKan()
     ]
   }
 

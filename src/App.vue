@@ -1,568 +1,621 @@
 <template>
   <div>
-    <div
-      id="left-menu"
-      :class="{ open: leftMenuIsOpen, close: !leftMenuIsOpen }">
-      <nav>
-        <a
-          href="#"
-          @click="reset">Reset</a>
-      </nav>
-      <a
-        id="left-menu-slider"
-        @click="toggleLeftMenu"><span id="left-menu-slider-icon">{{ leftMenuIsOpen ? '&lt;' : '&gt;' }}</span></a>
-    </div>
-
-    <div id="layout">
-      <div style="width: 100%;">
-        <img
-          src="img/logo.png"
-          style="height: 40px; display: block; float: left; margin-right: 40px;">
-        <h1 style="font-size: 30px; line-height: 40px;"><span>{{ title }}</span></h1>
-        <div style="clear: both;"/>
+    <header>
+      <div class="container">
+        <h1>Your Hand</h1>
+        <button @click="reset">
+          Reset
+        </button>
       </div>
+    </header>
 
-      <div v-if="currentView === 'TileSelection'">
-        <div style="margin-bottom: 20px">
-          <input
-            type="button"
-            value="back to your hand"
-            @click="closeTileSelection">
-        </div>
+    <main class="container main-layout">
+      <div class="main-layout__infos">
+        <div class="main-layout__tiles-info">
+          <h2><span>Combinaisons</span></h2>
 
-        <tile-selection-component
-          :tiles="tilesAvailableForSelection"
-          @selectTile="selectTile" />
-      </div>
-
-      <div v-if="currentView === 'Main'">
-        <div style="margin: 10px 0;">
-          <div style="float: left; width: 50%;">
-            <fieldset>
-              <legend>Winning type</legend>
-
-              <div style="line-height: 14px; float: left; max-width: 30%; overflow: hidden; margin-right: 5%;">
-                <span class="txt1">Winning By<br></span>
-                <select
-                  v-model="winningType"
-                  style="width: 100%">
-                  <option value="tsumo">Tsumo</option>
-                  <option value="ron">Ron</option>
-                </select>
-              </div>
-            </fieldset>
+          <div class="btn-group">
+            <button
+              :class="{ active: addIsConcealed }"
+              @click="addIsConcealed = true"
+            >
+              Concealed
+            </button>
+            <button
+              :class="{ active: !addIsConcealed }"
+              :disabled="!openedCombinaisonAvailable"
+              @click="addIsConcealed = false"
+            >
+              Open
+            </button>
           </div>
 
-          <div style="float: left; width: 50%;">
-            <fieldset>
-              <legend>Winds</legend>
-
-              <div style="line-height: 14px; float: left; max-width: 40%; overflow: hidden; margin-right: 5%;">
-                <span class="txt1">Prevalent: <br></span>
-                <select v-model="prevalentWind">
-                  <option value="east">East</option>
-                  <option value="south">South</option>
-                  <option value="west">West</option>
-                  <option value="north">North</option>
-                </select>
-              </div>
-
-              <div style="line-height: 14px; float: left; max-width: 40%; overflow: hidden;">
-                <span class="txt1">Seat: <br></span>
-                <select v-model="seatWind">
-                  <option value="east">East</option>
-                  <option value="south">South</option>
-                  <option value="west">West</option>
-                  <option value="north">North</option>
-                </select>
-              </div>
-            </fieldset>
+          <div class="btn-group m-t">
+            <button
+              :disabled="!addChiiPonKanAvailable"
+              @click="addCombinaison('chii')"
+            >
+              Chii
+            </button>
+            <button
+              :disabled="!addChiiPonKanAvailable"
+              @click="addCombinaison('pon')"
+            >
+              Pon
+            </button>
+            <button
+              :disabled="!addChiiPonKanAvailable"
+              @click="addCombinaison('kan')"
+            >
+              Kan
+            </button>
+            <button
+              v-if="addIsConcealed"
+              :disabled="!addPairAvailable"
+              @click="addCombinaison('pair')"
+            >
+              Pair
+            </button>
+            <button
+              v-if="addIsConcealed"
+              :disabled="!addOrphanAvailable"
+              @click="addCombinaison('orphan')"
+            >
+              Orphan
+            </button>
           </div>
 
-          <div style="clear: both;"/>
-        </div>
-
-        <div style="margin: 10px 0;">
-          <div style="float: left; width: 50%;">
-            <fieldset>
-              <legend>Dora</legend>
-              <div style="margin-bottom: 10px;">
-                <input
-                  type="button"
-                  value="+ Dora"
-                  @click="addDora(false)">
-                <input
-                  v-if="selectedDoraTiles.length > 0"
-                  type="button"
-                  value="- Dora"
-                  @click="removeSelectedDoraTiles(false)">
-              </div>
-              <div>
-                <tile-component
-                  v-for="(tile, index) in doraTiles"
-                  :key="'dora.' + index"
-                  :tile="tile"
-                  :selected="selectedDoraTiles.indexOf(tile) > -1"
-                  @click.native="toggleDoraTileSelection(tile, false)" />
-              </div>
-            </fieldset>
-          </div>
-
-          <div style="float: left; width: 50%;">
-            <fieldset>
-              <legend>Ura-Dora</legend>
-              <div style="margin-bottom: 10px;">
-                <input
-                  type="button"
-                  value="+ Ura-Dora"
-                  @click="addDora(true)">
-                <input
-                  v-if="selectedUraDoraTiles.length > 0"
-                  type="button"
-                  value="- Ura-Dora"
-                  @click="removeSelectedDoraTiles(true)">
-              </div>
-              <div>
-                <tile-component
-                  v-for="(tile, index) in uraDoraTiles"
-                  :key="'uraDora.' + index"
-                  :tile="tile"
-                  :selected="selectedUraDoraTiles.indexOf(tile) > -1"
-                  @click.native="toggleDoraTileSelection(tile, true)" />
-              </div>
-            </fieldset>
-          </div>
-
-          <div style="clear: both;"/>
-        </div>
-
-        <div style="margin: 10px 0;">
-          <fieldset>
-            <legend>Concealed combinaisons</legend>
-            <div>
-              <input
-                v-if="!handIsFinish"
-                type="button"
-                value="+ Pair"
-                @click="addCombinaison(true, 'pair')">
-              <input
-                v-if="!handIsFinish"
-                type="button"
-                value="+ Pon"
-                @click="addCombinaison(true, 'pon')">
-              <input
-                v-if="!handIsFinish"
-                type="button"
-                value="+ Kan"
-                @click="addCombinaison(true, 'kan')">
-              <input
-                v-if="!handIsFinish"
-                type="button"
-                value="+ Chii"
-                @click="addCombinaison(true, 'chii')">
-              <input
-                v-if="!handIsFinish"
-                type="button"
-                value="+ Orphan"
-                @click="addCombinaison(true, 'orphan')">
-              <input
-                v-if="selectedConcealedCombinaisons.length > 0"
-                type="button"
-                value="- Combinaison"
-                @click="removeSelectedCombinaisons(true)">
-            </div>
+          <div class="combinaisons-wrapper m-t">
+            <h3 v-if="concealedCombinaisons.length > 0">
+              Concealed
+            </h3>
             <div
-              class="box-combinaison"
-              style="margin-top: 10px;">
+              v-if="concealedCombinaisons.length > 0"
+              class="combinaison-group"
+            >
               <combinaison-component
                 v-for="(combinaison, index) in concealedCombinaisons"
-                :key="'concealedCombinaisons.' + index"
+                :key="'combinaison.concealed.' + index"
                 :combinaison="combinaison"
-                :selected="selectedConcealedCombinaisons.indexOf(combinaison) > -1"
-                @click.native="toggleCombinaisonSelection(combinaison, true)" />
+                :waitable="true"
+                :waiting-tile="waitingTile"
+                :selected="combinaison === touchedCombinaison"
+                @selectAsWaitingTile="toggleWaitingTile"
+                @delete="removeConcealedCombinaison"
+                @touch="touchCombinaison"
+              />
             </div>
-          </fieldset>
-        </div>
 
-        <div style="margin: 10px 0;">
-          <fieldset>
-            <legend>Open combinaisons</legend>
-            <div>
-              <input
-                v-if="!handIsFinish"
-                type="button"
-                value="+ Pon"
-                @click="addCombinaison(false, 'pon')">
-              <input
-                v-if="!handIsFinish"
-                type="button"
-                value="+ Kan"
-                @click="addCombinaison(false, 'kan')">
-              <input
-                v-if="!handIsFinish"
-                type="button"
-                value="+ Chii"
-                @click="addCombinaison(false, 'chii')">
-              <input
-                v-if="selectedOpenCombinaisons.length > 0"
-                type="button"
-                value="- Combinaison"
-                @click="removeSelectedCombinaisons(false)">
-            </div>
+            <h3
+              v-if="openCombinaisons.length > 0"
+              :class="{ 'm-t-2': concealedCombinaisons.length > 0 }"
+            >
+              Open
+            </h3>
+
             <div
-              class="box-combinaison"
-              style="margin-top: 10px;">
+              v-if="openCombinaisons.length > 0"
+              class="combinaison-group"
+            >
               <combinaison-component
                 v-for="(combinaison, index) in openCombinaisons"
-                :key="'openCombinaisons.' + index"
+                :key="'combinaison.opened.' + index"
                 :combinaison="combinaison"
-                :selected="selectedOpenCombinaisons.indexOf(combinaison) > -1"
-                @click.native="toggleCombinaisonSelection(combinaison, false)" />
+                :selected="combinaison === touchedCombinaison"
+                @delete="removeOpenedCombinaison"
+                @touch="touchCombinaison"
+              />
             </div>
-          </fieldset>
+          </div>
         </div>
 
-        <div style="margin: 10px 0;">
-          <fieldset>
-            <legend>Waiting Tile</legend>
-            <div style="margin-top: 10px;">
-              <template v-for="(combinaison, combinaisonIndex) in concealedCombinaisons">
-                <tile-component
-                  v-for="(tile, tileIndex) in combinaison.tiles"
-                  :key="'waitingTile.' + combinaisonIndex + '.' + tileIndex"
-                  :tile="tile"
-                  :selected="waitingTile === tile"
-                  @click.native="toggleWaitingTile(tile)" />
-              </template>
+        <div class="main-layout__general-info">
+          <h2 class="no-mobile">
+            <span>Configurations</span>
+          </h2>
+
+          <div class="btn-group">
+            <button
+              :class="{ active: winningType === 'tsumo' }"
+              :disabled="!tsumoAvailable"
+              @click="winningType = 'tsumo'"
+            >
+              Tsumo
+            </button>
+            <button
+              :class="{ active: winningType === 'ron' }"
+              @click="winningType = 'ron'"
+            >
+              Ron
+            </button>
+          </div>
+
+          <div class="btn-groups m-t">
+            <div class="btn-group">
+              <button
+                :class="{ active: riichiType === 'normal' }"
+                :disabled="!riichiAvailable"
+                @click="riichiType = riichiType === 'normal' ? null : 'normal'"
+              >
+                Riichi
+              </button>
+              <button
+                :class="{ active: riichiType === 'double' }"
+                :disabled="!riichiAvailable"
+                @click="riichiType = riichiType === 'double' ? null : 'double'"
+              >
+                Double Riichi
+              </button>
             </div>
-          </fieldset>
-        </div>
 
-        <div style="margin: 10px 0;">
-          <fieldset>
-            <legend>Other</legend>
+            <div class="btn-group">
+              <button
+                :class="{ active: riichiIsIppatsu }"
+                :disabled="!riichiAvailable"
+                @click="riichiIsIppatsu = !riichiIsIppatsu"
+              >
+                Ippatsu
+              </button>
+            </div>
+          </div>
 
-            <div style="float: left; width: 30%;">
-              <span class="txt1">Riichi<br></span>
-              <div>
-                <select
-                  v-model="riichiType"
-                  style="margin-right: 5px;">
-                  <option/>
-                  <option value="normal">Riichi</option>
-                  <option value="double">Double Riichi</option>
-                </select>
-                <label class="checkbox">
-                  <input
-                    v-model="riichiIsIppatsu"
-                    type="checkbox">
-                  Ippatsu
-                </label>
+          <h2><span>Winds</span></h2>
+
+          <div class="responsive">
+            <div class="btn-groups with-labels">
+              <label>Prevalent:</label>
+              <div class="btn-group">
+                <button
+                  :class="{ active: prevalentWind === 'east' }"
+                  @click="prevalentWind = 'east'"
+                >
+                  East
+                </button>
+                <button
+                  :class="{ active: prevalentWind === 'south' }"
+                  @click="prevalentWind = 'south'"
+                >
+                  South
+                </button>
+                <button
+                  :class="{ active: prevalentWind === 'west' }"
+                  @click="prevalentWind = 'west'"
+                >
+                  West
+                </button>
+                <button
+                  :class="{ active: prevalentWind === 'north' }"
+                  @click="prevalentWind = 'north'"
+                >
+                  North
+                </button>
+              </div>
+
+              <label>Seat:</label>
+              <div class="btn-group">
+                <button
+                  :class="{ active: seatWind === 'east' }"
+                  @click="seatWind = 'east'"
+                >
+                  East
+                </button>
+                <button
+                  :class="{ active: seatWind === 'south' }"
+                  @click="seatWind = 'south'"
+                >
+                  South
+                </button>
+                <button
+                  :class="{ active: seatWind === 'west' }"
+                  @click="seatWind = 'west'"
+                >
+                  West
+                </button>
+                <button
+                  :class="{ active: seatWind === 'north' }"
+                  @click="seatWind = 'north'"
+                >
+                  North
+                </button>
               </div>
             </div>
+          </div>
 
-            <div style="float: left; width: 30%;">
-              <span class="txt1">Won on<br></span>
-              <div>
-                <label class="checkbox">
-                  <input
-                    v-model="wonDuringFirstUninterruptedRound"
-                    type="checkbox">
-                  First round
-                </label>
-              </div>
-            </div>
+          <h2><span>Dora</span></h2>
 
-            <div style="float: left; width: 30%;">
-              <span class="txt1">Special Yaku<br></span>
-              <select
-                v-model="winningSecondaryType"
-                style="width: 100%">
-                <option/>
-                <option value="haitei raoyue">Haitei Raoyue</option>
-                <option value="houtei raoyui">Houtei Raoyui</option>
-                <option value="rinshan kaihou">Rinshan Kaihou</option>
-                <option value="chan kan">Chan Kan</option>
-              </select>
-            </div>
+          <dora-counter-component v-model="nbDora" />
 
-            <div style="clear: both;"/>
-          </fieldset>
-        </div>
+          <h2><span>Special Cases</span></h2>
 
-        <div>
-          <input
-            v-if="canCalculatePoint"
-            type="button"
-            value="Calculate hand points"
-            @click="showPoints">
+          <div class="btn-group-column">
+            <button
+              :class="{ active: specialCases.includes('lastTile') }"
+              :disabled="!haiteiHouteiAvailable"
+              @click="toggleSpecialCase('lastTile')"
+            >
+              Haitei Raoyue / Houtei Raoyui
+            </button>
+            <button
+              :class="{ active: specialCases.includes('firstTurn') }"
+              :disabled="!tenhouChiihouRenhouAvailable"
+              @click="toggleSpecialCase('firstTurn')"
+            >
+              Tenhou / Chiihou / Renhou
+            </button>
+            <button
+              :class="{ active: specialCases.includes('rinshan') }"
+              :disabled="!rinshanAvailable"
+              @click="toggleSpecialCase('rinshan')"
+            >
+              Rinshan Kaihou
+            </button>
+            <button
+              :class="{ active: specialCases.includes('chankan') }"
+              :disabled="!chankanAvailable"
+              @click="toggleSpecialCase('chankan')"
+            >
+              Chan Kan
+            </button>
+          </div>
         </div>
       </div>
 
-      <div v-if="currentView === 'Result'">
-        <div style="margin-bottom: 20px">
-          <input
-            type="button"
-            value="back to your hand"
-            @click="returnToMain">
-        </div>
-        <div style="margin: 20px 0;">
-          <score-component
-            :hand="hand"
-            :ruleset="ruleset" />
-        </div>
+      <div class="main-layout__calculate-button">
+        <button
+          :disabled="!canCalculatePoint"
+          @click="showPoints"
+        >
+          <font-awesome-icon :icon="calculateIcon" />
+          Calculate Score
+        </button>
       </div>
-    </div>
+    </main>
+
+    <tile-selection-modal-component
+      v-model="tileSelectionModal"
+      :tiles="availableTilesForSelection"
+      @selectTile="selectTile"
+      @close="tileSelectionModal = false"
+    />
+
+    <score-modal-component
+      v-if="hand != null"
+      v-model="scoreModal"
+      :hand="hand"
+      :ruleset="ruleset"
+      @close="scoreModal = false"
+    />
   </div>
 </template>
 
 <style>
-.box-combinaison .combinaison {
-  margin-right: 1.5vw;
+/* ---
+LAYOUT
+--- */
+
+.main-layout__infos {
+  display: flex;
+  flex-direction: column;
 }
-.box-combinaison .combinaison:last-child {
-  margin-right: 0;
+
+.main-layout__general-info {
+  order: -1;
+}
+
+.main-layout__calculate-button button {
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 2.5rem;
+}
+
+@media (min-width: 960px) {
+  .main-layout__infos {
+    flex-direction: row;
+    padding-bottom: calc(var(--gap-size) * 2);
+  }
+
+  .main-layout__tiles-info {
+    flex: 1;
+    margin-right: calc(var(--gap-size) * 4);
+  }
+
+  .main-layout__general-info {
+    min-width: 450px;
+    order: 0;
+  }
+}
+
+@media (max-width: 959px) {
+  .main-layout__infos {
+    padding-bottom: 50px;
+  }
+
+  .main-layout__calculate-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background: #43a047;
+  }
+
+  .main-layout__calculate-button button {
+    border-radius: 0;
+  }
+}
+
+/* ---
+COMBINAISONS WRAPPER
+--- */
+
+.combinaisons-wrapper {
+  background: rgba(255, 255, 255, 0.3);
+  padding: var(--gap-size);
+  min-height: 100px;
+  max-height: 63vh;
+  overflow-y: auto;
+  border: 1px solid var(--dark-green);
+}
+.combinaisons-wrapper h3 {
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: bold;
+  margin-bottom: var(--gap-size);
+}
+.combinaisons-wrapper .combinaison-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-size);
+}
+
+@media (min-width: 960px) {
+  .combinaisons-wrapper {
+    min-height: 395px;
+  }
 }
 </style>
 
 <script>
 import { Hand } from './core/hand-classes'
 import { TileFactory, NumberedTile } from './core/tile-classes'
-import { CombinaisonFactory } from './core/combinaison-classes'
+import { CombinaisonFactory, Orphan, Pair } from './core/combinaison-classes'
 import { DefaultRuleset } from './core/ruleset-classes'
-import ScoreComponent from './components/Score.vue'
-import TileComponent from './components/Tile.vue'
 import CombinaisonComponent from './components/Combinaison.vue'
-import TileSelectionComponent from './components/TileSelection.vue'
+import TileSelectionModalComponent from './components/TileSelectionModal.vue'
+import DoraCounterComponent from './components/DoraCounter.vue'
+import ScoreModalComponent from './components/ScoreModal.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faCalculator } from '@fortawesome/free-solid-svg-icons'
 
 export default {
   components: {
-    ScoreComponent,
-    TileComponent,
     CombinaisonComponent,
-    TileSelectionComponent
+    TileSelectionModalComponent,
+    DoraCounterComponent,
+    ScoreModalComponent,
+    FontAwesomeIcon
   },
 
   data () {
     return {
-      title: 'Your hand', // Title of the current active view on the interface
-      currentView: 'Main', // Id of the current active view on the interface (Main, TileSuitSelection, TileValueSelection, Result)
       prevalentWind: 'east', // name of the wind prevalent for the round (east, south, west, north)
       seatWind: 'east', // name of the wind of the player seat (east, south, west, north)
       winningType: 'tsumo', // indicate if the player won with a self-draw or discard (tsumo, ron)
-      winningSecondaryType: '', // indicate if the player won with a particular circonstance (haitei raoyue, houtei raoyui, rinshan kaihou, chan kan)
-      wonDuringFirstUninterruptedRound: false, // indicate if the player won during the his first uninterrupted (no open melds by any player) round
-      riichiType: '', // indicate if the player won with riichi circonstance (riichi / double riichi)
+      specialCases: [], // indicate if the player won with a particular circonstance (haitei raoyue, houtei raoyui, rinshan kaihou, chan kan)
+      riichiType: null, // indicate if the player won with riichi circonstance (riichi / double riichi)
       riichiIsIppatsu: false, // indicate if the player's riichi was ippatsu (won on the first round after declaring riichi)
-      doraTiles: [], // list of the dora tiles
-      selectedDoraTiles: [], // list of user selected dora tiles
-      uraDoraTiles: [], // list of the ura-dora tiles
-      selectedUraDoraTiles: [], // list of user selected ura-dora tiles
+      nbDora: 0, // indicate the number of dora in the player's hand
       waitingTile: null, // winning tile selected by the user
       concealedCombinaisons: [], // list of the concealed combinaisons of the player
-      selectedConcealedCombinaisons: [], // list of user selected concealed combinaisons
       openCombinaisons: [], // list of the open combinaisons of the player
-      selectedOpenCombinaisons: [], // list of user selected open combinaisons
-      addForDora: null, // ndicate if the adding process is for dora or not (ex. : combinaison)
-      addIsConcealed: null, // indicate if the combinaison that the user is currently adding is concealed or not
+      addIsConcealed: true, // indicate if the combinaison that the user is currently adding is concealed or not
       addType: null, // type of the combinaison that the user is currently adding (pair, pon, kan, chii)
-      addIsUraDora: null, // indicate if the dora that the user is currently adding is ura-dora or not
-      leftMenuIsOpen: false,
-      ruleset: new DefaultRuleset(),
-      hand: null
+      touchedCombinaison: null, // keep track of which combinaison the user touch on mobile
+      ruleset: new DefaultRuleset(), // define the ruleset used by the calculator
+      hand: null, // the hand object generate by the user selection (null if the hand is not in a finished state)
+      tileSelectionModal: false, // indicate if the tile selection modal is open
+      scoreModal: false, // indicate if the score modal is open
+      calculateIcon: faCalculator
     }
   },
 
   computed: {
-    // computed property that indicate if the player hand is in a finish state (complete)
-    handIsFinish () {
-      const hand = new Hand(this.concealedCombinaisons, this.openCombinaisons)
-      return hand.isFinish()
-    },
-
-    /** Computed property that indicate if the state of the hand is ready for point calculation */
     canCalculatePoint () {
-      return this.handIsFinish && this.waitingTile !== null
+      const counts = this.combinaisonCounts
+      return this.waitingTile != null &&
+       (
+         (counts.pair === 7 && counts.chiiPonKan === 0 && counts.orphan === 0) ||
+         (counts.pair === 1 && counts.orphan === 12 && counts.chiiPonKan === 0) ||
+         (counts.pair === 1 && counts.chiiPonKan === 4 && counts.orphan === 0)
+       )
     },
 
-    /** Computed property to which tiles can be select by the user when showing the tile selection component */
-    tilesAvailableForSelection () {
-      let availableTiles = this.ruleset.getAvailableTiles()
+    availableTiles () {
+      const availableTiles = this.ruleset.getAvailableTiles().map(x => {
+        return { tile: x, count: 4 }
+      })
 
-      if (this.addType === 'chii') {
-        // for chii selection, we want to remove honor tiles and the 8 and 9 numbered tiles from the selection available tiles
-        availableTiles = availableTiles.filter(x => x instanceof NumberedTile)
-        const highestNumber = Math.max(...availableTiles.map(x => x.number))
-        availableTiles = availableTiles.filter(x => x.number <= highestNumber - 2)
-      }
+      this.concealedCombinaisons.concat(this.openCombinaisons).forEach(combinaison => {
+        combinaison.tiles.forEach(tile => {
+          availableTiles.find(x => x.tile.suit === tile.suit && x.tile.value === tile.value).count--
+        })
+      })
 
       return availableTiles
+    },
+
+    availableTilesForSelection () {
+      if (this.addType === 'chii') {
+        return this.availableTiles.map(tile => {
+          let disabled = tile.count === 0 || !(tile.tile instanceof NumberedTile) || tile.tile.value >= 8
+
+          if (!disabled) {
+            const nextTile = this.availableTiles.find(x => x.tile.suit === tile.tile.suit && x.tile.value === tile.tile.value + 1)
+            const nextTile2 = this.availableTiles.find(x => x.tile.suit === tile.tile.suit && x.tile.value === tile.tile.value + 2)
+            disabled = nextTile.count === 0 || nextTile2.count === 0
+          }
+
+          return { tile: tile.tile, disabled }
+        })
+      } else {
+        let tileNecessary = 1
+
+        if (this.addType === 'pair') tileNecessary = 2
+        else if (this.addType === 'pon') tileNecessary = 3
+        else if (this.addType === 'kan') tileNecessary = 4
+
+        return this.availableTiles.map(tile => {
+          const disabled = tile.count < tileNecessary
+          return { tile: tile.tile, disabled }
+        })
+      }
+    },
+
+    combinaisonCounts () {
+      let pair = 0
+      let orphan = 0
+      let chiiPonKan = this.openCombinaisons.length
+
+      this.concealedCombinaisons.forEach(x => {
+        if (x instanceof Orphan) orphan++
+        else if (x instanceof Pair) pair++
+        else chiiPonKan++
+      })
+
+      return { pair, orphan, chiiPonKan }
+    },
+
+    addOrphanAvailable () {
+      const counts = this.combinaisonCounts
+      return counts.chiiPonKan === 0 && counts.pair <= 1 && counts.orphan < 12
+    },
+
+    addPairAvailable () {
+      const counts = this.combinaisonCounts
+      return counts.pair === 0 || ((counts.chiiPonKan + counts.orphan) === 0 && counts.pair < 7)
+    },
+
+    addChiiPonKanAvailable () {
+      const counts = this.combinaisonCounts
+      return counts.orphan === 0 && counts.pair <= 1 && counts.chiiPonKan < 4
+    },
+
+    riichiAvailable () {
+      return this.openCombinaisons.length === 0 && !this.specialCases.includes('firstTurn')
+    },
+
+    openedCombinaisonAvailable () {
+      return this.riichiType == null && !this.specialCases.includes('firstTurn')
+    },
+
+    tenhouChiihouRenhouAvailable () {
+      return this.openCombinaisons.length === 0 && this.riichiType == null && !this.specialCases.includes('lastTurn')
+    },
+
+    chankanAvailable () {
+      return !this.specialCases.includes('rinshan') && this.winningType === 'ron'
+    },
+
+    rinshanAvailable () {
+      return this.winningType === 'tsumo'
+    },
+
+    haiteiHouteiAvailable () {
+      return !this.specialCases.includes('firstTurn')
+    },
+
+    tsumoAvailable () {
+      return !this.specialCases.includes('chankan')
     }
+  },
+
+  watch: {
+    riichiIsIppatsu (value) {
+      // if the user select the ippatsu and the riichi was not selected, we need to select it
+      if (value === true && this.riichiType == null) this.riichiType = 'normal'
+    },
+
+    riichiType (value) {
+      // if the user removed his riichi and the ippatsu was selected, we need to reset it
+      if (value == null && this.riichiIsIppatsu) this.riichiIsIppatsu = false
+
+      // if the user add a riichi and the add combinaison was on "opened", we need to reset
+      // it to "concealed" because we can't have opened combinaison with riichi and the button
+      // will be disabled anyway
+      if (value != null && !this.addIsConcealed) this.addIsConcealed = true
+    },
+
+    specialCases (value) {
+      if (value.includes('firstTurn') && !this.addIsConcealed) this.addIsConcealed = true
+    }
+  },
+
+  mounted () {
+    // global event listener to unselect the touched combinaison on mobile
+    // when the user touch anywhere on the screen
+    document.addEventListener('touchend', () => {
+      this.touchedCombinaison = null
+    })
   },
 
   methods: {
     reset () {
-      this.title = 'Your hand'
-      this.currentView = 'Main'
       this.prevalentWind = 'east'
       this.seatWind = 'east'
       this.winningType = 'tsumo'
-      this.winningSecondaryType = ''
-      this.wonDuringFirstUninterruptedRound = false
-      this.riichiType = ''
+      this.specialCases = []
+      this.riichiType = null
       this.riichiIsIppatsu = false
-      this.doraTiles = []
-      this.selectedDoraTiles = []
-      this.uraDoraTiles = []
-      this.selectedUraDoraTiles = []
+      this.nbDora = 0
       this.waitingTile = null
       this.concealedCombinaisons = []
-      this.selectedConcealedCombinaisons = []
       this.openCombinaisons = []
-      this.selectedOpenCombinaisons = []
-      this.addForDora = null
-      this.addIsConcealed = null
+      this.addIsConcealed = true
       this.addType = null
-      this.addIsUraDora = null
+      this.touchedCombinaison = null
+      this.hand = null
     },
 
-    /**
-     * action to begin the process of adding a new dora
-     * this open the TileSelection view on the interface
-     *
-     * @param bool isUraDora indicate if the dora is an ura-dora (under the dora for riichi win)
-     */
-    addDora (isUraDora) {
-      this.addForDora = true
-      this.addIsUraDora = isUraDora
-      this.currentView = 'TileSelection'
-      this.title = 'Select a tile'
-    },
-
-    /**
-      * action to select/unselect a dora
-      *
-      * @param {object} tile - The dora tile
-      * @param {boolean} isUraDora - Flag indicating is the dora is an ura-dora (reverse dora) or not
-      */
-    toggleDoraTileSelection (tile, isUraDora) {
-      const selectedTiles = isUraDora ? this.selectedUraDoraTiles : this.selectedDoraTiles
-      const index = selectedTiles.indexOf(tile)
-      if (index > -1) {
-        selectedTiles.splice(index, 1)
-      } else {
-        selectedTiles.push(tile)
-      }
-    },
-
-    /**
-      * action to delete the selected dora
-      *
-      * @param {boolean} isUraDora - Flag indicating if we want to delete normal dora or ura-dora (reverse dora)
-      */
-    removeSelectedDoraTiles (isUraDora) {
-      const selectedTiles = isUraDora ? this.selectedUraDoraTiles : this.selectedDoraTiles
-      const tiles = isUraDora ? this.uraDoraTiles : this.doraTiles
-
-      while (selectedTiles.length > 0) {
-        const selectedTile = selectedTiles.pop()
-        const index = tiles.indexOf(selectedTile)
-        tiles.splice(index, 1)
-      }
-    },
-
-    /**
-     * action to begin the process of adding a new combinaison
-     * this open the TileSelection view on the interface
-     *
-     * @param bool isConcealed indicate if the new combinaison will be concealed or not
-     * @param string type specify the combinaison type that will be add (pair, pon, kan, chii)
-     */
-    addCombinaison (isConcealed, type) {
-      this.addForDora = false
-      this.addIsConcealed = isConcealed
+    addCombinaison (type) {
       this.addType = type
-      this.currentView = 'TileSelection'
-      this.title = 'Select a tile'
+      this.tileSelectionModal = true
     },
 
-    /**
-      * action to select/unselect an combinaison
-      *
-      * @param {object} combinaison - The combinaison
-      * @param {boolean} isConcealed - Flag indicating if the combinaison is concealed or not (open)
-      */
-    toggleCombinaisonSelection (combinaison, isConcealed) {
-      const selectedCombinaisons = isConcealed ? this.selectedConcealedCombinaisons : this.selectedOpenCombinaisons
-      const index = selectedCombinaisons.indexOf(combinaison)
-
-      if (index > -1) {
-        selectedCombinaisons.splice(index, 1)
-      } else {
-        selectedCombinaisons.push(combinaison)
-      }
-    },
-
-    /**
-      * action to delete the selected combinaisons
-      *
-      * @param {boolean} isConcealed - Flag indicating if we want to delete concealed combinaisons or not (open)
-      */
-    removeSelectedCombinaisons (isConcealed) {
-      const selectedCombinaisons = isConcealed ? this.selectedConcealedCombinaisons : this.selectedOpenCombinaisons
-      const combinaisons = isConcealed ? this.concealedCombinaisons : this.openCombinaisons
-
-      while (selectedCombinaisons.length > 0) {
-        const selectedCombinaison = selectedCombinaisons.pop()
-        const index = combinaisons.indexOf(selectedCombinaison)
-        combinaisons.splice(index, 1)
-      }
-    },
-
-    /**
-     * action when the user select the tile value of the combinaison during the process of adding a new combinaison
-     * this will finalize the adding process and return on the Main view on the interface
-     *
-     * @param {object} - object container the suit (dragon, wind, bamboo, dot or character) and the value (east, red, 1, etc...)
-     */
     selectTile ({ suit, value }) {
-      if (this.addForDora) {
-        const tile = TileFactory.create(suit, value)
-        if (this.addIsUraDora) {
-          this.uraDoraTiles.push(tile)
-        } else {
-          this.doraTiles.push(tile)
-        }
-      } else {
-        const firstCombinaisonTile = TileFactory.create(suit, value)
-        const combinaison = CombinaisonFactory.create(this.addType, firstCombinaisonTile)
+      const firstCombinaisonTile = TileFactory.create(suit, value)
+      const combinaison = CombinaisonFactory.create(this.addType, firstCombinaisonTile)
 
-        if (this.addIsConcealed) {
-          this.concealedCombinaisons.push(combinaison)
-        } else {
-          this.openCombinaisons.push(combinaison)
-        }
+      if (this.addIsConcealed) {
+        this.concealedCombinaisons.push(combinaison)
+      } else {
+        this.openCombinaisons.push(combinaison)
       }
 
-      this.closeTileSelection()
+      this.tileSelectionModal = false
     },
 
-    /**
-     * action when the user want to close/cancel the tile selection view and return to the Main view on the interface
-     */
-    closeTileSelection () {
-      this.addForDora = null
-      this.addIsUraDora = null
-      this.addType = null
-      this.addIsConcealed = null
-      this.returnToMain()
+    removeConcealedCombinaison (combinaison) {
+      if (this.touchedCombinaison === combinaison) {
+        this.touchedCombinaison = null
+      }
+
+      if (combinaison.tiles.includes(this.waitingTile)) {
+        this.waitingTile = null
+      }
+
+      const index = this.concealedCombinaisons.indexOf(combinaison)
+      this.concealedCombinaisons.splice(index, 1)
     },
 
-    /**
-     * action when the user select the winning tile
-     *
-     * @param object tile
-     */
+    removeOpenedCombinaison (combinaison) {
+      if (this.touchedCombinaison === combinaison) {
+        this.touchedCombinaison = null
+      }
+
+      const index = this.openCombinaisons.indexOf(combinaison)
+      this.openCombinaisons.splice(index, 1)
+    },
+
     toggleWaitingTile (tile) {
       if (this.waitingTile === tile) {
         this.waitingTile = null
@@ -571,21 +624,28 @@ export default {
       }
     },
 
-    /**
-     * action when the user want to return to the Main view on the interface
-     */
-    returnToMain () {
-      this.currentView = 'Main'
-      this.title = 'Your hand'
+    toggleSpecialCase (specialCase) {
+      if (this.specialCases.includes(specialCase)) {
+        this.specialCases.splice(this.specialCases.indexOf(specialCase), 1)
+      } else {
+        this.specialCases.push(specialCase)
+      }
     },
 
-    /**
-     * action when the user want to calculate the points of his hand
-     * this will calculate the hand values
-     * and this will open the Result view on the interface
-    */
+    touchCombinaison (combinaison) {
+      if (this.touchedCombinaison === combinaison) {
+        this.touchedCombinaison = null
+      } else {
+        this.touchedCombinaison = combinaison
+      }
+    },
+
     showPoints () {
-      const winningCombinaison = this.concealedCombinaisons.filter(x => x.tiles.indexOf(this.waitingTile) > -1)[0]
+      const winningCombinaison = this.concealedCombinaisons.filter(x => x.tiles.includes(this.waitingTile))[0]
+
+      let winningSecondaryType = ''
+      if (this.specialCases.includes('rinshan')) winningSecondaryType = 'rinshan kaihou'
+      else if (this.specialCases.includes('chankan')) winningSecondaryType = 'chankan'
 
       const hand = new Hand(
         this.concealedCombinaisons,
@@ -595,24 +655,20 @@ export default {
         this.concealedCombinaisons.indexOf(winningCombinaison),
         winningCombinaison.tiles.indexOf(this.waitingTile),
         this.winningType,
-        this.winningSecondaryType,
-        this.doraTiles,
-        this.uraDoraTiles
+        winningSecondaryType,
+        this.nbDora
       )
 
-      hand.wonDuringFirstUninterruptedRound = this.wonDuringFirstUninterruptedRound
+      hand.wonDuringFirstUninterruptedRound = this.specialCases.includes('firstTurn')
+      hand.wonWithLastTile = this.specialCases.includes('lastTile')
 
-      hand.isRiichi = this.riichiType !== ''
+      hand.isRiichi = this.riichiType != null
       hand.isDoubleRiichi = this.riichiType === 'double'
       hand.isIppatsu = this.riichiIsIppatsu
 
       this.hand = hand
-      this.currentView = 'Result'
-      this.title = 'Hand points'
-    },
 
-    toggleLeftMenu () {
-      this.leftMenuIsOpen = !this.leftMenuIsOpen
+      this.scoreModal = true
     }
   }
 }

@@ -27,9 +27,7 @@ import {
   HaiteiRaoyue,
   HouteiRaoyui,
   RinshanKaihou,
-  ChanKan,
-  Dora,
-  UraDora
+  ChanKan
 } from '@/core/yakupattern-classes'
 import {
   Chiihou,
@@ -57,7 +55,7 @@ import {
 test('default ruleset return valid yaku pattern list', () => {
   const patterns = new DefaultRuleset().getYakuPatterns()
 
-  expect(patterns.length).toBe(30)
+  expect(patterns.length).toBe(28)
   expect(patterns.filter(x => x instanceof TanyaouChuu).length).toBe(1)
   expect(patterns.filter(x => x instanceof Honitsu).length).toBe(1)
   expect(patterns.filter(x => x instanceof Chinitsu).length).toBe(1)
@@ -86,8 +84,6 @@ test('default ruleset return valid yaku pattern list', () => {
   expect(patterns.filter(x => x instanceof HouteiRaoyui).length).toBe(1)
   expect(patterns.filter(x => x instanceof RinshanKaihou).length).toBe(1)
   expect(patterns.filter(x => x instanceof ChanKan).length).toBe(1)
-  expect(patterns.filter(x => x instanceof Dora).length).toBe(1)
-  expect(patterns.filter(x => x instanceof UraDora).length).toBe(1)
 })
 
 test('default ruleset return valid yakuman pattern list', () => {

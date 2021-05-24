@@ -11,8 +11,9 @@ import { Pair, Chii, Orphan } from './combinaison-classes'
  * param Integer winningTileIndex
  * param string winningType
  * param string winningSecondType
+ * param Integer nbDora
  */
-export function Hand (concealedCombinaisons, openCombinaisons, seatWind, roundWind, winningCombinaisonIndex, winningTileIndex, winningType, winningSecondType, doraTiles, uraDoraTiles) {
+export function Hand (concealedCombinaisons, openCombinaisons, seatWind, roundWind, winningCombinaisonIndex, winningTileIndex, winningType, winningSecondType, nbDora) {
   this.concealedCombinaisons = concealedCombinaisons // array of HandCombinaison
   this.openCombinaisons = openCombinaisons // array of HandCombinaison
   this.combinaisons = concealedCombinaisons.concat(this.openCombinaisons)
@@ -23,11 +24,11 @@ export function Hand (concealedCombinaisons, openCombinaisons, seatWind, roundWi
   this.winningType = winningType
   this.winningSecondType = winningSecondType
   this.wonDuringFirstUninterruptedRound = false
+  this.wonWithLastTile = false
   this.isRiichi = false
   this.isDoubleRiichi = false
   this.isIppatsu = false
-  this.doraTiles = doraTiles
-  this.uraDoraTiles = uraDoraTiles
+  this.nbDora = nbDora
 
   this.isFinish = function () {
     var nbPair = 0

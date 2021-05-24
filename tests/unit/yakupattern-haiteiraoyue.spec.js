@@ -12,7 +12,8 @@ test('haitei raoyue (Last Tile Draw) valid hand', function () {
     new Pon(new DotTile(3)),
     new Pon(new DotTile(4)),
     new Pair(new DotTile(5))
-  ], [], 'east', 'east', 0, 0, 'tsumo', 'haitei raoyue')
+  ], [], 'east', 'east', 0, 0, 'tsumo')
+  hand.wonWithLastTile = true
   expect(haiteiRaoyue.check(hand)).toBe(1)
 })
 

@@ -12,7 +12,8 @@ test('houtei raoyui (Last Tile Discard) valid hand', function () {
     new Pon(new DotTile(3)),
     new Pon(new DotTile(4)),
     new Pair(new DotTile(5))
-  ], [], 'east', 'east', 0, 0, 'ron', 'houtei raoyui')
+  ], [], 'east', 'east', 0, 0, 'ron')
+  hand.wonWithLastTile = true
   expect(houteiRaoyui.check(hand)).toBe(1)
 })
 

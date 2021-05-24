@@ -49,3 +49,7 @@ If you encounter bugs or points calculation errors, please contact me or add a b
 * Tenhou (Heavenly Hand)
 * Chiihou (Hand of Earth)
 * Renhou (Hand of Man)
+
+## Credits
+
+Tiles images are from https://github.com/FluffyStuff/riichi-mahjong-tiles
