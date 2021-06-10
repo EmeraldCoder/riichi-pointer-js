@@ -44,6 +44,7 @@ import {
   Tenhou,
   TsuuIisou
 } from '@/core/yakumanpattern-classes'
+import WrcFuCalculator from './wrc/wrc-fu-calculator'
 
 export class Ruleset {
   getYakuPatterns () {
@@ -55,6 +56,10 @@ export class Ruleset {
   }
 
   getAvailableTiles () {
+    throw new Error('NotImplemented')
+  }
+
+  getFuCalculator () {
     throw new Error('NotImplemented')
   }
 }
@@ -152,5 +157,9 @@ export class DefaultRuleset extends Ruleset {
       TileFactory.create('dot', 8),
       TileFactory.create('dot', 9)
     ]
+  }
+
+  getFuCalculator () {
+    return new WrcFuCalculator()
   }
 }

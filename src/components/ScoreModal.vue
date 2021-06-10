@@ -40,7 +40,9 @@
                 v-for="(detail, index) in yakuman.details"
                 :key="index"
               >
-                <td>{{ detail.name }}</td>
+                <td>
+                  {{ detail.japaneseName }}<br><i>({{ detail.englishName }})</i>
+                </td>
                 <td>{{ detail.value }}</td>
               </tr>
             </tbody>
@@ -56,7 +58,9 @@
                 v-for="(detail, index) in han.details"
                 :key="index"
               >
-                <td>{{ detail.name }}</td>
+                <td>
+                  {{ detail.japaneseName }}<br><i>({{ detail.englishName }})</i>
+                </td>
                 <td class="txt-right">
                   {{ detail.value }}
                 </td>
@@ -74,9 +78,14 @@
                 v-for="(detail, index) in fu.details"
                 :key="index"
               >
-                <td>{{ detail.name }}</td>
+                <td>
+                  {{ detail.key | fuKeyMapping }}
+                  <span v-if="detail.quantity > 1">
+                    x{{ detail.quantity }}
+                  </span>
+                </td>
                 <td class="txt-right">
-                  {{ detail.value }}
+                  {{ detail.fuValue * detail.quantity }}
                 </td>
               </tr>
             </tbody>
@@ -88,6 +97,12 @@
 </template>
 
 <style>
+.score-layout table {
+  white-space: nowrap;
+}
+
+.score-layout h2 span { white-space: nowrap; }
+
 @media (min-width: 960px) {
   .score-layout {
     min-width: 500px;
@@ -114,7 +129,7 @@
 </style>
 
 <script>
-import { calculateFu, calculatePoint } from '@/core/pointer-classes'
+import { calculatePoint } from '@/core/pointer-classes'
 import { Hand } from '@/core/hand-classes'
 import { Ruleset } from '@/core/ruleset-classes'
 import ModalComponent from '@/components/Modal.vue'
@@ -122,6 +137,27 @@ import ModalComponent from '@/components/Modal.vue'
 export default {
   components: {
     ModalComponent
+  },
+
+  filters: {
+    fuKeyMapping (key) {
+      if (key === 'win') return 'Winning'
+      if (key === 'tsumo') return 'Tsumo'
+      if (key === 'concealed ron') return 'Concealed Ron'
+      if (key === 'open pinfu') return 'Open Pinfu'
+      if (key === 'chiitoitsu') return 'Chii Toitsu (Seven Pairs)'
+      if (key === 'pair') return 'Pair'
+      if (key === 'wait') return 'Wait'
+      if (key === 'minkou simple') return 'Open Pon (simple)'
+      if (key === 'minkou non simple') return 'Open Pon (Terminal / Honor)'
+      if (key === 'minkan simple') return 'Open Kan (simple)'
+      if (key === 'minkan non simple') return 'Open Kan (Terminal / Honor)'
+      if (key === 'ankou simple') return 'Concealed Pon (simple)'
+      if (key === 'ankou non simple') return 'Concealed Pon (Terminal / Honor)'
+      if (key === 'ankan simple') return 'Concealed Kan (simple)'
+      if (key === 'ankan non simple') return 'Concealed Kan (Terminal / Honor)'
+      return key
+    }
   },
 
   props: {
@@ -151,7 +187,7 @@ export default {
         const checkResult = x.check(this.hand)
         if (checkResult > 0) {
           agg.total += checkResult
-          agg.details.push({ value: checkResult, name: `${x.japaneseName} (${x.englishName})` })
+          agg.details.push({ value: checkResult, japaneseName: x.japaneseName, englishName: x.englishName })
         }
         return agg
       }, { total: 0, details: [] })
@@ -171,14 +207,14 @@ export default {
         const checkResult = x.check(this.hand)
         if (checkResult > 0) {
           agg.total += checkResult
-          agg.details.push({ value: checkResult, name: `${x.japaneseName} (${x.englishName})` })
+          agg.details.push({ value: checkResult, japaneseName: x.japaneseName, englishName: x.englishName })
         }
         return agg
       }, { total: 0, details: [] })
     },
 
     fu () {
-      return calculateFu(this.hand)
+      return this.ruleset.getFuCalculator().calculate(this.hand)
     },
 
     summary () {
