@@ -34,6 +34,7 @@ If you encounter bugs or points calculation errors, please contact me or add a b
 * Pinfu (All chii / No points)
 * San Ankou (3 concealed pons)
 * San Kan Tsu (3 kans)
+* Renhou (Hand of Man)
 
 ## Supported Yakuman Patterns
 * Suu Ankou (Four concealed pons)
@@ -48,7 +49,6 @@ If you encounter bugs or points calculation errors, please contact me or add a b
 * Kokushi Musou (Thirten Orphans)
 * Tenhou (Heavenly Hand)
 * Chiihou (Hand of Earth)
-* Renhou (Hand of Man)
 
 ## Credits
 
