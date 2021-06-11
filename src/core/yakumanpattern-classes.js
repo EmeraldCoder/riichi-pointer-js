@@ -19,7 +19,10 @@ export class SuuAnkou extends YakumanPattern {
   englishName = 'Four concealed pon'
 
   check (hand) {
-    const nbOfConcealedPon = hand.concealedCombinaisons.filter(x => x instanceof Pon || x instanceof Kan).length
+    const nbOfConcealedPon = hand.concealedCombinaisons.filter((x, i) =>
+      (x instanceof Pon || x instanceof Kan) &&
+      (i !== hand.winningCombinaisonIndex || hand.winningType === 'tsumo')
+    ).length
     if (nbOfConcealedPon === 4) {
       return hand.isSingleWait() ? 2 : 1
     }

@@ -638,7 +638,10 @@ export function SanAnkou () {
 
     for (var i = 0; i < hand.concealedCombinaisons.length; i++) {
       var combinaison = hand.concealedCombinaisons[i]
-      if (combinaison instanceof Pon || combinaison instanceof Kan) {
+      if (
+        (combinaison instanceof Pon || combinaison instanceof Kan) &&
+        (i !== hand.winningCombinaisonIndex || hand.winningType === 'tsumo')
+      ) {
         nbConcealedPon++
       }
     }

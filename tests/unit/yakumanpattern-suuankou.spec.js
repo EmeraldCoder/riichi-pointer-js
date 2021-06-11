@@ -71,3 +71,23 @@ test('suu ankou (four concealed pon) valid hand with a single wait count as a do
   ], [], 'east', 'east', 0, 0, 'ron') // even if it's a ron
   expect(suuAnkou.check(hand)).toBe(2)
 })
+
+describe('given the winning tile was part of one of the ankou (concealed pon)', () => {
+  const concealedCombinaisons = [
+    new Pon(new DotTile(1)),
+    new Pon(new DotTile(2)),
+    new Pon(new DotTile(3)),
+    new Pon(new DotTile(4)),
+    new Pair(new DotTile(5))
+  ]
+
+  test('should count as a suu ankou (four concealed pon) if the hand was won by tsumo (self-draw)', () => {
+    const hand = new Hand(concealedCombinaisons, [], 'east', 'east', 0, 0, 'tsumo')
+    expect(suuAnkou.check(hand)).toBe(1)
+  })
+
+  test('should not be eligible for suu ankou (four concealed pon) if the hand was won by ron (discard)', () => {
+    const hand = new Hand(concealedCombinaisons, [], 'east', 'east', 0, 0, 'ron')
+    expect(suuAnkou.check(hand)).toBe(0)
+  })
+})
