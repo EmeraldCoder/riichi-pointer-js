@@ -27,7 +27,8 @@ import {
   HaiteiRaoyue,
   HouteiRaoyui,
   RinshanKaihou,
-  ChanKan
+  ChanKan,
+  Renhou
 } from '@/core/yakupattern-classes'
 import {
   Chiihou,
@@ -36,7 +37,6 @@ import {
   DaiSangen,
   DaiSuushii,
   KokushiMusou,
-  Renhou,
   RyuuIisou,
   ShouSuushii,
   SuuAnkou,
@@ -55,7 +55,7 @@ import {
 test('default ruleset return valid yaku pattern list', () => {
   const patterns = new DefaultRuleset().getYakuPatterns()
 
-  expect(patterns.length).toBe(28)
+  expect(patterns.length).toBe(29)
   expect(patterns.filter(x => x instanceof TanyaouChuu).length).toBe(1)
   expect(patterns.filter(x => x instanceof Honitsu).length).toBe(1)
   expect(patterns.filter(x => x instanceof Chinitsu).length).toBe(1)
@@ -84,12 +84,13 @@ test('default ruleset return valid yaku pattern list', () => {
   expect(patterns.filter(x => x instanceof HouteiRaoyui).length).toBe(1)
   expect(patterns.filter(x => x instanceof RinshanKaihou).length).toBe(1)
   expect(patterns.filter(x => x instanceof ChanKan).length).toBe(1)
+  expect(patterns.filter(x => x instanceof Renhou).length).toBe(1)
 })
 
 test('default ruleset return valid yakuman pattern list', () => {
   const patterns = new DefaultRuleset().getYakumanPatterns()
 
-  expect(patterns.length).toBe(13)
+  expect(patterns.length).toBe(12)
   expect(patterns.filter(x => x instanceof SuuAnkou).length).toBe(1)
   expect(patterns.filter(x => x instanceof SuuKantsu).length).toBe(1)
   expect(patterns.filter(x => x instanceof RyuuIisou).length).toBe(1)
@@ -102,7 +103,6 @@ test('default ruleset return valid yakuman pattern list', () => {
   expect(patterns.filter(x => x instanceof KokushiMusou).length).toBe(1)
   expect(patterns.filter(x => x instanceof Tenhou).length).toBe(1)
   expect(patterns.filter(x => x instanceof Chiihou).length).toBe(1)
-  expect(patterns.filter(x => x instanceof Renhou).length).toBe(1)
 })
 
 test('default ruleset return valid available tile list', () => {

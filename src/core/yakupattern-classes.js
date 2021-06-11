@@ -869,3 +869,23 @@ export function ChanKan () {
 }
 ChanKan.prototype = new YakuPattern()
 ChanKan.prototype.constructor = ChanKan
+
+/**
+ * Renhou (Hand of man) yaku pattern
+ * A hand won by a non-dealer with a discard tile on his first round without open-meld
+ *
+ * Must be concealed: yes
+ * Han: 5
+ */
+export function Renhou () {
+  YakuPattern.call(this)
+
+  this.japaneseName = 'Renhou'
+  this.englishName = 'Hand of man'
+
+  this.check = function (hand) {
+    return hand.wonDuringFirstUninterruptedRound && hand.seatWind !== 'east' && hand.winningType === 'ron' ? 5 : 0
+  }
+}
+Renhou.prototype = new YakuPattern()
+Renhou.prototype.constructor = Renhou

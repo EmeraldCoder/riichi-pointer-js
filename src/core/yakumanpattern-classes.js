@@ -272,7 +272,7 @@ export class Chiihou extends YakumanPattern {
 
 /**
  * Renhou (Hand of man)
- * A han won by a non-dealer with a discard tile on his first round without open-meld
+ * A hand won by a non-dealer with a discard tile on his first round without open-meld
  *
  * Must be concealed: yes
  * Yakuman: 1

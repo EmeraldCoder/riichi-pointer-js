@@ -27,7 +27,8 @@ import {
   HaiteiRaoyue,
   HouteiRaoyui,
   RinshanKaihou,
-  ChanKan
+  ChanKan,
+  Renhou
 } from '@/core/yakupattern-classes'
 import {
   Chiihou,
@@ -37,7 +38,6 @@ import {
   DaiSuushii,
   KokushiMusou,
   RyuuIisou,
-  Renhou,
   ShouSuushii,
   SuuAnkou,
   SuuKantsu,
@@ -94,7 +94,8 @@ export class DefaultRuleset extends Ruleset {
       new HaiteiRaoyue(),
       new HouteiRaoyui(),
       new RinshanKaihou(),
-      new ChanKan()
+      new ChanKan(),
+      new Renhou()
     ]
   }
 
@@ -106,7 +107,6 @@ export class DefaultRuleset extends Ruleset {
       new DaiSangen(),
       new DaiSuushii(),
       new KokushiMusou(),
-      new Renhou(),
       new ShouSuushii(),
       new SuuAnkou(),
       new SuuKantsu(),
