@@ -1,60 +1,9 @@
 import { TileFactory } from '@/core/tile-classes'
-import {
-  TanyaouChuu,
-  Honitsu,
-  Chinitsu,
-  Honroutou,
-  Iipeikou,
-  SanShokuDoujun,
-  Itsu,
-  Chanta,
-  ChiiToitsu,
-  SanShokuDokou,
-  ToiToiHou,
-  ShouSangen,
-  RyanPeikou,
-  JunchanTaiyai,
-  FanpaiDragonPon,
-  FanpaiRoundWind,
-  FanpaiSeatWind,
-  Pinfu,
-  SanAnkou,
-  SanKanTsu,
-  MenzenTsumo,
-  Riichi,
-  DoubleRiichi,
-  Ippatsu,
-  HaiteiRaoyue,
-  HouteiRaoyui,
-  RinshanKaihou,
-  ChanKan,
-  Renhou
-} from '@/core/yakupattern-classes'
-import {
-  Chiihou,
-  ChinRoutou,
-  ChuurenPoutou,
-  DaiSangen,
-  DaiSuushii,
-  KokushiMusou,
-  RyuuIisou,
-  ShouSuushii,
-  SuuAnkou,
-  SuuKantsu,
-  Tenhou,
-  TsuuIisou
-} from '@/core/yakumanpattern-classes'
 import WrcFuCalculator from './wrc/wrc-fu-calculator'
+import WrcHanCalculator from './wrc/wrc-han-calculator'
+import WrcPointCalculator from './wrc/wrc-point-calculator'
 
 export class Ruleset {
-  getYakuPatterns () {
-    throw new Error('NotImplemented')
-  }
-
-  getYakumanPatterns () {
-    throw new Error('NotImplemented')
-  }
-
   getAvailableTiles () {
     throw new Error('NotImplemented')
   }
@@ -62,60 +11,17 @@ export class Ruleset {
   getFuCalculator () {
     throw new Error('NotImplemented')
   }
+
+  getHanCalculator () {
+    throw new Error('NotImplemented')
+  }
+
+  getPointCalculator () {
+    throw new Error('NotImplemented')
+  }
 }
 
 export class DefaultRuleset extends Ruleset {
-  getYakuPatterns () {
-    return [
-      new TanyaouChuu(),
-      new Honitsu(),
-      new Chinitsu(),
-      new Honroutou(),
-      new Iipeikou(),
-      new SanShokuDoujun(),
-      new Itsu(),
-      new Chanta(),
-      new ChiiToitsu(),
-      new SanShokuDokou(),
-      new ToiToiHou(),
-      new ShouSangen(),
-      new RyanPeikou(),
-      new JunchanTaiyai(),
-      new FanpaiDragonPon(),
-      new FanpaiRoundWind(),
-      new FanpaiSeatWind(),
-      new Pinfu(),
-      new SanAnkou(),
-      new SanKanTsu(),
-      new MenzenTsumo(),
-      new Riichi(),
-      new DoubleRiichi(),
-      new Ippatsu(),
-      new HaiteiRaoyue(),
-      new HouteiRaoyui(),
-      new RinshanKaihou(),
-      new ChanKan(),
-      new Renhou()
-    ]
-  }
-
-  getYakumanPatterns () {
-    return [
-      new Chiihou(),
-      new ChinRoutou(),
-      new ChuurenPoutou(),
-      new DaiSangen(),
-      new DaiSuushii(),
-      new KokushiMusou(),
-      new ShouSuushii(),
-      new SuuAnkou(),
-      new SuuKantsu(),
-      new RyuuIisou(),
-      new Tenhou(),
-      new TsuuIisou()
-    ]
-  }
-
   getAvailableTiles () {
     return [
       TileFactory.create('dragon', 'green'),
@@ -161,5 +67,13 @@ export class DefaultRuleset extends Ruleset {
 
   getFuCalculator () {
     return new WrcFuCalculator()
+  }
+
+  getHanCalculator () {
+    return new WrcHanCalculator()
+  }
+
+  getPointCalculator () {
+    return new WrcPointCalculator()
   }
 }

@@ -1,8 +1,10 @@
 import FuCalculator from '@/core/fu-calculation/fu-calculator'
+import Hand from '@/core/hand'
 
-const hand = {} // just a placeholder because rule checkers will be mocked anyway
+const hand = new Hand() // just a placeholder because rule checkers will be mocked anyway
 
 test('trying to instantiate the calculator without rules parameter should throw an error', () => {
+  /* eslint-disable no-new */
   expect(() => { new FuCalculator() }).toThrow('rules parameter is required')
 })
 

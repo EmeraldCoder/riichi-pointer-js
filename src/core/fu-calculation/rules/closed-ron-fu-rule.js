@@ -6,8 +6,8 @@
  */
 class ClosedRonFuRule {
   /** @override */
-  check ({ openCombinaisons, winningType }) {
-    if (openCombinaisons.length === 0 && winningType === 'ron') {
+  check ({ isOpen, winningType }) {
+    if (!isOpen && winningType === 'ron') {
       return { key: 'closed ron', fuValue: 10, quantity: 1 }
     }
   }

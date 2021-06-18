@@ -1,6 +1,7 @@
 import ChiitoitsuRule from '@/core/fu-calculation/rules/chiitoitsu-fu-rule'
+import Hand from '@/core/hand'
 
-const hand = {} // just a placeholder because the yaku checker will be mocked anyway
+const hand = new Hand() // just a placeholder because the yaku checker will be mocked anyway
 
 function makeDefaultFuCalculationContext () {
   return { stop: false, rounding: true }
@@ -8,8 +9,11 @@ function makeDefaultFuCalculationContext () {
 
 test('trying to instantiate the rule without chiitoitsuYakuPattern option should throw an error', () => {
   const expectedError = 'chiitoitsuYakuPattern is required'
+  /* eslint-disable no-new */
   expect(() => { new ChiitoitsuRule() }).toThrow(expectedError)
+  /* eslint-disable no-new */
   expect(() => { new ChiitoitsuRule({}) }).toThrow(expectedError)
+  /* eslint-disable no-new */
   expect(() => { new ChiitoitsuRule({ fuValue: 50 }) }).toThrow(expectedError)
 })
 

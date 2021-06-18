@@ -1,5 +1,8 @@
 import { Pair, Chii } from './../../combinaison-classes'
 import { DragonTile } from './../../tile-classes'
+import isTankiWait from './../../waits/is-tanki-wait'
+import isKanchanWait from './../../waits/is-kanchan-wait'
+import isPenchanWait from './../../waits/is-penchan-wait'
 
 /**
  * Fu calculation rule that will attribute fu if the hand was open and won by ron without any fu for the pair, the combinaisons and the wait.
@@ -10,7 +13,7 @@ import { DragonTile } from './../../tile-classes'
 class OpenPinfuFuRule {
   /** @override */
   check (hand) {
-    if (hand.winningType === 'ron' && hand.openCombinaisons.length > 0) {
+    if (hand.winningType === 'ron' && hand.isOpen) {
       const chiis = hand.combinaisons.filter(x => x instanceof Chii)
       const pairs = hand.concealedCombinaisons.filter(x => x instanceof Pair)
 
@@ -22,9 +25,9 @@ class OpenPinfuFuRule {
         pairs[0].tiles[0].value !== hand.roundWind &&
         pairs[0].tiles[0].value !== hand.seatWind &&
 
-        !hand.isSingleWait() &&
-        !hand.isClosedWait() &&
-        !hand.isEdgeWait()
+        !isTankiWait(hand) &&
+        !isKanchanWait(hand) &&
+        !isPenchanWait(hand)
       ) {
         return { key: 'open pinfu', fuValue: 10, quantity: 1 }
       }

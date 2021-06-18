@@ -1,24 +1,30 @@
 import PairRule from '@/core/fu-calculation/rules/pair-fu-rule'
-import { Hand } from '@/core/hand-classes'
+import Hand from '@/core/hand'
 import { Pon, Pair } from '@/core/combinaison-classes'
 import { DotTile, DragonTile, WindTile } from '@/core/tile-classes'
 
-function makeDefaultHand(pair, roundWind, seatWind) {
-  return new Hand([
+function makeDefaultHand (pair, roundWind, seatWind) {
+  return new Hand({
+    concealedCombinaisons: [
       new Pon(new DotTile(1)),
       new Pon(new DotTile(2)),
       new Pon(new DotTile(3)),
       pair
-    ], [
+    ],
+    openCombinaisons: [
       new Pon(new DotTile(4))
     ],
-    roundWind ?? 'east', seatWind ?? 'east', 0, 0, 'tsumo'
-  )
+    roundWind: roundWind ?? 'east',
+    seatWind: seatWind ?? 'east',
+    winningCombinaisonIndex: 0,
+    winningTileIndex: 0,
+    winningType: 'tsumo'
+  })
 }
 
 describe('given the hand have more than one pair (ex.: chiitoitsu)', () => {
-  const hand = new Hand(
-    [
+  const hand = new Hand({
+    concealedCombinaisons: [
       new Pair(new DragonTile('green')),
       new Pair(new DragonTile('red')),
       new Pair(new DragonTile('white')),
@@ -26,10 +32,8 @@ describe('given the hand have more than one pair (ex.: chiitoitsu)', () => {
       new Pair(new DotTile(5)),
       new Pair(new DotTile(6)),
       new Pair(new DotTile(7))
-    ],
-    [ ],
-    'east', 'east', 1, 0, 'tsumo'
-  )
+    ]
+  })
 
   test('should not return any fu info', () => {
     const result = new PairRule().check(hand)

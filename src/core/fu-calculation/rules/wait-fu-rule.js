@@ -1,3 +1,7 @@
+import isTankiWait from './../../waits/is-tanki-wait'
+import isKanchanWait from './../../waits/is-kanchan-wait'
+import isPenchanWait from './../../waits/is-penchan-wait'
+
 /**
  * Fu calculation rule that will attribute fu according to the hand's wait.<br><br>
  *
@@ -11,7 +15,7 @@
 class WaitFuRule {
   /** @override */
   check (hand) {
-    if (hand.isSingleWait() || hand.isClosedWait() || hand.isEdgeWait()) {
+    if (isTankiWait(hand) || isKanchanWait(hand) || isPenchanWait(hand)) {
       return { key: 'wait', fuValue: 2, quantity: 1 }
     }
   }

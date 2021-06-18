@@ -41,9 +41,17 @@
                 :key="index"
               >
                 <td>
-                  {{ detail.japaneseName }}<br><i>({{ detail.englishName }})</i>
+                  {{ detail.japaneseRomanizedName | titleCase }}
+                  <div
+                    v-if="detail.japaneseRomanizedName !== detail.localizedName"
+                    class="localized-name"
+                  >
+                    {{ detail.localizedName | titleCase }}
+                  </div>
                 </td>
-                <td>{{ detail.value }}</td>
+                <td class="txt-right">
+                  {{ detail.value }}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -59,7 +67,13 @@
                 :key="index"
               >
                 <td>
-                  {{ detail.japaneseName }}<br><i>({{ detail.englishName }})</i>
+                  {{ detail.japaneseRomanizedName | titleCase }}
+                  <div
+                    v-if="detail.japaneseRomanizedName !== detail.localizedName"
+                    class="localized-name"
+                  >
+                    {{ detail.localizedName | titleCase }}
+                  </div>
                 </td>
                 <td class="txt-right">
                   {{ detail.value }}
@@ -103,9 +117,15 @@
 
 .score-layout h2 span { white-space: nowrap; }
 
+.score-layout .localized-name {
+  font-size: smaller;
+  margin-top: 0.5em;
+  font-style: italic;
+}
+
 @media (min-width: 960px) {
   .score-layout {
-    min-width: 500px;
+    min-width: 700px;
   }
 
   .score-layout__details {
@@ -129,10 +149,10 @@
 </style>
 
 <script>
-import { calculatePoint } from '@/core/pointer-classes'
-import { Hand } from '@/core/hand-classes'
+import Hand from '@/core/hand'
 import { Ruleset } from '@/core/ruleset-classes'
 import ModalComponent from '@/components/Modal.vue'
+import titleCase from '@/filters/title-case'
 
 export default {
   components: {
@@ -140,12 +160,14 @@ export default {
   },
 
   filters: {
+    titleCase,
+
     fuKeyMapping (key) {
       if (key === 'win') return 'Winning'
       if (key === 'tsumo') return 'Tsumo'
       if (key === 'concealed ron') return 'Concealed Ron'
       if (key === 'open pinfu') return 'Open Pinfu'
-      if (key === 'chiitoitsu') return 'Chii Toitsu (Seven Pairs)'
+      if (key === 'chiitoitsu') return 'Chiitoitsu (Seven Pairs)'
       if (key === 'pair') return 'Pair'
       if (key === 'wait') return 'Wait'
       if (key === 'minkou simple') return 'Open Pon (simple)'
@@ -177,40 +199,37 @@ export default {
 
   computed: {
     noYaku () {
-      return this.yakuman.total <= 0 && (this.han.total - this.hand.nbDora) <= 0
+      return this.hanCalculation.han == null && this.hanCalculation.yakuman == null
+    },
+
+    hanCalculation () {
+      return this.ruleset.getHanCalculator().calculate(this.hand)
     },
 
     han () {
-      const patterns = this.ruleset.getYakuPatterns()
+      if (this.hanCalculation.han == null) return { total: 0, details: [] } // invalid or yakuman hand
 
-      const han = patterns.reduce((agg, x) => {
-        const checkResult = x.check(this.hand)
-        if (checkResult > 0) {
-          agg.total += checkResult
-          agg.details.push({ value: checkResult, japaneseName: x.japaneseName, englishName: x.englishName })
-        }
-        return agg
-      }, { total: 0, details: [] })
-
-      if (this.hand.nbDora > 0) {
-        han.total += this.hand.nbDora
-        han.details.push({ value: this.hand.nbDora, name: 'Dora' })
+      return {
+        total: this.hanCalculation.han,
+        details: this.hanCalculation.details.map(x => ({
+          localizedName: this.$t(x.key),
+          japaneseRomanizedName: this.$t(x.key, 'jp-romanized'),
+          value: x.hanValue
+        }))
       }
-
-      return han
     },
 
     yakuman () {
-      const patterns = this.ruleset.getYakumanPatterns()
+      if (this.hanCalculation.yakuman == null) return { total: 0, details: [] } // invalid or not a yakuman hand
 
-      return patterns.reduce((agg, x) => {
-        const checkResult = x.check(this.hand)
-        if (checkResult > 0) {
-          agg.total += checkResult
-          agg.details.push({ value: checkResult, japaneseName: x.japaneseName, englishName: x.englishName })
-        }
-        return agg
-      }, { total: 0, details: [] })
+      return {
+        total: this.hanCalculation.yakuman,
+        details: this.hanCalculation.details.map(x => ({
+          localizedName: this.$t(x.key),
+          japaneseRomanizedName: this.$t(x.key, 'jp-romanized'),
+          value: x.yakumanValue
+        }))
+      }
     },
 
     fu () {
@@ -218,15 +237,17 @@ export default {
     },
 
     summary () {
-      const pointResult = calculatePoint(this.hand, this.han.total, this.fu.total, this.yakuman.total)
+      if (this.noYaku) return
+
+      const pointResult = this.ruleset.getPointCalculator().calculate(this.hand, this.fu.total, this.han.total, this.yakuman.total)
 
       let summary = ''
 
       if (this.hand.winningType === 'ron') {
-        summary = pointResult + ' points'
+        summary = pointResult.discard + ' points'
       } else {
         if (this.hand.seatWind === 'east') {
-          summary = pointResult + ' points from all players'
+          summary = pointResult.nonDealer + ' points from all players'
         } else {
           summary = pointResult.nonDealer + ' / ' + pointResult.dealer + ' points'
         }

@@ -376,7 +376,7 @@ COMBINAISONS WRAPPER
 </style>
 
 <script>
-import { Hand } from './core/hand-classes'
+import Hand from './core/hand'
 import { TileFactory, NumberedTile } from './core/tile-classes'
 import { CombinaisonFactory, Orphan, Pair } from './core/combinaison-classes'
 import { DefaultRuleset } from './core/ruleset-classes'
@@ -643,28 +643,34 @@ export default {
     showPoints () {
       const winningCombinaison = this.concealedCombinaisons.filter(x => x.tiles.includes(this.waitingTile))[0]
 
-      let winningSecondaryType = ''
-      if (this.specialCases.includes('rinshan')) winningSecondaryType = 'rinshan kaihou'
-      else if (this.specialCases.includes('chankan')) winningSecondaryType = 'chankan'
+      const hand = new Hand({
+        concealedCombinaisons: this.concealedCombinaisons,
+        openCombinaisons: this.openCombinaisons,
+        roundWind: this.prevalentWind,
+        seatWind: this.seatWind,
+        winningType: this.winningType,
+        nbDora: this.nbDora,
+        winningCombinaisonIndex: this.concealedCombinaisons.indexOf(winningCombinaison),
+        winningTileIndex: winningCombinaison.tiles.indexOf(this.waitingTile)
+      })
 
-      const hand = new Hand(
-        this.concealedCombinaisons,
-        this.openCombinaisons,
-        this.seatWind,
-        this.prevalentWind,
-        this.concealedCombinaisons.indexOf(winningCombinaison),
-        winningCombinaison.tiles.indexOf(this.waitingTile),
-        this.winningType,
-        winningSecondaryType,
-        this.nbDora
-      )
+      if (this.riichiType === 'normal' || this.riichiType === 'double') hand.yakus.push('riichi')
+      if (this.riichiType === 'double') hand.yakus.push('double riichi')
+      if (this.riichiIsIppatsu) hand.yakus.push('ippatsu')
 
-      hand.wonDuringFirstUninterruptedRound = this.specialCases.includes('firstTurn')
-      hand.wonWithLastTile = this.specialCases.includes('lastTile')
+      if (this.specialCases.includes('rinshan')) hand.yakus.push('rinshan kaihou')
+      if (this.specialCases.includes('chankan')) hand.yakus.push('chankan')
 
-      hand.isRiichi = this.riichiType != null
-      hand.isDoubleRiichi = this.riichiType === 'double'
-      hand.isIppatsu = this.riichiIsIppatsu
+      if (this.specialCases.includes('firstTurn')) {
+        if (this.seatWind === 'east' && this.winningType === 'tsumo') hand.yakus.push('tenhou')
+        else if (this.seatWind !== 'east' && this.winningType === 'tsumo') hand.yakus.push('chiihou')
+        else if (this.seatWind !== 'east' && this.winningType === 'ron') hand.yakus.push('renhou')
+      }
+
+      if (this.specialCases.includes('lastTile')) {
+        if (this.winningType === 'tsumo') hand.yakus.push('haitei raoyue')
+        else hand.yakus.push('houtei raoyui')
+      }
 
       this.hand = hand
 

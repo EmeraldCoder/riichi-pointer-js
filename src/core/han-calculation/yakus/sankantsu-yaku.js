@@ -1,0 +1,22 @@
+import { Kan } from './../../combinaison-classes'
+
+/**
+ * San Kantsu (3 kans) yaku pattern<br><br>
+ *
+ * A hand with three kans.<br><br>
+ *
+ * Must be concealed: no<br>
+ * Han: 2
+ *
+ * @implements HanCalculation.Yaku
+ * @memberof HanCalculation
+ */
+class SankantsuYaku {
+  /** @override */
+  check ({ combinaisons }) {
+    const nbKan = combinaisons.filter(x => x instanceof Kan).length
+    if (nbKan === 3) return { key: 'sankantsu', hanValue: 2, yakumanValue: 0 }
+  }
+}
+
+export default SankantsuYaku

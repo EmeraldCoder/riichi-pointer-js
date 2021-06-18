@@ -9,7 +9,8 @@ import CombinaisonsRule from './../fu-calculation/rules/combinaisons-fu-rule'
 import ClosedRonRule from './../fu-calculation/rules/closed-ron-fu-rule'
 import ChiitoitsuRule from './../fu-calculation/rules/chiitoitsu-fu-rule'
 
-import { ChiiToitsu, Pinfu } from './../yakupattern-classes'
+import ChiitoitsuYaku from './../han-calculation/yakus/chiitoitsu-yaku'
+import PinfuYaku from './../han-calculation/yakus/pinfu-yaku'
 
 /**
  * Fu calculator implementation using WRC ruleset.
@@ -20,14 +21,14 @@ class WrcFuCalculator extends FuCalculator {
   constructor () {
     super([
       // put the chiitoitsu rule at the top because it's a fixed amount of fu
-      new ChiitoitsuRule({ chiitoitsuYakuPattern: new ChiiToitsu(), fuValue: 25 }),
+      new ChiitoitsuRule({ chiitoitsuYakuPattern: new ChiitoitsuYaku(), fuValue: 25 }),
       new WinRule(),
       new CombinaisonsRule(),
       new PairRule({ stackable: true }),
       new WaitRule(),
       new OpenPinfuRule(),
       new ClosedRonRule(),
-      new TsumoRule({ excludedYakuPatterns: [new Pinfu()] })
+      new TsumoRule({ excludedYakuPatterns: [new PinfuYaku()] })
     ])
   }
 }

@@ -1,22 +1,19 @@
 import TsumoRule from '@/core/fu-calculation/rules/tsumo-fu-rule'
-import { Hand } from '@/core/hand-classes'
-import { Pair } from '@/core/combinaison-classes'
+import Hand from '@/core/hand'
+import { Pair, Pon } from '@/core/combinaison-classes'
 import { DotTile, DragonTile, WindTile } from '@/core/tile-classes'
 
 function makeDefaultHand (winningType) {
-  return new Hand(
-    [
-      new Pair(new DragonTile('green')),
-      new Pair(new DragonTile('red')),
-      new Pair(new DragonTile('white')),
-      new Pair(new WindTile('east')),
-      new Pair(new DotTile(5)),
-      new Pair(new DotTile(6)),
-      new Pair(new DotTile(7))
+  return new Hand({
+    concealedCombinaisons: [
+      new Pon(new DragonTile('green')),
+      new Pon(new DragonTile('red')),
+      new Pon(new DragonTile('white')),
+      new Pon(new WindTile('east')),
+      new Pair(new DotTile(5))
     ],
-    [],
-    'east', 'east', 0, 0, winningType
-  )
+    winningType
+  })
 }
 
 describe('given the hand was won by tsumo (self-draw)', () => {
