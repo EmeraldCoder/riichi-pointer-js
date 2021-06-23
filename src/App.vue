@@ -378,7 +378,7 @@ COMBINAISONS WRAPPER
 <script>
 import Hand from './core/hand'
 import { TileFactory, NumberedTile } from './core/tile-classes'
-import { CombinaisonFactory, Orphan, Pair } from './core/combinaison-classes'
+import { CombinaisonFactory, Orphan, Pair, Kan } from './core/combinaison-classes'
 import { DefaultRuleset } from './core/ruleset-classes'
 import CombinaisonComponent from './components/Combinaison.vue'
 import TileSelectionModalComponent from './components/TileSelectionModal.vue'
@@ -474,15 +474,19 @@ export default {
     combinaisonCounts () {
       let pair = 0
       let orphan = 0
+      let kan = this.openCombinaisons.filter(x => x instanceof Kan).length
       let chiiPonKan = this.openCombinaisons.length
 
       this.concealedCombinaisons.forEach(x => {
         if (x instanceof Orphan) orphan++
         else if (x instanceof Pair) pair++
-        else chiiPonKan++
+        else if (x instanceof Kan) {
+          kan++
+          chiiPonKan++
+        } else chiiPonKan++
       })
 
-      return { pair, orphan, chiiPonKan }
+      return { pair, orphan, kan, chiiPonKan }
     },
 
     addOrphanAvailable () {
@@ -509,19 +513,19 @@ export default {
     },
 
     tenhouChiihouRenhouAvailable () {
-      return this.openCombinaisons.length === 0 && this.riichiType == null && !this.specialCases.includes('lastTurn')
+      return this.openCombinaisons.length === 0 && this.riichiType == null && !this.specialCases.includes('lastTile')
     },
 
     chankanAvailable () {
-      return !this.specialCases.includes('rinshan') && this.winningType === 'ron'
+      return !this.specialCases.includes('rinshan') && !this.specialCases.includes('lastTile') && this.winningType === 'ron'
     },
 
     rinshanAvailable () {
-      return this.winningType === 'tsumo'
+      return this.winningType === 'tsumo' && this.combinaisonCounts.kan > 0
     },
 
     haiteiHouteiAvailable () {
-      return !this.specialCases.includes('firstTurn')
+      return !this.specialCases.includes('firstTurn') && !this.specialCases.includes('chankan')
     },
 
     tsumoAvailable () {
@@ -547,6 +551,10 @@ export default {
 
     specialCases (value) {
       if (value.includes('firstTurn') && !this.addIsConcealed) this.addIsConcealed = true
+    },
+
+    rinshanAvailable (value) {
+      if (!value && this.specialCases.includes('rinshan')) this.specialCases.splice(this.specialCases.indexOf('rinshan'), 1)
     }
   },
 
