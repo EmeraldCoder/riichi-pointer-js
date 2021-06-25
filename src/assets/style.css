@@ -130,8 +130,6 @@ button:disabled,
 button[disabled] {
   opacity: 0.7;
   color: rgba(255, 255, 255, 0.5);
-  /* background: var(--light-green);
-  border-color: var(--dark-green); */
   cursor: auto;
 }
 
@@ -142,8 +140,12 @@ button:hover:enabled {
 button.active {
   background: var(--orange);
 }
-button.active:hover {
+button.active:hover:enabled {
   background: var(--orange-hover);
+}
+
+button.text {
+  background: none;
 }
 
 .btn-group {

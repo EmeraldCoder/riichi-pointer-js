@@ -150,7 +150,6 @@
 
 <script>
 import Hand from '@/core/hand'
-import { Ruleset } from '@/core/ruleset-classes'
 import ModalComponent from '@/components/Modal.vue'
 import titleCase from '@/filters/title-case'
 
@@ -192,7 +191,7 @@ export default {
       required: true
     },
     ruleset: {
-      type: Ruleset,
+      type: Object,
       required: true
     }
   },
@@ -203,7 +202,7 @@ export default {
     },
 
     hanCalculation () {
-      return this.ruleset.getHanCalculator().calculate(this.hand)
+      return this.ruleset.hanCalculator.calculate(this.hand)
     },
 
     han () {
@@ -233,13 +232,13 @@ export default {
     },
 
     fu () {
-      return this.ruleset.getFuCalculator().calculate(this.hand)
+      return this.ruleset.fuCalculator.calculate(this.hand)
     },
 
     summary () {
       if (this.noYaku) return
 
-      const pointResult = this.ruleset.getPointCalculator().calculate(this.hand, this.fu.total, this.han.total, this.yakuman.total)
+      const pointResult = this.ruleset.pointCalculator.calculate(this.hand, this.fu.total, this.han.total, this.yakuman.total)
 
       let summary = ''
 

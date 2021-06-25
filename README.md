@@ -11,6 +11,7 @@ If you encounter bugs or points calculation errors, please contact me or add a b
 * Menzen Tsumo (Fully Concealed Hand)
 * Riichi
 * Double Riichi
+* Open Riichi
 * Ippatsu (One Shot)
 * Haitei Raoyue (Last Tile Draw)
 * Houtei Raoyui (Last Tile Discard)

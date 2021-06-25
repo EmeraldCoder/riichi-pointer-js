@@ -7,7 +7,7 @@
     <header>
       <div class="container">
         <button
-          class="modal__back-button m-r"
+          class="text modal__back-button m-r"
           @click="$emit('close')"
         >
           <font-awesome-icon :icon="backIcon" />
@@ -16,7 +16,7 @@
         <h1>{{ title }}</h1>
 
         <button
-          class="modal__close-button"
+          class="text modal__close-button"
           @click="$emit('close')"
         >
           <font-awesome-icon :icon="closeIcon" />

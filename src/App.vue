@@ -3,8 +3,18 @@
     <header>
       <div class="container">
         <h1>Your Hand</h1>
+
         <button @click="reset">
           Reset
+        </button>
+
+        <button
+          class="text"
+          style="font-size: 1.3rem;"
+          title="Modify ruleset configuration"
+          @click="rulesetConfigurationModal = true"
+        >
+          <font-awesome-icon :icon="settingsIcon" />
         </button>
       </div>
     </header>
@@ -157,6 +167,19 @@
                 Ippatsu
               </button>
             </div>
+
+            <div
+              v-if="ruleset.options.allowOpenRiichi"
+              class="btn-group"
+            >
+              <button
+                :class="{ active: riichiIsOpen }"
+                :disabled="!riichiAvailable"
+                @click="riichiIsOpen = !riichiIsOpen"
+              >
+                Open Riichi
+              </button>
+            </div>
           </div>
 
           <h2><span>Winds</span></h2>
@@ -254,7 +277,7 @@
               :disabled="!chankanAvailable"
               @click="toggleSpecialCase('chankan')"
             >
-              Chan Kan
+              Chankan
             </button>
           </div>
         </div>
@@ -284,6 +307,13 @@
       :hand="hand"
       :ruleset="ruleset"
       @close="scoreModal = false"
+    />
+
+    <ruleset-configuration-modal-component
+      v-model="rulesetConfigurationModal"
+      :ruleset="ruleset"
+      @updateRuleset="updateRuleset"
+      @close="rulesetConfigurationModal = false"
     />
   </div>
 </template>
@@ -379,13 +409,14 @@ COMBINAISONS WRAPPER
 import Hand from './core/hand'
 import { TileFactory, NumberedTile } from './core/tile-classes'
 import { CombinaisonFactory, Orphan, Pair, Kan } from './core/combinaison-classes'
-import { DefaultRuleset } from './core/ruleset-classes'
+import { getRuleset, setRuleset } from './ruleset'
 import CombinaisonComponent from './components/Combinaison.vue'
 import TileSelectionModalComponent from './components/TileSelectionModal.vue'
 import DoraCounterComponent from './components/DoraCounter.vue'
 import ScoreModalComponent from './components/ScoreModal.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCalculator } from '@fortawesome/free-solid-svg-icons'
+import { faCalculator, faCog } from '@fortawesome/free-solid-svg-icons'
+import RulesetConfigurationModalComponent from './components/RulesetConfigurationModal.vue'
 
 export default {
   components: {
@@ -393,7 +424,8 @@ export default {
     TileSelectionModalComponent,
     DoraCounterComponent,
     ScoreModalComponent,
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    RulesetConfigurationModalComponent
   },
 
   data () {
@@ -404,6 +436,7 @@ export default {
       specialCases: [], // indicate if the player won with a particular circonstance (haitei raoyue, houtei raoyui, rinshan kaihou, chan kan)
       riichiType: null, // indicate if the player won with riichi circonstance (riichi / double riichi)
       riichiIsIppatsu: false, // indicate if the player's riichi was ippatsu (won on the first round after declaring riichi)
+      riichiIsOpen: false, // indicate if the player's riichi is an open riichi (optional yaku)
       nbDora: 0, // indicate the number of dora in the player's hand
       waitingTile: null, // winning tile selected by the user
       concealedCombinaisons: [], // list of the concealed combinaisons of the player
@@ -411,11 +444,13 @@ export default {
       addIsConcealed: true, // indicate if the combinaison that the user is currently adding is concealed or not
       addType: null, // type of the combinaison that the user is currently adding (pair, pon, kan, chii)
       touchedCombinaison: null, // keep track of which combinaison the user touch on mobile
-      ruleset: new DefaultRuleset(), // define the ruleset used by the calculator
+      ruleset: null, // define the ruleset used by the calculator
       hand: null, // the hand object generate by the user selection (null if the hand is not in a finished state)
       tileSelectionModal: false, // indicate if the tile selection modal is open
       scoreModal: false, // indicate if the score modal is open
-      calculateIcon: faCalculator
+      calculateIcon: faCalculator,
+      settingsIcon: faCog,
+      rulesetConfigurationModal: false // indicate if the ruleset configuration modal is open
     }
   },
 
@@ -431,7 +466,7 @@ export default {
     },
 
     availableTiles () {
-      const availableTiles = this.ruleset.getAvailableTiles().map(x => {
+      const availableTiles = this.ruleset.tiles.map(x => {
         return { tile: x, count: 4 }
       })
 
@@ -539,9 +574,16 @@ export default {
       if (value === true && this.riichiType == null) this.riichiType = 'normal'
     },
 
+    riichiIsOpen (value) {
+      // if the user select the ippatsu and the riichi was not selected, we need to select it
+      if (value === true && this.riichiType == null) this.riichiType = 'normal'
+    },
+
     riichiType (value) {
       // if the user removed his riichi and the ippatsu was selected, we need to reset it
       if (value == null && this.riichiIsIppatsu) this.riichiIsIppatsu = false
+      // if the user removed his riichi and the open riichi was selected, we need to reset it
+      if (value == null && this.riichiIsOpen) this.riichiIsOpen = false
 
       // if the user add a riichi and the add combinaison was on "opened", we need to reset
       // it to "concealed" because we can't have opened combinaison with riichi and the button
@@ -556,6 +598,10 @@ export default {
     rinshanAvailable (value) {
       if (!value && this.specialCases.includes('rinshan')) this.specialCases.splice(this.specialCases.indexOf('rinshan'), 1)
     }
+  },
+
+  created () {
+    this.ruleset = getRuleset()
   },
 
   mounted () {
@@ -574,6 +620,7 @@ export default {
       this.specialCases = []
       this.riichiType = null
       this.riichiIsIppatsu = false
+      this.riichiIsOpen = false
       this.nbDora = 0
       this.waitingTile = null
       this.concealedCombinaisons = []
@@ -648,6 +695,11 @@ export default {
       }
     },
 
+    updateRuleset (key, options) {
+      setRuleset(key, options)
+      this.ruleset = getRuleset()
+    },
+
     showPoints () {
       const winningCombinaison = this.concealedCombinaisons.filter(x => x.tiles.includes(this.waitingTile))[0]
 
@@ -665,6 +717,7 @@ export default {
       if (this.riichiType === 'normal' || this.riichiType === 'double') hand.yakus.push('riichi')
       if (this.riichiType === 'double') hand.yakus.push('double riichi')
       if (this.riichiIsIppatsu) hand.yakus.push('ippatsu')
+      if (this.riichiIsOpen) hand.yakus.push('open riichi')
 
       if (this.specialCases.includes('rinshan')) hand.yakus.push('rinshan kaihou')
       if (this.specialCases.includes('chankan')) hand.yakus.push('chankan')
