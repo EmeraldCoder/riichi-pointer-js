@@ -3,7 +3,9 @@ Riichi Mahjong Pointer
 
 Riichi Mahjong Pointer is a Vue.js application to calculate the score of a winning hand at Riichi Mahjong (Japanese Mahjong).
 
-The application is already able to calculate the points of your mahjong hand, but keep in mind that this application is in beta phase and a lot of features are missing.
+URL: https://tools.phil.moe/riichi/pointer
+
+The application is already able to calculate the points of your mahjong hand, but keep in mind that this application is in beta phase and a lot of features are missing or need to be refactored.
 
 If you encounter bugs or points calculation errors, please contact me or add a bug in the github issues section. This way, the application will become more and more stable.
 
