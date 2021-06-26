@@ -1,4 +1,4 @@
-import { Pon, Kan } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combinaison-classes'
 
 /**
  * San Ankou (3 concealed pons) yaku pattern<br><br>
@@ -16,7 +16,7 @@ class SanankouYaku {
   check ({ concealedCombinaisons, winningCombinaisonIndex, winningType }) {
     const nbAnkouOrAnkan = concealedCombinaisons.reduce((agg, combinaison, combinaisonIndex) => {
       if (
-        (combinaison instanceof Pon || combinaison instanceof Kan) &&
+        (combinaison instanceof Triplet || combinaison instanceof Quad) &&
         (combinaisonIndex !== winningCombinaisonIndex || winningType === 'tsumo')
       ) {
         agg++

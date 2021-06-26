@@ -1,5 +1,5 @@
 import { HonorTile } from './../../tile-classes'
-import { Pon, Kan } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combinaison-classes'
 
 /**
  * Fu calculation rule that will attribute fu according to the hand's combinaisons.<br><br>
@@ -52,7 +52,7 @@ function countCombinaisonType (hand) {
   }
 
   counts = hand.concealedCombinaisons.reduce((agg, combinaison, combinaisonIndex) => {
-    if (combinaison instanceof Pon) {
+    if (combinaison instanceof Triplet) {
       if (hand.winningType === 'ron' && hand.winningCombinaisonIndex === combinaisonIndex) {
         if (isSimpleTile(combinaison.tiles[0])) {
           agg.minkouSimple++
@@ -66,7 +66,7 @@ function countCombinaisonType (hand) {
           agg.ankouNonSimple++
         }
       }
-    } else if (combinaison instanceof Kan) {
+    } else if (combinaison instanceof Quad) {
       if (isSimpleTile(combinaison.tiles[0])) {
         agg.ankanSimple++
       } else {
@@ -78,13 +78,13 @@ function countCombinaisonType (hand) {
   }, counts)
 
   return hand.openCombinaisons.reduce((agg, combinaison) => {
-    if (combinaison instanceof Pon) {
+    if (combinaison instanceof Triplet) {
       if (isSimpleTile(combinaison.tiles[0])) {
         agg.minkouSimple++
       } else {
         agg.minkouNonSimple++
       }
-    } else if (combinaison instanceof Kan) {
+    } else if (combinaison instanceof Quad) {
       if (isSimpleTile(combinaison.tiles[0])) {
         agg.minkanSimple++
       } else {

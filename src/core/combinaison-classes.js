@@ -4,21 +4,21 @@ import { TileFactory } from './tile-classes'
  * Combinaison factory class
  * Factory design pattern to help create hand combinaison classes
  *
- * ex. : CombinaisonFactory.create('pon', new DotTile(1))
+ * ex. : CombinaisonFactory.create('triplet', new DotTile(1))
  */
 export const CombinaisonFactory = {
   create (combinaisonType, firstCombinaisonTile) {
     switch (combinaisonType) {
       case 'pair':
         return new Pair(firstCombinaisonTile)
-      case 'pon':
-        return new Pon(firstCombinaisonTile)
-      case 'kan':
-        return new Kan(firstCombinaisonTile)
-      case 'chii':
+      case 'triplet':
+        return new Triplet(firstCombinaisonTile)
+      case 'quad':
+        return new Quad(firstCombinaisonTile)
+      case 'sequence':
         var secondCombinaisonTile = TileFactory.create(firstCombinaisonTile.suit, firstCombinaisonTile.value + 1)
         var thirdCombinaisonTile = TileFactory.create(firstCombinaisonTile.suit, firstCombinaisonTile.value + 2)
-        return new Chii(firstCombinaisonTile, secondCombinaisonTile, thirdCombinaisonTile)
+        return new Sequence(firstCombinaisonTile, secondCombinaisonTile, thirdCombinaisonTile)
       case 'orphan':
         return new Orphan(firstCombinaisonTile)
       default:
@@ -28,7 +28,7 @@ export const CombinaisonFactory = {
 }
 
 /**
- * Combinaison base class (pair, pon, kan, chii)
+ * Combinaison base class (pair, triplet, quad, sequence)
  */
 export class Combinaison {
   constructor (tiles) {
@@ -52,12 +52,12 @@ export class Pair extends Combinaison {
 }
 
 /**
- * Pon combinaison class
+ * Triplet combinaison class
  * three identical tiles (ex. : 3,3,3 of bamboo tiles)
  *
  * param Tile tile
  */
-export class Pon extends Combinaison {
+export class Triplet extends Combinaison {
   constructor (tile) {
     super([
       TileFactory.create(tile.suit, tile.value),
@@ -68,12 +68,12 @@ export class Pon extends Combinaison {
 }
 
 /**
- * Kan combinaison class
+ * Quad combinaison class
  * four identical tiles (ex. : 3,3,3,3 of bamboo tiles)
  *
  * param Tile tile
  */
-export class Kan extends Combinaison {
+export class Quad extends Combinaison {
   constructor (tile) {
     super([
       TileFactory.create(tile.suit, tile.value),
@@ -85,12 +85,12 @@ export class Kan extends Combinaison {
 }
 
 /**
- * Chii combinaison class
+ * Sequence combinaison class
  * three following numbered tile of the same suit (ex. : 2,3,4 of bamboo tiles)
  *
  * param Tile tile
  */
-export class Chii extends Combinaison {
+export class Sequence extends Combinaison {
   constructor (tile1, tile2, tile3) {
     super([tile1, tile2, tile3])
   }

@@ -1,98 +1,98 @@
 import DaisangenYaku from '@/core/han-calculation/yakus/daisangen-yaku'
 import Hand from '@/core/hand'
-import { Pon, Pair, Kan } from '@/core/combinaison-classes'
+import { Triplet, Pair, Quad } from '@/core/combinaison-classes'
 import { DotTile, DragonTile } from '@/core/tile-classes'
 
-test('daisangen (big three dragons) valid hand with a pon of each dragon tile', () => {
+test('daisangen (big three dragons) valid hand with a triplet of each dragon tile', () => {
   const hand = new Hand({
     concealedCombinaisons: [
       new Pair(new DotTile(1)),
-      new Pon(new DragonTile('red')),
-      new Pon(new DragonTile('green')),
-      new Pon(new DotTile(2))
+      new Triplet(new DragonTile('red')),
+      new Triplet(new DragonTile('green')),
+      new Triplet(new DotTile(2))
     ],
     openCombinaisons: [
-      new Pon(new DragonTile('white'))
+      new Triplet(new DragonTile('white'))
     ]
   })
 
   expect(new DaisangenYaku().check(hand)).toStrictEqual({ key: 'daisangen', hanValue: 0, yakumanValue: 1 })
 })
 
-test('daisangen (big three dragons) valid hand with a kan of each dragon tile', () => {
+test('daisangen (big three dragons) valid hand with a quad of each dragon tile', () => {
   const hand = new Hand({
     concealedCombinaisons: [
       new Pair(new DotTile(1)),
-      new Kan(new DragonTile('red')),
-      new Kan(new DragonTile('green')),
-      new Pon(new DotTile(2))
+      new Quad(new DragonTile('red')),
+      new Quad(new DragonTile('green')),
+      new Triplet(new DotTile(2))
     ],
     openCombinaisons: [
-      new Kan(new DragonTile('white'))
+      new Quad(new DragonTile('white'))
     ]
   })
 
   expect(new DaisangenYaku().check(hand)).toStrictEqual({ key: 'daisangen', hanValue: 0, yakumanValue: 1 })
 })
 
-test('daisangen (big three dragons) valid hand with a mix of pon and kan of each dragon tile', () => {
+test('daisangen (big three dragons) valid hand with a mix of triplet and quad of each dragon tile', () => {
   const hand = new Hand({
     concealedCombinaisons: [
       new Pair(new DotTile(1)),
-      new Kan(new DragonTile('red')),
-      new Pon(new DragonTile('green')),
-      new Pon(new DotTile(2))
+      new Quad(new DragonTile('red')),
+      new Triplet(new DragonTile('green')),
+      new Triplet(new DotTile(2))
     ],
     openCombinaisons: [
-      new Kan(new DragonTile('white'))
+      new Quad(new DragonTile('white'))
     ]
   })
 
   expect(new DaisangenYaku().check(hand)).toStrictEqual({ key: 'daisangen', hanValue: 0, yakumanValue: 1 })
 })
 
-test('daisangen (big three dragons) invalid hand because there is no pon or kan of white dragon', () => {
+test('daisangen (big three dragons) invalid hand because there is no triplet or quad of white dragon', () => {
   const hand = new Hand({
     concealedCombinaisons: [
       new Pair(new DotTile(1)),
-      new Pon(new DragonTile('red')),
-      new Pon(new DragonTile('green')),
-      new Pon(new DotTile(3))
+      new Triplet(new DragonTile('red')),
+      new Triplet(new DragonTile('green')),
+      new Triplet(new DotTile(3))
     ],
     openCombinaisons: [
-      new Pon(new DotTile(2))
+      new Triplet(new DotTile(2))
     ]
   })
 
   expect(new DaisangenYaku().check(hand)).toBeUndefined()
 })
 
-test('daisangen (big three dragons) invalid hand because there is no pon or kan of red dragon', () => {
+test('daisangen (big three dragons) invalid hand because there is no triplet or quad of red dragon', () => {
   const hand = new Hand({
     concealedCombinaisons: [
       new Pair(new DotTile(1)),
-      new Pon(new DragonTile('white')),
-      new Pon(new DragonTile('green')),
-      new Pon(new DotTile(3))
+      new Triplet(new DragonTile('white')),
+      new Triplet(new DragonTile('green')),
+      new Triplet(new DotTile(3))
     ],
     openCombinaisons: [
-      new Pon(new DotTile(2))
+      new Triplet(new DotTile(2))
     ]
   })
 
   expect(new DaisangenYaku().check(hand)).toBeUndefined()
 })
 
-test('daisangen (big three dragons) invalid hand because there is no pon or kan of green dragon', () => {
+test('daisangen (big three dragons) invalid hand because there is no triplet or quad of green dragon', () => {
   const hand = new Hand({
     concealedCombinaisons: [
       new Pair(new DotTile(1)),
-      new Pon(new DragonTile('white')),
-      new Pon(new DragonTile('red')),
-      new Pon(new DotTile(3))
+      new Triplet(new DragonTile('white')),
+      new Triplet(new DragonTile('red')),
+      new Triplet(new DotTile(3))
     ],
     openCombinaisons: [
-      new Pon(new DotTile(2))
+      new Triplet(new DotTile(2))
     ]
   })
 

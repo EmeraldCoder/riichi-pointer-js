@@ -1,17 +1,17 @@
 import YakuhaiYaku from '@/core/han-calculation/yakus/yakuhai-yaku'
 import Hand from '@/core/hand'
-import { Pon, Pair, Kan, Chii } from '@/core/combinaison-classes'
+import { Triplet, Pair, Quad, Sequence } from '@/core/combinaison-classes'
 import { DotTile, BambooTile, DragonTile, WindTile } from '@/core/tile-classes'
 
 const sut = new YakuhaiYaku()
 
-test('chun yakuhai (red dragon pon) valid hand', () => {
+test('chun yakuhai (red dragon triplet) valid hand', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Pon(new DragonTile('red')),
-      new Pon(new BambooTile(7)),
-      new Pon(new BambooTile(4)),
-      new Pon(new DotTile(3)),
+      new Triplet(new DragonTile('red')),
+      new Triplet(new BambooTile(7)),
+      new Triplet(new BambooTile(4)),
+      new Triplet(new DotTile(3)),
       new Pair(new DotTile(7))
     ]
   })
@@ -19,13 +19,13 @@ test('chun yakuhai (red dragon pon) valid hand', () => {
   expect(sut.check(hand)).toStrictEqual([{ key: 'chun', hanValue: 1, yakumanValue: 0 }])
 })
 
-test('hatsu yakuhai (green dragon pon) valid hand', () => {
+test('hatsu yakuhai (green dragon triplet) valid hand', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Pon(new DragonTile('green')),
-      new Pon(new BambooTile(7)),
-      new Pon(new BambooTile(4)),
-      new Pon(new DotTile(3)),
+      new Triplet(new DragonTile('green')),
+      new Triplet(new BambooTile(7)),
+      new Triplet(new BambooTile(4)),
+      new Triplet(new DotTile(3)),
       new Pair(new DotTile(7))
     ]
   })
@@ -33,13 +33,13 @@ test('hatsu yakuhai (green dragon pon) valid hand', () => {
   expect(sut.check(hand)).toStrictEqual([{ key: 'hatsu', hanValue: 1, yakumanValue: 0 }])
 })
 
-test('haku yakuhai (white dragon pon) valid hand', () => {
+test('haku yakuhai (white dragon triplet) valid hand', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Pon(new DragonTile('white')),
-      new Pon(new BambooTile(7)),
-      new Pon(new BambooTile(4)),
-      new Pon(new DotTile(3)),
+      new Triplet(new DragonTile('white')),
+      new Triplet(new BambooTile(7)),
+      new Triplet(new BambooTile(4)),
+      new Triplet(new DotTile(3)),
       new Pair(new DotTile(7))
     ]
   })
@@ -47,12 +47,12 @@ test('haku yakuhai (white dragon pon) valid hand', () => {
   expect(sut.check(hand)).toStrictEqual([{ key: 'haku', hanValue: 1, yakumanValue: 0 }])
 })
 
-describe('given the hand contains a pon of east', () => {
+describe('given the hand contains a triplet of east', () => {
   const combinaisons = [
-    new Pon(new WindTile('east')),
-    new Pon(new BambooTile(7)),
-    new Pon(new BambooTile(4)),
-    new Pon(new DotTile(3)),
+    new Triplet(new WindTile('east')),
+    new Triplet(new BambooTile(7)),
+    new Triplet(new BambooTile(4)),
+    new Triplet(new DotTile(3)),
     new Pair(new DotTile(7))
   ]
 
@@ -77,12 +77,12 @@ describe('given the hand contains a pon of east', () => {
   })
 })
 
-describe('given the hand contains a pon of south', () => {
+describe('given the hand contains a triplet of south', () => {
   const combinaisons = [
-    new Pon(new WindTile('south')),
-    new Pon(new BambooTile(7)),
-    new Pon(new BambooTile(4)),
-    new Pon(new DotTile(3)),
+    new Triplet(new WindTile('south')),
+    new Triplet(new BambooTile(7)),
+    new Triplet(new BambooTile(4)),
+    new Triplet(new DotTile(3)),
     new Pair(new DotTile(7))
   ]
 
@@ -107,12 +107,12 @@ describe('given the hand contains a pon of south', () => {
   })
 })
 
-describe('given the hand contains a pon of west', () => {
+describe('given the hand contains a triplet of west', () => {
   const combinaisons = [
-    new Pon(new WindTile('west')),
-    new Pon(new BambooTile(7)),
-    new Pon(new BambooTile(4)),
-    new Pon(new DotTile(3)),
+    new Triplet(new WindTile('west')),
+    new Triplet(new BambooTile(7)),
+    new Triplet(new BambooTile(4)),
+    new Triplet(new DotTile(3)),
     new Pair(new DotTile(7))
   ]
 
@@ -137,12 +137,12 @@ describe('given the hand contains a pon of west', () => {
   })
 })
 
-describe('given the hand contains a pon of north', () => {
+describe('given the hand contains a triplet of north', () => {
   const combinaisons = [
-    new Pon(new WindTile('north')),
-    new Pon(new BambooTile(7)),
-    new Pon(new BambooTile(4)),
-    new Pon(new DotTile(3)),
+    new Triplet(new WindTile('north')),
+    new Triplet(new BambooTile(7)),
+    new Triplet(new BambooTile(4)),
+    new Triplet(new DotTile(3)),
     new Pair(new DotTile(7))
   ]
 
@@ -170,10 +170,10 @@ describe('given the hand contains a pon of north', () => {
 test('can return multiple yakuhai', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Pon(new DragonTile('red')),
-      new Pon(new DragonTile('white')),
-      new Pon(new WindTile('south')),
-      new Chii(new DotTile(5)),
+      new Triplet(new DragonTile('red')),
+      new Triplet(new DragonTile('white')),
+      new Triplet(new WindTile('south')),
+      new Sequence(new DotTile(5)),
       new Pair(new DotTile(8))
     ],
     roundWind: 'south',
@@ -188,13 +188,13 @@ test('can return multiple yakuhai', () => {
   expect(result.filter(x => x.key === 'nan')).toStrictEqual([{ key: 'nan', hanValue: 1, yakumanValue: 0 }])
 })
 
-test('kan should be valid for yakuhai', () => {
+test('quad should be valid for yakuhai', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Kan(new DragonTile('red')),
-      new Pon(new BambooTile(7)),
-      new Pon(new BambooTile(4)),
-      new Pon(new DotTile(3)),
+      new Quad(new DragonTile('red')),
+      new Triplet(new BambooTile(7)),
+      new Triplet(new BambooTile(4)),
+      new Triplet(new DotTile(3)),
       new Pair(new DotTile(7))
     ]
   })
@@ -205,13 +205,13 @@ test('kan should be valid for yakuhai', () => {
 test('open combinaison should be valid for yakuhai', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Pon(new BambooTile(7)),
-      new Pon(new BambooTile(4)),
-      new Pon(new DotTile(3)),
+      new Triplet(new BambooTile(7)),
+      new Triplet(new BambooTile(4)),
+      new Triplet(new DotTile(3)),
       new Pair(new DotTile(7))
     ],
     openCombinaisons: [
-      new Pon(new DragonTile('red'))
+      new Triplet(new DragonTile('red'))
     ]
   })
 

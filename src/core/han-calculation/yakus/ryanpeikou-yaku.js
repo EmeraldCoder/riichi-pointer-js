@@ -1,4 +1,4 @@
-import { Chii } from './../../combinaison-classes'
+import { Sequence } from './../../combinaison-classes'
 
 /**
  * Ryanpeikou (twice pure double chiis) yaku pattern<br><br>
@@ -28,7 +28,7 @@ class RyanpeikouYaku {
     let nbPairOfChii = 0
 
     for (const combinaison of combinaisons) {
-      if (combinaison instanceof Chii) {
+      if (combinaison instanceof Sequence) {
         const chiiKey = combinaison.tiles[0].suit + combinaison.tiles[0].number
 
         if (chiis[chiiKey] == null) { chiis[chiiKey] = 0 } else { nbPairOfChii++ }

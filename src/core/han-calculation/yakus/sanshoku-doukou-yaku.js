@@ -1,10 +1,10 @@
-import { Pon, Kan } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combinaison-classes'
 import { NumberedTile } from './../../tile-classes'
 
 /**
- * San Shoku Doukou (triple pon) yaku pattern<br><br>
+ * San Shoku Doukou (triple triplet) yaku pattern<br><br>
  *
- * One pon or kan in each of the three suits, all having the same number.<br><br>
+ * One triplet or quad in each of the three suits, all having the same number.<br><br>
  *
  * Must be concealed: no<br>
  * Han: 2
@@ -18,7 +18,7 @@ class SanshokuDokouYaku {
     const storedPons = {}
 
     for (const combinaison of hand.combinaisons) {
-      if (combinaison instanceof Pon || combinaison instanceof Kan) {
+      if (combinaison instanceof Triplet || combinaison instanceof Quad) {
         const tile = combinaison.tiles[0]
 
         if (tile instanceof NumberedTile) {

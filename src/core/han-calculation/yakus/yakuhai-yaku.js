@@ -1,9 +1,9 @@
-import { Pon, Kan } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combinaison-classes'
 
 /**
  * Yakuhai yaku pattern<br><br>
  *
- * A pon or kan of dragon, round wind or seat wind<br><br>
+ * A triplet or quad of dragon, round wind or seat wind<br><br>
  *
  * Must be concealed: no<br>
  * Han: 1
@@ -15,7 +15,7 @@ class YakuhaiYaku {
   /** @override */
   check ({ combinaisons, roundWind, seatWind }) {
     const yaku = combinaisons.reduce((agg, combinaison) => {
-      if (combinaison instanceof Pon || combinaison instanceof Kan) {
+      if (combinaison instanceof Triplet || combinaison instanceof Quad) {
         const tile = combinaison.tiles[0]
 
         if (tile.value === 'red') agg.push({ key: 'chun', hanValue: 1, yakumanValue: 0 })

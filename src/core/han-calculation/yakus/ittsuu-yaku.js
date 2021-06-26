@@ -1,4 +1,4 @@
-import { Chii } from './../../combinaison-classes'
+import { Sequence } from './../../combinaison-classes'
 
 /**
  * Ittsu or Ikkitsuukan (pure straight) yaku pattern<br><br>
@@ -17,7 +17,7 @@ class IttsuuYaku {
     const chiiCount = {}
 
     for (const combinaison of combinaisons) {
-      if (combinaison instanceof Chii) {
+      if (combinaison instanceof Sequence) {
         var tile = combinaison.tiles[0]
 
         if (chiiCount[tile.suit] == null) {

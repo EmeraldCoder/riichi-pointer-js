@@ -1,16 +1,16 @@
 import RyanpeikouYaku from '@/core/han-calculation/yakus/ryanpeikou-yaku'
 import Hand from '@/core/hand'
-import { Pon, Pair, Chii } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence } from '@/core/combinaison-classes'
 import { DotTile, BambooTile } from '@/core/tile-classes'
 
 const sut = new RyanpeikouYaku()
 
 const validHand = new Hand({
   concealedCombinaisons: [
-    new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
-    new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
-    new Chii(new DotTile(7), new DotTile(8), new DotTile(9)),
-    new Chii(new DotTile(7), new DotTile(8), new DotTile(9)),
+    new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+    new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+    new Sequence(new DotTile(7), new DotTile(8), new DotTile(9)),
+    new Sequence(new DotTile(7), new DotTile(8), new DotTile(9)),
     new Pair(new DotTile(1))
   ]
 })
@@ -23,12 +23,12 @@ describe('given the hand have a valid open ryan peikou (twice pure double chiis)
   const validOpenHand = new Hand({
     concealedCombinaisons: [
       new Pair(new DotTile(1)),
-      new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3))
+      new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3))
     ],
     openCombinaisons: [
-      new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
-      new Chii(new DotTile(7), new DotTile(8), new DotTile(9)),
-      new Chii(new DotTile(7), new DotTile(8), new DotTile(9))
+      new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+      new Sequence(new DotTile(7), new DotTile(8), new DotTile(9)),
+      new Sequence(new DotTile(7), new DotTile(8), new DotTile(9))
     ]
   })
 
@@ -43,28 +43,28 @@ describe('given the hand have a valid open ryan peikou (twice pure double chiis)
 
 const invalidHandWitoutTwoPairOfChii = new Hand({
   concealedCombinaisons: [
-    new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
-    new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
-    new Chii(new DotTile(7), new DotTile(8), new DotTile(9)),
-    new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
+    new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+    new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+    new Sequence(new DotTile(7), new DotTile(8), new DotTile(9)),
+    new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Pair(new DotTile(1))
   ]
 })
 
-test('ryan peikou (twice pure double chiis) invalid hand without two pair of chii', () => {
+test('ryan peikou (twice pure double chiis) invalid hand without two pair of sequence', () => {
   expect(sut.check(invalidHandWitoutTwoPairOfChii)).toBeUndefined()
 })
 
 const invalidHandWithoutChii = new Hand({
   concealedCombinaisons: [
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(2)),
-    new Pon(new DotTile(7)),
-    new Pon(new DotTile(1)),
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(2)),
+    new Triplet(new DotTile(7)),
+    new Triplet(new DotTile(1)),
     new Pair(new DotTile(1))
   ]
 })
 
-test('ryan peikou (twice pure double chiis) invalid hand without chii', () => {
+test('ryan peikou (twice pure double chiis) invalid hand without sequence', () => {
   expect(sut.check(invalidHandWithoutChii)).toBeUndefined()
 })

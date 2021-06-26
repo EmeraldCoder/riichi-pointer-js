@@ -1,4 +1,4 @@
-import { Kan } from './../../combinaison-classes'
+import { Quad } from './../../combinaison-classes'
 
 /**
  * San Kantsu (3 kans) yaku pattern<br><br>
@@ -14,7 +14,7 @@ import { Kan } from './../../combinaison-classes'
 class SankantsuYaku {
   /** @override */
   check ({ combinaisons }) {
-    const nbKan = combinaisons.filter(x => x instanceof Kan).length
+    const nbKan = combinaisons.filter(x => x instanceof Quad).length
     if (nbKan === 3) return { key: 'sankantsu', hanValue: 2, yakumanValue: 0 }
   }
 }

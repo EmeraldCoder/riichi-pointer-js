@@ -1,4 +1,4 @@
-import { Pair, Pon, Kan } from './../../combinaison-classes'
+import { Pair, Triplet, Quad } from './../../combinaison-classes'
 import { DragonTile } from './../../tile-classes'
 
 /**
@@ -21,7 +21,7 @@ class ShousangenYaku {
       if (tile instanceof DragonTile) {
         if (combinaison instanceof Pair) {
           agg.pair++
-        } else if (combinaison instanceof Pon || combinaison instanceof Kan) {
+        } else if (combinaison instanceof Triplet || combinaison instanceof Quad) {
           agg.ponOrKan++
         }
       }

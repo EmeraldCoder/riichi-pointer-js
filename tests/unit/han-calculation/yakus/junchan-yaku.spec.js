@@ -1,16 +1,16 @@
 import JunchanYaku from '@/core/han-calculation/yakus/junchan-yaku'
 import Hand from '@/core/hand'
-import { Pon, Pair, Chii } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence } from '@/core/combinaison-classes'
 import { DotTile, CharacterTile, BambooTile } from '@/core/tile-classes'
 
 const sut = new JunchanYaku()
 
 const validHand = new Hand({
   concealedCombinaisons: [
-    new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
-    new Pon(new BambooTile(9)),
-    new Pon(new DotTile(1)),
-    new Pon(new DotTile(9)),
+    new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+    new Triplet(new BambooTile(9)),
+    new Triplet(new DotTile(1)),
+    new Triplet(new DotTile(9)),
     new Pair(new CharacterTile(1))
   ]
 })
@@ -21,24 +21,24 @@ test('junchan (terminals in all sets) valid hand', () => {
 
 const invalidHandWithoutChii = new Hand({
   concealedCombinaisons: [
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(9)),
-    new Pon(new DotTile(1)),
-    new Pon(new DotTile(9)),
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(9)),
+    new Triplet(new DotTile(1)),
+    new Triplet(new DotTile(9)),
     new Pair(new CharacterTile(1))
   ]
 })
 
-test('junchan (terminals in all sets) invalid hand without chii', () => {
+test('junchan (terminals in all sets) invalid hand without sequence', () => {
   expect(sut.check(invalidHandWithoutChii)).toBeUndefined()
 })
 
 const invalidHandWithSetWithoutTerminal = new Hand({
   concealedCombinaisons: [
-    new Chii(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
-    new Pon(new BambooTile(8)),
-    new Pon(new DotTile(1)),
-    new Pon(new DotTile(9)),
+    new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
+    new Triplet(new BambooTile(8)),
+    new Triplet(new DotTile(1)),
+    new Triplet(new DotTile(9)),
     new Pair(new CharacterTile(1))
   ]
 })

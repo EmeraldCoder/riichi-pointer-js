@@ -1,10 +1,10 @@
-import { Pon, Kan, Pair } from './../../combinaison-classes'
+import { Triplet, Quad, Pair } from './../../combinaison-classes'
 import { WindTile } from './../../tile-classes'
 
 /**
  * Shou Suushii (Little Four Winds)<br><br>
  *
- * A hand with three pon/kan of winds and a pair of the fourth wind<br><br>
+ * A hand with three triplet/quad of winds and a pair of the fourth wind<br><br>
  *
  * Must be concealed: no<br>
  * Yakuman: 1
@@ -15,7 +15,7 @@ import { WindTile } from './../../tile-classes'
 class ShousuushiiYaku {
   /** @override */
   check ({ combinaisons }) {
-    const nbOfWindPonOrKan = combinaisons.filter(x => (x instanceof Pon || x instanceof Kan) && x.tiles[0] instanceof WindTile).length
+    const nbOfWindPonOrKan = combinaisons.filter(x => (x instanceof Triplet || x instanceof Quad) && x.tiles[0] instanceof WindTile).length
     const nbOfWindPair = combinaisons.filter(x => x instanceof Pair && x.tiles[0] instanceof WindTile).length
 
     if (nbOfWindPonOrKan === 3 && nbOfWindPair === 1) {

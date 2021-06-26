@@ -44,5 +44,23 @@
   "toitoi": "all triplets",
   "ton": "east",
   "tsuuiisou": "all honours",
-  "xia": "west"
+  "xia": "west",
+
+  "fuRules": {
+    "win": "Winning",
+    "tsumo": "Tsumo",
+    "concealed ron": "concealed ron",
+    "open pinfu": "open pinfu",
+    "chiitoitsu": "chiitoitsu (seven pairs)",
+    "pair": "pair",
+    "wait": "wait",
+    "minkou simple": "open triplet (simple)",
+    "minkou non simple": "open triplet (terminal / honor)",
+    "minkan simple": "open quad (simple)",
+    "minkan non simple": "open quad (terminal / honor)",
+    "ankou simple": "concealed triplet (simple)",
+    "ankou non simple": "concealed triplet (terminal / honor)",
+    "ankan simple": "concealed quad (simple)",
+    "ankan non simple": "concealed quad (terminal / honor)"
+  }
 }

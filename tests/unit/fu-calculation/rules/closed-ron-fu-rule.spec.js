@@ -1,18 +1,18 @@
 import ClosedRonRule from '@/core/fu-calculation/rules/closed-ron-fu-rule'
 import Hand from '@/core/hand'
-import { Pon, Pair } from '@/core/combinaison-classes'
+import { Triplet, Pair } from '@/core/combinaison-classes'
 import { DotTile } from '@/core/tile-classes'
 
 describe('given the hand is not concealed', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Pon(new DotTile(1)),
-      new Pon(new DotTile(2)),
-      new Pon(new DotTile(3)),
+      new Triplet(new DotTile(1)),
+      new Triplet(new DotTile(2)),
+      new Triplet(new DotTile(3)),
       new Pair(new DotTile(4))
     ],
     openCombinaisons: [
-      new Pon(new DotTile(5))
+      new Triplet(new DotTile(5))
     ]
   })
 
@@ -25,10 +25,10 @@ describe('given the hand is not concealed', () => {
 describe('given the hand was not won by ron (discard)', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Pon(new DotTile(1)),
-      new Pon(new DotTile(2)),
-      new Pon(new DotTile(3)),
-      new Pon(new DotTile(5)),
+      new Triplet(new DotTile(1)),
+      new Triplet(new DotTile(2)),
+      new Triplet(new DotTile(3)),
+      new Triplet(new DotTile(5)),
       new Pair(new DotTile(4))
     ],
     winningType: 'tsumo'
@@ -43,10 +43,10 @@ describe('given the hand was not won by ron (discard)', () => {
 describe('given the hand is concealed and was won by ron (discard)', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Pon(new DotTile(1)),
-      new Pon(new DotTile(2)),
-      new Pon(new DotTile(3)),
-      new Pon(new DotTile(5)),
+      new Triplet(new DotTile(1)),
+      new Triplet(new DotTile(2)),
+      new Triplet(new DotTile(3)),
+      new Triplet(new DotTile(5)),
       new Pair(new DotTile(4))
     ],
     winningType: 'ron'

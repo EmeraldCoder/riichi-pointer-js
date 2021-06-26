@@ -1,6 +1,6 @@
 import WrcHanCalculator from '@/core/wrc/wrc-han-calculator'
 import Hand from '@/core/hand'
-import { Pon, Pair, Chii, Kan } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence, Quad } from '@/core/combinaison-classes'
 import { DotTile, CharacterTile, BambooTile, WindTile, DragonTile } from '@/core/tile-classes'
 
 const wrcCalculator = new WrcHanCalculator()
@@ -8,13 +8,13 @@ const wrcCalculator = new WrcHanCalculator()
 test('open tanyao should be valid', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Pon(new DotTile(2)),
-      new Chii(new DotTile(2), new DotTile(3), new DotTile(4)),
+      new Triplet(new DotTile(2)),
+      new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Pair(new CharacterTile(5))
     ],
     openCombinaisons: [
-      new Pon(new BambooTile(2)),
-      new Kan(new CharacterTile(8))
+      new Triplet(new BambooTile(2)),
+      new Quad(new CharacterTile(8))
     ]
   })
 
@@ -27,13 +27,13 @@ test('open tanyao should be valid', () => {
 test('open ryanpeikou should not be valid', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Chii(new DotTile(2), new DotTile(3), new DotTile(4)),
-      new Chii(new DotTile(2), new DotTile(3), new DotTile(4)),
+      new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
+      new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Pair(new CharacterTile(9))
     ],
     openCombinaisons: [
-      new Chii(new CharacterTile(4), new CharacterTile(5), new CharacterTile(6)),
-      new Chii(new CharacterTile(4), new CharacterTile(5), new CharacterTile(6))
+      new Sequence(new CharacterTile(4), new CharacterTile(5), new CharacterTile(6)),
+      new Sequence(new CharacterTile(4), new CharacterTile(5), new CharacterTile(6))
     ]
   })
 
@@ -46,10 +46,10 @@ test('open ryanpeikou should not be valid', () => {
 test('renhou should be worth 5 han', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Chii(new DotTile(2), new DotTile(3), new DotTile(4)),
-      new Pon(new DotTile(8)),
-      new Chii(new CharacterTile(4), new CharacterTile(5), new CharacterTile(6)),
-      new Pon(new WindTile('north')),
+      new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
+      new Triplet(new DotTile(8)),
+      new Sequence(new CharacterTile(4), new CharacterTile(5), new CharacterTile(6)),
+      new Triplet(new WindTile('north')),
       new Pair(new CharacterTile(9))
     ],
     winningType: 'ron',
@@ -68,10 +68,10 @@ test('renhou should be worth 5 han', () => {
 test('test case 1', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Chii(new DotTile(2), new DotTile(3), new DotTile(4)),
-      new Chii(new DotTile(2), new DotTile(3), new DotTile(4)),
-      new Chii(new DotTile(5), new DotTile(6), new DotTile(7)),
-      new Chii(new DotTile(5), new DotTile(6), new DotTile(7)),
+      new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
+      new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
+      new Sequence(new DotTile(5), new DotTile(6), new DotTile(7)),
+      new Sequence(new DotTile(5), new DotTile(6), new DotTile(7)),
       new Pair(new DotTile(8))
     ],
     winningType: 'tsumo',
@@ -100,13 +100,13 @@ test('test case 1', () => {
 test('test case 2', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Pon(new DragonTile('red')),
-      new Pon(new DragonTile('green')),
-      new Pon(new DragonTile('white')),
+      new Triplet(new DragonTile('red')),
+      new Triplet(new DragonTile('green')),
+      new Triplet(new DragonTile('white')),
       new Pair(new WindTile('north'))
     ],
     openCombinaisons: [
-      new Pon(new WindTile('east'))
+      new Triplet(new WindTile('east'))
     ],
     winningType: 'ron',
     roundWind: 'east',

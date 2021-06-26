@@ -1,15 +1,15 @@
 import CombinaisonsRule from '@/core/fu-calculation/rules/combinaisons-fu-rule'
 import Hand from '@/core/hand'
-import { Pon, Pair, Chii, Kan } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence, Quad } from '@/core/combinaison-classes'
 import { DotTile, DragonTile, WindTile } from '@/core/tile-classes'
 
-describe('given the hand have only chii and one pair', () => {
+describe('given the hand have only sequence and one pair', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
-      new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
-      new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
-      new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
+      new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
+      new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
+      new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
+      new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Pair(new DotTile(9))
     ]
   })
@@ -39,16 +39,16 @@ describe('given the hand have only pairs (chiitoitsu)', () => {
   })
 })
 
-describe('given the hand have open pon of simple tile (2 to 8)', () => {
+describe('given the hand have open triplet of simple tile (2 to 8)', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
-      new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
+      new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
+      new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Pair(new DotTile(9))
     ],
     openCombinaisons: [
-      new Pon(new DotTile(5)),
-      new Pon(new DotTile(6))
+      new Triplet(new DotTile(5)),
+      new Triplet(new DotTile(6))
     ]
   })
 
@@ -58,12 +58,12 @@ describe('given the hand have open pon of simple tile (2 to 8)', () => {
   })
 })
 
-describe('given the hand have concealed pon of simple tile (2 to 8)', () => {
+describe('given the hand have concealed triplet of simple tile (2 to 8)', () => {
   const concealedCombinaisons = [
-    new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
-    new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
-    new Pon(new DotTile(5)),
-    new Pon(new DotTile(6)),
+    new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
+    new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
+    new Triplet(new DotTile(5)),
+    new Triplet(new DotTile(6)),
     new Pair(new DotTile(9))
   ]
 
@@ -73,7 +73,7 @@ describe('given the hand have concealed pon of simple tile (2 to 8)', () => {
     expect(result).toStrictEqual([{ key: 'ankou simple', fuValue: 4, quantity: 2 }])
   })
 
-  describe('and given the winning tile is part of one of those pon', () => {
+  describe('and given the winning tile is part of one of those triplet', () => {
     test('should count as concealed and return 4 fu for it if the hand was won by tsumo', () => {
       const hand = new Hand({ concealedCombinaisons, winningType: 'tsumo', winningCombinaisonIndex: 2, winningTileIndex: 0 })
       const result = new CombinaisonsRule().check(hand)
@@ -91,16 +91,16 @@ describe('given the hand have concealed pon of simple tile (2 to 8)', () => {
   })
 })
 
-describe('given the hand have open pon of terminal or honor tile', () => {
+describe('given the hand have open triplet of terminal or honor tile', () => {
   const hand = new Hand({
     concealedCombinaisons: [
       new Pair(new DotTile(9))
     ],
     openCombinaisons: [
-      new Pon(new DotTile(1)),
-      new Pon(new DotTile(9)),
-      new Pon(new DragonTile('green')),
-      new Pon(new WindTile('east'))
+      new Triplet(new DotTile(1)),
+      new Triplet(new DotTile(9)),
+      new Triplet(new DragonTile('green')),
+      new Triplet(new WindTile('east'))
     ]
   })
 
@@ -110,12 +110,12 @@ describe('given the hand have open pon of terminal or honor tile', () => {
   })
 })
 
-describe('given the hand have concealed pon of terminal or honor tile', () => {
+describe('given the hand have concealed triplet of terminal or honor tile', () => {
   const concealedCombinaisons = [
-    new Pon(new DotTile(1)),
-    new Pon(new DotTile(9)),
-    new Pon(new DragonTile('green')),
-    new Pon(new WindTile('east')),
+    new Triplet(new DotTile(1)),
+    new Triplet(new DotTile(9)),
+    new Triplet(new DragonTile('green')),
+    new Triplet(new WindTile('east')),
     new Pair(new DotTile(9))
   ]
 
@@ -125,7 +125,7 @@ describe('given the hand have concealed pon of terminal or honor tile', () => {
     expect(result).toStrictEqual([{ key: 'ankou non simple', fuValue: 8, quantity: 4 }])
   })
 
-  describe('and given the winning tile is part of one of those pon', () => {
+  describe('and given the winning tile is part of one of those triplet', () => {
     test('should count as concealed and return 8 fu for it if the hand was won by tsumo', () => {
       const hand = new Hand({ concealedCombinaisons, winningType: 'tsumo', winningCombinaisonIndex: 0, winningTileIndex: 0 })
       const result = new CombinaisonsRule().check(hand)
@@ -143,16 +143,16 @@ describe('given the hand have concealed pon of terminal or honor tile', () => {
   })
 })
 
-describe('given the hand have open kan of simple tile (2 to 8)', () => {
+describe('given the hand have open quad of simple tile (2 to 8)', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
-      new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
+      new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
+      new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Pair(new DotTile(9))
     ],
     openCombinaisons: [
-      new Kan(new DotTile(5)),
-      new Kan(new DotTile(6))
+      new Quad(new DotTile(5)),
+      new Quad(new DotTile(6))
     ]
   })
 
@@ -162,13 +162,13 @@ describe('given the hand have open kan of simple tile (2 to 8)', () => {
   })
 })
 
-describe('given the hand have concealed kan of simple tile (2 to 8)', () => {
+describe('given the hand have concealed quad of simple tile (2 to 8)', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
-      new Chii(new DotTile(1), new DotTile(2), new DotTile(3)),
-      new Kan(new DotTile(5)),
-      new Kan(new DotTile(6)),
+      new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
+      new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
+      new Quad(new DotTile(5)),
+      new Quad(new DotTile(6)),
       new Pair(new DotTile(9))
     ]
   })
@@ -179,16 +179,16 @@ describe('given the hand have concealed kan of simple tile (2 to 8)', () => {
   })
 })
 
-describe('given the hand have open kan of terminal or honor tile', () => {
+describe('given the hand have open quad of terminal or honor tile', () => {
   const hand = new Hand({
     concealedCombinaisons: [
       new Pair(new DotTile(9))
     ],
     openCombinaisons: [
-      new Kan(new DotTile(1)),
-      new Kan(new DotTile(9)),
-      new Kan(new DragonTile('green')),
-      new Kan(new WindTile('east'))
+      new Quad(new DotTile(1)),
+      new Quad(new DotTile(9)),
+      new Quad(new DragonTile('green')),
+      new Quad(new WindTile('east'))
     ]
   })
 
@@ -198,13 +198,13 @@ describe('given the hand have open kan of terminal or honor tile', () => {
   })
 })
 
-describe('given the hand have concealed kan of terminal or honor tile', () => {
+describe('given the hand have concealed quad of terminal or honor tile', () => {
   const hand = new Hand({
     concealedCombinaisons: [
-      new Kan(new DotTile(1)),
-      new Kan(new DotTile(9)),
-      new Kan(new DragonTile('green')),
-      new Kan(new WindTile('east')),
+      new Quad(new DotTile(1)),
+      new Quad(new DotTile(9)),
+      new Quad(new DragonTile('green')),
+      new Quad(new WindTile('east')),
       new Pair(new DotTile(9))
     ]
   })

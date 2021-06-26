@@ -1,4 +1,4 @@
-import { Pon, Kan } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combinaison-classes'
 import isTankiWait from './../../waits/is-tanki-wait'
 
 /**
@@ -21,7 +21,7 @@ class SuuankouYaku {
   /** @override */
   check (hand) {
     const nbOfConcealedPonOrKan = hand.concealedCombinaisons.filter((x, i) =>
-      (x instanceof Pon || x instanceof Kan) &&
+      (x instanceof Triplet || x instanceof Quad) &&
       (i !== hand.winningCombinaisonIndex || hand.winningType === 'tsumo')
     ).length
 

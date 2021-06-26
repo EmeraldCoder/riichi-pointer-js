@@ -1,6 +1,6 @@
 import HonitsuYaku from '@/core/han-calculation/yakus/honitsu-yaku'
 import Hand from '@/core/hand'
-import { Pon, Pair } from '@/core/combinaison-classes'
+import { Triplet, Pair } from '@/core/combinaison-classes'
 import { DotTile, BambooTile, DragonTile } from '@/core/tile-classes'
 
 const sut = new HonitsuYaku()
@@ -8,10 +8,10 @@ const sut = new HonitsuYaku()
 const validHand = new Hand({
   concealedCombinaisons: [
     new Pair(new DragonTile('green')),
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(2)),
-    new Pon(new BambooTile(3)),
-    new Pon(new BambooTile(4))
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(2)),
+    new Triplet(new BambooTile(3)),
+    new Triplet(new BambooTile(4))
   ]
 })
 test('honitsu (half flush) valid hand', () => {
@@ -21,12 +21,12 @@ test('honitsu (half flush) valid hand', () => {
 const validHandWithOpenCombinaison = new Hand({
   concealedCombinaisons: [
     new Pair(new DragonTile('green')),
-    new Pon(new BambooTile(3)),
-    new Pon(new BambooTile(4))
+    new Triplet(new BambooTile(3)),
+    new Triplet(new BambooTile(4))
   ],
   openCombinaisons: [
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(2))
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(2))
   ]
 })
 test('honitsu (half flush) valid hand with open combinaison', () => {
@@ -35,10 +35,10 @@ test('honitsu (half flush) valid hand with open combinaison', () => {
 
 const invalidHandWithoutHonorTile = new Hand({
   concealedCombinaisons: [
-    new Pon(new BambooTile(9)),
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(2)),
-    new Pon(new BambooTile(3)),
+    new Triplet(new BambooTile(9)),
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(2)),
+    new Triplet(new BambooTile(3)),
     new Pair(new BambooTile(4))
   ]
 })
@@ -49,10 +49,10 @@ test('honitsu (half flush) invalid hand without honor tile', () => {
 const invalidHandWithTwoSuit = new Hand({
   concealedCombinaisons: [
     new Pair(new DragonTile('green')),
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(2)),
-    new Pon(new BambooTile(3)),
-    new Pon(new DotTile(4))
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(2)),
+    new Triplet(new BambooTile(3)),
+    new Triplet(new DotTile(4))
   ]
 })
 test('honitsu (half flush) invalid hand with two suit', () => {

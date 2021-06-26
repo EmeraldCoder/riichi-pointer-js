@@ -1,7 +1,7 @@
-import { Chii } from './../../combinaison-classes'
+import { Sequence } from './../../combinaison-classes'
 
 /**
- * San Shoku Doujun (mixed triple chii) yaku pattern<br><br>
+ * San Shoku Doujun (mixed triple sequence) yaku pattern<br><br>
  *
  * Three chiis of the same value, with one in each suit<br><br>
  *
@@ -17,7 +17,7 @@ class SanshokuDoujunYaku {
     const chiiCount = {}
 
     for (const combinaison of combinaisons) {
-      if (combinaison instanceof Chii) {
+      if (combinaison instanceof Sequence) {
         const tile = combinaison.tiles[0]
 
         if (chiiCount[tile.number] == null) {

@@ -1,18 +1,18 @@
 import PairRule from '@/core/fu-calculation/rules/pair-fu-rule'
 import Hand from '@/core/hand'
-import { Pon, Pair } from '@/core/combinaison-classes'
+import { Triplet, Pair } from '@/core/combinaison-classes'
 import { DotTile, DragonTile, WindTile } from '@/core/tile-classes'
 
 function makeDefaultHand (pair, roundWind, seatWind) {
   return new Hand({
     concealedCombinaisons: [
-      new Pon(new DotTile(1)),
-      new Pon(new DotTile(2)),
-      new Pon(new DotTile(3)),
+      new Triplet(new DotTile(1)),
+      new Triplet(new DotTile(2)),
+      new Triplet(new DotTile(3)),
       pair
     ],
     openCombinaisons: [
-      new Pon(new DotTile(4))
+      new Triplet(new DotTile(4))
     ],
     roundWind: roundWind ?? 'east',
     seatWind: seatWind ?? 'east',

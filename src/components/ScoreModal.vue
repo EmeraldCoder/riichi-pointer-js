@@ -93,7 +93,7 @@
                 :key="index"
               >
                 <td>
-                  {{ detail.key | fuKeyMapping }}
+                  {{ $t(`fuRules.${detail.key}`) | titleCase }}
                   <span v-if="detail.quantity > 1">
                     x{{ detail.quantity }}
                   </span>
@@ -159,26 +159,7 @@ export default {
   },
 
   filters: {
-    titleCase,
-
-    fuKeyMapping (key) {
-      if (key === 'win') return 'Winning'
-      if (key === 'tsumo') return 'Tsumo'
-      if (key === 'concealed ron') return 'Concealed Ron'
-      if (key === 'open pinfu') return 'Open Pinfu'
-      if (key === 'chiitoitsu') return 'Chiitoitsu (Seven Pairs)'
-      if (key === 'pair') return 'Pair'
-      if (key === 'wait') return 'Wait'
-      if (key === 'minkou simple') return 'Open Pon (simple)'
-      if (key === 'minkou non simple') return 'Open Pon (Terminal / Honor)'
-      if (key === 'minkan simple') return 'Open Kan (simple)'
-      if (key === 'minkan non simple') return 'Open Kan (Terminal / Honor)'
-      if (key === 'ankou simple') return 'Concealed Pon (simple)'
-      if (key === 'ankou non simple') return 'Concealed Pon (Terminal / Honor)'
-      if (key === 'ankan simple') return 'Concealed Kan (simple)'
-      if (key === 'ankan non simple') return 'Concealed Kan (Terminal / Honor)'
-      return key
-    }
+    titleCase
   },
 
   props: {

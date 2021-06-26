@@ -1,17 +1,17 @@
 import ShousangenYaku from '@/core/han-calculation/yakus/shousangen-yaku'
 import Hand from '@/core/hand'
-import { Pon, Pair, Kan } from '@/core/combinaison-classes'
+import { Triplet, Pair, Quad } from '@/core/combinaison-classes'
 import { BambooTile, DragonTile, WindTile } from '@/core/tile-classes'
 
 const sut = new ShousangenYaku()
 
 const validHand = new Hand({
   concealedCombinaisons: [
-    new Pon(new DragonTile('red')),
-    new Pon(new DragonTile('green')),
+    new Triplet(new DragonTile('red')),
+    new Triplet(new DragonTile('green')),
     new Pair(new DragonTile('white')),
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(2))
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(2))
   ]
 })
 
@@ -21,25 +21,25 @@ test('shousangen (little three dragons) valid hand', () => {
 
 const validHandWithKan = new Hand({
   concealedCombinaisons: [
-    new Pon(new DragonTile('red')),
-    new Kan(new DragonTile('green')),
+    new Triplet(new DragonTile('red')),
+    new Quad(new DragonTile('green')),
     new Pair(new DragonTile('white')),
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(2))
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(2))
   ]
 })
 
-test('shousangen (little three dragons) valid hand with kan', () => {
+test('shousangen (little three dragons) valid hand with quad', () => {
   expect(sut.check(validHandWithKan)).toStrictEqual({ key: 'shousangen', hanValue: 2, yakumanValue: 0 })
 })
 
 const invalidHandWithoutDragonPair = new Hand({
   concealedCombinaisons: [
-    new Pon(new DragonTile('red')),
-    new Pon(new DragonTile('green')),
+    new Triplet(new DragonTile('red')),
+    new Triplet(new DragonTile('green')),
     new Pair(new WindTile('east')),
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(2))
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(2))
   ]
 })
 
@@ -49,14 +49,14 @@ test('shousangen (little three dragons) invalid hand without dragon pair', () =>
 
 const invalidHandWithoutTwoDragonPon = new Hand({
   concealedCombinaisons: [
-    new Pon(new DragonTile('red')),
-    new Pon(new WindTile('north')),
+    new Triplet(new DragonTile('red')),
+    new Triplet(new WindTile('north')),
     new Pair(new DragonTile('white')),
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(2))
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(2))
   ]
 })
 
-test('shousangen (little three dragons) invalid hand without two dragon pon', () => {
+test('shousangen (little three dragons) invalid hand without two dragon triplet', () => {
   expect(sut.check(invalidHandWithoutTwoDragonPon)).toBeUndefined()
 })

@@ -1,4 +1,4 @@
-import { Pair, Chii } from './../../combinaison-classes'
+import { Pair, Sequence } from './../../combinaison-classes'
 import { DragonTile } from './../../tile-classes'
 import isTankiWait from './../../waits/is-tanki-wait'
 import isKanchanWait from './../../waits/is-kanchan-wait'
@@ -14,7 +14,7 @@ class OpenPinfuFuRule {
   /** @override */
   check (hand) {
     if (hand.winningType === 'ron' && hand.isOpen) {
-      const chiis = hand.combinaisons.filter(x => x instanceof Chii)
+      const chiis = hand.combinaisons.filter(x => x instanceof Sequence)
       const pairs = hand.concealedCombinaisons.filter(x => x instanceof Pair)
 
       if (

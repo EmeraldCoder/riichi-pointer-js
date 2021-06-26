@@ -1,16 +1,16 @@
 import HonroutouYaku from '@/core/han-calculation/yakus/honroutou-yaku'
 import Hand from '@/core/hand'
-import { Pon, Pair } from '@/core/combinaison-classes'
+import { Triplet, Pair } from '@/core/combinaison-classes'
 import { DotTile, BambooTile, DragonTile, WindTile } from '@/core/tile-classes'
 
 const sut = new HonroutouYaku()
 
 const validHand = new Hand({
   concealedCombinaisons: [
-    new Pon(new DragonTile('green')),
-    new Pon(new DragonTile('white')),
-    new Pon(new WindTile('east')),
-    new Pon(new DotTile(1)),
+    new Triplet(new DragonTile('green')),
+    new Triplet(new DragonTile('white')),
+    new Triplet(new WindTile('east')),
+    new Triplet(new DotTile(1)),
     new Pair(new BambooTile(9))
   ]
 })
@@ -21,10 +21,10 @@ test('honroutou (all terminals & honors) valid hand', () => {
 
 const invalidHandWithTileNotHonorOrTerminal = new Hand({
   concealedCombinaisons: [
-    new Pon(new DragonTile('green')),
-    new Pon(new DragonTile('white')),
-    new Pon(new WindTile('east')),
-    new Pon(new DotTile(1)),
+    new Triplet(new DragonTile('green')),
+    new Triplet(new DragonTile('white')),
+    new Triplet(new WindTile('east')),
+    new Triplet(new DotTile(1)),
     new Pair(new BambooTile(5))
   ]
 })

@@ -1,10 +1,10 @@
-import { Chii } from './../../combinaison-classes'
+import { Sequence } from './../../combinaison-classes'
 import { HonorTile } from './../../tile-classes'
 
 /**
  * Chanta (outside hand) yaku pattern<br><br>
  *
- * A hand where all sets contain a terminal or honor tile, and at least one of the sets is a chii.<br><br>
+ * A hand where all sets contain a terminal or honor tile, and at least one of the sets is a sequence.<br><br>
  *
  * Must be concealed: no<br>
  * Han: 2 (concealed) / 1 (open)
@@ -19,7 +19,7 @@ class ChantaYaku {
     let nbHonorTile = 0
 
     for (const combinaison of combinaisons) {
-      if (combinaison instanceof Chii) nbChii++
+      if (combinaison instanceof Sequence) nbChii++
 
       const nbTerminalOrHonor = combinaison.tiles.reduce((agg, tile) => {
         if (tile instanceof HonorTile) {
@@ -34,7 +34,7 @@ class ChantaYaku {
       if (nbTerminalOrHonor === 0) return
     }
 
-    // without chii it would be considered a honroutou or chinroutou
+    // without sequence it would be considered a honroutou or chinroutou
     // without honor tile it would be considered a junchan
 
     if (nbChii && nbHonorTile) {

@@ -24,53 +24,56 @@
         <div class="main-layout__tiles-info">
           <h2><span>Combinaisons</span></h2>
 
-          <div class="btn-group">
-            <button
-              :class="{ active: addIsConcealed }"
-              @click="addIsConcealed = true"
-            >
-              Concealed
-            </button>
-            <button
-              :class="{ active: !addIsConcealed }"
-              :disabled="!openedCombinaisonAvailable"
-              @click="addIsConcealed = false"
-            >
-              Open
-            </button>
-          </div>
+          <div class="combinaisons-toolbar">
+            <div class="btn-group">
+              <button
+                :class="{ active: addIsConcealed }"
+                @click="addIsConcealed = true"
+              >
+                Concealed
+              </button>
+              <button
+                :class="{ active: !addIsConcealed }"
+                :disabled="!openedCombinaisonAvailable"
+                @click="addIsConcealed = false"
+              >
+                Open
+              </button>
+            </div>
 
-          <div class="btn-group m-t">
             <button
-              :disabled="!addChiiPonKanAvailable"
-              @click="addCombinaison('chii')"
+              :disabled="!addNormalCombinaisonAvailable"
+              @click="addCombinaison('sequence')"
             >
-              Chii
+              <font-awesome-icon :icon="plusIcon" />
+              Sequence
             </button>
             <button
-              :disabled="!addChiiPonKanAvailable"
-              @click="addCombinaison('pon')"
+              :disabled="!addNormalCombinaisonAvailable"
+              @click="addCombinaison('triplet')"
             >
-              Pon
+              <font-awesome-icon :icon="plusIcon" />
+              Triplet
             </button>
             <button
-              :disabled="!addChiiPonKanAvailable"
-              @click="addCombinaison('kan')"
+              :disabled="!addNormalCombinaisonAvailable"
+              @click="addCombinaison('quad')"
             >
-              Kan
+              <font-awesome-icon :icon="plusIcon" />
+              Quad
             </button>
             <button
-              v-if="addIsConcealed"
               :disabled="!addPairAvailable"
               @click="addCombinaison('pair')"
             >
+              <font-awesome-icon :icon="plusIcon" />
               Pair
             </button>
             <button
-              v-if="addIsConcealed"
               :disabled="!addOrphanAvailable"
               @click="addCombinaison('orphan')"
             >
+              <font-awesome-icon :icon="plusIcon" />
               Orphan
             </button>
           </div>
@@ -339,6 +342,13 @@ LAYOUT
   line-height: 2.5rem;
 }
 
+.combinaisons-toolbar {
+  display: flex;
+  column-gap: calc(var(--gap-size) / 2);
+  row-gap: calc(var(--gap-size) / 2);
+  flex-wrap: wrap;
+}
+
 @media (min-width: 960px) {
   .main-layout__infos {
     flex-direction: row;
@@ -372,6 +382,10 @@ LAYOUT
   .main-layout__calculate-button button {
     border-radius: 0;
   }
+
+  .combinaisons-toolbar .btn-group {
+    width: 100%;
+  }
 }
 
 /* ---
@@ -400,7 +414,7 @@ COMBINAISONS WRAPPER
 
 @media (min-width: 960px) {
   .combinaisons-wrapper {
-    min-height: 395px;
+    min-height: 440px;
   }
 }
 </style>
@@ -408,14 +422,14 @@ COMBINAISONS WRAPPER
 <script>
 import Hand from './core/hand'
 import { TileFactory, NumberedTile } from './core/tile-classes'
-import { CombinaisonFactory, Orphan, Pair, Kan } from './core/combinaison-classes'
+import { CombinaisonFactory, Orphan, Pair, Quad } from './core/combinaison-classes'
 import { getRuleset, setRuleset } from './ruleset'
 import CombinaisonComponent from './components/Combinaison.vue'
 import TileSelectionModalComponent from './components/TileSelectionModal.vue'
 import DoraCounterComponent from './components/DoraCounter.vue'
 import ScoreModalComponent from './components/ScoreModal.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCalculator, faCog } from '@fortawesome/free-solid-svg-icons'
+import { faCalculator, faCog, faPlus } from '@fortawesome/free-solid-svg-icons'
 import RulesetConfigurationModalComponent from './components/RulesetConfigurationModal.vue'
 
 export default {
@@ -433,7 +447,7 @@ export default {
       prevalentWind: 'east', // name of the wind prevalent for the round (east, south, west, north)
       seatWind: 'east', // name of the wind of the player seat (east, south, west, north)
       winningType: 'tsumo', // indicate if the player won with a self-draw or discard (tsumo, ron)
-      specialCases: [], // indicate if the player won with a particular circonstance (haitei raoyue, houtei raoyui, rinshan kaihou, chan kan)
+      specialCases: [], // indicate if the player won with a particular circonstance (firstTurn, lastTile, rinshan, chankan)
       riichiType: null, // indicate if the player won with riichi circonstance (riichi / double riichi)
       riichiIsIppatsu: false, // indicate if the player's riichi was ippatsu (won on the first round after declaring riichi)
       riichiIsOpen: false, // indicate if the player's riichi is an open riichi (optional yaku)
@@ -442,7 +456,7 @@ export default {
       concealedCombinaisons: [], // list of the concealed combinaisons of the player
       openCombinaisons: [], // list of the open combinaisons of the player
       addIsConcealed: true, // indicate if the combinaison that the user is currently adding is concealed or not
-      addType: null, // type of the combinaison that the user is currently adding (pair, pon, kan, chii)
+      addType: null, // type of the combinaison that the user is currently adding (pair, triplet, quad, sequence)
       touchedCombinaison: null, // keep track of which combinaison the user touch on mobile
       ruleset: null, // define the ruleset used by the calculator
       hand: null, // the hand object generate by the user selection (null if the hand is not in a finished state)
@@ -450,6 +464,7 @@ export default {
       scoreModal: false, // indicate if the score modal is open
       calculateIcon: faCalculator,
       settingsIcon: faCog,
+      plusIcon: faPlus,
       rulesetConfigurationModal: false // indicate if the ruleset configuration modal is open
     }
   },
@@ -459,9 +474,9 @@ export default {
       const counts = this.combinaisonCounts
       return this.waitingTile != null &&
        (
-         (counts.pair === 7 && counts.chiiPonKan === 0 && counts.orphan === 0) ||
-         (counts.pair === 1 && counts.orphan === 12 && counts.chiiPonKan === 0) ||
-         (counts.pair === 1 && counts.chiiPonKan === 4 && counts.orphan === 0)
+         (counts.pair === 7 && counts.normal === 0 && counts.orphan === 0) ||
+         (counts.pair === 1 && counts.orphan === 12 && counts.normal === 0) ||
+         (counts.pair === 1 && counts.normal === 4 && counts.orphan === 0)
        )
     },
 
@@ -480,7 +495,7 @@ export default {
     },
 
     availableTilesForSelection () {
-      if (this.addType === 'chii') {
+      if (this.addType === 'sequence') {
         return this.availableTiles.map(tile => {
           let disabled = tile.count === 0 || !(tile.tile instanceof NumberedTile) || tile.tile.value >= 8
 
@@ -496,8 +511,8 @@ export default {
         let tileNecessary = 1
 
         if (this.addType === 'pair') tileNecessary = 2
-        else if (this.addType === 'pon') tileNecessary = 3
-        else if (this.addType === 'kan') tileNecessary = 4
+        else if (this.addType === 'triplet') tileNecessary = 3
+        else if (this.addType === 'quad') tileNecessary = 4
 
         return this.availableTiles.map(tile => {
           const disabled = tile.count < tileNecessary
@@ -509,34 +524,34 @@ export default {
     combinaisonCounts () {
       let pair = 0
       let orphan = 0
-      let kan = this.openCombinaisons.filter(x => x instanceof Kan).length
-      let chiiPonKan = this.openCombinaisons.length
+      let quad = this.openCombinaisons.filter(x => x instanceof Quad).length
+      let normal = this.openCombinaisons.length
 
       this.concealedCombinaisons.forEach(x => {
         if (x instanceof Orphan) orphan++
         else if (x instanceof Pair) pair++
-        else if (x instanceof Kan) {
-          kan++
-          chiiPonKan++
-        } else chiiPonKan++
+        else if (x instanceof Quad) {
+          quad++
+          normal++
+        } else normal++
       })
 
-      return { pair, orphan, kan, chiiPonKan }
+      return { pair, orphan, quad, normal }
     },
 
     addOrphanAvailable () {
       const counts = this.combinaisonCounts
-      return counts.chiiPonKan === 0 && counts.pair <= 1 && counts.orphan < 12
+      return this.addIsConcealed && counts.normal === 0 && counts.pair <= 1 && counts.orphan < 12
     },
 
     addPairAvailable () {
       const counts = this.combinaisonCounts
-      return counts.pair === 0 || ((counts.chiiPonKan + counts.orphan) === 0 && counts.pair < 7)
+      return this.addIsConcealed && (counts.pair === 0 || ((counts.normal + counts.orphan) === 0 && counts.pair < 7))
     },
 
-    addChiiPonKanAvailable () {
+    addNormalCombinaisonAvailable () {
       const counts = this.combinaisonCounts
-      return counts.orphan === 0 && counts.pair <= 1 && counts.chiiPonKan < 4
+      return counts.orphan === 0 && counts.pair <= 1 && counts.normal < 4
     },
 
     riichiAvailable () {
@@ -556,7 +571,7 @@ export default {
     },
 
     rinshanAvailable () {
-      return this.winningType === 'tsumo' && this.combinaisonCounts.kan > 0
+      return this.winningType === 'tsumo' && this.combinaisonCounts.quad > 0
     },
 
     haiteiHouteiAvailable () {

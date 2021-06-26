@@ -1,16 +1,16 @@
 import SankantsuYaku from '@/core/han-calculation/yakus/sankantsu-yaku'
 import Hand from '@/core/hand'
-import { Pon, Pair, Kan } from '@/core/combinaison-classes'
+import { Triplet, Pair, Quad } from '@/core/combinaison-classes'
 import { DotTile } from '@/core/tile-classes'
 
 const sut = new SankantsuYaku()
 
 const validHand = new Hand({
   concealedCombinaisons: [
-    new Kan(new DotTile(1)),
-    new Kan(new DotTile(2)),
-    new Kan(new DotTile(3)),
-    new Pon(new DotTile(4)),
+    new Quad(new DotTile(1)),
+    new Quad(new DotTile(2)),
+    new Quad(new DotTile(3)),
+    new Triplet(new DotTile(4)),
     new Pair(new DotTile(6))
   ]
 })
@@ -21,30 +21,30 @@ test('Sankantsu (3 kans) valid hand', () => {
 
 const validHandWithOpenKan = new Hand({
   concealedCombinaisons: [
-    new Kan(new DotTile(3)),
-    new Pon(new DotTile(4)),
+    new Quad(new DotTile(3)),
+    new Triplet(new DotTile(4)),
     new Pair(new DotTile(6))
   ],
   openCombinaisons: [
-    new Kan(new DotTile(1)),
-    new Kan(new DotTile(2))
+    new Quad(new DotTile(1)),
+    new Quad(new DotTile(2))
   ]
 })
 
-test('Sankantsu (3 kans) valid hand with open kan', () => {
+test('Sankantsu (3 kans) valid hand with open quad', () => {
   expect(sut.check(validHandWithOpenKan)).toStrictEqual({ key: 'sankantsu', hanValue: 2, yakumanValue: 0 })
 })
 
 const invalidHandWithLessThanThreeKan = new Hand({
   concealedCombinaisons: [
-    new Kan(new DotTile(1)),
-    new Kan(new DotTile(2)),
-    new Pon(new DotTile(3)),
-    new Pon(new DotTile(4)),
+    new Quad(new DotTile(1)),
+    new Quad(new DotTile(2)),
+    new Triplet(new DotTile(3)),
+    new Triplet(new DotTile(4)),
     new Pair(new DotTile(6))
   ]
 })
 
-test('Sankantsu (3 kans) invalid hand with less than three kan', () => {
+test('Sankantsu (3 kans) invalid hand with less than three quad', () => {
   expect(sut.check(invalidHandWithLessThanThreeKan)).toBeUndefined()
 })

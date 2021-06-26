@@ -1,16 +1,16 @@
 import SanankouYaku from '@/core/han-calculation/yakus/sanankou-yaku'
 import Hand from '@/core/hand'
-import { Pon, Pair, Kan } from '@/core/combinaison-classes'
+import { Triplet, Pair, Quad } from '@/core/combinaison-classes'
 import { DotTile } from '@/core/tile-classes'
 
 const sut = new SanankouYaku()
 
 const validHand = new Hand({
   concealedCombinaisons: [
-    new Pon(new DotTile(1)),
-    new Pon(new DotTile(2)),
-    new Pon(new DotTile(3)),
-    new Pon(new DotTile(4)),
+    new Triplet(new DotTile(1)),
+    new Triplet(new DotTile(2)),
+    new Triplet(new DotTile(3)),
+    new Triplet(new DotTile(4)),
     new Pair(new DotTile(5))
   ]
 })
@@ -20,13 +20,13 @@ test('Sanankou (3 concealed pons) valid hand', () => {
 
 const validOpenHand = new Hand({
   concealedCombinaisons: [
-    new Pon(new DotTile(1)),
-    new Pon(new DotTile(2)),
-    new Pon(new DotTile(3)),
+    new Triplet(new DotTile(1)),
+    new Triplet(new DotTile(2)),
+    new Triplet(new DotTile(3)),
     new Pair(new DotTile(5))
   ],
   openCombinaisons: [
-    new Pon(new DotTile(4))
+    new Triplet(new DotTile(4))
   ]
 })
 test('Sanankou (3 concealed pons) valid open hand', () => {
@@ -35,26 +35,26 @@ test('Sanankou (3 concealed pons) valid open hand', () => {
 
 const validHandWithKan = new Hand({
   concealedCombinaisons: [
-    new Pon(new DotTile(1)),
-    new Pon(new DotTile(2)),
-    new Kan(new DotTile(3)),
-    new Pon(new DotTile(4)),
+    new Triplet(new DotTile(1)),
+    new Triplet(new DotTile(2)),
+    new Quad(new DotTile(3)),
+    new Triplet(new DotTile(4)),
     new Pair(new DotTile(5))
   ]
 })
-test('Sanankou (3 concealed pons) valid hand with kan', () => {
+test('Sanankou (3 concealed pons) valid hand with quad', () => {
   expect(sut.check(validHandWithKan)).toStrictEqual({ key: 'sanankou', hanValue: 2, yakumanValue: 0 })
 })
 
 const invalidHandWithLessThanThreeConcealedPon = new Hand({
   concealedCombinaisons: [
-    new Pon(new DotTile(3)),
+    new Triplet(new DotTile(3)),
     new Pair(new DotTile(5))
   ],
   openCombinaisons: [
-    new Pon(new DotTile(1)),
-    new Pon(new DotTile(2)),
-    new Pon(new DotTile(4))
+    new Triplet(new DotTile(1)),
+    new Triplet(new DotTile(2)),
+    new Triplet(new DotTile(4))
   ]
 })
 test('Sanankou (3 concealed pons) invalid hand with less than 3 concealed pons', () => {
@@ -63,13 +63,13 @@ test('Sanankou (3 concealed pons) invalid hand with less than 3 concealed pons',
 
 describe('given the third ankou (concealed triplet) is also the winning tile', () => {
   const concealedCombinaisons = [
-    new Pon(new DotTile(1)),
-    new Pon(new DotTile(2)),
-    new Pon(new DotTile(3)),
+    new Triplet(new DotTile(1)),
+    new Triplet(new DotTile(2)),
+    new Triplet(new DotTile(3)),
     new Pair(new DotTile(4))
   ]
   const openCombinaisons = [
-    new Pon(new DotTile(5))
+    new Triplet(new DotTile(5))
   ]
 
   test('should be valid for a san ankou yaku if the hand was won by tsumo (self-draw)', () => {

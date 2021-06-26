@@ -100,7 +100,7 @@
 </style>
 
 <script>
-import { Combinaison, Chii, Kan } from '@/core/combinaison-classes'
+import { Combinaison, Sequence, Quad } from '@/core/combinaison-classes'
 import { Tile } from '@/core/tile-classes'
 import TileComponent from '@/components/Tile.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -144,11 +144,11 @@ export default {
 
   computed: {
     isChii () {
-      return this.combinaison instanceof Chii
+      return this.combinaison instanceof Sequence
     },
 
     isKan () {
-      return this.combinaison instanceof Kan
+      return this.combinaison instanceof Quad
     }
   },
 

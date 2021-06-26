@@ -1,9 +1,9 @@
-import { Chii } from './../combinaison-classes'
+import { Sequence } from './../combinaison-classes'
 
 function isPenchanWait ({ concealedCombinaisons, winningCombinaisonIndex, winningTileIndex }) {
   const winningCombinaison = concealedCombinaisons[winningCombinaisonIndex]
 
-  if (winningCombinaison != null && winningCombinaison instanceof Chii) {
+  if (winningCombinaison != null && winningCombinaison instanceof Sequence) {
     const winningTile = winningCombinaison.tiles[winningTileIndex]
 
     if (

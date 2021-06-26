@@ -1,6 +1,6 @@
 import ChiiToitsuYaku from '@/core/han-calculation/yakus/chiitoitsu-yaku'
 import Hand from '@/core/hand'
-import { Pon, Pair } from '@/core/combinaison-classes'
+import { Triplet, Pair } from '@/core/combinaison-classes'
 import { BambooTile } from '@/core/tile-classes'
 
 const sut = new ChiiToitsuYaku()
@@ -22,10 +22,10 @@ test('chiitoitsu (seven pairs) valid hand', () => {
 
 const invalidHandWithoutSevenPairs = new Hand({
   concealedCombinaisons: [
-    new Pon(new BambooTile(1)),
-    new Pon(new BambooTile(2)),
-    new Pon(new BambooTile(3)),
-    new Pon(new BambooTile(4)),
+    new Triplet(new BambooTile(1)),
+    new Triplet(new BambooTile(2)),
+    new Triplet(new BambooTile(3)),
+    new Triplet(new BambooTile(4)),
     new Pair(new BambooTile(5))
   ]
 })

@@ -1,14 +1,14 @@
-import { Pair, Chii } from './../../combinaison-classes'
+import { Pair, Sequence } from './../../combinaison-classes'
 import { DragonTile, WindTile } from './../../tile-classes'
 import isTankiWait from './../../waits/is-tanki-wait'
 import isKanchanWait from './../../waits/is-kanchan-wait'
 import isPenchanWait from './../../waits/is-penchan-wait'
 
 /**
- * Pinfu (All chii / No points) yaku pattern<br><br>
+ * Pinfu (All sequence / No points) yaku pattern<br><br>
  *
  * A hand with no fu except the one for winning<br>
- * Just chii, no pair point (dragon or seat/prevalent wind) and a two-sided wait (only wait that give no fu)<br><br>
+ * Just sequence, no pair point (dragon or seat/prevalent wind) and a two-sided wait (only wait that give no fu)<br><br>
  *
  * Must be concealed: yes<br>
  * Han: 1
@@ -27,7 +27,7 @@ class PinfuYaku {
     ) return
 
     const pairs = hand.concealedCombinaisons.filter(x => x instanceof Pair)
-    const chiis = hand.concealedCombinaisons.filter(x => x instanceof Chii)
+    const chiis = hand.concealedCombinaisons.filter(x => x instanceof Sequence)
 
     if (pairs.length !== 1 || chiis.length !== 4) return
 

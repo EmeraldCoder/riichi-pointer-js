@@ -1,7 +1,7 @@
-import { Chii } from './../../combinaison-classes'
+import { Sequence } from './../../combinaison-classes'
 
 /**
- * Iipeikou (pure double chii) yaku pattern<br><br>
+ * Iipeikou (pure double sequence) yaku pattern<br><br>
  *
  * Two chiis of the same value and suit<br><br>
  *
@@ -20,7 +20,7 @@ class IipeikouYaku {
     let numberOfIdenticalChiis = 0
 
     for (const combinaison of combinaisons) {
-      if (combinaison instanceof Chii) {
+      if (combinaison instanceof Sequence) {
         const identicalChiis = storedChiis.filter(x => x.tiles[0].suit === combinaison.tiles[0].suit && x.tiles[0].value === combinaison.tiles[0].value)
         if (identicalChiis.length > 0) numberOfIdenticalChiis++
         storedChiis.push(combinaison)
