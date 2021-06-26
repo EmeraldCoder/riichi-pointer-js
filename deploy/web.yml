@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: riichi-pointer-web
+  namespace: riichi
+  labels:
+    app: riichi-pointer-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: riichi-pointer-web
+  template:
+    metadata:
+      labels:
+        app: riichi-pointer-web
+    spec:
+      containers:
+      - name: riichi-pointer-web
+        image: emeraldcoder/riichi-pointer-web:${IMAGE_TAG}
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: riichi-pointer-web
+  namespace: riichi
+spec:
+  selector:
+    app: riichi-pointer-web
+  ports:
+  - name: tcp
+    port: 80

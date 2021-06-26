@@ -27,3 +27,7 @@ jobs:
     - name: Build test
       run: |
         npm run build
+
+    - name: Docker build test
+      run: |
+        docker -t test:local .

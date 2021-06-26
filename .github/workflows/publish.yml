@@ -1,0 +1,28 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Build docker image
+      run: |
+        docker build -t emeraldcoder/riichi-pointer-web:${{ github.event.release.tag_name }} .
+
+    - name: Publish docker image
+      run: |
+        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        docker push emeraldcoder/riichi-pointer-web:${{ github.event.release.tag_name }}
+
+    - name: Update K8S cluster
+      run: |
+        cat <<< "${{ secrets.DO_K8S_CONFIG }}" > $GITHUB_WORKSPACE/.kubeconfig
+        IMAGE_TAG=${{ github.event.release.tag_name }} envsubst < $GITHUB_WORKSPACE/deploy/web.yml > $GITHUB_WORKSPACE/deploy/web.processed.yml
+        kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/deploy/namespace.yml
+        kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/deploy/web.processed.yml
+        kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/deploy/ingress.yml
