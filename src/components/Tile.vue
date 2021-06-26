@@ -3,7 +3,7 @@
     :class="{ 'tile--hoverable': hoverable, 'tile--disabled': disabled }"
     class="tile"
   >
-    <svg role="img"><use :xlink:href="'/riichi-mahjong-tiles/svgstore.svg#' + tileSvgStoreKey" /></svg>
+    <svg role="img"><use :xlink:href="publicPath + 'riichi-mahjong-tiles/svgstore.svg#' + tileSvgStoreKey" /></svg>
   </div>
 </template>
 
@@ -67,6 +67,12 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    }
+  },
+
+  data () {
+    return {
+      publicPath: process.env.VUE_APP_PUBLIC_PATH
     }
   },
 
