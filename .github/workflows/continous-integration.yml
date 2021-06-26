@@ -30,4 +30,4 @@ jobs:
 
     - name: Docker build test
       run: |
-        docker -t test:local .
+        docker build -t test:local .
