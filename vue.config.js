@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/riichi/pointer/' : '/',
+  publicPath: process.env.VUE_APP_PUBLIC_PATH,
   pluginOptions: {
     i18n: {
       locale: 'en',
