@@ -12,10 +12,11 @@ class HanCalculator {
   /**
    * @param {HanCalculation.Yaku[]} yakus - Set of yaku to check during the han calculation process
    */
-  constructor (yakus) {
+  constructor (yakus, options) {
     if (yakus == null) throw new Error('yakus parameter is required')
 
     this.yakus = yakus
+    this.stackableYakuman = options?.stackableYakuman ?? false
   }
 
   /**
@@ -37,9 +38,18 @@ class HanCalculator {
     // sum the yakuman value of the hand and return early if it's higher than 0
     // because we don't need the han value if it's a yakuman hand
 
-    const yakuman = sum(details.map(x => x.yakumanValue))
+    const yakumanDetails = details.filter(x => x.yakumanValue != null && x.yakumanValue > 0)
 
-    if (yakuman > 0) {
+    if (yakumanDetails.length > 0) {
+      let yakuman = 0
+
+      if (this.stackableYakuman) {
+        yakuman = sum(yakumanDetails.map(x => x.yakumanValue))
+      } else {
+        // take the value of the yakuman with the highest value
+        yakuman = Math.max(...yakumanDetails.map(x => x.yakumanValue))
+      }
+
       return { details: details.filter(x => x.yakumanValue != null && x.yakumanValue > 0), han: null, yakuman }
     }
 

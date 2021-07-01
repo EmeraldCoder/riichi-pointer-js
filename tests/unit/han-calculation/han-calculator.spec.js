@@ -80,29 +80,34 @@ describe('given the hand is a yakuman', () => {
   const yakus = [
     { check: () => ({ key: 'han test', hanValue: 1, yakumanValue: 0 }) },
     { check: () => ({ key: 'yakuman test', hanValue: 0, yakumanValue: 1 }) },
-    { check: () => ({ key: 'yakuman test 2', hanValue: 0, yakumanValue: 1 }) }
+    { check: () => ({ key: 'yakuman test 2', hanValue: 0, yakumanValue: 2 }) }
   ]
 
   test('should return the total yakuman value of the hand', () => {
-    const result = new HanCalculator(yakus).calculate(hand)
+    const result = new HanCalculator(yakus, { stackableYakuman: true }).calculate(hand)
+    expect(result.yakuman).toBe(3)
+  })
+
+  test('should return the total yakuman value of the hand using only the highest valued yakuman if the option stackableYakuman is at false', () => {
+    const result = new HanCalculator(yakus, { stackableYakuman: false }).calculate(hand)
     expect(result.yakuman).toBe(2)
   })
 
   test('should return null for the han value of the hand', () => {
-    const result = new HanCalculator(yakus).calculate(hand)
+    const result = new HanCalculator(yakus, { stackableYakuman: true }).calculate(hand)
     expect(result.han).toBeNull()
   })
 
   test('should filter the details to keep only the details corresponding to yakuman', () => {
-    const result = new HanCalculator(yakus).calculate(hand)
+    const result = new HanCalculator(yakus, { stackableYakuman: true }).calculate(hand)
     expect(result.details).toStrictEqual([
       { key: 'yakuman test', hanValue: 0, yakumanValue: 1 },
-      { key: 'yakuman test 2', hanValue: 0, yakumanValue: 1 }
+      { key: 'yakuman test 2', hanValue: 0, yakumanValue: 2 }
     ])
   })
 
   test('should not add the number of dora to the han value of the hand', () => {
-    const result = new HanCalculator(yakus).calculate({ nbDora: 5 })
+    const result = new HanCalculator(yakus, { stackableYakuman: true }).calculate({ nbDora: 5 })
     expect(result.han).toBeNull()
   })
 })

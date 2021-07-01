@@ -91,12 +91,13 @@ function createHanCalculator (options) {
 
   if (options.allowOpenRiichi) yakuList.push(new HanCalculation.OpenRiichiYaku({ ronAsYakuman: false }))
 
-  return new HanCalculation.HanCalculator(yakuList)
+  return new HanCalculation.HanCalculator(yakuList, {
+    stackableYakuman: options.allowMultipleYakuman
+  })
 }
 
 function craetePointCalculator (options) {
   return new PointCalculator({
-    allowMultipleYakuman: options.allowMultipleYakuman,
     kazoeYakumanAsSanbaiman: options.kazoeYakumanAsSanbaiman
   })
 }

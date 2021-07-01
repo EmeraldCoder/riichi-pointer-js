@@ -128,18 +128,9 @@ describe('given the calculator is configured to count kazoe yakuman as yakuman',
   })
 })
 
-describe('given the calculator is configured to not stack multiple yakuman', () => {
-  test('hand with yakuman value higher than 1 should be capped at 1 yakuman', () => {
-    const sut = new PointCalculator({ stackableYakuman: false })
-    const hand = new Hand({ seatWind: 'east', winningType: 'ron' })
-    const result = sut.calculate(hand, null, null, 3)
-    expect(result).toStrictEqual({ discard: 48000 })
-  })
-})
-
-describe('given the calculator is configured to stack multiple yakuman', () => {
-  test('hand with yakuman value higher than 1 should be multiply by the number of yakuman', () => {
-    const sut = new PointCalculator({ stackableYakuman: true })
+describe('given the hand is a multi yakuman', () => {
+  test('should multiply the point by the number of yakuman', () => {
+    const sut = new PointCalculator()
     const hand = new Hand({ seatWind: 'east', winningType: 'ron' })
     const result = sut.calculate(hand, null, null, 2)
     expect(result).toStrictEqual({ discard: 96000 })

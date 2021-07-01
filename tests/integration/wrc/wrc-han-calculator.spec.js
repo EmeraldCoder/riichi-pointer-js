@@ -98,6 +98,8 @@ test('test case 1', () => {
 })
 
 test('test case 2', () => {
+  // yakuman should be capped at 1 yakuman
+
   const hand = new Hand({
     concealedCombinaisons: [
       new Triplet(new DragonTile('red')),
@@ -118,7 +120,7 @@ test('test case 2', () => {
   const result = wrcCalculator.calculate(hand)
 
   expect(result.han).toBeNull()
-  expect(result.yakuman).toBe(2)
+  expect(result.yakuman).toBe(1)
   expect(result.details.length).toBe(2)
   expect(result.details.filter(x => x.key === 'daisangen')).toStrictEqual([{ key: 'daisangen', hanValue: 0, yakumanValue: 1 }])
   expect(result.details.filter(x => x.key === 'tsuuiisou')).toStrictEqual([{ key: 'tsuuiisou', hanValue: 0, yakumanValue: 1 }])

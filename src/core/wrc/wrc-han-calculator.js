@@ -82,7 +82,9 @@ class WrcHanCalculator extends HanCalculator {
       new ToitoiYaku(),
       new TsuuiisouYaku(),
       new YakuhaiYaku()
-    ])
+    ], {
+      stackableYakuman: false
+    })
   }
 }
 

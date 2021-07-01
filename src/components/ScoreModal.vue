@@ -152,6 +152,7 @@
 import Hand from '@/core/hand'
 import ModalComponent from '@/components/Modal.vue'
 import titleCase from '@/filters/title-case'
+import formatNumber from '@/filters/format-number'
 
 export default {
   components: {
@@ -224,12 +225,12 @@ export default {
       let summary = ''
 
       if (this.hand.winningType === 'ron') {
-        summary = pointResult.discard + ' points'
+        summary = formatNumber(pointResult.discard) + ' points'
       } else {
         if (this.hand.seatWind === 'east') {
-          summary = pointResult.nonDealer + ' points from all players'
+          summary = formatNumber(pointResult.nonDealer) + ' points from all players'
         } else {
-          summary = pointResult.nonDealer + ' / ' + pointResult.dealer + ' points'
+          summary = formatNumber(pointResult.nonDealer) + ' / ' + formatNumber(pointResult.dealer) + ' points'
         }
       }
 

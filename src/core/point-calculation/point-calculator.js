@@ -1,11 +1,10 @@
 class PointCalculator {
   constructor (options) {
-    this.stackableYakuman = options?.stackableYakuman ?? false
     this.kazoeYakumanAsSanbaiman = options?.kazoeYakumanAsSanbaiman ?? true
   }
 
   calculate (hand, fu, han, yakuman) {
-    if (yakuman > 0) return getPointForYakuman(hand, this.stackableYakuman ? yakuman : 1)
+    if (yakuman > 0) return getPointForYakuman(hand, yakuman)
     if (han >= 13 && !this.kazoeYakumanAsSanbaiman) return getPointForYakuman(hand, 1)
     if (han >= 13 && this.kazoeYakumanAsSanbaiman) return getPointForSanbaiman(hand)
     if (han >= 11) return getPointForSanbaiman(hand)
