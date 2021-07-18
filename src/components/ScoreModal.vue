@@ -1,11 +1,11 @@
 <template>
   <modal-component
-    v-model="value"
+    :open="open"
     title="Score"
     @close="$emit('close')"
   >
     <div
-      v-if="noYaku"
+      v-if="data == null"
       class="score-layout"
     >
       <div class="bold txt-center m-t m-b">
@@ -19,34 +19,34 @@
     >
       <div class="m-t txt-center">
         <div class="txt-2 bold m-b">
-          {{ summary }}
+          {{ data.summary }}
         </div>
 
-        <div v-if="yakuman.total > 0">
-          {{ yakuman.total }} yakuman
+        <div v-if="data.yakuman != null">
+          {{ data.yakuman.total }} yakuman
         </div>
         <div v-else>
-          {{ han.total }} han / {{ fu.total }} fu
+          {{ data.han.total }} han / {{ data.fu.total }} fu
         </div>
       </div>
 
       <div class="score-layout__details m-t-2">
-        <div v-if="yakuman.total > 0">
+        <div v-if="data.yakuman != null">
           <h2><span>Yakuman Details</span></h2>
 
           <table>
             <tbody>
               <tr
-                v-for="(detail, index) in yakuman.details"
+                v-for="(detail, index) in data.yakuman.details"
                 :key="index"
               >
                 <td>
-                  {{ detail.japaneseRomanizedName | titleCase }}
+                  {{ titleCase(detail.japaneseRomanizedName) }}
                   <div
                     v-if="detail.japaneseRomanizedName !== detail.localizedName"
                     class="localized-name"
                   >
-                    {{ detail.localizedName | titleCase }}
+                    {{ titleCase(detail.localizedName) }}
                   </div>
                 </td>
                 <td class="txt-right">
@@ -57,22 +57,22 @@
           </table>
         </div>
 
-        <div v-if="yakuman.total === 0">
+        <div v-if="data.yakuman == null">
           <h2><span>Han Details</span></h2>
 
           <table>
             <tbody>
               <tr
-                v-for="(detail, index) in han.details"
+                v-for="(detail, index) in data.han.details"
                 :key="index"
               >
                 <td>
-                  {{ detail.japaneseRomanizedName | titleCase }}
+                  {{ titleCase(detail.japaneseRomanizedName) }}
                   <div
                     v-if="detail.japaneseRomanizedName !== detail.localizedName"
                     class="localized-name"
                   >
-                    {{ detail.localizedName | titleCase }}
+                    {{ titleCase(detail.localizedName) }}
                   </div>
                 </td>
                 <td class="txt-right">
@@ -83,17 +83,17 @@
           </table>
         </div>
 
-        <div v-if="yakuman.total === 0">
+        <div v-if="data.yakuman == null">
           <h2><span>Fu Details</span></h2>
 
           <table>
             <tbody>
               <tr
-                v-for="(detail, index) in fu.details"
+                v-for="(detail, index) in data.fu.details"
                 :key="index"
               >
                 <td>
-                  {{ $t(`fuRules.${detail.key}`) | titleCase }}
+                  {{ titleCase(t(`fuRules.${detail.key}`)) }}
                   <span v-if="detail.quantity > 1">
                     x{{ detail.quantity }}
                   </span>
@@ -109,6 +109,96 @@
     </div>
   </modal-component>
 </template>
+
+<script>
+import Hand from '@/core/hand'
+import ModalComponent from '@/components/Modal.vue'
+import titleCase from '@/filters/title-case'
+import formatNumber from '@/filters/format-number'
+import { computed } from 'vue'
+import { t } from '@/i18n'
+
+export default {
+  components: {
+    ModalComponent
+  },
+
+  props: {
+    open: {
+      type: Boolean,
+      required: true
+    },
+    hand: {
+      type: Hand,
+      required: true
+    },
+    ruleset: {
+      type: Object,
+      required: true
+    }
+  },
+
+  emits: ['close'],
+
+  setup (props) {
+    const data = computed(() => {
+      const hanCalculation = props.ruleset.hanCalculator.calculate(props.hand)
+
+      if (hanCalculation.han == null && hanCalculation.yakuman == null) return null // no yaku hand
+
+      const isYakuman = hanCalculation.yakuman != null
+
+      const fuCalculation = isYakuman ? null : props.ruleset.fuCalculator.calculate(props.hand)
+
+      const point = props.ruleset.pointCalculator.calculate(props.hand, fuCalculation?.total, hanCalculation.han, hanCalculation.yakuman)
+
+      let summary = ''
+      if (props.hand.winningType === 'ron') {
+        summary = formatNumber(point.discard) + ' points'
+      } else {
+        if (props.hand.seatWind === 'east') {
+          summary = formatNumber(point.nonDealer) + ' points from all players'
+        } else {
+          summary = formatNumber(point.nonDealer) + ' / ' + formatNumber(point.dealer) + ' points'
+        }
+      }
+
+      if (isYakuman) {
+        return {
+          summary,
+          yakuman: {
+            total: hanCalculation.yakuman,
+            details: hanCalculation.details.map(x => ({
+              localizedName: t(x.key),
+              japaneseRomanizedName: t(x.key, 'jp-romanized'),
+              value: x.yakumanValue
+            }))
+          }
+        }
+      } else {
+        return {
+          summary,
+          han: {
+            total: hanCalculation.han,
+            details: hanCalculation.details.map(x => ({
+              localizedName: t(x.key),
+              japaneseRomanizedName: t(x.key, 'jp-romanized'),
+              value: x.hanValue
+            }))
+          },
+          fu: fuCalculation
+        }
+      }
+    })
+
+    return {
+      data,
+      t,
+      titleCase
+    }
+  }
+}
+</script>
 
 <style>
 .score-layout table {
@@ -147,95 +237,3 @@
   }
 }
 </style>
-
-<script>
-import Hand from '@/core/hand'
-import ModalComponent from '@/components/Modal.vue'
-import titleCase from '@/filters/title-case'
-import formatNumber from '@/filters/format-number'
-
-export default {
-  components: {
-    ModalComponent
-  },
-
-  filters: {
-    titleCase
-  },
-
-  props: {
-    value: {
-      type: Boolean,
-      required: true
-    },
-    hand: {
-      type: Hand,
-      required: true
-    },
-    ruleset: {
-      type: Object,
-      required: true
-    }
-  },
-
-  computed: {
-    noYaku () {
-      return this.hanCalculation.han == null && this.hanCalculation.yakuman == null
-    },
-
-    hanCalculation () {
-      return this.ruleset.hanCalculator.calculate(this.hand)
-    },
-
-    han () {
-      if (this.hanCalculation.han == null) return { total: 0, details: [] } // invalid or yakuman hand
-
-      return {
-        total: this.hanCalculation.han,
-        details: this.hanCalculation.details.map(x => ({
-          localizedName: this.$t(x.key),
-          japaneseRomanizedName: this.$t(x.key, 'jp-romanized'),
-          value: x.hanValue
-        }))
-      }
-    },
-
-    yakuman () {
-      if (this.hanCalculation.yakuman == null) return { total: 0, details: [] } // invalid or not a yakuman hand
-
-      return {
-        total: this.hanCalculation.yakuman,
-        details: this.hanCalculation.details.map(x => ({
-          localizedName: this.$t(x.key),
-          japaneseRomanizedName: this.$t(x.key, 'jp-romanized'),
-          value: x.yakumanValue
-        }))
-      }
-    },
-
-    fu () {
-      return this.ruleset.fuCalculator.calculate(this.hand)
-    },
-
-    summary () {
-      if (this.noYaku) return
-
-      const pointResult = this.ruleset.pointCalculator.calculate(this.hand, this.fu.total, this.han.total, this.yakuman.total)
-
-      let summary = ''
-
-      if (this.hand.winningType === 'ron') {
-        summary = formatNumber(pointResult.discard) + ' points'
-      } else {
-        if (this.hand.seatWind === 'east') {
-          summary = formatNumber(pointResult.nonDealer) + ' points from all players'
-        } else {
-          summary = formatNumber(pointResult.nonDealer) + ' / ' + formatNumber(pointResult.dealer) + ' points'
-        }
-      }
-
-      return summary
-    }
-  }
-}
-</script>

@@ -1,6 +1,6 @@
 <template>
   <modal-component
-    v-model="value"
+    :open="open"
     title="Tile Selection"
     @close="$emit('close')"
   >
@@ -16,12 +16,65 @@
           :tile="tile.tile"
           :hoverable="true"
           :disabled="tile.disabled"
-          @click.native="selectTile(tile)"
+          @click="selectTile(tile)"
         />
       </div>
     </div>
   </modal-component>
 </template>
+
+<script>
+import ModalComponent from '@/components/Modal.vue'
+import TileComponent from '@/components/Tile.vue'
+import { computed } from 'vue'
+
+export default {
+  name: 'TileSelectionComponent',
+
+  components: {
+    ModalComponent,
+    TileComponent
+  },
+
+  props: {
+    open: {
+      type: Boolean,
+      required: true
+    },
+
+    tiles: {
+      type: Array,
+      required: true
+    }
+  },
+
+  emits: ['close', 'selectTile'],
+
+  setup (props, { emit }) {
+    return {
+      tilesGroupedBySuit: computed(() => groupTilesBySuit(props.tiles)),
+
+      selectTile: tile => {
+        if (!tile.disabled) emit('selectTile', { suit: tile.tile.suit, value: tile.tile.value })
+      }
+    }
+  }
+}
+
+function groupTilesBySuit (tiles) {
+  return tiles.reduce((agg, tile) => {
+    const suitIndex = agg.findIndex(x => x.suit === tile.tile.suit)
+
+    if (suitIndex > -1) {
+      agg[suitIndex].tiles.push(tile)
+    } else {
+      agg.push({ suit: tile.tile.suit, tiles: [tile] })
+    }
+
+    return agg
+  }, [])
+}
+</script>
 
 <style>
 .tile-suit {
@@ -33,53 +86,3 @@
   margin-bottom: 0;
 }
 </style>
-
-<script>
-import ModalComponent from '@/components/Modal.vue'
-import TileComponent from '@/components/Tile.vue'
-
-export default {
-  name: 'TileSelectionComponent',
-
-  components: {
-    ModalComponent,
-    TileComponent
-  },
-
-  props: {
-    value: {
-      type: Boolean,
-      required: true
-    },
-
-    tiles: {
-      type: Array,
-      required: true
-    }
-  },
-
-  computed: {
-    tilesGroupedBySuit () {
-      return this.tiles.reduce((agg, tile) => {
-        const suitIndex = agg.findIndex(x => x.suit === tile.tile.suit)
-
-        if (suitIndex > -1) {
-          agg[suitIndex].tiles.push(tile)
-        } else {
-          agg.push({ suit: tile.tile.suit, tiles: [tile] })
-        }
-
-        return agg
-      }, [])
-    }
-  },
-
-  methods: {
-    selectTile (tile) {
-      if (!tile.disabled) {
-        this.$emit('selectTile', { suit: tile.tile.suit, value: tile.tile.value })
-      }
-    }
-  }
-}
-</script>

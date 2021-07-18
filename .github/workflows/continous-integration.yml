@@ -18,22 +18,26 @@ jobs:
       with:
         node-version: 14.x
 
+    - name: Install Yarn
+      run: |
+        npm i -g yarn
+
     - name: Install dependencies
       run: |
-        npm ci
+        yarn --frozen-lockfile --production=false
 
     - name: Run linter
       run: |
-        npm run lint
+        yarn lint
 
     - name: Run unit tests
       run: |
-        npm run test:unit
+        yarn test:unit
 
-    - name: Build test
+    - name: Test application build
       run: |
-        npm run build
+        yarn build
 
-    - name: Docker build test
+    - name: Test Docker build
       run: |
-        docker build -t test:local .
+        docker build -t ci:local .

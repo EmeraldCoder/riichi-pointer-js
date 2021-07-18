@@ -14,13 +14,17 @@ jobs:
       with:
         node-version: 14.x
 
+    - name: Install Yarn
+      run: |
+        npm i -g yarn
+
     - name: Install dependencies
       run: |
-        npm ci
+        yarn --frozen-lockfile --production=false
 
     - name: Build application
       run: |
-        npm run build
+        yarn build
 
     - name: Build docker image
       run: |

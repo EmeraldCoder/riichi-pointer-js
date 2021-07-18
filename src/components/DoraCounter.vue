@@ -1,19 +1,49 @@
 <template>
   <div class="dora-counter">
     <button
-      :disabled="value <= 0"
+      :disabled="modelValue <= 0"
       @click="decrement"
     >
       <font-awesome-icon :icon="decrementIcon" />
     </button>
 
-    <span class="txt-2 txt-center">{{ value }}</span>
+    <span class="txt-2 txt-center">{{ modelValue }}</span>
 
     <button @click="increment">
       <font-awesome-icon :icon="incrementIcon" />
     </button>
   </div>
 </template>
+
+<script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+
+export default {
+  components: {
+    FontAwesomeIcon
+  },
+
+  props: {
+    modelValue: {
+      type: Number,
+      required: true
+    }
+  },
+
+  emits: ['update:modelValue'],
+
+  setup (props, { emit }) {
+    return {
+      incrementIcon: faPlus,
+      decrementIcon: faMinus,
+
+      increment: () => { emit('update:modelValue', props.modelValue + 1) },
+      decrement: () => { emit('update:modelValue', props.modelValue - 1) }
+    }
+  }
+}
+</script>
 
 <style>
   .dora-counter {
@@ -27,40 +57,3 @@
     width: 50px;
   }
 </style>
-
-<script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
-
-export default {
-  components: {
-    FontAwesomeIcon
-  },
-
-  props: {
-    value: {
-      type: Number,
-      required: true
-    }
-  },
-
-  data () {
-    return {
-      incrementIcon: faPlus,
-      decrementIcon: faMinus
-    }
-  },
-
-  methods: {
-    increment () {
-      this.$emit('input', this.value + 1)
-    },
-
-    decrement () {
-      if (this.value > 0) {
-        this.$emit('input', this.value - 1)
-      }
-    }
-  }
-}
-</script>

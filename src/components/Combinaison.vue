@@ -61,6 +61,83 @@
   </div>
 </template>
 
+<script>
+import { Combinaison, Sequence, Quad } from '@/core/combinaison-classes'
+import { Tile } from '@/core/tile-classes'
+import TileComponent from '@/components/Tile.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { ref, computed } from 'vue'
+
+export default {
+  components: {
+    TileComponent,
+    FontAwesomeIcon
+  },
+
+  props: {
+    combinaison: {
+      type: Combinaison,
+      required: true
+    },
+    waitable: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    waitingTile: {
+      type: Tile,
+      required: false,
+      default: null
+    },
+    selected: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+
+  emits: ['delete', 'touch', 'selectAsWaitingTile'],
+
+  setup (props, { emit }) {
+    const touching = ref(false)
+    const hover = ref(false)
+
+    return {
+      deleteIcon: faTrash,
+      isChii: computed(() => props.combinaison instanceof Sequence),
+      isKan: computed(() => props.combinaison instanceof Quad),
+      hover: hover,
+
+      onTouchStart: () => { if (!touching.value) touching.value = true },
+      onTouchMove: () => { if (touching.value) touching.value = false },
+      onTouchEnd: e => {
+        if (e.cancelable) {
+          e.preventDefault()
+          e.stopPropagation()
+        }
+
+        if (touching.value) {
+          setTimeout(() => { emit('touch') }, 0)
+          touching.value = false
+        }
+      },
+
+      onMouseOver: () => {
+        // doing a long touch trigger the mouse over event
+        // this is why we need to check if the user is not using a touch (triggered by the onTouchStart)
+        if (!touching.value && !hover.value) hover.value = true
+      },
+      onMouseOut: () => { if (hover.value) hover.value = false },
+
+      deleteCombinaison: () => {
+        setTimeout(() => { emit('delete') }, 0)
+      }
+    }
+  }
+}
+</script>
+
 <style>
   .combinaison {
     display: inline-block;
@@ -98,96 +175,3 @@
     text-align: center;
   }
 </style>
-
-<script>
-import { Combinaison, Sequence, Quad } from '@/core/combinaison-classes'
-import { Tile } from '@/core/tile-classes'
-import TileComponent from '@/components/Tile.vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-
-export default {
-  components: {
-    TileComponent,
-    FontAwesomeIcon
-  },
-
-  props: {
-    combinaison: {
-      type: Combinaison,
-      required: true
-    },
-    waitable: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    waitingTile: {
-      type: Tile,
-      required: false,
-      default: null
-    },
-    selected: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
-  },
-
-  data () {
-    return {
-      hover: false,
-      touching: false,
-      deleteIcon: faTrash
-    }
-  },
-
-  computed: {
-    isChii () {
-      return this.combinaison instanceof Sequence
-    },
-
-    isKan () {
-      return this.combinaison instanceof Quad
-    }
-  },
-
-  methods: {
-    onTouchStart () {
-      if (!this.touching) this.touching = true
-    },
-    onTouchMove () {
-      if (this.touching) this.touching = false
-    },
-    onTouchEnd (e) {
-      if (e.cancelable) {
-        e.preventDefault()
-        e.stopPropagation()
-      }
-
-      if (this.touching) {
-        setTimeout(() => {
-          this.$emit('touch', this.combinaison)
-        }, 0)
-
-        this.touching = false
-      }
-    },
-
-    onMouseOver () {
-      // doing a long touch trigger the mouse over event
-      // this is why we need to check if the user is not using a touch (triggered by the onTouchStart)
-      if (!this.touching && !this.hover) this.hover = true
-    },
-    onMouseOut () {
-      if (this.hover) this.hover = false
-    },
-
-    deleteCombinaison () {
-      setTimeout(() => {
-        this.$emit('delete', this.combinaison)
-      }, 0)
-    }
-  }
-}
-</script>
