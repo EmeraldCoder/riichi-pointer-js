@@ -1,7 +1,7 @@
 <template>
   <div
     ref="modal"
-    :class="{ 'modal--opened': value }"
+    :class="{ 'modal--opened': open }"
     class="modal"
   >
     <header>
@@ -29,6 +29,106 @@
     </main>
   </div>
 </template>
+
+<script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faTimes, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+
+const modalHash = 'modal'
+
+export default {
+  components: {
+    FontAwesomeIcon
+  },
+
+  props: {
+    open: {
+      type: Boolean,
+      required: true
+    },
+
+    title: {
+      type: String,
+      required: false,
+      default: ''
+    }
+  },
+
+  emits: ['close'],
+
+  data () {
+    return {
+      closeIcon: faTimes,
+      backIcon: faArrowLeft,
+      keyUpEventListenerHandler: null,
+      hashChangeEventListenerHandler: null
+    }
+  },
+
+  watch: {
+    open (newValue) {
+      if (newValue) {
+        this.initializeModal()
+      } else {
+        this.disposeModal()
+      }
+    }
+  },
+
+  beforeUnmount () {
+    // ensure all resources are dispose
+    this.disposeModal()
+  },
+
+  mounted () {
+    if (this.open) this.initializeModal()
+  },
+
+  methods: {
+    initializeModal () {
+      // add a key event listener to close the modal if the user press the Escape key
+      this.keyUpEventListenerHandler = document.addEventListener('keyup', e => {
+        if (e.key === 'Escape' && this.open) {
+          this.$emit('close')
+        }
+      })
+
+      // add a hash to the url and watch for hashchange to capture browser back feature to close the modal
+      location.hash = modalHash
+      this.hashChangeEventListenerHandler = window.addEventListener('hashchange', e => {
+        if (e.oldURL.endsWith(`#${modalHash}`) && !e.newURL.endsWith(`#${modalHash}`)) {
+          e.preventDefault()
+          this.$emit('close')
+        }
+      })
+
+      // add the css class that will activate the overly on the body
+      document.body.classList.add('modal-opened')
+
+      // ensure that we are always at the top of the content when we open a modal
+      setTimeout(() => { this.$refs.modal.scrollTo(0, 0) }, 0)
+    },
+
+    disposeModal () {
+      // clear the event listener added during initialization
+      if (this.keyUpEventListenerHandler) {
+        document.removeEventListener(this.keyUpEventListenerHandler)
+        delete this.keyUpEventListenerHandler
+      }
+      if (this.hashChangeEventListenerHandler) {
+        window.removeEventListener(this.hashChangeEventListenerHandler)
+        delete this.hashChangeEventListenerHandler
+      }
+
+      // remove the css class from the body to remove the overlay
+      document.body.classList.remove('modal-opened')
+
+      // remove the hash from the url and history if necessary
+      if (location.hash === `#${modalHash}`) history.back()
+    }
+  }
+}
+</script>
 
 <style>
 .modal {
@@ -109,101 +209,3 @@ Desktop Version (centered modal)
   }
 }
 </style>
-
-<script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTimes, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-
-const modalHash = 'modal'
-
-export default {
-  components: {
-    FontAwesomeIcon
-  },
-
-  props: {
-    value: {
-      type: Boolean,
-      required: true
-    },
-
-    title: {
-      type: String,
-      required: false,
-      default: ''
-    }
-  },
-
-  data () {
-    return {
-      closeIcon: faTimes,
-      backIcon: faArrowLeft,
-      keyUpEventListenerHandler: null,
-      hashChangeEventListenerHandler: null
-    }
-  },
-
-  watch: {
-    value (newValue) {
-      if (newValue) {
-        this.initializeModal()
-      } else {
-        this.disposeModal()
-      }
-    }
-  },
-
-  beforeDestroy () {
-    // ensure all resources are dispose
-    this.disposeModal()
-  },
-
-  mounted () {
-    if (this.value) this.initializeModal()
-  },
-
-  methods: {
-    initializeModal () {
-      // add a key event listener to close the modal if the user press the Escape key
-      this.keyUpEventListenerHandler = document.addEventListener('keyup', e => {
-        if (e.key === 'Escape' && this.value) {
-          this.$emit('close')
-        }
-      })
-
-      // add a hash to the url and watch for hashchange to capture browser back feature to close the modal
-      location.hash = modalHash
-      this.hashChangeEventListenerHandler = window.addEventListener('hashchange', e => {
-        if (e.oldURL.endsWith(`#${modalHash}`) && !e.newURL.endsWith(`#${modalHash}`)) {
-          e.preventDefault()
-          this.$emit('close')
-        }
-      })
-
-      // add the css class that will activate the overly on the body
-      document.body.classList.add('modal-opened')
-
-      // ensure that we are always at the top of the content when we open a modal
-      setTimeout(() => { this.$refs.modal.scrollTo(0, 0) }, 0)
-    },
-
-    disposeModal () {
-      // clear the event listener added during initialization
-      if (this.keyUpEventListenerHandler) {
-        document.removeEventListener(this.keyUpEventListenerHandler)
-        delete this.keyUpEventListenerHandler
-      }
-      if (this.hashChangeEventListenerHandler) {
-        window.removeEventListener(this.hashChangeEventListenerHandler)
-        delete this.hashChangeEventListenerHandler
-      }
-
-      // remove the css class from the body to remove the overlay
-      document.body.classList.remove('modal-opened')
-
-      // remove the hash from the url and history if necessary
-      if (location.hash === `#${modalHash}`) history.back()
-    }
-  }
-}
-</script>

@@ -1,6 +1,6 @@
 <template>
   <modal-component
-    v-model="value"
+    :open="open"
     title="Ruleset Configuration"
     @close="$emit('close')"
   >
@@ -28,14 +28,14 @@
         <div class="btn-group">
           <button
             :class="{ active: ruleset.options.allowOpenTanyao }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('allowOpenTanyao', true)"
           >
             Yes
           </button>
           <button
             :class="{ active: !ruleset.options.allowOpenTanyao }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('allowOpenTanyao', false)"
           >
             No
@@ -48,14 +48,14 @@
         <div class="btn-group">
           <button
             :class="{ active: ruleset.options.allowMultipleYakuman }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('allowMultipleYakuman', true)"
           >
             Yes
           </button>
           <button
             :class="{ active: !ruleset.options.allowMultipleYakuman }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('allowMultipleYakuman', false)"
           >
             No
@@ -68,14 +68,14 @@
         <div class="btn-group">
           <button
             :class="{ active: ruleset.options.allowDoubleYakuman }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('allowDoubleYakuman', true)"
           >
             Yes
           </button>
           <button
             :class="{ active: !ruleset.options.allowDoubleYakuman }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('allowDoubleYakuman', false)"
           >
             No
@@ -88,14 +88,14 @@
         <div class="btn-group">
           <button
             :class="{ active: ruleset.options.allowDoubleWindFu }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('allowDoubleWindFu', true)"
           >
             Yes
           </button>
           <button
             :class="{ active: !ruleset.options.allowDoubleWindFu }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('allowDoubleWindFu', false)"
           >
             No
@@ -108,14 +108,14 @@
         <div class="btn-group">
           <button
             :class="{ active: ruleset.options.renhouValue === 'mangan' }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('renhouValue', 'mangan')"
           >
             Mangan
           </button>
           <button
             :class="{ active: ruleset.options.renhouValue === 'yakuman' }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('renhouValue', 'yakuman')"
           >
             Yakuman
@@ -128,14 +128,14 @@
         <div class="btn-group">
           <button
             :class="{ active: ruleset.options.kazoeYakumanAsSanbaiman }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('kazoeYakumanAsSanbaiman', true)"
           >
             Sanbaiman
           </button>
           <button
             :class="{ active: !ruleset.options.kazoeYakumanAsSanbaiman }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('kazoeYakumanAsSanbaiman', false)"
           >
             Yakuman
@@ -150,14 +150,14 @@
         <div class="btn-group">
           <button
             :class="{ active: ruleset.options.allowOpenRiichi }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('allowOpenRiichi', true)"
           >
             Yes
           </button>
           <button
             :class="{ active: !ruleset.options.allowOpenRiichi }"
-            :disabled="optionsAreReadonly"
+            :disabled="readOnly"
             @click="changeOption('allowOpenRiichi', false)"
           >
             No
@@ -167,6 +167,51 @@
     </div>
   </modal-component>
 </template>
+
+<script>
+import ModalComponent from '@/components/Modal.vue'
+import { key as wrcRulesetKey } from '@/rulesets/wrc-ruleset'
+import { key as customRulesetKey } from '@/rulesets/custom-ruleset'
+import { computed } from 'vue'
+
+export default {
+  components: {
+    ModalComponent
+  },
+
+  props: {
+    open: {
+      type: Boolean,
+      required: true
+    },
+    ruleset: {
+      type: Object,
+      required: true
+    }
+  },
+
+  emits: ['close', 'updateRuleset'],
+
+  setup (props, { emit }) {
+    return {
+      wrcRulesetKey,
+      customRulesetKey,
+
+      readOnly: computed(() => props.ruleset.key !== customRulesetKey),
+
+      changePreset: key => { if (props.ruleset !== key) emit('updateRuleset', key) },
+
+      changeOption: (option, value) => {
+        if (props.ruleset[option] !== value) {
+          const options = { ...props.ruleset.options }
+          options[option] = value
+          emit('updateRuleset', props.ruleset.key, options)
+        }
+      }
+    }
+  }
+}
+</script>
 
 <style>
 .ruleset-configuration-layout {
@@ -196,56 +241,3 @@
   }
 }
 </style>
-
-<script>
-import ModalComponent from '@/components/Modal.vue'
-import { key as wrcRulesetKey } from '@/rulesets/wrc-ruleset'
-import { key as customRulesetKey } from '@/rulesets/custom-ruleset'
-
-export default {
-  components: {
-    ModalComponent
-  },
-
-  props: {
-    value: {
-      type: Boolean,
-      required: true
-    },
-    ruleset: {
-      type: Object,
-      required: true
-    }
-  },
-
-  data () {
-    return {
-      wrcRulesetKey,
-      customRulesetKey
-    }
-  },
-
-  computed: {
-    optionsAreReadonly () {
-      return this.ruleset.key !== customRulesetKey
-    }
-  },
-
-  methods: {
-    changePreset (key) {
-      if (this.ruleset.key !== key) {
-        this.$emit('updateRuleset', key)
-      }
-    },
-
-    changeOption (option, value) {
-      if (this.ruleset[option] !== value) {
-        const options = { ...this.ruleset.options }
-        options[option] = value
-
-        this.$emit('updateRuleset', this.ruleset.key, options)
-      }
-    }
-  }
-}
-</script>

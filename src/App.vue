@@ -94,8 +94,8 @@
                 :waiting-tile="waitingTile"
                 :selected="combinaison === touchedCombinaison"
                 @selectAsWaitingTile="toggleWaitingTile"
-                @delete="removeConcealedCombinaison"
-                @touch="touchCombinaison"
+                @delete="removeConcealedCombinaison(combinaison)"
+                @touch="touchCombinaison(combinaison)"
               />
             </div>
 
@@ -115,8 +115,8 @@
                 :key="'combinaison.opened.' + index"
                 :combinaison="combinaison"
                 :selected="combinaison === touchedCombinaison"
-                @delete="removeOpenedCombinaison"
-                @touch="touchCombinaison"
+                @delete="removeOpenedCombinaison(combinaison)"
+                @touch="touchCombinaison(combinaison)"
               />
             </div>
           </div>
@@ -298,7 +298,7 @@
     </main>
 
     <tile-selection-modal-component
-      v-model="tileSelectionModal"
+      :open="tileSelectionModal"
       :tiles="availableTilesForSelection"
       @selectTile="selectTile"
       @close="tileSelectionModal = false"
@@ -306,118 +306,20 @@
 
     <score-modal-component
       v-if="hand != null"
-      v-model="scoreModal"
+      :open="scoreModal"
       :hand="hand"
       :ruleset="ruleset"
       @close="scoreModal = false"
     />
 
     <ruleset-configuration-modal-component
-      v-model="rulesetConfigurationModal"
+      :open="rulesetConfigurationModal"
       :ruleset="ruleset"
       @updateRuleset="updateRuleset"
       @close="rulesetConfigurationModal = false"
     />
   </div>
 </template>
-
-<style>
-/* ---
-LAYOUT
---- */
-
-.main-layout__infos {
-  display: flex;
-  flex-direction: column;
-}
-
-.main-layout__general-info {
-  order: -1;
-}
-
-.main-layout__calculate-button button {
-  width: 100%;
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: 2.5rem;
-}
-
-.combinaisons-toolbar {
-  display: flex;
-  column-gap: calc(var(--gap-size) / 2);
-  row-gap: calc(var(--gap-size) / 2);
-  flex-wrap: wrap;
-}
-
-@media (min-width: 960px) {
-  .main-layout__infos {
-    flex-direction: row;
-    padding-bottom: calc(var(--gap-size) * 2);
-  }
-
-  .main-layout__tiles-info {
-    flex: 1;
-    margin-right: calc(var(--gap-size) * 4);
-  }
-
-  .main-layout__general-info {
-    min-width: 450px;
-    order: 0;
-  }
-}
-
-@media (max-width: 959px) {
-  .main-layout__infos {
-    padding-bottom: 50px;
-  }
-
-  .main-layout__calculate-button {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    background: #43a047;
-  }
-
-  .main-layout__calculate-button button {
-    border-radius: 0;
-  }
-
-  .combinaisons-toolbar .btn-group {
-    width: 100%;
-  }
-}
-
-/* ---
-COMBINAISONS WRAPPER
---- */
-
-.combinaisons-wrapper {
-  background: rgba(255, 255, 255, 0.3);
-  padding: var(--gap-size);
-  min-height: 100px;
-  max-height: 63vh;
-  overflow-y: auto;
-  border: 1px solid var(--dark-green);
-}
-.combinaisons-wrapper h3 {
-  font-size: 1rem;
-  line-height: 1rem;
-  font-weight: bold;
-  margin-bottom: var(--gap-size);
-}
-.combinaisons-wrapper .combinaison-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap-size);
-}
-
-@media (min-width: 960px) {
-  .combinaisons-wrapper {
-    min-height: 440px;
-  }
-}
-</style>
 
 <script>
 import Hand from './core/hand'
@@ -755,3 +657,101 @@ export default {
   }
 }
 </script>
+
+<style>
+/* ---
+LAYOUT
+--- */
+
+.main-layout__infos {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-layout__general-info {
+  order: -1;
+}
+
+.main-layout__calculate-button button {
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 2.5rem;
+}
+
+.combinaisons-toolbar {
+  display: flex;
+  column-gap: calc(var(--gap-size) / 2);
+  row-gap: calc(var(--gap-size) / 2);
+  flex-wrap: wrap;
+}
+
+@media (min-width: 960px) {
+  .main-layout__infos {
+    flex-direction: row;
+    padding-bottom: calc(var(--gap-size) * 2);
+  }
+
+  .main-layout__tiles-info {
+    flex: 1;
+    margin-right: calc(var(--gap-size) * 4);
+  }
+
+  .main-layout__general-info {
+    min-width: 450px;
+    order: 0;
+  }
+}
+
+@media (max-width: 959px) {
+  .main-layout__infos {
+    padding-bottom: 50px;
+  }
+
+  .main-layout__calculate-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background: #43a047;
+  }
+
+  .main-layout__calculate-button button {
+    border-radius: 0;
+  }
+
+  .combinaisons-toolbar .btn-group {
+    width: 100%;
+  }
+}
+
+/* ---
+COMBINAISONS WRAPPER
+--- */
+
+.combinaisons-wrapper {
+  background: rgba(255, 255, 255, 0.3);
+  padding: var(--gap-size);
+  min-height: 100px;
+  max-height: 63vh;
+  overflow-y: auto;
+  border: 1px solid var(--dark-green);
+}
+.combinaisons-wrapper h3 {
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: bold;
+  margin-bottom: var(--gap-size);
+}
+.combinaisons-wrapper .combinaison-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-size);
+}
+
+@media (min-width: 960px) {
+  .combinaisons-wrapper {
+    min-height: 440px;
+  }
+}
+</style>
