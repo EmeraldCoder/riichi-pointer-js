@@ -1,10 +1,33 @@
 <template>
   <modal-component
     :open="open"
-    title="Ruleset Configuration"
+    title="Configuration"
     @close="$emit('close')"
   >
     <div class="ruleset-configuration-layout">
+      <h1 class="m-b">
+        Calculator Mode
+      </h1>
+
+      <div class="btn-group">
+        <button
+          :class="{ active: mode === 'simple' }"
+          @click="changeMode('simple')"
+        >
+          Simple
+        </button>
+        <button
+          :class="{ active: mode === 'advanced' }"
+          @click="changeMode('advanced')"
+        >
+          Advanced
+        </button>
+      </div>
+
+      <h1 class="m-t m-b">
+        Ruleset
+      </h1>
+
       <div class="btn-group">
         <button
           :class="{ active: ruleset.key === wrcRulesetKey }"
@@ -187,10 +210,14 @@ export default {
     ruleset: {
       type: Object,
       required: true
+    },
+    mode: {
+      type: String,
+      required: true
     }
   },
 
-  emits: ['close', 'updateRuleset'],
+  emits: ['close', 'updateRuleset', 'updateMode'],
 
   setup (props, { emit }) {
     return {
@@ -206,6 +233,12 @@ export default {
           const options = { ...props.ruleset.options }
           options[option] = value
           emit('updateRuleset', props.ruleset.key, options)
+        }
+      },
+
+      changeMode: mode => {
+        if (mode !== props.mode) {
+          emit('updateMode', mode)
         }
       }
     }

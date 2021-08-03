@@ -1,7 +1,7 @@
 import * as WrcRuleset from './rulesets/wrc-ruleset'
 import * as CustomRuleset from './rulesets/custom-ruleset'
 
-const localStorageKey = 'current-ruleset'
+const localStorageKey = 'riichi-pointer-ruleset'
 const defaultPreset = WrcRuleset.key
 let instance = null
 
