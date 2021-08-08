@@ -1,6 +1,7 @@
 {
   "name": "riichi-pointer-js",
   "version": "0.6.0",
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
