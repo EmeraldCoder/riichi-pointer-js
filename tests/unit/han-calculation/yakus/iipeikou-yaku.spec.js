@@ -1,12 +1,12 @@
 import IipeikouYaku from '@/core/han-calculation/yakus/iipeikou-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence } from '@/core/combination-classes'
 import { DotTile, CharacterTile, BambooTile } from '@/core/tile-classes'
 
 const sut = new IipeikouYaku()
 
 const validHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),
@@ -21,12 +21,12 @@ test('iipeikou (pure double sequence) valid hand', () => {
 
 // test with a open hand
 const invalidOpenHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5))
   ],
-  openCombinaisons: [
+  openCombinations: [
     new Triplet(new DotTile(3)),
     new Pair(new DotTile(7))
   ]
@@ -38,7 +38,7 @@ test('iipeikou (pure double sequence) invalid with a open hand', () => {
 
 // test with different number
 const invalidHandWithoutTwoIdenticalChii1 = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(3), new BambooTile(4), new BambooTile(5)),
     new Sequence(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),
@@ -53,7 +53,7 @@ test('iipeikou (pure double sequence) invalid hand without two identical sequenc
 
 // test with different suit
 const invalidHandWithoutTwoIdenticalChii2 = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
     new Sequence(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),

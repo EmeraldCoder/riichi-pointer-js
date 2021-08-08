@@ -1,12 +1,12 @@
 import ToitoiYaku from '@/core/han-calculation/yakus/toitoi-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence, Quad } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence, Quad } from '@/core/combination-classes'
 import { DotTile, BambooTile } from '@/core/tile-classes'
 
 const sut = new ToitoiYaku()
 
 const validHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new BambooTile(1)),
     new Triplet(new BambooTile(7)),
     new Triplet(new BambooTile(4)),
@@ -20,7 +20,7 @@ test('toitoi (all pons) valid hand', () => {
 })
 
 const validHandWithKan = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new BambooTile(1)),
     new Triplet(new BambooTile(7)),
     new Triplet(new BambooTile(4)),
@@ -34,7 +34,7 @@ test('toitoi (all pons) valid hand with quad', () => {
 })
 
 const invalidHandWithoutFourPon = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new BambooTile(1)),
     new Triplet(new BambooTile(7)),
     new Triplet(new BambooTile(4)),

@@ -1,4 +1,4 @@
-import { Triplet, Quad } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combination-classes'
 
 /**
  * Toitoi (all pons) yaku pattern<br><br>
@@ -13,9 +13,9 @@ import { Triplet, Quad } from './../../combinaison-classes'
  */
 class ToitoiYaku {
   /** @override */
-  check ({ combinaisons }) {
-    const nbPonOrKan = combinaisons.reduce((agg, combinaison) => {
-      if (combinaison instanceof Triplet || combinaison instanceof Quad) agg++
+  check ({ combinations }) {
+    const nbPonOrKan = combinations.reduce((agg, combination) => {
+      if (combination instanceof Triplet || combination instanceof Quad) agg++
       return agg
     }, 0)
 

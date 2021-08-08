@@ -1,4 +1,4 @@
-import { Pair } from './../../combinaison-classes'
+import { Pair } from './../../combination-classes'
 import { DragonTile } from './../../tile-classes'
 
 /**
@@ -22,8 +22,8 @@ class PairFuRule {
   }
 
   /** @override */
-  check ({ concealedCombinaisons, roundWind, seatWind }) {
-    const pairs = concealedCombinaisons.filter(x => x instanceof Pair)
+  check ({ concealedCombinations, roundWind, seatWind }) {
+    const pairs = concealedCombinations.filter(x => x instanceof Pair)
 
     if (pairs.length !== 1) return
 

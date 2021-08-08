@@ -1,12 +1,12 @@
 import ChinitsuYaku from '@/core/han-calculation/yakus/chinitsu-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence } from '@/core/combination-classes'
 import { DotTile, BambooTile, DragonTile } from '@/core/tile-classes'
 
 const sut = new ChinitsuYaku()
 
 const validHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(6), new BambooTile(7), new BambooTile(8)),
     new Triplet(new BambooTile(1)),
@@ -19,24 +19,24 @@ test('chinitsu (full flush) valid hand', () => {
   expect(sut.check(validHand)).toStrictEqual({ key: 'chinitsu', hanValue: 6, yakumanValue: 0 })
 })
 
-const validHandWithOpenCombinaison = new Hand({
-  concealedCombinaisons: [
+const validHandWithOpenCombination = new Hand({
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(6), new BambooTile(7), new BambooTile(8)),
     new Pair(new BambooTile(7))
   ],
-  openCombinaisons: [
+  openCombinations: [
     new Triplet(new BambooTile(1)),
     new Triplet(new BambooTile(9))
   ]
 })
 
-test('chinitsu (full flush) valid hand with open combinaison', () => {
-  expect(sut.check(validHandWithOpenCombinaison)).toStrictEqual({ key: 'chinitsu', hanValue: 5, yakumanValue: 0 })
+test('chinitsu (full flush) valid hand with open combination', () => {
+  expect(sut.check(validHandWithOpenCombination)).toStrictEqual({ key: 'chinitsu', hanValue: 5, yakumanValue: 0 })
 })
 
 const invalidHandWithHonorTiles = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(6), new BambooTile(7), new BambooTile(8)),
     new Triplet(new BambooTile(1)),
@@ -50,7 +50,7 @@ test('chinitsu (full flush) invalid hand with honor tile', () => {
 })
 
 const invalidHandWithTwoSuit = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(6), new BambooTile(7), new BambooTile(8)),
     new Triplet(new BambooTile(1)),

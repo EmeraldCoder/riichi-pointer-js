@@ -1,12 +1,12 @@
 import SanshokuDokouYaku from '@/core/han-calculation/yakus/sanshoku-doukou-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair } from '@/core/combinaison-classes'
+import { Triplet, Pair } from '@/core/combination-classes'
 import { DotTile, CharacterTile, BambooTile } from '@/core/tile-classes'
 
 const sut = new SanshokuDokouYaku()
 
 const validHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new BambooTile(1)),
     new Triplet(new DotTile(1)),
     new Triplet(new CharacterTile(1)),
@@ -20,7 +20,7 @@ test('sanshoku dokou (triple triplet) valid hand', () => {
 })
 
 const invalidHandWithoutThreeSamePon = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new BambooTile(1)),
     new Triplet(new DotTile(1)),
     new Triplet(new CharacterTile(2)),

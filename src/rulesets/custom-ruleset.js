@@ -37,7 +37,7 @@ function createFuCalculator (options) {
     // put the chiitoitsu rule at the top because it's a fixed amount of fu
     new FuCalculation.ChiitoitsuFuRule({ chiitoitsuYakuPattern: new HanCalculation.ChiitoitsuYaku(), fuValue: 25 }),
     new FuCalculation.WinningFuRule(),
-    new FuCalculation.CombinaisonsFuRule(),
+    new FuCalculation.CombinationsFuRule(),
     new FuCalculation.PairFuRule({ stackable: options.allowDoubleWindFu }),
     new FuCalculation.WaitFuRule(),
     new FuCalculation.OpenPinfuFuRule(),

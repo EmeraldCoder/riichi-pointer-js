@@ -1,22 +1,22 @@
 import PairRule from '@/core/fu-calculation/rules/pair-fu-rule'
 import Hand from '@/core/hand'
-import { Triplet, Pair } from '@/core/combinaison-classes'
+import { Triplet, Pair } from '@/core/combination-classes'
 import { DotTile, DragonTile, WindTile } from '@/core/tile-classes'
 
 function makeDefaultHand (pair, roundWind, seatWind) {
   return new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Triplet(new DotTile(1)),
       new Triplet(new DotTile(2)),
       new Triplet(new DotTile(3)),
       pair
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Triplet(new DotTile(4))
     ],
     roundWind: roundWind ?? 'east',
     seatWind: seatWind ?? 'east',
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 0,
     winningType: 'tsumo'
   })
@@ -24,7 +24,7 @@ function makeDefaultHand (pair, roundWind, seatWind) {
 
 describe('given the hand have more than one pair (ex.: chiitoitsu)', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DragonTile('green')),
       new Pair(new DragonTile('red')),
       new Pair(new DragonTile('white')),

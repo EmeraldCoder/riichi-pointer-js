@@ -1,18 +1,18 @@
 import WrcHanCalculator from '@/core/wrc/wrc-han-calculator'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence, Quad } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence, Quad } from '@/core/combination-classes'
 import { DotTile, CharacterTile, BambooTile, WindTile, DragonTile } from '@/core/tile-classes'
 
 const wrcCalculator = new WrcHanCalculator()
 
 test('open tanyao should be valid', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Triplet(new DotTile(2)),
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Pair(new CharacterTile(5))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Triplet(new BambooTile(2)),
       new Quad(new CharacterTile(8))
     ]
@@ -26,12 +26,12 @@ test('open tanyao should be valid', () => {
 
 test('open ryanpeikou should not be valid', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Pair(new CharacterTile(9))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new CharacterTile(4), new CharacterTile(5), new CharacterTile(6)),
       new Sequence(new CharacterTile(4), new CharacterTile(5), new CharacterTile(6))
     ]
@@ -45,7 +45,7 @@ test('open ryanpeikou should not be valid', () => {
 
 test('renhou should be worth 5 han', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Triplet(new DotTile(8)),
       new Sequence(new CharacterTile(4), new CharacterTile(5), new CharacterTile(6)),
@@ -67,7 +67,7 @@ test('renhou should be worth 5 han', () => {
 
 test('test case 1', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Sequence(new DotTile(5), new DotTile(6), new DotTile(7)),
@@ -78,7 +78,7 @@ test('test case 1', () => {
     yakus: ['riichi', 'ippatsu', 'haitei raoyue'],
     roundWind: 'east',
     seatWind: 'east',
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 0
   })
 
@@ -101,19 +101,19 @@ test('test case 2', () => {
   // yakuman should be capped at 1 yakuman
 
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Triplet(new DragonTile('red')),
       new Triplet(new DragonTile('green')),
       new Triplet(new DragonTile('white')),
       new Pair(new WindTile('north'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Triplet(new WindTile('east'))
     ],
     winningType: 'ron',
     roundWind: 'east',
     seatWind: 'east',
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 0
   })
 

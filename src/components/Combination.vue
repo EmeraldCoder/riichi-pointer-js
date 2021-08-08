@@ -1,10 +1,10 @@
 <template>
   <div
-    :class="{ 'combinaison--selected': selected || hover }"
-    class="combinaison"
+    :class="{ 'combination--selected': selected || hover }"
+    class="combination"
   >
     <div
-      class="combinaison__tiles"
+      class="combination__tiles"
       @touchstart="onTouchStart"
       @touchmove="onTouchMove"
       @touchend="onTouchEnd"
@@ -12,15 +12,15 @@
       @mouseout="onMouseOut"
     >
       <tile-component
-        v-for="(tile, index) in combinaison.tiles"
+        v-for="(tile, index) in combination.tiles"
         :key="'tile' + index"
         :tile="tile"
       />
 
-      <div class="combinaison__hover-overlay">
+      <div class="combination__hover-overlay">
         <button
-          @click.stop="deleteCombinaison"
-          @touchend.stop.prevent="deleteCombinaison"
+          @click.stop="deleteCombination"
+          @touchend.stop.prevent="deleteCombination"
         >
           <font-awesome-icon :icon="deleteIcon" />
         </button>
@@ -30,10 +30,10 @@
     <div v-if="waitable && !isKan">
       <div
         v-if="isChii"
-        class="combinaison__waits"
+        class="combination__waits"
       >
         <div
-          v-for="(tile, index) in combinaison.tiles"
+          v-for="(tile, index) in combination.tiles"
           :key="'wait.' + index"
         >
           <button
@@ -46,12 +46,12 @@
       </div>
       <div
         v-else
-        class="combinaison__waits"
+        class="combination__waits"
       >
         <div>
           <button
-            :class="{ active: combinaison.tiles.includes(waitingTile) }"
-            @click="$emit('selectAsWaitingTile', combinaison.tiles[0])"
+            :class="{ active: combination.tiles.includes(waitingTile) }"
+            @click="$emit('selectAsWaitingTile', combination.tiles[0])"
           >
             Wait
           </button>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { Combinaison, Sequence, Quad } from '@/core/combinaison-classes'
+import { Combination, Sequence, Quad } from '@/core/combination-classes'
 import { Tile } from '@/core/tile-classes'
 import TileComponent from '@/components/Tile.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -76,8 +76,8 @@ export default {
   },
 
   props: {
-    combinaison: {
-      type: Combinaison,
+    combination: {
+      type: Combination,
       required: true
     },
     waitable: {
@@ -105,8 +105,8 @@ export default {
 
     return {
       deleteIcon: faTrash,
-      isChii: computed(() => props.combinaison instanceof Sequence),
-      isKan: computed(() => props.combinaison instanceof Quad),
+      isChii: computed(() => props.combination instanceof Sequence),
+      isKan: computed(() => props.combination instanceof Quad),
       hover: hover,
 
       onTouchStart: () => { if (!touching.value) touching.value = true },
@@ -130,7 +130,7 @@ export default {
       },
       onMouseOut: () => { if (hover.value) hover.value = false },
 
-      deleteCombinaison: () => {
+      deleteCombination: () => {
         setTimeout(() => { emit('delete') }, 0)
       }
     }
@@ -139,15 +139,15 @@ export default {
 </script>
 
 <style>
-  .combinaison {
+  .combination {
     display: inline-block;
   }
 
-  .combinaison__tiles {
+  .combination__tiles {
     position: relative;
   }
 
-  .combinaison__hover-overlay {
+  .combination__hover-overlay {
     position: absolute;
     display: none;
     align-items: center;
@@ -158,18 +158,18 @@ export default {
     height: 100%;
   }
 
-  .combinaison--selected .combinaison__tiles .tile {
+  .combination--selected .combination__tiles .tile {
     opacity: 0.3;
   }
-  .combinaison--selected .combinaison__hover-overlay {
+  .combination--selected .combination__hover-overlay {
     display: flex;
   }
 
-  .combinaison__waits {
+  .combination__waits {
     text-align: center;
     margin-top: calc(var(--gap-size) / 2);
   }
-  .combinaison__waits div {
+  .combination__waits div {
     display: inline-block;
     width: 70px;
     text-align: center;

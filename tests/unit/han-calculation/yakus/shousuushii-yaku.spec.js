@@ -1,17 +1,17 @@
 import ShousuushiiYaku from '@/core/han-calculation/yakus/shousuushii-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Quad } from '@/core/combinaison-classes'
+import { Triplet, Pair, Quad } from '@/core/combination-classes'
 import { DotTile, WindTile } from '@/core/tile-classes'
 
 test('shousuushii (little four winds) valid hand with three triplet of wind tile and a pair of wind tile', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new WindTile('east')),
       new Triplet(new WindTile('south')),
       new Triplet(new WindTile('west')),
       new Triplet(new DotTile(1))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Triplet(new WindTile('north'))
     ]
   })
@@ -21,13 +21,13 @@ test('shousuushii (little four winds) valid hand with three triplet of wind tile
 
 test('shousuushii (little four winds) valid hand with three quad of wind tile and a pair of wind tile', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new WindTile('south')),
       new Quad(new WindTile('west')),
       new Quad(new WindTile('north')),
       new Triplet(new DotTile(1))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Quad(new WindTile('east'))
     ]
   })
@@ -37,13 +37,13 @@ test('shousuushii (little four winds) valid hand with three quad of wind tile an
 
 test('shousuushii (little four winds) valid hand with a mix of three triplet/quad of wind tile and a pair of wind tile', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new WindTile('west')),
       new Quad(new WindTile('north')),
       new Triplet(new WindTile('east')),
       new Triplet(new DotTile(1))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Quad(new WindTile('south'))
     ]
   })
@@ -53,13 +53,13 @@ test('shousuushii (little four winds) valid hand with a mix of three triplet/qua
 
 test('shousuushii (little four winds) invalid hand because it contains four triplet/quad of wind tiles (big four winds)', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Triplet(new WindTile('north')),
       new Triplet(new WindTile('east')),
       new Triplet(new WindTile('west'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Quad(new WindTile('south'))
     ]
   })
@@ -69,13 +69,13 @@ test('shousuushii (little four winds) invalid hand because it contains four trip
 
 test('shousuushii (little four winds) invalid hand because it doesn\'t contains a wind pair', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Triplet(new WindTile('north')),
       new Triplet(new WindTile('east')),
       new Triplet(new DotTile(2))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Quad(new WindTile('south'))
     ]
   })
@@ -85,13 +85,13 @@ test('shousuushii (little four winds) invalid hand because it doesn\'t contains 
 
 test('shousuushii (little four winds) invalid hand because it doesn\'t contains three triplet/quad of wind tile', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new WindTile('west')),
       new Triplet(new WindTile('north')),
       new Triplet(new WindTile('east')),
       new Triplet(new DotTile(2))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Quad(new DotTile(1))
     ]
   })

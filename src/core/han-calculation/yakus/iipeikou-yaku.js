@@ -1,4 +1,4 @@
-import { Sequence } from './../../combinaison-classes'
+import { Sequence } from './../../combination-classes'
 
 /**
  * Iipeikou (pure double sequence) yaku pattern<br><br>
@@ -13,17 +13,17 @@ import { Sequence } from './../../combinaison-classes'
  */
 class IipeikouYaku {
   /** @override */
-  check ({ combinaisons, isOpen }) {
+  check ({ combinations, isOpen }) {
     if (isOpen) return
 
     const storedChiis = []
     let numberOfIdenticalChiis = 0
 
-    for (const combinaison of combinaisons) {
-      if (combinaison instanceof Sequence) {
-        const identicalChiis = storedChiis.filter(x => x.tiles[0].suit === combinaison.tiles[0].suit && x.tiles[0].value === combinaison.tiles[0].value)
+    for (const combination of combinations) {
+      if (combination instanceof Sequence) {
+        const identicalChiis = storedChiis.filter(x => x.tiles[0].suit === combination.tiles[0].suit && x.tiles[0].value === combination.tiles[0].value)
         if (identicalChiis.length > 0) numberOfIdenticalChiis++
-        storedChiis.push(combinaison)
+        storedChiis.push(combination)
       }
     }
 

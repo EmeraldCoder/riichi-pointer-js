@@ -1,4 +1,4 @@
-import { Quad } from './../../combinaison-classes'
+import { Quad } from './../../combination-classes'
 
 /**
  * Suu Kantsu (Four kans)<br><br>
@@ -13,8 +13,8 @@ import { Quad } from './../../combinaison-classes'
  */
 class SuukantsuYaku {
   /** @override */
-  check ({ combinaisons }) {
-    const nbOfKan = combinaisons.filter(x => x instanceof Quad).length
+  check ({ combinations }) {
+    const nbOfKan = combinations.filter(x => x instanceof Quad).length
     if (nbOfKan === 4) return { key: 'suukantsu', hanValue: 0, yakumanValue: 1 }
   }
 }

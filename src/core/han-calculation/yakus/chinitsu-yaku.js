@@ -13,11 +13,11 @@ import { HonorTile } from './../../tile-classes'
  */
 class ChinitsuYaku {
   /** @override */
-  check ({ combinaisons, isOpen }) {
+  check ({ combinations, isOpen }) {
     let suit = null
 
-    for (const combinaison of combinaisons) {
-      for (const tile of combinaison.tiles) {
+    for (const combination of combinations) {
+      for (const tile of combination.tiles) {
         if (tile instanceof HonorTile) return
 
         if (suit == null) {

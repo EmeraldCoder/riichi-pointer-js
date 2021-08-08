@@ -1,4 +1,4 @@
-import { Sequence } from './../../combinaison-classes'
+import { Sequence } from './../../combination-classes'
 
 /**
  * Ittsu or Ikkitsuukan (pure straight) yaku pattern<br><br>
@@ -13,12 +13,12 @@ import { Sequence } from './../../combinaison-classes'
  */
 class IttsuuYaku {
   /** @override */
-  check ({ combinaisons, isOpen }) {
+  check ({ combinations, isOpen }) {
     const chiiCount = {}
 
-    for (const combinaison of combinaisons) {
-      if (combinaison instanceof Sequence) {
-        var tile = combinaison.tiles[0]
+    for (const combination of combinations) {
+      if (combination instanceof Sequence) {
+        var tile = combination.tiles[0]
 
         if (chiiCount[tile.suit] == null) {
           chiiCount[tile.suit] = { 1: 0, 4: 0, 7: 0 }

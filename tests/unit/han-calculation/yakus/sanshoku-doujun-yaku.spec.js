@@ -1,12 +1,12 @@
 import SanshokuDoujunYaku from '@/core/han-calculation/yakus/sanshoku-doujun-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence } from '@/core/combination-classes'
 import { DotTile, CharacterTile, BambooTile } from '@/core/tile-classes'
 
 const sut = new SanshokuDoujunYaku()
 
 const validConcealedHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
     new Sequence(new CharacterTile(2), new CharacterTile(3), new CharacterTile(4)),
@@ -20,12 +20,12 @@ test('sanshoku doujun (mixed triple sequence) valid concealed hand', () => {
 })
 
 const validOpenHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
     new Sequence(new CharacterTile(2), new CharacterTile(3), new CharacterTile(4))
   ],
-  openCombinaisons: [
+  openCombinations: [
     new Triplet(new DotTile(3)),
     new Pair(new DotTile(7))
   ]
@@ -36,7 +36,7 @@ test('sanshoku doujun (mixed triple sequence) valid open hand', () => {
 })
 
 const invalidHandWithOnlyTwoChiiOfTheSameValue = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
     new Triplet(new CharacterTile(2)),
@@ -50,7 +50,7 @@ test('sanshoku doujun (mixed triple sequence) invalid hand with only two sequenc
 })
 
 const invalidHandWithoutThreeDifferentSuit = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
     new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),

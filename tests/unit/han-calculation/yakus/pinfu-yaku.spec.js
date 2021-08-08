@@ -1,19 +1,19 @@
 import PinfuYaku from '@/core/han-calculation/yakus/pinfu-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence, Quad } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence, Quad } from '@/core/combination-classes'
 import { DotTile, DragonTile, WindTile } from '@/core/tile-classes'
 
 const sut = new PinfuYaku()
 
 const validHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Pair(new DotTile(9))
   ],
-  winningCombinaisonIndex: 0,
+  winningCombinationIndex: 0,
   winningTileIndex: 0
 })
 
@@ -22,14 +22,14 @@ test('pinfu (all sequence / no point) valid hand', () => {
 })
 
 const invalidHandWithDragonPair = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Pair(new DragonTile('red'))
   ],
-  winningCombinaisonIndex: 0,
+  winningCombinationIndex: 0,
   winningTileIndex: 0
 })
 
@@ -38,14 +38,14 @@ test('pinfu (all sequence / no point) invalid hand with a dragon pair', () => {
 })
 
 const invalidHandWithSeatWindPair = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Pair(new WindTile('east'))
   ],
-  winningCombinaisonIndex: 0,
+  winningCombinationIndex: 0,
   winningTileIndex: 0,
   roundWind: 'east',
   seatWind: 'south'
@@ -56,14 +56,14 @@ test('pinfu (all sequence / no point) invalid hand with a seat wind pair', () =>
 })
 
 const invalidHandWithPrevalentWindPair = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Pair(new WindTile('south'))
   ],
-  winningCombinaisonIndex: 0,
+  winningCombinationIndex: 0,
   winningTileIndex: 0,
   roundWind: 'east',
   seatWind: 'south'
@@ -73,14 +73,14 @@ test('pinfu (all sequence / no point) invalid hand with a prevalent wind pair', 
 })
 
 const invalidHandWithPon = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Triplet(new DotTile(7)),
     new Pair(new DotTile(9))
   ],
-  winningCombinaisonIndex: 0,
+  winningCombinationIndex: 0,
   winningTileIndex: 0
 })
 
@@ -89,14 +89,14 @@ test('pinfu (all sequence / no point) invalid hand with a triplet', () => {
 })
 
 const invalidHandWithKan = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Quad(new DotTile(7)),
     new Pair(new DotTile(9))
   ],
-  winningCombinaisonIndex: 0,
+  winningCombinationIndex: 0,
   winningTileIndex: 0
 })
 
@@ -105,16 +105,16 @@ test('pinfu (all sequence / no point) invalid hand with a quad', () => {
 })
 
 const invalidHandWhenOpen = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Pair(new DotTile(9))
   ],
-  openCombinaisons: [
+  openCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3))
   ],
-  winningCombinaisonIndex: 0,
+  winningCombinationIndex: 0,
   winningTileIndex: 0
 })
 
@@ -123,14 +123,14 @@ test('pinfu (all sequence / no point) invalid hand when open', () => {
 })
 
 const invalidHandWithEdgeWait = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Pair(new DotTile(9))
   ],
-  winningCombinaisonIndex: 0,
+  winningCombinationIndex: 0,
   winningTileIndex: 2
 })
 
@@ -139,14 +139,14 @@ test('pinfu (all sequence / no point) invalid hand with an edge wait', () => {
 })
 
 const invalidHandWithClosedWait = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Pair(new DotTile(9))
   ],
-  winningCombinaisonIndex: 0,
+  winningCombinationIndex: 0,
   winningTileIndex: 1
 })
 
@@ -155,14 +155,14 @@ test('pinfu (all sequence / no point) invalid hand with a closed wait', () => {
 })
 
 const invalidHandWithSingleWait = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
     new Pair(new DotTile(9))
   ],
-  winningCombinaisonIndex: 4,
+  winningCombinationIndex: 4,
   winningTileIndex: 0
 })
 

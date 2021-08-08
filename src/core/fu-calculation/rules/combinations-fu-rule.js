@@ -1,11 +1,11 @@
 import { HonorTile } from './../../tile-classes'
-import { Triplet, Quad } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combination-classes'
 
 /**
- * Fu calculation rule that will attribute fu according to the hand's combinaisons.<br><br>
+ * Fu calculation rule that will attribute fu according to the hand's combinations.<br><br>
  *
  * <table>
- * <tr><th>Combinaison</th><th>Simples</th><th>Terminal / Honor</th></tr>
+ * <tr><th>Combination</th><th>Simples</th><th>Terminal / Honor</th></tr>
  * <tr><td>Minkou (Open Triplet)</td><td>2</td><td>4</td></tr>
  * <tr><td>Ankou (Concealed Triplet)</td><td>4</td><td>8</td></tr>
  * <tr><td>Minkan (Open Quad)</td><td>8</td><td>16</td></tr>
@@ -15,12 +15,12 @@ import { Triplet, Quad } from './../../combinaison-classes'
  * @implements FuCalculation.FuRule
  * @memberof FuCalculation
  */
-class CombinaisonsFuRule {
+class CombinationsFuRule {
   /** @override */
   check (hand) {
     const result = []
 
-    const counts = countCombinaisonType(hand)
+    const counts = countCombinationType(hand)
 
     if (counts.minkouSimple > 0) result.push({ key: 'minkou simple', fuValue: 2, quantity: counts.minkouSimple })
     if (counts.minkouNonSimple > 0) result.push({ key: 'minkou non simple', fuValue: 4, quantity: counts.minkouNonSimple })
@@ -39,7 +39,7 @@ function isSimpleTile (tile) {
   return !(tile instanceof HonorTile) && !tile.isTerminal()
 }
 
-function countCombinaisonType (hand) {
+function countCombinationType (hand) {
   let counts = {
     minkouSimple: 0,
     minkouNonSimple: 0,
@@ -51,23 +51,23 @@ function countCombinaisonType (hand) {
     ankanNonSimple: 0
   }
 
-  counts = hand.concealedCombinaisons.reduce((agg, combinaison, combinaisonIndex) => {
-    if (combinaison instanceof Triplet) {
-      if (hand.winningType === 'ron' && hand.winningCombinaisonIndex === combinaisonIndex) {
-        if (isSimpleTile(combinaison.tiles[0])) {
+  counts = hand.concealedCombinations.reduce((agg, combination, combinationIndex) => {
+    if (combination instanceof Triplet) {
+      if (hand.winningType === 'ron' && hand.winningCombinationIndex === combinationIndex) {
+        if (isSimpleTile(combination.tiles[0])) {
           agg.minkouSimple++
         } else {
           agg.minkouNonSimple++
         }
       } else {
-        if (isSimpleTile(combinaison.tiles[0])) {
+        if (isSimpleTile(combination.tiles[0])) {
           agg.ankouSimple++
         } else {
           agg.ankouNonSimple++
         }
       }
-    } else if (combinaison instanceof Quad) {
-      if (isSimpleTile(combinaison.tiles[0])) {
+    } else if (combination instanceof Quad) {
+      if (isSimpleTile(combination.tiles[0])) {
         agg.ankanSimple++
       } else {
         agg.ankanNonSimple++
@@ -77,15 +77,15 @@ function countCombinaisonType (hand) {
     return agg
   }, counts)
 
-  return hand.openCombinaisons.reduce((agg, combinaison) => {
-    if (combinaison instanceof Triplet) {
-      if (isSimpleTile(combinaison.tiles[0])) {
+  return hand.openCombinations.reduce((agg, combination) => {
+    if (combination instanceof Triplet) {
+      if (isSimpleTile(combination.tiles[0])) {
         agg.minkouSimple++
       } else {
         agg.minkouNonSimple++
       }
-    } else if (combinaison instanceof Quad) {
-      if (isSimpleTile(combinaison.tiles[0])) {
+    } else if (combination instanceof Quad) {
+      if (isSimpleTile(combination.tiles[0])) {
         agg.minkanSimple++
       } else {
         agg.minkanNonSimple++
@@ -96,4 +96,4 @@ function countCombinaisonType (hand) {
   }, counts)
 }
 
-export default CombinaisonsFuRule
+export default CombinationsFuRule

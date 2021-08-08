@@ -1,11 +1,11 @@
 import TsumoRule from '@/core/fu-calculation/rules/tsumo-fu-rule'
 import Hand from '@/core/hand'
-import { Pair, Triplet } from '@/core/combinaison-classes'
+import { Pair, Triplet } from '@/core/combination-classes'
 import { DotTile, DragonTile, WindTile } from '@/core/tile-classes'
 
 function makeDefaultHand (winningType) {
   return new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Triplet(new DragonTile('green')),
       new Triplet(new DragonTile('red')),
       new Triplet(new DragonTile('white')),

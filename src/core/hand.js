@@ -1,13 +1,13 @@
 class Hand {
   constructor (options) {
-    this.concealedCombinaisons = options?.concealedCombinaisons ?? []
-    this.openCombinaisons = options?.openCombinaisons ?? []
+    this.concealedCombinations = options?.concealedCombinations ?? []
+    this.openCombinations = options?.openCombinations ?? []
 
     this.winningType = options?.winningType ?? 'tsumo'
     this.seatWind = options?.seatWind ?? 'east'
     this.roundWind = options?.roundWind ?? 'east'
 
-    this.winningCombinaisonIndex = options?.winningCombinaisonIndex ?? null
+    this.winningCombinationIndex = options?.winningCombinationIndex ?? null
     this.winningTileIndex = options?.winningTileIndex ?? null
 
     this.nbDora = options?.nbDora ?? 0
@@ -16,23 +16,23 @@ class Hand {
   }
 
   get isOpen () {
-    return this.openCombinaisons.length > 0
+    return this.openCombinations.length > 0
   }
 
-  get combinaisons () {
-    return this.concealedCombinaisons.concat(this.openCombinaisons)
+  get combinations () {
+    return this.concealedCombinations.concat(this.openCombinations)
   }
 
-  get winningCombinaison () {
-    if (this.winningCombinaisonIndex != null) {
-      return this.concealedCombinaisons[this.winningCombinaisonIndex] ?? null
+  get winningCombination () {
+    if (this.winningCombinationIndex != null) {
+      return this.concealedCombinations[this.winningCombinationIndex] ?? null
     }
     return null
   }
 
   get winningTile () {
-    if (this.winningCombinaison != null && this.winningTileIndex != null) {
-      return this.winningCombinaison.tiles[this.winningTileIndex] ?? null
+    if (this.winningCombination != null && this.winningTileIndex != null) {
+      return this.winningCombination.tiles[this.winningTileIndex] ?? null
     }
     return null
   }

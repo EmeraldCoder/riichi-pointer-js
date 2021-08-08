@@ -1,12 +1,12 @@
 import RyanpeikouYaku from '@/core/han-calculation/yakus/ryanpeikou-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence } from '@/core/combination-classes'
 import { DotTile, BambooTile } from '@/core/tile-classes'
 
 const sut = new RyanpeikouYaku()
 
 const validHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new DotTile(7), new DotTile(8), new DotTile(9)),
@@ -21,11 +21,11 @@ test('ryan peikou (twice pure double chiis) valid hand', () => {
 
 describe('given the hand have a valid open ryan peikou (twice pure double chiis)', () => {
   const validOpenHand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
       new Sequence(new DotTile(7), new DotTile(8), new DotTile(9)),
       new Sequence(new DotTile(7), new DotTile(8), new DotTile(9))
@@ -42,7 +42,7 @@ describe('given the hand have a valid open ryan peikou (twice pure double chiis)
 })
 
 const invalidHandWitoutTwoPairOfChii = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new DotTile(7), new DotTile(8), new DotTile(9)),
@@ -56,7 +56,7 @@ test('ryan peikou (twice pure double chiis) invalid hand without two pair of seq
 })
 
 const invalidHandWithoutChii = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new BambooTile(1)),
     new Triplet(new BambooTile(2)),
     new Triplet(new DotTile(7)),

@@ -1,4 +1,4 @@
-import { Pair, Orphan } from './../../combinaison-classes'
+import { Pair, Orphan } from './../../combination-classes'
 import { HonorTile } from './../../tile-classes'
 
 /**
@@ -19,15 +19,15 @@ class KokushiMusouYaku {
   }
 
   /** @override */
-  check ({ concealedCombinaisons, winningCombinaison }) {
-    const nbOfPair = concealedCombinaisons.filter(x => x instanceof Pair).length
+  check ({ concealedCombinations, winningCombination }) {
+    const nbOfPair = concealedCombinations.filter(x => x instanceof Pair).length
     if (nbOfPair === 0) return
 
-    const nbOfOrphan = concealedCombinaisons.filter(x => x instanceof Orphan).length
+    const nbOfOrphan = concealedCombinations.filter(x => x instanceof Orphan).length
     if (nbOfOrphan !== 12) return
 
-    const nbOfValidDistinctTile = concealedCombinaisons.reduce((tiles, combinaison) => {
-      combinaison.tiles.forEach(tile => tiles.push(tile))
+    const nbOfValidDistinctTile = concealedCombinations.reduce((tiles, combination) => {
+      combination.tiles.forEach(tile => tiles.push(tile))
       return tiles
     }, [])
       .filter(tile => tile instanceof HonorTile || tile.isTerminal())
@@ -37,7 +37,7 @@ class KokushiMusouYaku {
 
     if (nbOfValidDistinctTile !== 13) return
 
-    const yakumanValue = winningCombinaison instanceof Pair && this.allowDoubleYakuman ? 2 : 1
+    const yakumanValue = winningCombination instanceof Pair && this.allowDoubleYakuman ? 2 : 1
 
     return { key: 'kokushi musou', hanValue: 0, yakumanValue }
   }

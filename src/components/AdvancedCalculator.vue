@@ -2,9 +2,9 @@
   <div class="container main-layout">
     <div class="main-layout__infos">
       <div class="main-layout__tiles-info">
-        <h2><span>Combinaisons</span></h2>
+        <h2><span>Combinations</span></h2>
 
-        <div class="combinaisons-toolbar">
+        <div class="combinations-toolbar">
           <div class="btn-group">
             <button
               :class="{ active: addIsConcealed }"
@@ -14,7 +14,7 @@
             </button>
             <button
               :class="{ active: !addIsConcealed }"
-              :disabled="!openedCombinaisonAvailable"
+              :disabled="!openedCombinationAvailable"
               @click="addIsConcealed = false"
             >
               Open
@@ -22,81 +22,81 @@
           </div>
 
           <button
-            :disabled="!addNormalCombinaisonAvailable"
-            @click="addCombinaison('sequence')"
+            :disabled="!addNormalCombinationAvailable"
+            @click="addCombination('sequence')"
           >
             <font-awesome-icon :icon="plusIcon" />
             Sequence
           </button>
           <button
-            :disabled="!addNormalCombinaisonAvailable"
-            @click="addCombinaison('triplet')"
+            :disabled="!addNormalCombinationAvailable"
+            @click="addCombination('triplet')"
           >
             <font-awesome-icon :icon="plusIcon" />
             Triplet
           </button>
           <button
-            :disabled="!addNormalCombinaisonAvailable"
-            @click="addCombinaison('quad')"
+            :disabled="!addNormalCombinationAvailable"
+            @click="addCombination('quad')"
           >
             <font-awesome-icon :icon="plusIcon" />
             Quad
           </button>
           <button
             :disabled="!addPairAvailable"
-            @click="addCombinaison('pair')"
+            @click="addCombination('pair')"
           >
             <font-awesome-icon :icon="plusIcon" />
             Pair
           </button>
           <button
             :disabled="!addOrphanAvailable"
-            @click="addCombinaison('orphan')"
+            @click="addCombination('orphan')"
           >
             <font-awesome-icon :icon="plusIcon" />
             Orphan
           </button>
         </div>
 
-        <div class="combinaisons-wrapper m-t">
-          <h3 v-if="concealedCombinaisons.length > 0">
+        <div class="combinations-wrapper m-t">
+          <h3 v-if="concealedCombinations.length > 0">
             Concealed
           </h3>
           <div
-            v-if="concealedCombinaisons.length > 0"
-            class="combinaison-group"
+            v-if="concealedCombinations.length > 0"
+            class="combination-group"
           >
-            <combinaison-component
-              v-for="(combinaison, index) in concealedCombinaisons"
-              :key="'combinaison.concealed.' + index"
-              :combinaison="combinaison"
+            <combination-component
+              v-for="(combination, index) in concealedCombinations"
+              :key="'combination.concealed.' + index"
+              :combination="combination"
               :waitable="true"
               :waiting-tile="waitingTile"
-              :selected="combinaison === touchedCombinaison"
+              :selected="combination === touchedCombination"
               @selectAsWaitingTile="toggleWaitingTile"
-              @delete="removeConcealedCombinaison(combinaison)"
-              @touch="touchCombinaison(combinaison)"
+              @delete="removeConcealedCombination(combination)"
+              @touch="touchCombination(combination)"
             />
           </div>
 
           <h3
-            v-if="openCombinaisons.length > 0"
-            :class="{ 'm-t-2': concealedCombinaisons.length > 0 }"
+            v-if="openCombinations.length > 0"
+            :class="{ 'm-t-2': concealedCombinations.length > 0 }"
           >
             Open
           </h3>
 
           <div
-            v-if="openCombinaisons.length > 0"
-            class="combinaison-group"
+            v-if="openCombinations.length > 0"
+            class="combination-group"
           >
-            <combinaison-component
-              v-for="(combinaison, index) in openCombinaisons"
-              :key="'combinaison.opened.' + index"
-              :combinaison="combinaison"
-              :selected="combinaison === touchedCombinaison"
-              @delete="removeOpenedCombinaison(combinaison)"
-              @touch="touchCombinaison(combinaison)"
+            <combination-component
+              v-for="(combination, index) in openCombinations"
+              :key="'combination.opened.' + index"
+              :combination="combination"
+              :selected="combination === touchedCombination"
+              @delete="removeOpenedCombination(combination)"
+              @touch="touchCombination(combination)"
             />
           </div>
         </div>
@@ -298,8 +298,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCalculator, faPlus } from '@fortawesome/free-solid-svg-icons'
 import Hand from './../core/hand'
 import { TileFactory, NumberedTile } from './../core/tile-classes'
-import { CombinaisonFactory, Orphan, Pair, Quad } from './../core/combinaison-classes'
-import CombinaisonComponent from './Combinaison.vue'
+import { CombinationFactory, Orphan, Pair, Quad } from './../core/combination-classes'
+import CombinationComponent from './Combination.vue'
 import TileSelectionModalComponent from './TileSelectionModal.vue'
 import DoraCounterComponent from './DoraCounter.vue'
 import ScoreModalComponent from './AdvancedCalculatorScoreModal.vue'
@@ -307,7 +307,7 @@ import eventBus from './../event-bus'
 
 export default {
   components: {
-    CombinaisonComponent,
+    CombinationComponent,
     TileSelectionModalComponent,
     DoraCounterComponent,
     ScoreModalComponent,
@@ -332,11 +332,11 @@ export default {
       riichiIsOpen: false, // indicate if the player's riichi is an open riichi (optional yaku)
       nbDora: 0, // indicate the number of dora in the player's hand
       waitingTile: null, // winning tile selected by the user
-      concealedCombinaisons: [], // list of the concealed combinaisons of the player
-      openCombinaisons: [], // list of the open combinaisons of the player
-      addIsConcealed: true, // indicate if the combinaison that the user is currently adding is concealed or not
-      addType: null, // type of the combinaison that the user is currently adding (pair, triplet, quad, sequence)
-      touchedCombinaison: null, // keep track of which combinaison the user touch on mobile
+      concealedCombinations: [], // list of the concealed combinations of the player
+      openCombinations: [], // list of the open combinations of the player
+      addIsConcealed: true, // indicate if the combination that the user is currently adding is concealed or not
+      addType: null, // type of the combination that the user is currently adding (pair, triplet, quad, sequence)
+      touchedCombination: null, // keep track of which combination the user touch on mobile
       hand: null, // the hand object generate by the user selection (null if the hand is not in a finished state)
       tileSelectionModal: false, // indicate if the tile selection modal is open
       scoreModal: false, // indicate if the score modal is open
@@ -347,7 +347,7 @@ export default {
 
   computed: {
     canCalculatePoint () {
-      const counts = this.combinaisonCounts
+      const counts = this.combinationCounts
       return this.waitingTile != null &&
        (
          (counts.pair === 7 && counts.normal === 0 && counts.orphan === 0) ||
@@ -361,8 +361,8 @@ export default {
         return { tile: x, count: 4 }
       })
 
-      this.concealedCombinaisons.concat(this.openCombinaisons).forEach(combinaison => {
-        combinaison.tiles.forEach(tile => {
+      this.concealedCombinations.concat(this.openCombinations).forEach(combination => {
+        combination.tiles.forEach(tile => {
           availableTiles.find(x => x.tile.suit === tile.suit && x.tile.value === tile.value).count--
         })
       })
@@ -397,13 +397,13 @@ export default {
       }
     },
 
-    combinaisonCounts () {
+    combinationCounts () {
       let pair = 0
       let orphan = 0
-      let quad = this.openCombinaisons.filter(x => x instanceof Quad).length
-      let normal = this.openCombinaisons.length
+      let quad = this.openCombinations.filter(x => x instanceof Quad).length
+      let normal = this.openCombinations.length
 
-      this.concealedCombinaisons.forEach(x => {
+      this.concealedCombinations.forEach(x => {
         if (x instanceof Orphan) orphan++
         else if (x instanceof Pair) pair++
         else if (x instanceof Quad) {
@@ -416,30 +416,30 @@ export default {
     },
 
     addOrphanAvailable () {
-      const counts = this.combinaisonCounts
+      const counts = this.combinationCounts
       return this.addIsConcealed && counts.normal === 0 && counts.pair <= 1 && counts.orphan < 12
     },
 
     addPairAvailable () {
-      const counts = this.combinaisonCounts
+      const counts = this.combinationCounts
       return this.addIsConcealed && (counts.pair === 0 || ((counts.normal + counts.orphan) === 0 && counts.pair < 7))
     },
 
-    addNormalCombinaisonAvailable () {
-      const counts = this.combinaisonCounts
+    addNormalCombinationAvailable () {
+      const counts = this.combinationCounts
       return counts.orphan === 0 && counts.pair <= 1 && counts.normal < 4
     },
 
     riichiAvailable () {
-      return this.openCombinaisons.length === 0 && !this.specialCases.includes('firstTurn')
+      return this.openCombinations.length === 0 && !this.specialCases.includes('firstTurn')
     },
 
-    openedCombinaisonAvailable () {
+    openedCombinationAvailable () {
       return this.riichiType == null && !this.specialCases.includes('firstTurn')
     },
 
     tenhouChiihouRenhouAvailable () {
-      return this.openCombinaisons.length === 0 && this.riichiType == null && !this.specialCases.includes('lastTile')
+      return this.openCombinations.length === 0 && this.riichiType == null && !this.specialCases.includes('lastTile')
     },
 
     chankanAvailable () {
@@ -447,7 +447,7 @@ export default {
     },
 
     rinshanAvailable () {
-      return this.winningType === 'tsumo' && this.combinaisonCounts.quad > 0
+      return this.winningType === 'tsumo' && this.combinationCounts.quad > 0
     },
 
     haiteiHouteiAvailable () {
@@ -476,8 +476,8 @@ export default {
       // if the user removed his riichi and the open riichi was selected, we need to reset it
       if (value == null && this.riichiIsOpen) this.riichiIsOpen = false
 
-      // if the user add a riichi and the add combinaison was on "opened", we need to reset
-      // it to "concealed" because we can't have opened combinaison with riichi and the button
+      // if the user add a riichi and the add combination was on "opened", we need to reset
+      // it to "concealed" because we can't have opened combination with riichi and the button
       // will be disabled anyway
       if (value != null && !this.addIsConcealed) this.addIsConcealed = true
     },
@@ -492,15 +492,15 @@ export default {
   },
 
   mounted () {
-    // global event listener to unselect the touched combinaison on mobile
+    // global event listener to unselect the touched combination on mobile
     // when the user touch anywhere on the screen
-    document.addEventListener('touchend', this.resetTouchedCombinaison)
+    document.addEventListener('touchend', this.resetTouchedCombination)
 
     eventBus.on('reset', this.reset)
   },
 
   unmounted () {
-    document.removeEventListener('touchend', this.resetTouchedCombinaison)
+    document.removeEventListener('touchend', this.resetTouchedCombination)
     eventBus.off('reset', this.reset)
   },
 
@@ -515,52 +515,52 @@ export default {
       this.riichiIsOpen = false
       this.nbDora = 0
       this.waitingTile = null
-      this.concealedCombinaisons = []
-      this.openCombinaisons = []
+      this.concealedCombinations = []
+      this.openCombinations = []
       this.addIsConcealed = true
       this.addType = null
-      this.touchedCombinaison = null
+      this.touchedCombination = null
       this.hand = null
     },
 
-    addCombinaison (type) {
+    addCombination (type) {
       this.addType = type
       this.tileSelectionModal = true
     },
 
     selectTile ({ suit, value }) {
-      const firstCombinaisonTile = TileFactory.create(suit, value)
-      const combinaison = CombinaisonFactory.create(this.addType, firstCombinaisonTile)
+      const firstTile = TileFactory.create(suit, value)
+      const combination = CombinationFactory.create(this.addType, firstTile)
 
       if (this.addIsConcealed) {
-        this.concealedCombinaisons.push(combinaison)
+        this.concealedCombinations.push(combination)
       } else {
-        this.openCombinaisons.push(combinaison)
+        this.openCombinations.push(combination)
       }
 
       this.tileSelectionModal = false
     },
 
-    removeConcealedCombinaison (combinaison) {
-      if (this.touchedCombinaison === combinaison) {
-        this.touchedCombinaison = null
+    removeConcealedCombination (combination) {
+      if (this.touchedCombination === combination) {
+        this.touchedCombination = null
       }
 
-      if (combinaison.tiles.includes(this.waitingTile)) {
+      if (combination.tiles.includes(this.waitingTile)) {
         this.waitingTile = null
       }
 
-      const index = this.concealedCombinaisons.indexOf(combinaison)
-      this.concealedCombinaisons.splice(index, 1)
+      const index = this.concealedCombinations.indexOf(combination)
+      this.concealedCombinations.splice(index, 1)
     },
 
-    removeOpenedCombinaison (combinaison) {
-      if (this.touchedCombinaison === combinaison) {
-        this.touchedCombinaison = null
+    removeOpenedCombination (combination) {
+      if (this.touchedCombination === combination) {
+        this.touchedCombination = null
       }
 
-      const index = this.openCombinaisons.indexOf(combinaison)
-      this.openCombinaisons.splice(index, 1)
+      const index = this.openCombinations.indexOf(combination)
+      this.openCombinations.splice(index, 1)
     },
 
     toggleWaitingTile (tile) {
@@ -579,30 +579,30 @@ export default {
       }
     },
 
-    touchCombinaison (combinaison) {
-      if (this.touchedCombinaison === combinaison) {
-        this.touchedCombinaison = null
+    touchCombination (combination) {
+      if (this.touchedCombination === combination) {
+        this.touchedCombination = null
       } else {
-        this.touchedCombinaison = combinaison
+        this.touchedCombination = combination
       }
     },
 
-    resetTouchedCombinaison () {
-      this.touchedCombinaison = null
+    resetTouchedCombination () {
+      this.touchedCombination = null
     },
 
     showPoints () {
-      const winningCombinaison = this.concealedCombinaisons.filter(x => x.tiles.includes(this.waitingTile))[0]
+      const winningCombination = this.concealedCombinations.filter(x => x.tiles.includes(this.waitingTile))[0]
 
       const hand = new Hand({
-        concealedCombinaisons: this.concealedCombinaisons,
-        openCombinaisons: this.openCombinaisons,
+        concealedCombinations: this.concealedCombinations,
+        openCombinations: this.openCombinations,
         roundWind: this.prevalentWind,
         seatWind: this.seatWind,
         winningType: this.winningType,
         nbDora: this.nbDora,
-        winningCombinaisonIndex: this.concealedCombinaisons.indexOf(winningCombinaison),
-        winningTileIndex: winningCombinaison.tiles.indexOf(this.waitingTile)
+        winningCombinationIndex: this.concealedCombinations.indexOf(winningCombination),
+        winningTileIndex: winningCombination.tiles.indexOf(this.waitingTile)
       })
 
       if (this.riichiType === 'normal' || this.riichiType === 'double') hand.yakus.push('riichi')
@@ -653,7 +653,7 @@ LAYOUT
   line-height: 2.5rem;
 }
 
-.combinaisons-toolbar {
+.combinations-toolbar {
   display: flex;
   column-gap: calc(var(--gap-size) / 2);
   row-gap: calc(var(--gap-size) / 2);
@@ -694,16 +694,16 @@ LAYOUT
     border-radius: 0;
   }
 
-  .combinaisons-toolbar .btn-group {
+  .combinations-toolbar .btn-group {
     width: 100%;
   }
 }
 
 /* ---
-COMBINAISONS WRAPPER
+COMBINATIONS WRAPPER
 --- */
 
-.combinaisons-wrapper {
+.combinations-wrapper {
   background: rgba(255, 255, 255, 0.3);
   padding: var(--gap-size);
   min-height: 100px;
@@ -711,20 +711,20 @@ COMBINAISONS WRAPPER
   overflow-y: auto;
   border: 1px solid var(--dark-green);
 }
-.combinaisons-wrapper h3 {
+.combinations-wrapper h3 {
   font-size: 1rem;
   line-height: 1rem;
   font-weight: bold;
   margin-bottom: var(--gap-size);
 }
-.combinaisons-wrapper .combinaison-group {
+.combinations-wrapper .combination-group {
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap-size);
 }
 
 @media (min-width: 960px) {
-  .combinaisons-wrapper {
+  .combinations-wrapper {
     min-height: 440px;
   }
 }

@@ -1,18 +1,18 @@
 import WaitRule from '@/core/fu-calculation/rules/wait-fu-rule'
 import Hand from '@/core/hand'
-import { Pair, Triplet, Sequence } from '@/core/combinaison-classes'
+import { Pair, Triplet, Sequence } from '@/core/combination-classes'
 import { DotTile } from '@/core/tile-classes'
 
 describe('given the wait is a single wait', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Triplet(new DotTile(2)),
       new Triplet(new DotTile(3)),
       new Triplet(new DotTile(4)),
       new Triplet(new DotTile(5))
     ],
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 0
   })
 
@@ -24,14 +24,14 @@ describe('given the wait is a single wait', () => {
 
 describe('given the wait is a edge wait', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Triplet(new DotTile(3)),
       new Triplet(new DotTile(4)),
       new Triplet(new DotTile(5))
     ],
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 2
   })
 
@@ -43,14 +43,14 @@ describe('given the wait is a edge wait', () => {
 
 describe('given the wait is a closed wait', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Triplet(new DotTile(3)),
       new Triplet(new DotTile(4)),
       new Triplet(new DotTile(5))
     ],
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 1
   })
 
@@ -62,14 +62,14 @@ describe('given the wait is a closed wait', () => {
 
 describe('given the wait is not a single, edge or closed wait', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Triplet(new DotTile(2)),
       new Triplet(new DotTile(3)),
       new Triplet(new DotTile(4)),
       new Triplet(new DotTile(5))
     ],
-    winningCombinaisonIndex: 1,
+    winningCombinationIndex: 1,
     winningTileIndex: 0
   })
 

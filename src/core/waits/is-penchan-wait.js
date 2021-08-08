@@ -1,10 +1,10 @@
-import { Sequence } from './../combinaison-classes'
+import { Sequence } from './../combination-classes'
 
-function isPenchanWait ({ concealedCombinaisons, winningCombinaisonIndex, winningTileIndex }) {
-  const winningCombinaison = concealedCombinaisons[winningCombinaisonIndex]
+function isPenchanWait ({ concealedCombinations, winningCombinationIndex, winningTileIndex }) {
+  const winningCombination = concealedCombinations[winningCombinationIndex]
 
-  if (winningCombinaison != null && winningCombinaison instanceof Sequence) {
-    const winningTile = winningCombinaison.tiles[winningTileIndex]
+  if (winningCombination != null && winningCombination instanceof Sequence) {
+    const winningTile = winningCombination.tiles[winningTileIndex]
 
     if (
       winningTile != null &&

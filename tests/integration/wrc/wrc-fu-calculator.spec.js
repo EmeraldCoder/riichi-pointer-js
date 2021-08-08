@@ -1,13 +1,13 @@
 import WrcFuCalculator from '@/core/wrc/wrc-fu-calculator'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence, Quad } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence, Quad } from '@/core/combination-classes'
 import { DotTile, CharacterTile, BambooTile, WindTile, DragonTile } from '@/core/tile-classes'
 
 const wrcCalculator = new WrcFuCalculator()
 
 test('chiitsoitsu (seven pairs) hand should be 25 fu', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Pair(new DotTile(2)),
       new Pair(new DotTile(3)),
@@ -25,16 +25,16 @@ test('chiitsoitsu (seven pairs) hand should be 25 fu', () => {
 
 test('hand valid for open pinfu should be 30 fu', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new CharacterTile(1), new CharacterTile(2), new CharacterTile(3)),
       new Sequence(new DotTile(3), new DotTile(4), new DotTile(5)),
       new Pair(new BambooTile(2))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Sequence(new BambooTile(5), new BambooTile(6), new BambooTile(7))
     ],
-    winningCombinaisonIndex: 1,
+    winningCombinationIndex: 1,
     winningTileIndex: 0,
     winningType: 'ron'
   })
@@ -45,7 +45,7 @@ test('hand valid for open pinfu should be 30 fu', () => {
 })
 
 describe('given the hand is a pinfu', () => {
-  const concealedCombinaisons = [
+  const concealedCombinations = [
     new Sequence(new CharacterTile(1), new CharacterTile(2), new CharacterTile(3)),
     new Sequence(new DotTile(3), new DotTile(4), new DotTile(5)),
     new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
@@ -54,13 +54,13 @@ describe('given the hand is a pinfu', () => {
   ]
 
   test('should be 20 fu if the hand was won by tsumo (self-draw)', () => {
-    const hand = new Hand({ concealedCombinaisons, winningType: 'tsumo', winningCombinaisonIndex: 0, winningTileIndex: 0 })
+    const hand = new Hand({ concealedCombinations, winningType: 'tsumo', winningCombinationIndex: 0, winningTileIndex: 0 })
     const result = wrcCalculator.calculate(hand)
     expect(result.total).toBe(20)
   })
 
   test('should be 30 fu if the hand was won by ron (discard)', () => {
-    const hand = new Hand({ concealedCombinaisons, winningType: 'ron', winningCombinaisonIndex: 0, winningTileIndex: 0 })
+    const hand = new Hand({ concealedCombinations, winningType: 'ron', winningCombinationIndex: 0, winningTileIndex: 0 })
     const result = wrcCalculator.calculate(hand)
     expect(result.total).toBe(30)
   })
@@ -68,17 +68,17 @@ describe('given the hand is a pinfu', () => {
 
 test('test case 1', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Triplet(new DotTile(1)),
       new Triplet(new DotTile(2)),
       new Quad(new DotTile(3)),
       new Pair(new WindTile('east'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Triplet(new DotTile(8))
     ],
     winningType: 'tsumo',
-    winningCombinaisonIndex: 3,
+    winningCombinationIndex: 3,
     winningTileIndex: 0,
     roundWind: 'east',
     seatWind: 'east'
@@ -103,7 +103,7 @@ test('test case 1', () => {
 
 test('test case 2', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Triplet(new DotTile(1)),
       new Triplet(new DotTile(2)),
       new Sequence(new DotTile(3), new DotTile(4), new DotTile(5)),
@@ -111,7 +111,7 @@ test('test case 2', () => {
       new Pair(new DragonTile('green'))
     ],
     winningType: 'ron',
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 0,
     roundWind: 'east',
     seatWind: 'east'

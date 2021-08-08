@@ -1,4 +1,4 @@
-import { Pair, Triplet, Quad } from './../../combinaison-classes'
+import { Pair, Triplet, Quad } from './../../combination-classes'
 import { DragonTile } from './../../tile-classes'
 
 /**
@@ -14,14 +14,14 @@ import { DragonTile } from './../../tile-classes'
  */
 class ShousangenYaku {
   /** @override */
-  check ({ combinaisons }) {
-    const dragonCombinaisonCount = combinaisons.reduce((agg, combinaison) => {
-      const tile = combinaison.tiles[0]
+  check ({ combinations }) {
+    const dragonCombinationCount = combinations.reduce((agg, combination) => {
+      const tile = combination.tiles[0]
 
       if (tile instanceof DragonTile) {
-        if (combinaison instanceof Pair) {
+        if (combination instanceof Pair) {
           agg.pair++
-        } else if (combinaison instanceof Triplet || combinaison instanceof Quad) {
+        } else if (combination instanceof Triplet || combination instanceof Quad) {
           agg.ponOrKan++
         }
       }
@@ -29,7 +29,7 @@ class ShousangenYaku {
       return agg
     }, { pair: 0, ponOrKan: 0 })
 
-    if (dragonCombinaisonCount.pair === 1 && dragonCombinaisonCount.ponOrKan === 2) {
+    if (dragonCombinationCount.pair === 1 && dragonCombinationCount.ponOrKan === 2) {
       return { key: 'shousangen', hanValue: 2, yakumanValue: 0 }
     }
   }

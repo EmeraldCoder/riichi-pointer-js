@@ -1,4 +1,4 @@
-import { Sequence } from './../../combinaison-classes'
+import { Sequence } from './../../combination-classes'
 import { NumberedTile } from './../../tile-classes'
 
 /**
@@ -14,13 +14,13 @@ import { NumberedTile } from './../../tile-classes'
  */
 class JunchanYaku {
   /** @override */
-  check ({ combinaisons, isOpen }) {
+  check ({ combinations, isOpen }) {
     let nbChii = 0
 
-    for (const combinaison of combinaisons) {
-      if (combinaison instanceof Sequence) nbChii++
+    for (const combination of combinations) {
+      if (combination instanceof Sequence) nbChii++
 
-      const nbTerminal = combinaison.tiles.reduce((agg, tile) => {
+      const nbTerminal = combination.tiles.reduce((agg, tile) => {
         if (tile instanceof NumberedTile && tile.isTerminal()) agg++
         return agg
       }, 0)

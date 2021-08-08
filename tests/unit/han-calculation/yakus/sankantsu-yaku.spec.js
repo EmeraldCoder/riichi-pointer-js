@@ -1,12 +1,12 @@
 import SankantsuYaku from '@/core/han-calculation/yakus/sankantsu-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Quad } from '@/core/combinaison-classes'
+import { Triplet, Pair, Quad } from '@/core/combination-classes'
 import { DotTile } from '@/core/tile-classes'
 
 const sut = new SankantsuYaku()
 
 const validHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Quad(new DotTile(1)),
     new Quad(new DotTile(2)),
     new Quad(new DotTile(3)),
@@ -20,12 +20,12 @@ test('Sankantsu (3 kans) valid hand', () => {
 })
 
 const validHandWithOpenKan = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Quad(new DotTile(3)),
     new Triplet(new DotTile(4)),
     new Pair(new DotTile(6))
   ],
-  openCombinaisons: [
+  openCombinations: [
     new Quad(new DotTile(1)),
     new Quad(new DotTile(2))
   ]
@@ -36,7 +36,7 @@ test('Sankantsu (3 kans) valid hand with open quad', () => {
 })
 
 const invalidHandWithLessThanThreeKan = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Quad(new DotTile(1)),
     new Quad(new DotTile(2)),
     new Triplet(new DotTile(3)),

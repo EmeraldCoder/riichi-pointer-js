@@ -21,11 +21,11 @@ class TanyaoYaku {
   }
 
   /** @override */
-  check ({ combinaisons, isOpen }) {
+  check ({ combinations, isOpen }) {
     if (!this.allowOpen && isOpen) return
 
-    for (const combinaison of combinaisons) {
-      for (const tile of combinaison.tiles) {
+    for (const combination of combinations) {
+      for (const tile of combination.tiles) {
         if (tile instanceof HonorTile || tile.isTerminal()) return
       }
     }

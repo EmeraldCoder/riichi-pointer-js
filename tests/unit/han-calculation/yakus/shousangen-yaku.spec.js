@@ -1,12 +1,12 @@
 import ShousangenYaku from '@/core/han-calculation/yakus/shousangen-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Quad } from '@/core/combinaison-classes'
+import { Triplet, Pair, Quad } from '@/core/combination-classes'
 import { BambooTile, DragonTile, WindTile } from '@/core/tile-classes'
 
 const sut = new ShousangenYaku()
 
 const validHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new DragonTile('red')),
     new Triplet(new DragonTile('green')),
     new Pair(new DragonTile('white')),
@@ -20,7 +20,7 @@ test('shousangen (little three dragons) valid hand', () => {
 })
 
 const validHandWithKan = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new DragonTile('red')),
     new Quad(new DragonTile('green')),
     new Pair(new DragonTile('white')),
@@ -34,7 +34,7 @@ test('shousangen (little three dragons) valid hand with quad', () => {
 })
 
 const invalidHandWithoutDragonPair = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new DragonTile('red')),
     new Triplet(new DragonTile('green')),
     new Pair(new WindTile('east')),
@@ -48,7 +48,7 @@ test('shousangen (little three dragons) invalid hand without dragon pair', () =>
 })
 
 const invalidHandWithoutTwoDragonPon = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new DragonTile('red')),
     new Triplet(new WindTile('north')),
     new Pair(new DragonTile('white')),

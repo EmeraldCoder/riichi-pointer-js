@@ -1,17 +1,17 @@
 import DaisuushiiYaku from '@/core/han-calculation/yakus/daisuushii-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Quad } from '@/core/combinaison-classes'
+import { Triplet, Pair, Quad } from '@/core/combination-classes'
 import { DotTile, WindTile } from '@/core/tile-classes'
 
 test('daisuushii (big four winds) valid hand with a triplet of each wind tile', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Triplet(new WindTile('east')),
       new Triplet(new WindTile('south')),
       new Triplet(new WindTile('west'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Triplet(new WindTile('north'))
     ]
   })
@@ -22,13 +22,13 @@ test('daisuushii (big four winds) valid hand with a triplet of each wind tile', 
 
 test('daisuushii (big four winds) valid hand with a quad of each wind tile', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Quad(new WindTile('east')),
       new Quad(new WindTile('south')),
       new Quad(new WindTile('west'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Quad(new WindTile('north'))
     ]
   })
@@ -39,13 +39,13 @@ test('daisuushii (big four winds) valid hand with a quad of each wind tile', () 
 
 test('daisuushii (big four winds) valid hand with a mix of four triplet/quad of wind tile', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Quad(new WindTile('east')),
       new Triplet(new WindTile('south')),
       new Quad(new WindTile('west'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Triplet(new WindTile('north'))
     ]
   })
@@ -56,13 +56,13 @@ test('daisuushii (big four winds) valid hand with a mix of four triplet/quad of 
 
 test('daisuushii (big four winds) invalid hand because it does not contains four triplet/quad of wind tile', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new WindTile('east')),
       new Quad(new DotTile(1)),
       new Triplet(new WindTile('south')),
       new Quad(new WindTile('west'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Triplet(new WindTile('north'))
     ]
   })

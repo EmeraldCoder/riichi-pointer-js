@@ -1,4 +1,4 @@
-import { Triplet, Quad } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combination-classes'
 import { NumberedTile } from './../../tile-classes'
 
 /**
@@ -17,9 +17,9 @@ class SanshokuDokouYaku {
   check (hand) {
     const storedPons = {}
 
-    for (const combinaison of hand.combinaisons) {
-      if (combinaison instanceof Triplet || combinaison instanceof Quad) {
-        const tile = combinaison.tiles[0]
+    for (const combination of hand.combinations) {
+      if (combination instanceof Triplet || combination instanceof Quad) {
+        const tile = combination.tiles[0]
 
         if (tile instanceof NumberedTile) {
           if (storedPons[tile.number] == null) storedPons[tile.number] = 0

@@ -1,4 +1,4 @@
-import { Triplet, Quad } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combination-classes'
 
 /**
  * Yakuhai yaku pattern<br><br>
@@ -13,10 +13,10 @@ import { Triplet, Quad } from './../../combinaison-classes'
  */
 class YakuhaiYaku {
   /** @override */
-  check ({ combinaisons, roundWind, seatWind }) {
-    const yaku = combinaisons.reduce((agg, combinaison) => {
-      if (combinaison instanceof Triplet || combinaison instanceof Quad) {
-        const tile = combinaison.tiles[0]
+  check ({ combinations, roundWind, seatWind }) {
+    const yaku = combinations.reduce((agg, combination) => {
+      if (combination instanceof Triplet || combination instanceof Quad) {
+        const tile = combination.tiles[0]
 
         if (tile.value === 'red') agg.push({ key: 'chun', hanValue: 1, yakumanValue: 0 })
         else if (tile.value === 'green') agg.push({ key: 'hatsu', hanValue: 1, yakumanValue: 0 })

@@ -1,4 +1,4 @@
-import { Pair, Sequence } from './../../combinaison-classes'
+import { Pair, Sequence } from './../../combination-classes'
 import { DragonTile, WindTile } from './../../tile-classes'
 import isTankiWait from './../../waits/is-tanki-wait'
 import isKanchanWait from './../../waits/is-kanchan-wait'
@@ -26,8 +26,8 @@ class PinfuYaku {
       isPenchanWait(hand)
     ) return
 
-    const pairs = hand.concealedCombinaisons.filter(x => x instanceof Pair)
-    const chiis = hand.concealedCombinaisons.filter(x => x instanceof Sequence)
+    const pairs = hand.concealedCombinations.filter(x => x instanceof Pair)
+    const chiis = hand.concealedCombinations.filter(x => x instanceof Sequence)
 
     if (pairs.length !== 1 || chiis.length !== 4) return
 

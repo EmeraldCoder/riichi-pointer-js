@@ -1,4 +1,4 @@
-import { Triplet, Quad } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combination-classes'
 import { WindTile } from './../../tile-classes'
 
 /**
@@ -18,8 +18,8 @@ class DaisuushiiYaku {
   }
 
   /** @override */
-  check ({ combinaisons }) {
-    const nbOfWindPonOrKan = combinaisons.filter(x => (x instanceof Triplet || x instanceof Quad) && x.tiles[0] instanceof WindTile).length
+  check ({ combinations }) {
+    const nbOfWindPonOrKan = combinations.filter(x => (x instanceof Triplet || x instanceof Quad) && x.tiles[0] instanceof WindTile).length
 
     if (nbOfWindPonOrKan === 4) return { key: 'daisuushii', hanValue: 0, yakumanValue: this.allowDoubleYakuman ? 2 : 1 }
   }

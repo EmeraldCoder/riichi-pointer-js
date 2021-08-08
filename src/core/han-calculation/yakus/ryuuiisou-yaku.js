@@ -13,9 +13,9 @@ import { DragonTile, BambooTile } from './../../tile-classes'
  */
 class RyuuiisouYaku {
   /** @override */
-  check ({ combinaisons }) {
-    for (const combinaison of combinaisons) {
-      for (const tile of combinaison.tiles) {
+  check ({ combinations }) {
+    for (const combination of combinations) {
+      for (const tile of combination.tiles) {
         if (!(
           (tile instanceof DragonTile && tile.color === 'green') ||
           (tile instanceof BambooTile && [2, 3, 4, 6, 8].includes(tile.number))

@@ -1,12 +1,12 @@
 import IttsuuYaku from '@/core/han-calculation/yakus/ittsuu-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence } from '@/core/combination-classes'
 import { DotTile, BambooTile } from '@/core/tile-classes'
 
 const sut = new IttsuuYaku()
 
 const validConcealedHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new BambooTile(7), new BambooTile(8), new BambooTile(9)),
     new Sequence(new BambooTile(4), new BambooTile(5), new BambooTile(6)),
@@ -20,12 +20,12 @@ test('ittsuu (pure straight) valid concealed hand', () => {
 })
 
 const validOpenHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new BambooTile(7), new BambooTile(8), new BambooTile(9)),
     new Sequence(new BambooTile(4), new BambooTile(5), new BambooTile(6))
   ],
-  openCombinaisons: [
+  openCombinations: [
     new Triplet(new DotTile(3)),
     new Pair(new DotTile(7))
   ]
@@ -36,7 +36,7 @@ test('ittsuu (pure straight) valid open hand', () => {
 })
 
 const invalidHandWithoutOneToNineNumber = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(4), new BambooTile(5), new BambooTile(6)),
@@ -50,7 +50,7 @@ test('ittsuu (pure straight) invalid hand without one to nine number', () => {
 })
 
 const invalidHandWithTwoSuit = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new DotTile(7), new DotTile(8), new DotTile(9)),
     new Sequence(new BambooTile(4), new BambooTile(5), new BambooTile(6)),

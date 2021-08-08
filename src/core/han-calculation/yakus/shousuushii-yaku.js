@@ -1,4 +1,4 @@
-import { Triplet, Quad, Pair } from './../../combinaison-classes'
+import { Triplet, Quad, Pair } from './../../combination-classes'
 import { WindTile } from './../../tile-classes'
 
 /**
@@ -14,9 +14,9 @@ import { WindTile } from './../../tile-classes'
  */
 class ShousuushiiYaku {
   /** @override */
-  check ({ combinaisons }) {
-    const nbOfWindPonOrKan = combinaisons.filter(x => (x instanceof Triplet || x instanceof Quad) && x.tiles[0] instanceof WindTile).length
-    const nbOfWindPair = combinaisons.filter(x => x instanceof Pair && x.tiles[0] instanceof WindTile).length
+  check ({ combinations }) {
+    const nbOfWindPonOrKan = combinations.filter(x => (x instanceof Triplet || x instanceof Quad) && x.tiles[0] instanceof WindTile).length
+    const nbOfWindPair = combinations.filter(x => x instanceof Pair && x.tiles[0] instanceof WindTile).length
 
     if (nbOfWindPonOrKan === 3 && nbOfWindPair === 1) {
       return { key: 'shousuushii', hanValue: 0, yakumanValue: 1 }

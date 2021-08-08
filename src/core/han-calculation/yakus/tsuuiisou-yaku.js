@@ -13,9 +13,9 @@ import { HonorTile } from './../../tile-classes'
  */
 class TsuuiisouYaku {
   /** @override */
-  check ({ combinaisons }) {
-    for (const combinaison of combinaisons) {
-      for (const tile of combinaison.tiles) {
+  check ({ combinations }) {
+    for (const combination of combinations) {
+      for (const tile of combination.tiles) {
         if (!(tile instanceof HonorTile)) return
       }
     }

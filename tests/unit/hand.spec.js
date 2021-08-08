@@ -1,4 +1,4 @@
-import { Pair, Triplet, Quad } from '@/core/combinaison-classes'
+import { Pair, Triplet, Quad } from '@/core/combination-classes'
 import { DotTile } from '@/core/tile-classes'
 import Hand from '@/core/hand'
 
@@ -6,12 +6,12 @@ test('create a hand with all default values', () => {
   const hand = new Hand()
 
   expect(hand).toMatchObject({
-    concealedCombinaisons: [],
-    openCombinaisons: [],
+    concealedCombinations: [],
+    openCombinations: [],
     roundWind: 'east',
     seatWind: 'east',
     winningType: 'tsumo',
-    winningCombinaisonIndex: null,
+    winningCombinationIndex: null,
     winningTileIndex: null,
     yakus: [],
     nbDora: 0
@@ -20,25 +20,25 @@ test('create a hand with all default values', () => {
   // getters don't work in toMatchObject
 
   expect(hand.isOpen).toBe(false)
-  expect(hand.combinaisons).toStrictEqual([])
-  expect(hand.winningCombinaison).toBeNull()
+  expect(hand.combinations).toStrictEqual([])
+  expect(hand.winningCombination).toBeNull()
   expect(hand.winningTile).toBeNull()
 })
 
 test('create a hand with options', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Triplet(new DotTile(2))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Triplet(new DotTile(3)),
       new Triplet(new DotTile(4)),
       new Quad(new DotTile(5))
     ],
     roundWind: 'south',
     seatWind: 'west',
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 0,
     winningType: 'ron',
     nbDora: 1,
@@ -46,11 +46,11 @@ test('create a hand with options', () => {
   })
 
   expect(hand).toMatchObject({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Triplet(new DotTile(2))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Triplet(new DotTile(3)),
       new Triplet(new DotTile(4)),
       new Quad(new DotTile(5))
@@ -58,7 +58,7 @@ test('create a hand with options', () => {
     roundWind: 'south',
     seatWind: 'west',
     winningType: 'ron',
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 0,
     yakus: ['rinshan kaihou'],
     nbDora: 1
@@ -67,13 +67,13 @@ test('create a hand with options', () => {
   // getters don't work in toMatchObject
 
   expect(hand.isOpen).toBe(true)
-  expect(hand.combinaisons).toStrictEqual([
+  expect(hand.combinations).toStrictEqual([
     new Pair(new DotTile(1)),
     new Triplet(new DotTile(2)),
     new Triplet(new DotTile(3)),
     new Triplet(new DotTile(4)),
     new Quad(new DotTile(5))
   ])
-  expect(hand.winningCombinaison).toStrictEqual(new Pair(new DotTile(1)))
+  expect(hand.winningCombination).toStrictEqual(new Pair(new DotTile(1)))
   expect(hand.winningTile).toStrictEqual(new DotTile(1))
 })

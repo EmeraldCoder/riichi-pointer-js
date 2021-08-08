@@ -1,12 +1,12 @@
 import ChantaYaku from '@/core/han-calculation/yakus/chanta-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence } from '@/core/combination-classes'
 import { DotTile, BambooTile, DragonTile } from '@/core/tile-classes'
 
 const sut = new ChantaYaku()
 
 const validConcealedHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new BambooTile(7), new BambooTile(8), new BambooTile(9)),
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
@@ -20,12 +20,12 @@ test('chanta (outside hand) valid concealed hand', () => {
 })
 
 const validOpenHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new BambooTile(7), new BambooTile(8), new BambooTile(9)),
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3))
   ],
-  openCombinaisons: [
+  openCombinations: [
     new Triplet(new DragonTile('red')),
     new Pair(new DotTile(1))
   ]
@@ -36,7 +36,7 @@ test('chanta (outside hand) valid open hand', () => {
 })
 
 const invalidHandWithoutChii = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Triplet(new BambooTile(1)),
     new Triplet(new BambooTile(9)),
     new Triplet(new DotTile(1)),
@@ -51,7 +51,7 @@ test('chanta (outside hand) invalid without one sequence', () => {
 
 // check for terminals
 const invalidHandWithSetWithoutTerminalOrHonor = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(7), new BambooTile(8), new BambooTile(9)),
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
@@ -66,7 +66,7 @@ test('chanta (outside hand) invalid hand with set without terminal or honor', ()
 
 // check of honor tiles
 const invalidHandWithSetWithoutTerminalOrHonor2 = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),
     new Sequence(new BambooTile(7), new BambooTile(8), new BambooTile(9)),
     new Sequence(new BambooTile(1), new BambooTile(2), new BambooTile(3)),

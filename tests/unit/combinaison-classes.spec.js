@@ -1,10 +1,10 @@
-import { Pair, Triplet, Quad, Sequence, Orphan, Combinaison, CombinaisonFactory } from '@/core/combinaison-classes'
+import { Pair, Triplet, Quad, Sequence, Orphan, Combination, CombinationFactory } from '@/core/combination-classes'
 import { WindTile, DragonTile, DotTile, BambooTile, TileFactory } from '@/core/tile-classes'
 
 // pair test
 var pair = new Pair(new DragonTile('green'))
-test('pair is a combinaison', function () {
-  expect(pair instanceof Combinaison).toBeTruthy()
+test('pair is a combination', function () {
+  expect(pair instanceof Combination).toBeTruthy()
 })
 test('pair is a pair', function () {
   expect(pair instanceof Pair).toBeTruthy()
@@ -19,8 +19,8 @@ test('pair has two green dragon', function () {
 
 // triplet test
 var triplet = new Triplet(new WindTile('south'))
-test('triplet is a combinaison', function () {
-  expect(triplet instanceof Combinaison).toBeTruthy()
+test('triplet is a combination', function () {
+  expect(triplet instanceof Combination).toBeTruthy()
 })
 test('triplet is a triplet', function () {
   expect(triplet instanceof Triplet).toBeTruthy()
@@ -36,8 +36,8 @@ test('triplet has three south wind', function () {
 
 // quad test
 var quad = new Quad(new DotTile(1))
-test('quad is a combinaison', function () {
-  expect(quad instanceof Combinaison).toBeTruthy()
+test('quad is a combination', function () {
+  expect(quad instanceof Combination).toBeTruthy()
 })
 test('quad is a quad', function () {
   expect(quad instanceof Quad).toBeTruthy()
@@ -54,8 +54,8 @@ test('quad has four 1 of dot', function () {
 
 // sequence test
 var sequence = new Sequence(new BambooTile(4), new BambooTile(5), new BambooTile(6))
-test('sequence is a combinaison', function () {
-  expect(sequence instanceof Combinaison).toBeTruthy()
+test('sequence is a combination', function () {
+  expect(sequence instanceof Combination).toBeTruthy()
 })
 test('sequence is a sequence', function () {
   expect(sequence instanceof Sequence).toBeTruthy()
@@ -71,8 +71,8 @@ test('sequence has 4,5,6 of bamboo', function () {
 
 // orphan test
 var orphan = new Orphan(new BambooTile(1))
-test('orphan is a combinaison', function () {
-  expect(orphan instanceof Combinaison).toBeTruthy()
+test('orphan is a combination', function () {
+  expect(orphan instanceof Combination).toBeTruthy()
 })
 test('orphan is a orphan', function () {
   expect(orphan instanceof Orphan).toBeTruthy()
@@ -85,36 +85,36 @@ test('orphan has 1 of bamboo', function () {
 })
 
 // factory test
-test('CombinaisonFactory create pair', function () {
-  var combinaison = CombinaisonFactory.create('pair', TileFactory.create('dot', 1))
-  expect(combinaison instanceof Pair).toBeTruthy()
-  expect(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1).toBeTruthy()
-  expect(combinaison.tiles[1] instanceof DotTile && combinaison.tiles[1].value === 1).toBeTruthy()
+test('CombinationFactory create pair', function () {
+  var combination = CombinationFactory.create('pair', TileFactory.create('dot', 1))
+  expect(combination instanceof Pair).toBeTruthy()
+  expect(combination.tiles[0] instanceof DotTile && combination.tiles[0].value === 1).toBeTruthy()
+  expect(combination.tiles[1] instanceof DotTile && combination.tiles[1].value === 1).toBeTruthy()
 })
-test('CombinaisonFactory create triplet', function () {
-  var combinaison = CombinaisonFactory.create('triplet', TileFactory.create('dot', 1))
-  expect(combinaison instanceof Triplet).toBeTruthy()
-  expect(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1).toBeTruthy()
-  expect(combinaison.tiles[1] instanceof DotTile && combinaison.tiles[1].value === 1).toBeTruthy()
-  expect(combinaison.tiles[2] instanceof DotTile && combinaison.tiles[2].value === 1).toBeTruthy()
+test('CombinationFactory create triplet', function () {
+  var combination = CombinationFactory.create('triplet', TileFactory.create('dot', 1))
+  expect(combination instanceof Triplet).toBeTruthy()
+  expect(combination.tiles[0] instanceof DotTile && combination.tiles[0].value === 1).toBeTruthy()
+  expect(combination.tiles[1] instanceof DotTile && combination.tiles[1].value === 1).toBeTruthy()
+  expect(combination.tiles[2] instanceof DotTile && combination.tiles[2].value === 1).toBeTruthy()
 })
-test('CombinaisonFactory create quad', function () {
-  var combinaison = CombinaisonFactory.create('quad', TileFactory.create('dot', 1))
-  expect(combinaison instanceof Quad).toBeTruthy()
-  expect(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1).toBeTruthy()
-  expect(combinaison.tiles[1] instanceof DotTile && combinaison.tiles[1].value === 1).toBeTruthy()
-  expect(combinaison.tiles[2] instanceof DotTile && combinaison.tiles[2].value === 1).toBeTruthy()
-  expect(combinaison.tiles[3] instanceof DotTile && combinaison.tiles[3].value === 1).toBeTruthy()
+test('CombinationFactory create quad', function () {
+  var combination = CombinationFactory.create('quad', TileFactory.create('dot', 1))
+  expect(combination instanceof Quad).toBeTruthy()
+  expect(combination.tiles[0] instanceof DotTile && combination.tiles[0].value === 1).toBeTruthy()
+  expect(combination.tiles[1] instanceof DotTile && combination.tiles[1].value === 1).toBeTruthy()
+  expect(combination.tiles[2] instanceof DotTile && combination.tiles[2].value === 1).toBeTruthy()
+  expect(combination.tiles[3] instanceof DotTile && combination.tiles[3].value === 1).toBeTruthy()
 })
-test('CombinaisonFactory create sequence', function () {
-  var combinaison = CombinaisonFactory.create('sequence', TileFactory.create('dot', 1))
-  expect(combinaison instanceof Sequence).toBeTruthy()
-  expect(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1).toBeTruthy()
-  expect(combinaison.tiles[1] instanceof DotTile && combinaison.tiles[1].value === 2).toBeTruthy()
-  expect(combinaison.tiles[2] instanceof DotTile && combinaison.tiles[2].value === 3).toBeTruthy()
+test('CombinationFactory create sequence', function () {
+  var combination = CombinationFactory.create('sequence', TileFactory.create('dot', 1))
+  expect(combination instanceof Sequence).toBeTruthy()
+  expect(combination.tiles[0] instanceof DotTile && combination.tiles[0].value === 1).toBeTruthy()
+  expect(combination.tiles[1] instanceof DotTile && combination.tiles[1].value === 2).toBeTruthy()
+  expect(combination.tiles[2] instanceof DotTile && combination.tiles[2].value === 3).toBeTruthy()
 })
-test('CombinaisonFactory create orphan', function () {
-  var combinaison = CombinaisonFactory.create('orphan', TileFactory.create('dot', 1))
-  expect(combinaison instanceof Orphan).toBeTruthy()
-  expect(combinaison.tiles[0] instanceof DotTile && combinaison.tiles[0].value === 1).toBeTruthy()
+test('CombinationFactory create orphan', function () {
+  var combination = CombinationFactory.create('orphan', TileFactory.create('dot', 1))
+  expect(combination instanceof Orphan).toBeTruthy()
+  expect(combination.tiles[0] instanceof DotTile && combination.tiles[0].value === 1).toBeTruthy()
 })

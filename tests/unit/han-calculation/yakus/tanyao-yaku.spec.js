@@ -1,12 +1,12 @@
 import TanyaouYaku from '@/core/han-calculation/yakus/tanyao-yaku'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence } from '@/core/combinaison-classes'
+import { Triplet, Pair, Sequence } from '@/core/combination-classes'
 import { DotTile, CharacterTile, BambooTile, DragonTile } from '@/core/tile-classes'
 
 const sut = new TanyaouYaku()
 
 const validHand = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(6), new BambooTile(7), new BambooTile(8)),
     new Sequence(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),
@@ -20,7 +20,7 @@ test('tanyaou (all simples) valid hand', () => {
 })
 
 const invalidHandWithHonorTile = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(6), new BambooTile(7), new BambooTile(8)),
     new Sequence(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),
@@ -34,7 +34,7 @@ test('tanyaou (all simples) invalid hand with honor tiles', () => {
 })
 
 const invalidHandWithTerminalTile = new Hand({
-  concealedCombinaisons: [
+  concealedCombinations: [
     new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
     new Sequence(new BambooTile(7), new BambooTile(8), new BambooTile(9)),
     new Sequence(new CharacterTile(3), new CharacterTile(4), new CharacterTile(5)),

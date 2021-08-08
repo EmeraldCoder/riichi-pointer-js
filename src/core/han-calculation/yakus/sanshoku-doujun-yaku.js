@@ -1,4 +1,4 @@
-import { Sequence } from './../../combinaison-classes'
+import { Sequence } from './../../combination-classes'
 
 /**
  * San Shoku Doujun (mixed triple sequence) yaku pattern<br><br>
@@ -13,12 +13,12 @@ import { Sequence } from './../../combinaison-classes'
  */
 class SanshokuDoujunYaku {
   /** @override */
-  check ({ combinaisons, isOpen }) {
+  check ({ combinations, isOpen }) {
     const chiiCount = {}
 
-    for (const combinaison of combinaisons) {
-      if (combinaison instanceof Sequence) {
-        const tile = combinaison.tiles[0]
+    for (const combination of combinations) {
+      if (combination instanceof Sequence) {
+        const tile = combination.tiles[0]
 
         if (chiiCount[tile.number] == null) {
           chiiCount[tile.number] = { dot: 0, bamboo: 0, character: 0 }

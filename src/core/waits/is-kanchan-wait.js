@@ -1,8 +1,8 @@
-import { Sequence } from './../combinaison-classes'
+import { Sequence } from './../combination-classes'
 
-function isKanchanWait ({ concealedCombinaisons, winningCombinaisonIndex, winningTileIndex }) {
-  const winningCombinaison = concealedCombinaisons[winningCombinaisonIndex]
-  return winningCombinaison != null && winningCombinaison instanceof Sequence && winningTileIndex === 1
+function isKanchanWait ({ concealedCombinations, winningCombinationIndex, winningTileIndex }) {
+  const winningCombination = concealedCombinations[winningCombinationIndex]
+  return winningCombination != null && winningCombination instanceof Sequence && winningTileIndex === 1
 }
 
 export default isKanchanWait

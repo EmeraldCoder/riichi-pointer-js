@@ -1,6 +1,6 @@
 import OpenPinfuRule from '@/core/fu-calculation/rules/open-pinfu-fu-rule'
 import Hand from '@/core/hand'
-import { Pair, Sequence, Triplet, Quad } from '@/core/combinaison-classes'
+import { Pair, Sequence, Triplet, Quad } from '@/core/combination-classes'
 import { DotTile, DragonTile, WindTile } from '@/core/tile-classes'
 
 function expectNoFu (hand) {
@@ -9,13 +9,13 @@ function expectNoFu (hand) {
 
 describe('given the hand was won by tsumo', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Pair(new DotTile(9))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5), new DotTile(6), new DotTile(7))
     ],
     winningType: 'tsumo'
@@ -26,7 +26,7 @@ describe('given the hand was won by tsumo', () => {
 
 describe('given the hand is concealed', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(2)),
@@ -41,7 +41,7 @@ describe('given the hand is concealed', () => {
 
 describe('given the hand have more than one pair (chiitoitsu)', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Pair(new DotTile(1)),
       new Pair(new DotTile(2)),
       new Pair(new DotTile(3)),
@@ -58,13 +58,13 @@ describe('given the hand have more than one pair (chiitoitsu)', () => {
 
 describe('given the hand have one or more triplet', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Triplet(new DotTile(1)),
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(2)),
       new Pair(new DotTile(9))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5))
     ],
     winningType: 'ron'
@@ -75,13 +75,13 @@ describe('given the hand have one or more triplet', () => {
 
 describe('given the hand have one or more quad', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Quad(new DotTile(1)),
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(2)),
       new Pair(new DotTile(9))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5))
     ],
     winningType: 'ron'
@@ -92,13 +92,13 @@ describe('given the hand have one or more quad', () => {
 
 describe('given the pair is a green dragon', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(2)),
       new Pair(new DragonTile('green'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5))
     ],
     winningType: 'ron'
@@ -109,13 +109,13 @@ describe('given the pair is a green dragon', () => {
 
 describe('given the pair is a red dragon', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(2)),
       new Pair(new DragonTile('red'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5))
     ],
     winningType: 'ron'
@@ -126,13 +126,13 @@ describe('given the pair is a red dragon', () => {
 
 describe('given the pair is a white dragon', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(2)),
       new Pair(new DragonTile('white'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5))
     ],
     winningType: 'ron'
@@ -143,13 +143,13 @@ describe('given the pair is a white dragon', () => {
 
 describe('given the pair is the round wind', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(2)),
       new Pair(new WindTile('east'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5))
     ],
     winningType: 'ron',
@@ -162,13 +162,13 @@ describe('given the pair is the round wind', () => {
 
 describe('given the pair is the seat wind', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(1)),
       new Sequence(new DotTile(2)),
       new Pair(new WindTile('south'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5))
     ],
     winningType: 'ron',
@@ -181,17 +181,17 @@ describe('given the pair is the seat wind', () => {
 
 describe('given the wait is a single wait', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Pair(new DotTile(9))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5), new DotTile(6), new DotTile(7))
     ],
     winningType: 'ron',
-    winningCombinaisonIndex: 3,
+    winningCombinationIndex: 3,
     winningTileIndex: 0
   })
 
@@ -200,17 +200,17 @@ describe('given the wait is a single wait', () => {
 
 describe('given the wait is a edge wait', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Pair(new DotTile(9))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5), new DotTile(6), new DotTile(7))
     ],
     winningType: 'ron',
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 2
   })
 
@@ -219,36 +219,36 @@ describe('given the wait is a edge wait', () => {
 
 describe('given the wait is a closed wait', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Pair(new DotTile(9))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5), new DotTile(6), new DotTile(7))
     ],
     winningType: 'ron',
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 1
   })
 
   test('should not return any fu info', expectNoFu(hand))
 })
 
-describe('given the hand is open, without pair/combinaisons/wait fu and was won by ron (discard)', () => {
+describe('given the hand is open, without pair/combinations/wait fu and was won by ron (discard)', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Pair(new DotTile(9))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5), new DotTile(6), new DotTile(7))
     ],
     winningType: 'ron',
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 0
   })
 
@@ -260,17 +260,17 @@ describe('given the hand is open, without pair/combinaisons/wait fu and was won 
 
 describe('given the hand have a valid shape and the pair is a different wind from the round and seat wind', () => {
   const hand = new Hand({
-    concealedCombinaisons: [
+    concealedCombinations: [
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(1), new DotTile(2), new DotTile(3)),
       new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
       new Pair(new WindTile('north'))
     ],
-    openCombinaisons: [
+    openCombinations: [
       new Sequence(new DotTile(5), new DotTile(6), new DotTile(7))
     ],
     winningType: 'ron',
-    winningCombinaisonIndex: 0,
+    winningCombinationIndex: 0,
     winningTileIndex: 0,
     roundWind: 'east',
     seatWind: 'south'

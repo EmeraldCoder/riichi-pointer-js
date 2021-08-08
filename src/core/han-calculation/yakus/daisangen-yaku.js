@@ -1,4 +1,4 @@
-import { Triplet, Quad } from './../../combinaison-classes'
+import { Triplet, Quad } from './../../combination-classes'
 import { DragonTile } from './../../tile-classes'
 
 /**
@@ -14,8 +14,8 @@ import { DragonTile } from './../../tile-classes'
  */
 class DaisangenYaku {
   /** @override */
-  check ({ combinaisons }) {
-    const nbOfDragonPonOrKan = combinaisons.filter(x => (x instanceof Triplet || x instanceof Quad) && x.tiles[0] instanceof DragonTile).length
+  check ({ combinations }) {
+    const nbOfDragonPonOrKan = combinations.filter(x => (x instanceof Triplet || x instanceof Quad) && x.tiles[0] instanceof DragonTile).length
 
     if (nbOfDragonPonOrKan === 3) return { key: 'daisangen', hanValue: 0, yakumanValue: 1 }
   }

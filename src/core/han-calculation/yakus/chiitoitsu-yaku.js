@@ -1,4 +1,4 @@
-import { Pair } from './../../combinaison-classes'
+import { Pair } from './../../combination-classes'
 
 /**
  * Chiitoitsu (seven pairs) yaku pattern<br><br>
@@ -13,9 +13,9 @@ import { Pair } from './../../combinaison-classes'
  */
 class ChiitoitsuYaku {
   /** @override */
-  check ({ concealedCombinaisons }) {
-    const nbPair = concealedCombinaisons.reduce((agg, combinaison) => {
-      if (combinaison instanceof Pair) agg++
+  check ({ concealedCombinations }) {
+    const nbPair = concealedCombinations.reduce((agg, combination) => {
+      if (combination instanceof Pair) agg++
       return agg
     }, 0)
 

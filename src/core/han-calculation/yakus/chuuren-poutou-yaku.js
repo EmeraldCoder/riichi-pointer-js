@@ -18,11 +18,11 @@ class ChuurenPoutouYaku {
   }
 
   /** @override */
-  check ({ concealedCombinaisons, winningCombinaisonIndex, winningTileIndex }) {
+  check ({ concealedCombinations, winningCombinationIndex, winningTileIndex }) {
     let suit = null
 
-    const numbers = concealedCombinaisons.reduce((numbers, combinaison) => {
-      combinaison.tiles.forEach(tile => {
+    const numbers = concealedCombinations.reduce((numbers, combination) => {
+      combination.tiles.forEach(tile => {
         if (suit == null) suit = tile.suit
 
         if (tile.suit === suit && tile instanceof NumberedTile) {
@@ -34,7 +34,7 @@ class ChuurenPoutouYaku {
 
     if (!containsAllChuurenPoutouNumbers(numbers)) return
 
-    numbers[concealedCombinaisons[winningCombinaisonIndex].tiles[winningTileIndex].number]--
+    numbers[concealedCombinations[winningCombinationIndex].tiles[winningTileIndex].number]--
 
     const yakumanValue = containsAllChuurenPoutouNumbers(numbers) && this.allowDoubleYakuman ? 2 : 1
 
