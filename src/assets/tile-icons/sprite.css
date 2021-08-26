@@ -1,0 +1,119 @@
+/*
+ * Generated and lightly adapted from https://jcthepants.github.io/Retina-CSS-Sprite-Generator/
+ */
+
+.tile-icon {
+  background: url('sprite.png') no-repeat top left;
+  width: 58px;
+  height: 78px;
+  display: inline-block;
+}
+.tile-icon.man-1 {
+  background-position: 0 0;
+}
+.tile-icon.man-2 {
+  background-position: 0 -79px;
+}
+.tile-icon.man-3 {
+  background-position: 0 -158px;
+}
+.tile-icon.man-4 {
+  background-position: 0 -237px;
+}
+.tile-icon.man-5 {
+  background-position: 0 -316px;
+}
+.tile-icon.man-6 {
+  background-position: 0 -395px;
+}
+.tile-icon.man-7 {
+  background-position: 0 -474px;
+}
+.tile-icon.man-8 {
+  background-position: 0 -553px;
+}
+.tile-icon.man-9 {
+  background-position: 0 -632px;
+}
+.tile-icon.pin-1 {
+  background-position: 0 -711px;
+}
+.tile-icon.pin-2 {
+  background-position: 0 -790px;
+}
+.tile-icon.pin-3 {
+  background-position: 0 -869px;
+}
+.tile-icon.pin-4 {
+  background-position: 0 -948px;
+}
+.tile-icon.pin-5 {
+  background-position: 0 -1027px;
+}
+.tile-icon.pin-6 {
+  background-position: 0 -1106px;
+}
+.tile-icon.pin-7 {
+  background-position: 0 -1185px;
+}
+.tile-icon.pin-8 {
+  background-position: 0 -1264px;
+}
+.tile-icon.pin-9 {
+  background-position: 0 -1343px;
+}
+.tile-icon.sou-1 {
+  background-position: 0 -1422px;
+}
+.tile-icon.sou-2 {
+  background-position: 0 -1501px;
+}
+.tile-icon.sou-3 {
+  background-position: 0 -1580px;
+}
+.tile-icon.sou-4 {
+  background-position: 0 -1659px;
+}
+.tile-icon.sou-5 {
+  background-position: 0 -1738px;
+}
+.tile-icon.sou-6 {
+  background-position: 0 -1817px;
+}
+.tile-icon.sou-7 {
+  background-position: 0 -1896px;
+}
+.tile-icon.sou-8 {
+  background-position: 0 -1975px;
+}
+.tile-icon.sou-9 {
+  background-position: 0 -2054px;
+}
+.tile-icon.hatsu {
+  background-position: 0 -2133px;
+}
+.tile-icon.chun {
+  background-position: 0 -2212px;
+}
+.tile-icon.haku {
+  background: none;
+}
+.tile-icon.ton {
+  background-position: 0 -2291px;
+}
+.tile-icon.nan {
+  background-position: 0 -2370px;
+}
+.tile-icon.shaa {
+  background-position: 0 -2449px;
+}
+.tile-icon.pei {
+  background-position: 0 -2528px;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .tile-icon {
+      background: url('sprite.2x.png') no-repeat top left;
+      background-size: 58px 2607px;
+  }
+}

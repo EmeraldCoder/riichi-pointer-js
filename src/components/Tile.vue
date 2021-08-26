@@ -3,13 +3,14 @@
     :class="{ 'tile--hoverable': hoverable, 'tile--disabled': disabled }"
     class="tile"
   >
-    <svg role="img"><use :xlink:href="publicPath + 'riichi-mahjong-tiles/svgstore.svg#' + svgStoreKey" /></svg>
+    <i :class="`tile-icon ${iconSpriteCssClass}`" />
   </div>
 </template>
 
 <script>
 import { Tile } from '@/core/tile-classes'
 import { computed } from 'vue'
+import '../assets/tile-icons/sprite.css'
 
 export default {
   props: {
@@ -31,35 +32,23 @@ export default {
 
   setup (props) {
     return {
-      svgStoreKey: computed(() => getTileSvgStoreKey(props.tile)),
+      iconSpriteCssClass: computed(() => getTileIconSpriteCssClass(props.tile)),
       publicPath: process.env.VUE_APP_PUBLIC_PATH
     }
   }
 }
 
-function getTileSvgStoreKey (tile) {
-  if (tile.suit === 'character') {
-    return `Man${tile.value}`
-  } else if (tile.suit === 'bamboo') {
-    return `Sou${tile.value}`
-  } else if (tile.suit === 'dot') {
-    return `Pin${tile.value}`
-  } else if (tile.value === 'east') {
-    return 'Ton'
-  } else if (tile.value === 'south') {
-    return 'Nan'
-  } else if (tile.value === 'west') {
-    return 'Shaa'
-  } else if (tile.value === 'north') {
-    return 'Pei'
-  } else if (tile.value === 'white') {
-    return 'Haku'
-  } else if (tile.value === 'green') {
-    return 'Hatsu'
-  } else if (tile.value === 'red') {
-    return 'Chun'
-  }
-  return null
+function getTileIconSpriteCssClass (tile) {
+  if (tile.suit === 'character') return `man-${tile.value}`
+  else if (tile.suit === 'bamboo') return `sou-${tile.value}`
+  else if (tile.suit === 'dot') return `pin-${tile.value}`
+  else if (tile.value === 'east') return 'ton'
+  else if (tile.value === 'south') return 'nan'
+  else if (tile.value === 'west') return 'shaa'
+  else if (tile.value === 'north') return 'pei'
+  else if (tile.value === 'red') return 'chun'
+  else if (tile.value === 'green') return 'hatsu'
+  else if (tile.value === 'white') return 'haku'
 }
 </script>
 
@@ -70,12 +59,6 @@ function getTileSvgStoreKey (tile) {
     border-radius: 5px;
     padding: 5px;
     border: 1px solid var(--dark-green);
-  }
-
-  .tile svg {
-    width: 58px;
-    height: calc(58px * (400/300));
-    vertical-align: middle;
   }
 
   .tile--disabled {

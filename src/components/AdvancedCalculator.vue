@@ -291,6 +291,14 @@
     :ruleset="ruleset"
     @close="scoreModal = false"
   />
+
+  <div id="Preloader">
+    <!--
+      Dummy tile for the browser to preload the css sprite image used by the tile component.
+      If the user is only using the simple calculator, we don't need this image, this is why it was put here and not in the App.vue or main.js.
+    -->
+    <tile-component :tile="dummyTile" />
+  </div>
 </template>
 
 <script>
@@ -303,6 +311,7 @@ import CombinationComponent from './Combination.vue'
 import TileSelectionModalComponent from './TileSelectionModal.vue'
 import DoraCounterComponent from './DoraCounter.vue'
 import ScoreModalComponent from './AdvancedCalculatorScoreModal.vue'
+import TileComponent from './Tile.vue'
 import eventBus from './../event-bus'
 
 export default {
@@ -311,6 +320,7 @@ export default {
     TileSelectionModalComponent,
     DoraCounterComponent,
     ScoreModalComponent,
+    TileComponent,
     FontAwesomeIcon
   },
 
@@ -341,7 +351,8 @@ export default {
       tileSelectionModal: false, // indicate if the tile selection modal is open
       scoreModal: false, // indicate if the score modal is open
       calculateIcon: faCalculator,
-      plusIcon: faPlus
+      plusIcon: faPlus,
+      dummyTile: TileFactory.create('wind', 'east') // dummy tile to map on the preloading section
     }
   },
 
@@ -727,5 +738,17 @@ COMBINATIONS WRAPPER
   .combinations-wrapper {
     min-height: 440px;
   }
+}
+
+/* ---
+Preloader section where we put a dummy stuff only for the browser to preload images.
+This section is not visible and put outside of the viewport
+--- */
+
+#Preloader {
+  visibility: hidden;
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
 }
 </style>
