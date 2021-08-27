@@ -100,6 +100,7 @@ The project structure is a standard Vue.js application created with vue-cli.
 * `/.github/workflows`: .yml configuration for Github Actions.
 * `/deploy`: Contains Kubernetes .yml configuration for production deployment.
 * `/dist`: Build output folder.
+* `/nginx`: NGINX related configuration files.
 * `/public`: Static assets that need to be copied during the build.
 * `/src`: Application code.
   * `/assets`: Application assets.
