@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: riichi-pointer
@@ -13,6 +13,9 @@ spec:
     http:
       paths:
       - path: /riichi/pointer/?(.*)
+        pathType: Prefix
         backend:
-          serviceName: riichi-pointer-web
-          servicePort: 80
+          service:
+            name: riichi-pointer-web
+            port:
+              number: 80
