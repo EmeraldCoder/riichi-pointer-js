@@ -124,6 +124,8 @@ button {
   font-weight: normal;
   cursor: pointer;
   border-radius: var(--radius);
+  display: block;
+  margin: 0;
 }
 
 button:disabled,
