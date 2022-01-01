@@ -128,6 +128,7 @@ function mapMode (mode) {
 @media (min-width: 500px) {
   #QuickModeSwitcher {
     display: block;
+    display: flex;
   }
 }
 </style>
