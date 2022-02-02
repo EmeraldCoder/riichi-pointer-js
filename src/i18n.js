@@ -1,9 +1,9 @@
-import dotProp from 'dot-prop'
+import { getProperty } from 'dot-prop'
 
 const defaultLocale = 'en'
 const messages = loadLocaleMessages()
 
-export const t = (key, locale) => dotProp.get(messages[locale ?? defaultLocale], key) ?? key
+export const t = (key, locale) => getProperty(messages[locale ?? defaultLocale], key) ?? key
 
 function loadLocaleMessages () {
   const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.json$/i)

@@ -13,7 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.0.0",
     "@fortawesome/vue-fontawesome": "3.0.0-4",
     "core-js": "^3.6.5",
-    "dot-prop": "^6.0.1",
+    "dot-prop": "^7.0.0",
     "tiny-emitter": "^2.1.0",
     "vue": "^3.0.0"
   },
