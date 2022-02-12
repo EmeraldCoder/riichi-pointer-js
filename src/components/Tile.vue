@@ -32,8 +32,7 @@ export default {
 
   setup (props) {
     return {
-      iconSpriteCssClass: computed(() => getTileIconSpriteCssClass(props.tile)),
-      publicPath: process.env.VUE_APP_PUBLIC_PATH
+      iconSpriteCssClass: computed(() => getTileIconSpriteCssClass(props.tile))
     }
   }
 }
