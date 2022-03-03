@@ -1,6 +1,6 @@
 {
   "name": "riichi-pointer-js",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.0.0",
-    "@fortawesome/free-solid-svg-icons": "^5.0.0",
+    "@fortawesome/free-solid-svg-icons": "^6.0.0",
     "@fortawesome/vue-fontawesome": "3.0.0-4",
     "core-js": "^3.6.5",
     "dot-prop": "^7.0.0",
