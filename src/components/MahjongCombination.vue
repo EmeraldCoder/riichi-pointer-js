@@ -11,7 +11,7 @@
       @mouseover="onMouseOver"
       @mouseout="onMouseOut"
     >
-      <tile-component
+      <mahjong-tile-component
         v-for="(tile, index) in combination.tiles"
         :key="'tile' + index"
         :tile="tile"
@@ -64,14 +64,14 @@
 <script>
 import { Combination, Sequence, Quad } from '@/core/combination-classes'
 import { Tile } from '@/core/tile-classes'
-import TileComponent from '@/components/Tile.vue'
+import MahjongTileComponent from '@/components/MahjongTile.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { ref, computed } from 'vue'
 
 export default {
   components: {
-    TileComponent,
+    MahjongTileComponent,
     FontAwesomeIcon
   },
 

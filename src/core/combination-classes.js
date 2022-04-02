@@ -15,10 +15,11 @@ export const CombinationFactory = {
         return new Triplet(firstCombinationTile)
       case 'quad':
         return new Quad(firstCombinationTile)
-      case 'sequence':
-        var secondCombinationTile = TileFactory.create(firstCombinationTile.suit, firstCombinationTile.value + 1)
-        var thirdCombinationTile = TileFactory.create(firstCombinationTile.suit, firstCombinationTile.value + 2)
+      case 'sequence': {
+        const secondCombinationTile = TileFactory.create(firstCombinationTile.suit, firstCombinationTile.value + 1)
+        const thirdCombinationTile = TileFactory.create(firstCombinationTile.suit, firstCombinationTile.value + 2)
         return new Sequence(firstCombinationTile, secondCombinationTile, thirdCombinationTile)
+      }
       case 'orphan':
         return new Orphan(firstCombinationTile)
       default:

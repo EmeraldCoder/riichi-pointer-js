@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import ChiitoitsuRule from '@/core/fu-calculation/rules/chiitoitsu-fu-rule'
 import Hand from '@/core/hand'
 

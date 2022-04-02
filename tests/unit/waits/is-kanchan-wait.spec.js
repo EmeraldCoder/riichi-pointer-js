@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import isKanchanWait from '@/core/waits/is-kanchan-wait'
 import Hand from '@/core/hand'
 import { Pair, Triplet, Sequence } from '@/core/combination-classes'

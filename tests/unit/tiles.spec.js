@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { WindTile, DragonTile, DotTile, BambooTile, CharacterTile, NumberedTile, HonorTile, Tile, TileFactory } from '@/core/tile-classes'
 
 // ---------------------

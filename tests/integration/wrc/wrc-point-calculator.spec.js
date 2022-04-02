@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import WrcPointCalculator from '@/core/wrc/wrc-point-calculator'
 import Hand from '@/core/hand'
 

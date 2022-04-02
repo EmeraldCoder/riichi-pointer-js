@@ -66,7 +66,7 @@
             v-if="concealedCombinations.length > 0"
             class="combination-group"
           >
-            <combination-component
+            <mahjong-combination-component
               v-for="(combination, index) in concealedCombinations"
               :key="'combination.concealed.' + index"
               :combination="combination"
@@ -90,7 +90,7 @@
             v-if="openCombinations.length > 0"
             class="combination-group"
           >
-            <combination-component
+            <mahjong-combination-component
               v-for="(combination, index) in openCombinations"
               :key="'combination.opened.' + index"
               :combination="combination"
@@ -297,7 +297,7 @@
       Dummy tile for the browser to preload the css sprite image used by the tile component.
       If the user is only using the simple calculator, we don't need this image, this is why it was put here and not in the App.vue or main.js.
     -->
-    <tile-component :tile="dummyTile" />
+    <mahjong-tile-component :tile="dummyTile" />
   </div>
 </template>
 
@@ -307,20 +307,20 @@ import { faCalculator, faPlus } from '@fortawesome/free-solid-svg-icons'
 import Hand from './../core/hand'
 import { TileFactory, NumberedTile } from './../core/tile-classes'
 import { CombinationFactory, Orphan, Pair, Quad } from './../core/combination-classes'
-import CombinationComponent from './Combination.vue'
+import MahjongCombinationComponent from './MahjongCombination.vue'
 import TileSelectionModalComponent from './TileSelectionModal.vue'
 import DoraCounterComponent from './DoraCounter.vue'
 import ScoreModalComponent from './AdvancedCalculatorScoreModal.vue'
-import TileComponent from './Tile.vue'
+import MahjongTileComponent from './MahjongTile.vue'
 import eventBus from './../event-bus'
 
 export default {
   components: {
-    CombinationComponent,
+    MahjongCombinationComponent,
     TileSelectionModalComponent,
     DoraCounterComponent,
     ScoreModalComponent,
-    TileComponent,
+    MahjongTileComponent,
     FontAwesomeIcon
   },
 

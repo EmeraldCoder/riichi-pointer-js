@@ -18,7 +18,7 @@ class IttsuuYaku {
 
     for (const combination of combinations) {
       if (combination instanceof Sequence) {
-        var tile = combination.tiles[0]
+        const tile = combination.tiles[0]
 
         if (chiiCount[tile.suit] == null) {
           chiiCount[tile.suit] = { 1: 0, 4: 0, 7: 0 }

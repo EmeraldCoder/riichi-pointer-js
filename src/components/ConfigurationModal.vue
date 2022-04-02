@@ -1,5 +1,5 @@
 <template>
-  <modal-component
+  <modal-base-component
     :open="open"
     title="Configuration"
     @close="$emit('close')"
@@ -188,18 +188,18 @@
         </div>
       </div>
     </div>
-  </modal-component>
+  </modal-base-component>
 </template>
 
 <script>
-import ModalComponent from '@/components/Modal.vue'
+import ModalBaseComponent from '@/components/ModalBase.vue'
 import { key as wrcRulesetKey } from '@/rulesets/wrc-ruleset'
 import { key as customRulesetKey } from '@/rulesets/custom-ruleset'
 import { computed } from 'vue'
 
 export default {
   components: {
-    ModalComponent
+    ModalBaseComponent
   },
 
   props: {

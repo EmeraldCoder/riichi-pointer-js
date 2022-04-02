@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import PairRule from '@/core/fu-calculation/rules/pair-fu-rule'
 import Hand from '@/core/hand'
 import { Triplet, Pair } from '@/core/combination-classes'
