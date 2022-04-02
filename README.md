@@ -68,7 +68,7 @@ Vue.js application to calculate the score of a winning hand at Riichi Mahjong (J
 
 ## Development
 
-The project is a standard Vue.js (3.x) application using vue-cli services and Yarn (1.x) to manage dependencies.
+The project is a standard Vue.js (3.x)/Vite and Yarn (1.x) to manage dependencies.
 
 After cloning the project, you'll need to install dependencies by running the command:
 
@@ -85,13 +85,14 @@ yarn build
 Or start the application in development mode by using the command:
 
 ```bash
-yarn serve
+yarn dev
 ```
 
 Other useful commands:
 
 ```bash
 yarn test:unit # run unit tests
+yarn watch:test:unit # run unit tests on each file change
 yarn lint # run linter on the code
 ```
 
