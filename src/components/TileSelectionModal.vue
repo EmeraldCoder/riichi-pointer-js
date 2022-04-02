@@ -1,5 +1,5 @@
 <template>
-  <modal-component
+  <modal-base-component
     :open="open"
     title="Tile Selection"
     @close="$emit('close')"
@@ -10,7 +10,7 @@
         :key="suitIndex"
         class="tile-suit"
       >
-        <tile-component
+        <mahjong-tile-component
           v-for="(tile, tileIndex) in suit.tiles"
           :key="suitIndex + '.' + tileIndex"
           :tile="tile.tile"
@@ -20,20 +20,20 @@
         />
       </div>
     </div>
-  </modal-component>
+  </modal-base-component>
 </template>
 
 <script>
-import ModalComponent from '@/components/Modal.vue'
-import TileComponent from '@/components/Tile.vue'
+import ModalBaseComponent from '@/components/ModalBase.vue'
+import MahjongTileComponent from '@/components/MahjongTile.vue'
 import { computed } from 'vue'
 
 export default {
   name: 'TileSelectionComponent',
 
   components: {
-    ModalComponent,
-    TileComponent
+    ModalBaseComponent,
+    MahjongTileComponent
   },
 
   props: {

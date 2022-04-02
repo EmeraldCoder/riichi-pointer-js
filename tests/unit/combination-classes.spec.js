@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { Pair, Triplet, Quad, Sequence, Orphan, Combination, CombinationFactory } from '@/core/combination-classes'
 import { WindTile, DragonTile, DotTile, BambooTile, TileFactory } from '@/core/tile-classes'
 

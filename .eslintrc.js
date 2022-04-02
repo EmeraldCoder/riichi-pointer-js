@@ -1,17 +1,11 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    'vue/setup-compiler-macros': true
   },
   extends: [
-    'plugin:vue/vue3-recommended',
-    '@vue/standard'
+    'plugin:vue/vue3-essential',
+    'standard'
   ],
-  rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  },
-  parserOptions: {
-    parser: 'babel-eslint'
-  }
+  ignorePatterns: ['tests/*']
 }

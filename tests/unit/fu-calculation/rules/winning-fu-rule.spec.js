@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import WinningFuRule from '@/core/fu-calculation/rules/winning-fu-rule'
 
 test('should return 20 fu', () => {

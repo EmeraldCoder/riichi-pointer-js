@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import KokushiMusouYaku from '@/core/han-calculation/yakus/kokushi-musou-yaku'
 import Hand from '@/core/hand'
 import { Pair, Orphan } from '@/core/combination-classes'

@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import SanshokuDokouYaku from '@/core/han-calculation/yakus/sanshoku-doukou-yaku'
 import Hand from '@/core/hand'
 import { Triplet, Pair } from '@/core/combination-classes'

@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { Pair, Triplet, Quad } from '@/core/combination-classes'
 import { DotTile } from '@/core/tile-classes'
 import Hand from '@/core/hand'

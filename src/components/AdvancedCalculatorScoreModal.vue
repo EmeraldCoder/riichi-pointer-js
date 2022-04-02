@@ -1,5 +1,5 @@
 <template>
-  <modal-component
+  <modal-base-component
     :open="open"
     title="Score"
     @close="$emit('close')"
@@ -107,12 +107,12 @@
         </div>
       </div>
     </div>
-  </modal-component>
+  </modal-base-component>
 </template>
 
 <script>
 import Hand from '@/core/hand'
-import ModalComponent from '@/components/Modal.vue'
+import ModalBaseComponent from '@/components/ModalBase.vue'
 import titleCase from '@/filters/title-case'
 import formatNumber from '@/filters/format-number'
 import { computed } from 'vue'
@@ -120,7 +120,7 @@ import { t } from '@/i18n'
 
 export default {
   components: {
-    ModalComponent
+    ModalBaseComponent
   },
 
   props: {

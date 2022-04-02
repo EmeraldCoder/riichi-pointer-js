@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import OpenPinfuRule from '@/core/fu-calculation/rules/open-pinfu-fu-rule'
 import Hand from '@/core/hand'
 import { Pair, Sequence, Triplet, Quad } from '@/core/combination-classes'
