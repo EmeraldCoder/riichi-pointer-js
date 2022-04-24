@@ -67,6 +67,22 @@ describe('given the hand is a pinfu', () => {
   })
 })
 
+describe('given the pair is both the seat and round wind', () => {
+  const concealedCombinations = [
+    new Sequence(new CharacterTile(1), new CharacterTile(2), new CharacterTile(3)),
+    new Sequence(new DotTile(3), new DotTile(4), new DotTile(5)),
+    new Sequence(new DotTile(2), new DotTile(3), new DotTile(4)),
+    new Sequence(new BambooTile(5), new BambooTile(6), new BambooTile(7)),
+    new Pair(new WindTile('east'))
+  ]
+
+  test('should attribute 2 fu for the pair', () => {
+    const hand = new Hand({ concealedCombinations, winningType: 'tsumo', winningCombinationIndex: 4, winningTileIndex: 0, seatWind: 'east', roundWind: 'east' })
+    const result = wrcCalculator.calculate(hand)
+    expect(result.details.find(x => x.key === 'pair')).toStrictEqual({ key: 'pair', fuValue: 2, quantity: 1 })
+  })
+})
+
 test('test case 1', () => {
   const hand = new Hand({
     concealedCombinations: [
@@ -94,7 +110,7 @@ test('test case 1', () => {
       { key: 'ankou simple', fuValue: 4, quantity: 1 },
       { key: 'ankou non simple', fuValue: 8, quantity: 1 },
       { key: 'ankan simple', fuValue: 16, quantity: 1 },
-      { key: 'pair', fuValue: 2, quantity: 2 },
+      { key: 'pair', fuValue: 2, quantity: 1 },
       { key: 'wait', fuValue: 2, quantity: 1 },
       { key: 'tsumo', fuValue: 2, quantity: 1 }
     ],

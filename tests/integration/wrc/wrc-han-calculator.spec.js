@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
 import WrcHanCalculator from '@/core/wrc/wrc-han-calculator'
 import Hand from '@/core/hand'
-import { Triplet, Pair, Sequence, Quad } from '@/core/combination-classes'
+import { Triplet, Pair, Sequence, Quad, Orphan } from '@/core/combination-classes'
 import { DotTile, CharacterTile, BambooTile, WindTile, DragonTile } from '@/core/tile-classes'
 
 const wrcCalculator = new WrcHanCalculator()
@@ -66,6 +66,64 @@ test('renhou should be worth 5 han', () => {
   expect(result.yakuman).toBeNull()
 })
 
+test('multiple different yakuman are allowed', () => {
+  const hand = new Hand({
+    concealedCombinations: [
+      new Orphan(new CharacterTile(1)),
+      new Orphan(new CharacterTile(9)),
+      new Orphan(new DotTile(1)),
+      new Orphan(new DotTile(9)),
+      new Orphan(new BambooTile(1)),
+      new Orphan(new BambooTile(9)),
+      new Orphan(new DragonTile('white')),
+      new Orphan(new DragonTile('red')),
+      new Orphan(new DragonTile('green')),
+      new Orphan(new WindTile('east')),
+      new Orphan(new WindTile('south')),
+      new Orphan(new WindTile('west')),
+      new Pair(new WindTile('north')),
+    ],
+    winningType: 'tsumo',
+    roundWind: 'east',
+    seatWind: 'east',
+    winningCombinationIndex: 12,
+    winningTileIndex: 0
+  })
+
+  const result = wrcCalculator.calculate(hand)
+
+  expect(result.han).toBeNull()
+  expect(result.yakuman).toBe(1)
+  expect(result.details.filter(x => x.key === 'kokushi musou')).toStrictEqual([{ key: 'kokushi musou', hanValue: 0, yakumanValue: 1 }])
+  expect(result.details.length).toBe(1)
+})
+
+test('single double yakuman are still count as 1 yakuman', () => {
+  const hand = new Hand({
+    concealedCombinations: [
+      new Triplet(new DragonTile('red')),
+      new Triplet(new DragonTile('white')),
+      new Triplet(new DragonTile('green')),
+      new Triplet(new WindTile('east')),
+      new Pair(new WindTile('south'))
+    ],
+    winningType: 'tsumo',
+    roundWind: 'east',
+    seatWind: 'east',
+    winningCombinationIndex: 0,
+    winningTileIndex: 0
+  })
+
+  const result = wrcCalculator.calculate(hand)
+
+  expect(result.han).toBeNull()
+  expect(result.yakuman).toBe(3)
+  expect(result.details.filter(x => x.key === 'daisangen')).toStrictEqual([{ key: 'daisangen', hanValue: 0, yakumanValue: 1 }])
+  expect(result.details.filter(x => x.key === 'tsuuiisou')).toStrictEqual([{ key: 'tsuuiisou', hanValue: 0, yakumanValue: 1 }])
+  expect(result.details.filter(x => x.key === 'suuankou')).toStrictEqual([{ key: 'suuankou', hanValue: 0, yakumanValue: 1 }])
+  expect(result.details.length).toBe(3)
+})
+
 test('test case 1', () => {
   const hand = new Hand({
     concealedCombinations: [
@@ -96,33 +154,4 @@ test('test case 1', () => {
   expect(result.details.filter(x => x.key === 'riichi')).toStrictEqual([{ key: 'riichi', hanValue: 1, yakumanValue: 0 }])
   expect(result.details.filter(x => x.key === 'ippatsu')).toStrictEqual([{ key: 'ippatsu', hanValue: 1, yakumanValue: 0 }])
   expect(result.details.filter(x => x.key === 'haitei raoyue')).toStrictEqual([{ key: 'haitei raoyue', hanValue: 1, yakumanValue: 0 }])
-})
-
-test('test case 2', () => {
-  // yakuman should be capped at 1 yakuman
-
-  const hand = new Hand({
-    concealedCombinations: [
-      new Triplet(new DragonTile('red')),
-      new Triplet(new DragonTile('green')),
-      new Triplet(new DragonTile('white')),
-      new Pair(new WindTile('north'))
-    ],
-    openCombinations: [
-      new Triplet(new WindTile('east'))
-    ],
-    winningType: 'ron',
-    roundWind: 'east',
-    seatWind: 'east',
-    winningCombinationIndex: 0,
-    winningTileIndex: 0
-  })
-
-  const result = wrcCalculator.calculate(hand)
-
-  expect(result.han).toBeNull()
-  expect(result.yakuman).toBe(1)
-  expect(result.details.length).toBe(2)
-  expect(result.details.filter(x => x.key === 'daisangen')).toStrictEqual([{ key: 'daisangen', hanValue: 0, yakumanValue: 1 }])
-  expect(result.details.filter(x => x.key === 'tsuuiisou')).toStrictEqual([{ key: 'tsuuiisou', hanValue: 0, yakumanValue: 1 }])
 })

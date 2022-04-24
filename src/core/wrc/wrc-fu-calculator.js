@@ -24,7 +24,7 @@ class WrcFuCalculator extends FuCalculator {
       new ChiitoitsuRule({ chiitoitsuYakuPattern: new ChiitoitsuYaku(), fuValue: 25 }),
       new WinRule(),
       new CombinationsRule(),
-      new PairRule({ stackable: true }),
+      new PairRule({ stackable: false }),
       new WaitRule(),
       new OpenPinfuRule(),
       new ClosedRonRule(),

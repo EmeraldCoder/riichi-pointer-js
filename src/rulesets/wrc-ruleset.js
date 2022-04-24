@@ -7,10 +7,10 @@ import fourPlayerGameTiles from './helpers/four-player-game-tiles'
 // if you need to change the implementation, please refer to ./../core/wrc/* classes
 const options = {
   kazoeYakumanAsSanbaiman: true,
-  allowMultipleYakuman: false,
+  allowMultipleYakuman: true,
   allowDoubleYakuman: false,
   allowOpenTanyao: true,
-  allowDoubleWindFu: true,
+  allowDoubleWindFu: false,
   renhouValue: 'mangan',
 
   // optional yaku
