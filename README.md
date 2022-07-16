@@ -11,6 +11,7 @@ Vue.js application to calculate the score of a winning hand at Riichi Mahjong (J
 
 * Many options available to configure the application according to your ruleset
   * Allow Open Tanyao (all simples)
+  * Kiriage Mangan (mangan rounding up)
   * Allow Multiple Yakuman
   * Allow Double Yakuman
   * Allow Double Wind Fu
