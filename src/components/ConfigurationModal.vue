@@ -67,6 +67,26 @@
       </div>
 
       <div class="btn-groups with-labels m-t">
+        <label>Kiriage Mangan:</label>
+        <div class="btn-group">
+          <button
+            :class="{ active: ruleset.options.kiriageMangan }"
+            :disabled="readOnly"
+            @click="changeOption('kiriageMangan', true)"
+          >
+            Yes
+          </button>
+          <button
+            :class="{ active: !ruleset.options.kiriageMangan }"
+            :disabled="readOnly"
+            @click="changeOption('kiriageMangan', false)"
+          >
+            No
+          </button>
+        </div>
+      </div>
+
+      <div class="btn-groups with-labels m-t">
         <label>Allow Multiple Yakuman:</label>
         <div class="btn-group">
           <button

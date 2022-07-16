@@ -6,42 +6,98 @@ import dealerScoreFixture from './../../fixtures/dealer-score-fixture.json'
 import nonDealerScoreFixture from './../../fixtures/non-dealer-score-fixture.json'
 
 describe('given the hand was won by tsumo by the dealer', () => {
-  const sut = new PointCalculator()
   const hand = new Hand({ seatWind: 'east', winningType: 'tsumo' })
 
   test.each(dealerScoreFixture.filter(x => x[3] != null).map(x => [x[0], x[1], x[3]]))('%i han and %i fu should be worth %i point from all players', (han, fu, expected) => {
+    const sut = new PointCalculator()
     const result = sut.calculate(hand, fu, han)
     expect(result).toStrictEqual({ nonDealer: expected })
+  })
+
+  describe('given the calculator is configured with kiriage mangan', () => {
+    test('4 han and 30 fu should be considered a mangan', () => {
+      const sut = new PointCalculator({ kiriageMangan: true })
+      const result = sut.calculate(hand, 30, 4)
+      expect(result).toStrictEqual({ nonDealer: 4000 })
+    })
+
+    test('3 han and 60 fu should be considered a mangan', () => {
+      const sut = new PointCalculator({ kiriageMangan: true })
+      const result = sut.calculate(hand, 60, 3)
+      expect(result).toStrictEqual({ nonDealer: 4000 })
+    })
   })
 })
 
 describe('given the hand was won by ron by the dealer', () => {
-  const sut = new PointCalculator()
   const hand = new Hand({ seatWind: 'east', winningType: 'ron' })
 
   test.each(dealerScoreFixture.map(x => [x[0], x[1], x[2]]))('%i han and %i fu should be worth %i point from discard player', (han, fu, expected) => {
+    const sut = new PointCalculator()
     const result = sut.calculate(hand, fu, han)
     expect(result).toStrictEqual({ discard: expected })
+  })
+
+  describe('given the calculator is configured with kiriage mangan', () => {
+    test('4 han and 30 fu should be considered a mangan', () => {
+      const sut = new PointCalculator({ kiriageMangan: true })
+      const result = sut.calculate(hand, 30, 4)
+      expect(result).toStrictEqual({ discard: 12000 })
+    })
+
+    test('3 han and 60 fu should be considered a mangan', () => {
+      const sut = new PointCalculator({ kiriageMangan: true })
+      const result = sut.calculate(hand, 60, 3)
+      expect(result).toStrictEqual({ discard: 12000 })
+    })
   })
 })
 
 describe('given the hand was won by tsumo by a non dealer', () => {
-  const sut = new PointCalculator()
   const hand = new Hand({ seatWind: 'south', winningType: 'tsumo' })
 
   test.each(nonDealerScoreFixture.filter(x => x[3] != null && x[4] != null).map(x => [x[0], x[1], x[3], x[4]]))('%i han and %i fu should be worth %i point from the dealer and %i from the others', (han, fu, expectedFromDealer, expectedFromNonDealers) => {
+    const sut = new PointCalculator()
     const result = sut.calculate(hand, fu, han)
     expect(result).toStrictEqual({ dealer: expectedFromDealer, nonDealer: expectedFromNonDealers })
+  })
+
+  describe('given the calculator is configured with kiriage mangan', () => {
+    test('4 han and 30 fu should be considered a mangan', () => {
+      const sut = new PointCalculator({ kiriageMangan: true })
+      const result = sut.calculate(hand, 30, 4)
+      expect(result).toStrictEqual({ dealer: 4000, nonDealer: 2000 })
+    })
+
+    test('3 han and 60 fu should be considered a mangan', () => {
+      const sut = new PointCalculator({ kiriageMangan: true })
+      const result = sut.calculate(hand, 60, 3)
+      expect(result).toStrictEqual({ dealer: 4000, nonDealer: 2000 })
+    })
   })
 })
 
 describe('given the hand was won by ron by a non dealer', () => {
-  const sut = new PointCalculator()
   const hand = new Hand({ seatWind: 'south', winningType: 'ron' })
 
   test.each(nonDealerScoreFixture.map(x => [x[0], x[1], x[2]]))('%i han and %i fu should be worth %i point from discard player', (han, fu, expected) => {
+    const sut = new PointCalculator()
     const result = sut.calculate(hand, fu, han)
     expect(result).toStrictEqual({ discard: expected })
+  })
+
+  describe('given the calculator is configured with kiriage mangan', () => {
+    test('4 han and 30 fu should be considered a mangan', () => {
+      const sut = new PointCalculator({ kiriageMangan: true })
+      const result = sut.calculate(hand, 30, 4)
+      expect(result).toStrictEqual({ discard: 8000 })
+    })
+
+    test('3 han and 60 fu should be considered a mangan', () => {
+      const sut = new PointCalculator({ kiriageMangan: true })
+      const result = sut.calculate(hand, 60, 3)
+      expect(result).toStrictEqual({ discard: 8000 })
+    })
   })
 })
 

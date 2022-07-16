@@ -12,6 +12,7 @@ const options = {
   allowOpenTanyao: true,
   allowDoubleWindFu: false,
   renhouValue: 'mangan',
+  kiriageMangan: true,
 
   // optional yaku
   allowOpenRiichi: false

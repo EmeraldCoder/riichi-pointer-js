@@ -1,6 +1,7 @@
 class PointCalculator {
   constructor (options) {
     this.kazoeYakumanAsSanbaiman = options?.kazoeYakumanAsSanbaiman ?? true
+    this.kiriageMangan = options?.kiriageMangan ?? false
   }
 
   calculate (hand, fu, han, yakuman) {
@@ -10,10 +11,14 @@ class PointCalculator {
     if (han >= 11) return getPointForSanbaiman(hand)
     if (han >= 8) return getPointForBaiman(hand)
     if (han >= 6) return getPointForHaneman(hand)
-    if (han === 5) return getPointForMangan(hand)
+    if (han === 5 || (this.kiriageMangan && canBeRoundUpToMangan(fu, han))) return getPointForMangan(hand)
     if ((han === 3 && fu > 60) || (han === 4 && fu > 30)) return getPointForMangan(hand)
     return getPointFromManualCalculation(hand, fu, han)
   }
+}
+
+function canBeRoundUpToMangan (fu, han) {
+  return (han === 4 && fu === 30) || (han === 3 && fu === 60)
 }
 
 function getPointForYakuman (hand, yakuman) {
