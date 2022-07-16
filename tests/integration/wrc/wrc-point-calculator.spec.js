@@ -9,3 +9,9 @@ test('kazoe yakuman should count as sanbaiman', () => {
   const result = sut.calculate(hand, null, 13)
   expect(result).toStrictEqual({ nonDealer: 12000 })
 })
+
+test('kiriage mangan should be active', () => {
+  const hand = new Hand({ seatWind: 'east', winningType: 'ron' })
+  const result = sut.calculate(hand, 30, 4)
+  expect(result).toStrictEqual({ discard: 12000 })
+})

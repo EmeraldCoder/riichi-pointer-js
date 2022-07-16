@@ -10,6 +10,7 @@ const defaultInfo = {
   allowOpenTanyao: true,
   allowDoubleWindFu: true,
   renhouValue: 'yakuman',
+  kiriageMangan: true,
 
   // optional yaku
   allowOpenRiichi: false
@@ -98,7 +99,8 @@ function createHanCalculator (options) {
 
 function craetePointCalculator (options) {
   return new PointCalculator({
-    kazoeYakumanAsSanbaiman: options.kazoeYakumanAsSanbaiman
+    kazoeYakumanAsSanbaiman: options.kazoeYakumanAsSanbaiman,
+    kiriageMangan: options.kiriageMangan
   })
 }
 
