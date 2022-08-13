@@ -160,6 +160,7 @@ Mobile Version (fullscreen modal)
     z-index: 4;
     width: 100vw;
     height: 100vh;
+    height: -webkit-fill-available; /* hack because iOS Safari cut 100vh content when the bottom toolbar is shown */
     overflow: auto;
   }
   .modal.modal--opened .modal__back-button {
