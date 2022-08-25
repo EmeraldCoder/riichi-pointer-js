@@ -109,6 +109,7 @@ The project structure is a standard Vue.js application created with vue-cli.
   * `/assets`: Application assets.
   * `/components`: Vue components.
   * `/core`: Riichi Mahjong business logic code (yaku, tile, combination, calculator, etc...).
+    * `/ema`: EMA ruleset configurations.
     * `/fu-calculation`: Fu calculation related code.
     * `/han-calculation`: Han calculation related code.
     * `/point-calculation`: Point calculation related code.
@@ -119,7 +120,7 @@ The project structure is a standard Vue.js application created with vue-cli.
   * `/rulesets`: Mahjong ruleset configurations.
 * `/tests`: Application tests.
   * `/fixtures`: Preset data to be used during the tests.
-  * `/integration`: Preset ruleset (WRC) integration tests.
+  * `/integration`: Preset ruleset (WRC, EMA) integration tests.
   * `/unit`: Standard unit tests.
 
 ## Github Actions
