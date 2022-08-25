@@ -37,6 +37,13 @@
         </button>
 
         <button
+          :class="{ active: ruleset.key === emaRulesetKey }"
+          @click="changePreset(emaRulesetKey)"
+        >
+          EMA
+        </button>
+
+        <button
           :class="{ active: ruleset.key === customRulesetKey }"
           @click="changePreset(customRulesetKey)"
         >
@@ -214,6 +221,7 @@
 <script>
 import ModalBaseComponent from '@/components/ModalBase.vue'
 import { key as wrcRulesetKey } from '@/rulesets/wrc-ruleset'
+import { key as emaRulesetKey } from '@/rulesets/ema-ruleset'
 import { key as customRulesetKey } from '@/rulesets/custom-ruleset'
 import { computed } from 'vue'
 
@@ -242,6 +250,7 @@ export default {
   setup (props, { emit }) {
     return {
       wrcRulesetKey,
+      emaRulesetKey,
       customRulesetKey,
 
       readOnly: computed(() => props.ruleset.key !== customRulesetKey),
