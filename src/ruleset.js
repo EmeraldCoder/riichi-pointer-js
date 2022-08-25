@@ -1,4 +1,5 @@
 import * as WrcRuleset from './rulesets/wrc-ruleset'
+import * as EmaRuleset from './rulesets/ema-ruleset'
 import * as CustomRuleset from './rulesets/custom-ruleset'
 
 const localStorageKey = 'riichi-pointer-ruleset'
@@ -8,6 +9,8 @@ let instance = null
 function setup (key, options) {
   if (key === WrcRuleset.key) {
     instance = WrcRuleset.create(options)
+  } else if (key === EmaRuleset.key) {
+    instance = EmaRuleset.create(options)
   } else if (key === CustomRuleset.key) {
     instance = CustomRuleset.create(options)
   } else {

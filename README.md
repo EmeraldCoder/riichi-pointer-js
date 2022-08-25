@@ -22,6 +22,7 @@ Vue.js application to calculate the score of a winning hand at Riichi Mahjong (J
 * Simple mode available for when you only need a quick reference to a score for a certain amount of fu/han without entering all your hand's combinations.<br><br>
 * Supported Rulesets
   * WRC (4 players)
+  * EMA (4 players)
   * Custom (4 players)<br><br>
 * Supported Yaku Patterns
   * Menzen Tsumo (fully concealed hand)
