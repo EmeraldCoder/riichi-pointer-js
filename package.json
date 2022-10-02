@@ -1,6 +1,6 @@
 {
   "name": "riichi-pointer-js",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -28,7 +28,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-vue": "^8.2.0",
     "vite": "^3.0.4",
-    "vitest": "^0.22.1",
+    "vitest": "^0.23.0",
     "vite-plugin-html": "^3.0.0"
   }
 }
