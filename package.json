@@ -3,6 +3,7 @@
   "version": "0.7.3",
   "private": true,
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -27,7 +28,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-vue": "^8.2.0",
-    "vite": "^4.0.0",
+    "vite": "^5.0.0",
     "vitest": "^0.34.0",
     "vite-plugin-html": "^3.0.0"
   }
