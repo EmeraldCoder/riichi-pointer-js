@@ -24,18 +24,18 @@ class RyanpeikouYaku {
   check ({ combinations, isOpen }) {
     if (!this.allowOpen && isOpen) return
 
-    const chiis = {}
-    let nbPairOfChii = 0
-
-    for (const combination of combinations) {
-      if (combination instanceof Sequence) {
-        const chiiKey = combination.tiles[0].suit + combination.tiles[0].number
-
-        if (chiis[chiiKey] == null) { chiis[chiiKey] = 0 } else { nbPairOfChii++ }
+    const groupsOfIdenticalSequence = combinations.filter(combination => combination instanceof Sequence).reduce((agg, combination) => {
+      const key = combination.tiles[0].number + combination.tiles[0].suit
+      const index = agg.findIndex(x => x.key === key)
+      if (index === -1) {
+        agg.push({ key, items: [combination] })
+      } else {
+        agg[index].items.push(combination)
       }
-    }
+      return agg
+    }, [])
 
-    if (nbPairOfChii === 2) {
+    if (groupsOfIdenticalSequence.filter(x => x.items.length > 1).length === 2) {
       return { key: 'ryanpeikou', hanValue: isOpen ? 2 : 3, yakumanValue: 0 }
     }
   }

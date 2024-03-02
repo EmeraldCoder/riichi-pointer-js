@@ -69,3 +69,17 @@ const invalidHandWithoutChii = new Hand({
 test('ryan peikou (twice pure double chiis) invalid hand without sequence', () => {
   expect(sut.check(invalidHandWithoutChii)).toBeUndefined()
 })
+
+const invalidHandWithThreeIdenticalChii = new Hand({
+  concealedCombinations: [
+    new Sequence(new BambooTile(2), new BambooTile(3), new BambooTile(4)),
+    new Pair(new BambooTile(4)),
+    new Sequence(new BambooTile(6), new BambooTile(7), new BambooTile(8)),
+    new Sequence(new BambooTile(6), new BambooTile(7), new BambooTile(8)),
+    new Sequence(new BambooTile(6), new BambooTile(7), new BambooTile(8))
+  ]
+})
+
+test('ryan peikou (twice pure double chiis) invalid hand with three identical sequences', () => {
+  expect(sut.check(invalidHandWithThreeIdenticalChii)).toBeUndefined()
+})
