@@ -107,7 +107,7 @@ export default {
       deleteIcon: faTrash,
       isChii: computed(() => props.combination instanceof Sequence),
       isKan: computed(() => props.combination instanceof Quad),
-      hover: hover,
+      hover,
 
       onTouchStart: () => { if (!touching.value) touching.value = true },
       onTouchMove: () => { if (touching.value) touching.value = false },
